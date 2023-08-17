@@ -1,0 +1,1116 @@
+@import 'mobile.scss';
+@import 'variables.scss';
+
+* {
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+}
+
+body {
+    // font-family: SVN-Gilroy;
+    background-color: #f5f5f5 !important;
+}
+.theme--light.v-application {
+    background: #f5f5f5 !important;
+    // color: rgba(0, 0, 0, 0.87);
+}
+.mt-60 {
+    margin-top: 60px;
+}
+.blade {
+    padding: 2px 17px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    color: #fc4d32;
+    font-family: SVN-Gilroy;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border-radius: 17px;
+    background: #ffeeeb;
+}
+.text {
+    font-family: SVN-Gilroy;
+}
+.user-name {
+    color: #2d2d2d;
+    font-family: SVN-Gilroy;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.ps-close-bar {
+    position: relative;
+    top: -8px;
+}
+
+.wmt-27 {
+    margin-bottom: 27px;
+}
+
+.px-27 {
+    padding: 0px 18px 0px 27px;
+}
+.mt-29 {
+    margin-top: 29px;
+}
+
+.theme--light.v-navigation-drawer {
+    // min-width: 325px;
+}
+
+// .img-avatar {
+//     width: 20px;
+// }
+
+a:hover {
+    text-decoration: none;
+}
+
+ul {
+    margin: 0px;
+    padding: 0px;
+
+    li {
+        list-style: none;
+    }
+}
+
+.v-application ul,
+.v-application ol {
+    padding-left: 0px !important;
+}
+
+.web-m-r {
+    margin-right: 6px;
+}
+
+.menu-bar {
+    .icon-bar {
+        margin-right: 7px;
+    }
+    .text-style {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    ul {
+        li {
+            a {
+                transition: 0.3s;
+                .mdi-chevron-right {
+                    font-size: 22px;
+                    color: #2d2d2d;
+                    transition: 0.3s;
+                }
+                svg {
+                    path {
+                        transition: 0.3s;
+                    }
+                }
+                span {
+                    transition: 0.3s;
+                }
+            }
+
+            a:hover {
+                background: #eef7fd;
+                color: #0056b1;
+            }
+
+            a:hover span {
+                color: #0056b1;
+                fill: #0056b1;
+            }
+
+            a:hover path {
+                color: #0056b1;
+                stroke: #0056b1;
+            }
+
+            a:hover .mdi-chevron-right {
+                color: #0056b1;
+            }
+
+            .nuxt-link-exact-active {
+                background: #eef7fd;
+                color: #0056b1;
+                span {
+                    color: #0056b1;
+                }
+                svg,
+                path {
+                    // fill: #0056b1;
+                    stroke: #0056b1;
+                }
+            }
+        }
+    }
+}
+
+.w-mt-17 {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.w-title {
+    color: #2d2d2d;
+    font-family: SVN-Gilroy;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.w-form-selected {
+    display: flex;
+    padding: 3px 26px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 46px;
+    background: #fff;
+    transition: 0.3s;
+    color: #495057;
+    vertical-align: middle;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    option {
+        color: #2d2d2d;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+}
+
+.w-form-selected:hover {
+    background: rgb(204, 202, 202);
+}
+
+.w-form-selected:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.w-h1 {
+    color: #2d2d2d;
+    font-family: SVN-Gilroy;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin: 0;
+}
+
+.content-mp {
+    padding: 25px 10px 28px 10px;
+}
+
+.w-card {
+    // background: #ffffff;
+    border-radius: 15px;
+    background: #e8f3ff;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.w-card-title {
+    background: #ffffff;
+    padding: 11px 16px;
+}
+
+.w-card-body {
+    background: #ffffff;
+    position: relative;
+    border-top-right-radius: 15px;
+}
+
+.w-bg-info {
+    background-color: #e8f3ff;
+}
+
+.w-card-body-svg {
+    // position: absolute;
+    top: -24px;
+    min-width: 300px;
+    max-width: 300px;
+    position: relative;
+}
+
+.w-card-body-main {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 14px 17px 14px 17px;
+
+    .user-name {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+}
+
+.layout-user {
+    position: relative;
+    overflow: hidden;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.w-p {
+    color: #7d7d7d;
+    font-family: SVN-Gilroy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.w-blade-card {
+    display: flex;
+    padding: 8px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    color: #0056b1;
+    text-align: center;
+    font-family: SVN-Gilroy;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border-radius: 46px;
+    background: rgba(0, 86, 177, 0.15);
+}
+
+.w-text-p-card {
+    color: #2d2d2d;
+    font-family: SVN-Gilroy;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    span {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+}
+
+.w-p-service {
+    color: #2d2d2d;
+    font-family: SVN-Gilroy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.w-p-service-i {
+    color: #2d2d2d;
+    font-family: SVN-Gilroy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.w-card-footer {
+    border-top: 2px solid #f2f2f2;
+    padding: 14px 17px 14px 17px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    .user-name {
+        color: #2d2d2d;
+        font-family: 'SVN-Gilroy';
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+}
+
+.hh-20 {
+    height: 20px;
+}
+
+.wh3-text {
+    color: #2d2d2d;
+    font-family: SVN-Gilroy;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.w-d-none {
+    display: none;
+}
+
+.flex-xs-nowrap {
+    flex-wrap: nowrap !important;
+}
+
+.teachers {
+    color: #2d2d2d;
+
+    .layout-user {
+        position: relative;
+        overflow: hidden;
+        width: 68px !important;
+        height: 68px !important;
+        border-radius: 50%;
+    }
+    .name {
+        color: #2d2d2d !important;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-top: 10px;
+    }
+    .position {
+        color: #7d7d7d !important;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .blade-id {
+        display: flex;
+        padding: 2px 12px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        border-radius: 17px;
+        background: #ffeeeb;
+        color: #fc4d32;
+        font-family: SVN-Gilroy;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .blade-rate {
+        border-radius: 22px;
+        border: 1px solid #ffb761;
+        background: #fff;
+        display: flex;
+        padding: 2px 10px;
+        justify-content: center;
+        align-items: center;
+        gap: 2px;
+        flex-shrink: 0;
+
+        .span-text {
+            color: #2d2d2d;
+            font-family: SVN-Gilroy;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+    }
+}
+
+.teacher-detail {
+    .layout-user {
+        width: 108px !important;
+        height: 108px !important;
+    }
+    .blade-infor {
+        margin-top: 10px;
+
+        span {
+            color: #2d2d2d;
+            font-family: SVN-Gilroy;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+    }
+}
+
+.teacher-detail-info {
+    h3 {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-top: 10px;
+    }
+
+    .w-text-p {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+    .w-text-p-1 {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+}
+
+.teacher-detail-info-nav {
+    margin-top: 40px;
+    h3 {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-bottom: 14px;
+    }
+    .teacher-nav {
+        border-radius: 5px !important;
+        border: none !important;
+        background: #fff;
+        margin-bottom: 10px;
+    }
+    .card-body {
+        padding: 8px 13px;
+    }
+    span {
+        color: #2d2d2d;
+    }
+    .web-icon {
+        color: #2d2d2d;
+        font-size: 23px;
+    }
+}
+
+.teacher-changer-password {
+    .input {
+        margin-bottom: 15px;
+        position: relative;
+    }
+    .input-form {
+        border-radius: 63px;
+        padding: 16px 22px;
+        border: 1px solid #e5e5e5;
+        background: #fff;
+        width: 100%;
+        color: rgba(45, 45, 45, 0.6);
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+    .icon {
+        position: absolute;
+        position: absolute;
+        top: 6px;
+        font-size: 26px;
+        right: 16px;
+        color: #2d2d2d;
+    }
+    .btn-save-pass {
+        color: #fff;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        display: flex;
+        width: 353px;
+        height: 48px;
+        padding: 10px 60px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        border-radius: 50px;
+        background: #0056b1;
+    }
+}
+
+.btn-save-pass {
+    color: #fff;
+    text-align: center;
+    font-family: SVN-Gilroy;
+    font-size: 16px;
+    display: flex;
+    width: 353px;
+    height: 48px;
+    padding: 10px 60px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 50px;
+    background: #0056b1;
+}
+
+.roll-back {
+    font-size: 33px;
+    color: #2d2d2d;
+}
+
+.teacher-detail-info-service-nav {
+    .input-check {
+        border-radius: 5px;
+        border: 1px solid #e5e5e5;
+        background: #f5f5f5;
+        width: 2rem;
+        height: 1.5rem;
+    }
+    .card-body {
+        padding: 12px 14px;
+    }
+    .teacher-nav {
+        margin-top: 6px;
+    }
+    .layout-img {
+        border-radius: 50%;
+        border: 1px solid #e5e5e5;
+        background: #f5f5f5;
+        overflow: hidden;
+        width: 30px;
+        height: 30px;
+        img {
+            object-fit: cover;
+        }
+    }
+}
+
+.cs {
+    cursor: pointer;
+}
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: content;
+}
+.training-results {
+    table {
+        td {
+            padding-bottom: 9px;
+        }
+    }
+    .name {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 18px;
+    }
+    .blade-id {
+        border-radius: 17px;
+        background: #ffeeeb;
+        display: flex;
+        width: 44px;
+        height: 15px;
+        padding: 3px 7px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        color: #fc4d32;
+        font-family: SVN-Gilroy;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        display: inherit;
+    }
+    .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        img {
+            object-fit: cover;
+        }
+    }
+    .p {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+    .p-text {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+}
+
+.training-results-detail {
+    .card-body {
+        padding: 0px;
+    }
+    .card-body-p-16 {
+        padding: 16px;
+    }
+    .br-top {
+        border-top: 1.5px solid #f2f2f2;
+    }
+    .text-infomation {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+    .layout-user {
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: 50%;
+        overflow: hidden;
+        img {
+            object-fit: cover;
+        }
+    }
+    .icon {
+        color: #fff;
+        font-family: SVN-Gilroy;
+        font-size: 27px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        position: absolute;
+        right: 7px;
+        top: 4px;
+    }
+    .btn-link-to {
+        border-radius: 33px;
+        background: #4eaeea;
+        display: inline-flex;
+        height: 38px;
+        padding: 10px;
+        justify-content: center;
+        color: white;
+        align-items: center;
+        width: 100%;
+        min-width: 150px;
+        margin-top: 10px;
+    }
+    .label-text {
+        color: rgba(45, 45, 45, 0.6);
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    input {
+        width: 1rem;
+        height: 1.25rem;
+    }
+}
+
+.history-course {
+    .select {
+        border-radius: 46px;
+        background: #fff;
+        display: flex;
+        padding: 5px 18px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+    input,
+    select {
+        border: none;
+        outline: none;
+    }
+    select:focus-visible {
+        border: none;
+        outline: none;
+    }
+}
+
+.w-bg-success {
+    background-color: #cbf8ed;
+}
+
+.w-blade-card-success {
+    display: flex;
+    padding: 8px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    color: #009874;
+    text-align: center;
+    font-family: SVN-Gilroy;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border-radius: 46px;
+    background: rgba(0, 192, 146, 0.2);
+}
+
+.recharge {
+    .web-b {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        span {
+            color: #0056b1;
+            font-family: SVN-Gilroy;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+    }
+
+    .input-text {
+        border-radius: 10px;
+        border: 1px solid #e5e5e5;
+        background: #fff;
+        color: rgba(45, 45, 45, 0.6);
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        padding: 16px 18px;
+        width: 100%;
+    }
+    .textarea {
+        border-radius: 10px;
+        border: 1px solid #e5e5e5;
+        background: #fff;
+        width: 100%;
+        height: 94px;
+        padding: 16px 18px;
+        flex-shrink: 0;
+    }
+    .btn-min {
+        border-radius: 50px;
+        background: #fc4d32;
+        display: flex;
+        width: 173px;
+        height: 48px;
+        padding: 10px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        color: #fff;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 120%;
+        margin-right: 5px;
+    }
+    .btn-plus {
+        border-radius: 50px;
+        background: #00c092;
+        display: flex;
+        width: 173px;
+        height: 48px;
+        padding: 10px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        color: #fff;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 120%;
+        margin-left: 5px;
+    }
+}
+
+.parents {
+    .text-field {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+}
+
+.parent-detail {
+    .layout-user1 {
+        min-width: 108px !important;
+    }
+    .select {
+        border-radius: 46px;
+        background: #fff;
+        display: flex;
+        padding: 5px 18px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+    select:focus-visible {
+        border: none;
+        outline: none;
+    }
+}
+
+.complain {
+    table {
+        td {
+            padding-bottom: 10px;
+        }
+    }
+    .select {
+        border-radius: 46px;
+        background: #fff;
+        display: flex;
+        padding: 2px 8px;
+        font-size: 14px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+    select:focus-visible {
+        border: none;
+        outline: none;
+    }
+    .w-h2 {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin: 0;
+    }
+    .p-text {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 18px;
+    }
+    .p {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+    .teachers .name {
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-top: 10px;
+    }
+    .blade-id {
+        width: 65px;
+    }
+}
+
+.align-items-baseline {
+    align-items: baseline;
+}
+
+.complain-detail {
+    .btn-call {
+        border-radius: 50px;
+        background: #0056b1;
+        color: #fff;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 120%;
+        width: 48%;
+        padding: 13px 5px;
+        svg {
+            position: absolute;
+            top: 3px;
+            left: 5px;
+        }
+    }
+    .btn-chat {
+        border-radius: 50px;
+        background: #00c092;
+        color: #fff;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 120%;
+        width: 48%;
+        padding: 13px 5px;
+        svg {
+            position: absolute;
+            top: 3px;
+            left: 5px;
+        }
+    }
+    .input-check {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+.review-lesson {
+    .btn-form-review {
+        border-radius: 46px;
+        background: #0056b1;
+        display: flex;
+        width: 173px;
+        height: 38px;
+        padding: 13px 5px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        color: #fff;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .btn-add-form-review {
+        border-radius: 46px;
+        border: 1px solid #4eaeea;
+        background: #e8f3ff;
+        display: flex;
+        width: 173px;
+        height: 38px;
+        padding: 13px 5px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        color: #4eaeea;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .icon-plus {
+        color: #4eaeea;
+    }
+
+    .w-blade-card-success {
+        display: flex;
+        padding: 8px 24px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        color: #009874;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        border-radius: 46px;
+        background: rgba(0, 192, 146, 0.2);
+    }
+    .btn-view {
+        border-radius: 51px;
+        background: #00c092;
+        display: inline-flex;
+        padding: 12px 10px;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        color: #fff;
+        width: 100%;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+
+        .icon-right {
+            position: absolute;
+            right: 3px;
+            font-size: 29px;
+            top: 6px;
+        }
+    }
+    .w-card-body-svg {
+        top: -22px;
+        min-width: 235px;
+        max-width: 300px;
+        height: 219px;
+        position: relative;
+    }
+}
