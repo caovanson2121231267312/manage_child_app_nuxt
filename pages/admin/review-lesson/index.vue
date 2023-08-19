@@ -1,10 +1,10 @@
 <template>
     <div class="content-mp review-lesson">
-        <div class="d-flex justify-content-between align-items-center wmt-27 ">
-            <nuxt-link class="btn btn-form-review" to="/admin/review-lesson/form-review">
+        <div class="d-flex align-items-center wmt-27 ">
+            <nuxt-link class="btn btn-form-review me-3" to="/admin/review-lesson/form-review">
                 Quản lý form đánh giá
             </nuxt-link>
-            <nuxt-link class="btn btn-add-form-review" to="/admin/review-lesson/form-review">
+            <nuxt-link class="btn btn-add-form-review" to="/admin/review-lesson/form-review/create">
                 <span class="icon-plus mdi mdi-plus"></span> Tạo form đánh giá
             </nuxt-link>
         </div>
@@ -194,7 +194,7 @@
                             <div class="w-w-10"></div>
                             <div class="">
                                 <div class="w-card-footer">
-                                    <nuxt-link class="btn btn-view position-relative" to="#">
+                                    <nuxt-link class="btn btn-view position-relative" to="/admin/review-lesson/12">
                                         Xem đánh giá
 
                                         <span class="icon-right mdi mdi-chevron-right"></span>
