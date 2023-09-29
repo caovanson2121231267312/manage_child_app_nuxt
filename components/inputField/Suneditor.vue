@@ -1,30 +1,61 @@
 <template>
-    <div class="container">
-      <div>
-        <vue-editor v-model="content" />
-      </div>
+    <div class="">
+        <div>
+            <textarea v-model="contents" :id="app"></textarea>
+        </div>
     </div>
-  </template>
+</template>
 
-  <script>
-  import { VueEditor } from "vue2-editor";
+<script>
+import SUNEDITOR from 'suneditor'
+import plugins from 'suneditor/src/plugins'
 
-  export default {
-    components: { VueEditor },
-
+export default {
+    props: {
+        app: {
+            type: String,
+            default: '',
+        },
+        contents: {
+            type: String,
+            default: 'Nhập nội dung',
+        },
+    },
     data: () => ({
-      content: "<h1>Some initial content</h1>"
-    })
-  };
-  </script>
+        suneditorInstance: null,
+    }),
+    mounted() {
+        this.$store.dispatch('title/set_title', this.title);
 
-  <style>
-  /* .container {
-    margin: 0 auto;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  } */
-  </style>
+        const editor = SUNEDITOR.create((document.getElementById(app) || app), {
+            toolbarContainer: '#toolbar_container',
+            showPathLabel: false,
+            charCounter: true,
+            maxCharCount: 720,
+            width: 'auto',
+            height: 'auto',
+            minHeight: '300px',
+            maxHeight: '250px',
+            plugins: plugins,
+            buttonList: [
+                ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
+                ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+                ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
+            ],
+            callBackSave: function (contents, isChanged) {
+                this.contents = contents
+                console.log(contents);
+            },
+        });
+        this.suneditorInstance = editor; // Store the Suneditor instance in a component property
+
+        this.suneditorInstance.onChange = async (contents, core) => {
+            this.contents = contents;
+            await console.log(this.contents)
+        };
+
+        this.suneditorInstance.setContents(this.contents);
+    },
+};
+</script>

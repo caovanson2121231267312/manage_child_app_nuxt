@@ -178,10 +178,7 @@
                             </div>
 
                             <div class="">
-                                <!-- <textarea v-model="value" id="value"></textarea> -->
-                                <client-only placeholder="Loading...">
-                                    <suneditor :value="value"></suneditor>
-                                </client-only>
+                                <textarea v-model="value" id="value"></textarea>
                             </div>
                         </div>
 
@@ -198,7 +195,7 @@
                             <div class="w-100">
                                 <div>
                                     <b-card style="min-width: 245px;" class="teacher-nav">
-                                        <nuxt-link class="block w-100 teachers " to="/admin/service/edit/3/lesson-price">
+                                        <nuxt-link class="block w-100 teachers " to="/admin/service/3/lesson-price">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <div class="">
                                                     <span class="me-2">
@@ -234,7 +231,7 @@
                                     </b-card>
 
                                     <b-card style="min-width: 245px;" class="teacher-nav">
-                                        <nuxt-link class="block w-100 teachers " to="/admin/service/edit/3/lesson-content">
+                                        <nuxt-link class="block w-100 teachers " to="/admin/service/3/lesson-content">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <div class="">
                                                     <span class="me-2">
@@ -264,7 +261,7 @@
                                     </b-card>
 
                                     <b-card style="min-width: 245px;" class="teacher-nav">
-                                        <nuxt-link class="block w-100 teachers " to="/admin/service/edit/3/sale">
+                                        <nuxt-link class="block w-100 teachers " to="/admin/service/3/sale">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <div class="">
                                                     <span class="me-2">
@@ -308,13 +305,11 @@
 </template>
 
 <script>
-import Suneditor from '~/components/inputField/Suneditor.vue';
-// import SUNEDITOR from 'suneditor'
-// import plugins from 'suneditor/src/plugins'
-// import 'suneditor/dist/css/suneditor.min.css'
+import SUNEDITOR from 'suneditor'
+import plugins from 'suneditor/src/plugins'
+import 'suneditor/dist/css/suneditor.min.css'
 
 export default {
-    components: { Suneditor },
     layout: 'admin',
     head: {
         title: 'Chi tiết dịch vụ',
@@ -347,35 +342,35 @@ export default {
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
 
-        // const editor = SUNEDITOR.create((document.getElementById('value') || 'value'), {
-        //     toolbarContainer: '#toolbar_container',
-        //     showPathLabel: false,
-        //     charCounter: true,
-        //     maxCharCount: 720,
-        //     width: 'auto',
-        //     height: 'auto',
-        //     minHeight: '300px',
-        //     maxHeight: '250px',
-        //     plugins: plugins,
-        //     buttonList: [
-        //         ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
-        //         ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
-        //         ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
-        //         ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
-        //     ],
-        //     callBackSave: function (contents, isChanged) {
-        //         this.value = contents
-        //         console.log(contents);
-        //     },
-        // });
-        // this.suneditorInstance = editor;
+        const editor = SUNEDITOR.create((document.getElementById('value') || 'value'), {
+            toolbarContainer: '#toolbar_container',
+            showPathLabel: false,
+            charCounter: true,
+            maxCharCount: 720,
+            width: 'auto',
+            height: 'auto',
+            minHeight: '300px',
+            maxHeight: '250px',
+            plugins: plugins,
+            buttonList: [
+                ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
+                ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+                ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
+            ],
+            callBackSave: function (contents, isChanged) {
+                this.value = contents
+                console.log(contents);
+            },
+        });
+        this.suneditorInstance = editor;
 
-        // this.suneditorInstance.onChange = async (contents, core) => {
-        //     this.value = contents;
-        //     await console.log(this.value)
-        // };
+        this.suneditorInstance.onChange = async (contents, core) => {
+            this.value = contents;
+            await console.log(this.value)
+        };
 
-        // this.suneditorInstance.setContents(this.value);
+        this.suneditorInstance.setContents(this.value);
     },
 }
 </script>
