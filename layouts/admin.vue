@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <div class="nav-bar">
-            <v-navigation-drawer floating width="340" v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed
+            <v-navigation-drawer floating width="340" v-model="drawer_1" :mini-variant="miniVariant" :clipped="clipped" fixed
                 app>
                 <div class="mt-60 px-27">
                     <div class="d-flex flex-wrap justify-content-between w-100">
@@ -772,6 +772,9 @@ export default {
     computed: {
         ready() {
             return this.$store.getters[`title/title`]
+        },
+        drawer_1() {
+            return !this.drawer
         }
     },
     head() {

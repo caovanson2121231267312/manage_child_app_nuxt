@@ -1,6 +1,12 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+    mode: 'spa',
+    /*
+     ** Nuxt target
+     ** See https://nuxtjs.org/api/configuration-target
+     */
+    target: 'server',
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
         titleTemplate: '%s - child_app',
@@ -16,9 +22,12 @@ export default {
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-            {rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'},
+            {
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css',
+            },
         ],
-
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
@@ -29,6 +38,7 @@ export default {
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
         { src: '@/plugins/vuetify.js', mode: 'server' },
+        { src: '@/plugins/suneditor.js', mode: 'client' },
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -49,6 +59,8 @@ export default {
         '@nuxtjs/pwa',
         // https://go.nuxtjs.dev/content
         '@nuxt/content',
+
+        'vue2-editor/nuxt',
     ],
 
     // Axios module configuration: https://go.nuxtjs.dev/config-axios

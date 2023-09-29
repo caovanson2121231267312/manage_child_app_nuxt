@@ -15,25 +15,44 @@
                 <b-col class="mt-0 pt-0" cols="12" sm="9" md="7">
                     <div class="w-100">
 
-                        <div class="mt-3">
-                            <strong class="strong-title">
-                                <span>Độ tuổi</span>
-                            </strong>
-                            <div class="input-grop">
-                                <select class="select">
-                                    <option>Từ 0 - 6 tuổi</option>
-                                    <option>Từ 6 - 12 tuổi</option>
-                                </select>
-                                <span class="icon-down mdi mdi-chevron-down"></span>
-                            </div>
+                        <div class="mt-2 d-flex justify-content-between align-items-center">
+                            <span>
+                                <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M14.8263 6.4735C14.5997 6.38016 14.2997 6.3335 13.9263 6.3335H10.4063C9.24634 6.3335 8.83301 6.74683 8.83301 7.92016V13.0802C8.83301 13.4668 8.87967 13.7668 8.97967 14.0002C9.18634 14.4802 9.62634 14.6668 10.4063 14.6668H13.9263C15.0863 14.6668 15.4997 14.2468 15.4997 13.0802V7.92016C15.4997 7.12683 15.313 6.68016 14.8263 6.4735ZM12.833 13.1668H11.4997C11.4863 13.1668 11.4663 13.1668 11.453 13.1602C11.353 13.1535 11.2663 13.1202 11.193 13.0535C11.073 12.9668 10.9997 12.8268 10.9997 12.6668C10.9997 12.3935 11.2263 12.1668 11.4997 12.1668H12.833C13.1063 12.1668 13.333 12.3935 13.333 12.6668C13.333 12.9402 13.1063 13.1668 12.833 13.1668Z"
+                                        fill="#FC4D32" />
+                                    <path
+                                        d="M14.8262 4.12683V4.66683C14.8262 5.0335 14.5262 5.3335 14.1595 5.3335H10.4062C8.69952 5.3335 7.83285 6.20683 7.83285 7.92016V14.0002C7.83285 14.3668 7.53285 14.6668 7.16618 14.6668H5.86618C5.59952 14.6668 5.38618 14.4535 5.38618 14.1935C5.38618 13.9268 5.59952 13.7202 5.86618 13.7202H7.16618V11.1668H4.83285C3.35285 11.0935 2.17285 9.8735 2.17285 8.3735V4.12683C2.17285 2.58683 3.42618 1.3335 4.97285 1.3335H12.0329C13.5729 1.3335 14.8262 2.58683 14.8262 4.12683Z"
+                                        fill="#FC4D32" />
+                                </svg>
+                                <span class="service-title">Khóa dịch vụ</span>
+                            </span>
+                            <span>
+                                <b-form-checkbox switch size="lg"></b-form-checkbox>
+                            </span>
                         </div>
 
+                        <hr class="support-hr" />
+
                         <div class="mt-3 mb-6">
-                            <div>
-                                <strong class="strong-title">
+                            <div class="mb-2">
+                                <strong class="service-title">
+                                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M2.22003 12.6735L2.2067 12.6868C2.0267 12.2935 1.91337 11.8468 1.8667 11.3535C1.91337 11.8402 2.04003 12.2802 2.22003 12.6735Z"
+                                            fill="#FFB761" />
+                                        <path
+                                            d="M6.5 6.91992C7.37629 6.91992 8.08666 6.20954 8.08666 5.33325C8.08666 4.45696 7.37629 3.74658 6.5 3.74658C5.6237 3.74658 4.91333 4.45696 4.91333 5.33325C4.91333 6.20954 5.6237 6.91992 6.5 6.91992Z"
+                                            fill="#FFB761" />
+                                        <path
+                                            d="M11.2934 1.3335H5.70671C3.28004 1.3335 1.83337 2.78016 1.83337 5.20683V10.7935C1.83337 11.5202 1.96004 12.1535 2.20671 12.6868C2.78004 13.9535 4.00671 14.6668 5.70671 14.6668H11.2934C13.72 14.6668 15.1667 13.2202 15.1667 10.7935V9.26683V5.20683C15.1667 2.78016 13.72 1.3335 11.2934 1.3335ZM14.08 8.3335C13.56 7.88683 12.72 7.88683 12.2 8.3335L9.42671 10.7135C8.90671 11.1602 8.06671 11.1602 7.54671 10.7135L7.32004 10.5268C6.84671 10.1135 6.09337 10.0735 5.56004 10.4335L3.06671 12.1068C2.92004 11.7335 2.83337 11.3002 2.83337 10.7935V5.20683C2.83337 3.32683 3.82671 2.3335 5.70671 2.3335H11.2934C13.1734 2.3335 14.1667 3.32683 14.1667 5.20683V8.40683L14.08 8.3335Z"
+                                            fill="#FFB761" />
+                                    </svg>
                                     <span>Hình ảnh</span>
                                 </strong>
-                                <span class="note">(Tối thiểu không quá 2mb)</span>
+                                <i class="img-note">(Tối thiểu không quá 2mb)</i>
                             </div>
 
                             <div class="input-grop">
@@ -42,7 +61,7 @@
                                         <img src="@/static/images/teacher-training/Rectangle4052.png" alt="">
                                     </div>
                                     <div class="action">
-                                        <div class="mb-2">
+                                        <div class="mb-3 btn-service-delete" v-b-tooltip.hover title="Xoá ảnh">
                                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -62,7 +81,7 @@
                                                 </defs>
                                             </svg>
                                         </div>
-                                        <div>
+                                        <div class="btn-service-upload" v-b-tooltip.hover title="Tải ảnh lên ảnh">
                                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -78,41 +97,91 @@
                             </div>
                         </div>
 
-                        <div class="mt-3">
-                            <strong class="strong-title">
-                                <span>Video</span>
-                            </strong>
-                            <div class="input-grop">
-                                <input type="text" class="input" placeholder="Link"
-                                    value="https://www.youtube.com/watch?v=n..." />
-                                <span class="copy">
-                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                        <hr class="support-hr" />
+
+                        <div class="mt-4 mb-6">
+                            <div class="mb-2">
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <title-header>
+                                            Quyền lợi
+                                        </title-header>
+                                        <button-add :addClass="'btn-add-more-law'">
+                                            <span class="mdi mdi-plus"></span>
+                                        </button-add>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="input-group-service" v-for="n in 3" v-bind:key="n">
+                                <div class="service-title mb-2">
+                                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
-                                            d="M9.61204 14.5083L8.38796 15.7324C6.69786 17.4225 3.95767 17.4225 2.26757 15.7324C0.577475 14.0423 0.577476 11.3021 2.26757 9.61204L3.49165 8.38796M14.5083 9.61204L15.7324 8.38796C17.4225 6.69786 17.4225 3.95767 15.7324 2.26757C14.0423 0.577475 11.3021 0.577476 9.61204 2.26757L8.38796 3.49165M5.97056 12.0294L12.0294 5.97054"
-                                            stroke="#979797" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
+                                            d="M15.1667 3.23329V11.16C15.1667 11.8066 14.64 12.4 13.9933 12.48L13.7867 12.5066C12.6933 12.6533 11.1533 13.1066 9.91333 13.6266C9.48 13.8066 9 13.48 9 13.0066V3.73329C9 3.48662 9.14 3.25995 9.36 3.13995C10.58 2.47995 12.4267 1.89329 13.68 1.78662H13.72C14.52 1.78662 15.1667 2.43329 15.1667 3.23329Z"
+                                            fill="#FC4D32" />
+                                        <path
+                                            d="M7.63999 3.13995C6.41999 2.47995 4.57333 1.89329 3.31999 1.78662H3.27333C2.47333 1.78662 1.82666 2.43329 1.82666 3.23329V11.16C1.82666 11.8066 2.35333 12.4 2.99999 12.48L3.20666 12.5066C4.29999 12.6533 5.83999 13.1066 7.07999 13.6266C7.51333 13.8066 7.99333 13.48 7.99333 13.0066V3.73329C7.99333 3.47995 7.85999 3.25995 7.63999 3.13995ZM3.83333 5.15995H5.33333C5.60666 5.15995 5.83333 5.38662 5.83333 5.65995C5.83333 5.93995 5.60666 6.15995 5.33333 6.15995H3.83333C3.55999 6.15995 3.33333 5.93995 3.33333 5.65995C3.33333 5.38662 3.55999 5.15995 3.83333 5.15995ZM5.83333 8.15995H3.83333C3.55999 8.15995 3.33333 7.93995 3.33333 7.65995C3.33333 7.38662 3.55999 7.15995 3.83333 7.15995H5.83333C6.10666 7.15995 6.33333 7.38662 6.33333 7.65995C6.33333 7.93995 6.10666 8.15995 5.83333 8.15995Z"
+                                            fill="#FC4D32" />
                                     </svg>
-                                </span>
+                                    <span>Chương trình {{ n }}</span>
+                                </div>
+                                <div class="d-block position-relative">
+                                    <input type="text" placeholder="Nhập đường dẫn" class="form-control form-benefits" />
+
+                                    <div class="text-center action-benefits">
+                                        <v-menu offset-y open-on-hover transition="scale-transition">
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <div v-bind="attrs" v-on="on">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="4" height="18"
+                                                        viewBox="0 0 4 18" fill="none">
+                                                        <path
+                                                            d="M2 10C2.55228 10 3 9.55228 3 9C3 8.44772 2.55228 8 2 8C1.44772 8 1 8.44772 1 9C1 9.55228 1.44772 10 2 10Z"
+                                                            stroke="#979797" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                        <path
+                                                            d="M2 3C2.55228 3 3 2.55228 3 2C3 1.44772 2.55228 1 2 1C1.44772 1 1 1.44772 1 2C1 2.55228 1.44772 3 2 3Z"
+                                                            stroke="#979797" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                        <path
+                                                            d="M2 17C2.55228 17 3 16.5523 3 16C3 15.4477 2.55228 15 2 15C1.44772 15 1 15.4477 1 16C1 16.5523 1.44772 17 2 17Z"
+                                                            stroke="#979797" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                </div>
+                                            </template>
+                                            <v-list>
+                                                <v-list-item>
+                                                    <v-list-item-title>Sửa quyền lợi</v-list-item-title>
+                                                </v-list-item>
+                                                <v-list-item>
+                                                    <v-list-item-title>Xóa</v-list-item-title>
+                                                </v-list-item>
+                                            </v-list>
+                                        </v-menu>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="mt-3" v-for="n in 4" v-bind:key="n">
-                            <strong class="strong-title">
-                                <span>Quyền lợi {{ n }}</span>
-                            </strong>
-                            <div class="input-grop">
-                                <input type="text" class="input" placeholder="Link"
-                                    value="https://www.youtube.com/watch?v=n..." />
-                                <span class="copy">
-                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M9.61204 14.5083L8.38796 15.7324C6.69786 17.4225 3.95767 17.4225 2.26757 15.7324C0.577475 14.0423 0.577476 11.3021 2.26757 9.61204L3.49165 8.38796M14.5083 9.61204L15.7324 8.38796C17.4225 6.69786 17.4225 3.95767 15.7324 2.26757C14.0423 0.577475 11.3021 0.577476 9.61204 2.26757L8.38796 3.49165M5.97056 12.0294L12.0294 5.97054"
-                                            stroke="#979797" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                </span>
+                        <hr class="support-hr" />
+
+                        <div class="mt-4 mb-6">
+                            <div class="mb-2">
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <title-header>
+                                            Giá trị
+                                        </title-header>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="">
+                                <!-- <textarea v-model="value" id="value"></textarea> -->
+                                <client-only placeholder="Loading...">
+                                    <suneditor :value="value"></suneditor>
+                                </client-only>
                             </div>
                         </div>
 
@@ -239,29 +308,154 @@
 </template>
 
 <script>
+import Suneditor from '~/components/inputField/Suneditor.vue';
+// import SUNEDITOR from 'suneditor'
+// import plugins from 'suneditor/src/plugins'
+// import 'suneditor/dist/css/suneditor.min.css'
+
 export default {
+    components: { Suneditor },
     layout: 'admin',
+    head: {
+        title: 'Chi tiết dịch vụ',
+        meta: [
+            {
+                hid: 'description',
+                name: 'description',
+                content: 'Home page description'
+            }
+        ],
+    },
     data() {
         return {
             title: {
                 name: 'Bảo mẫu Pro',
                 previous: '/admin/service'
             },
-            panel: [0],
+            suneditorInstance: null,
+            value: 'Nhập nội dung',
         };
+    },
+    validate({ params }) {
+        return /^[0-9]{0,2}$/.test(params.id)
     },
     computed: {
         id() {
             return this.$route.params.id
         },
     },
-    methods: {
-        togglePassword() {
-            this.showPassword = !this.showPassword;
-        },
-    },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+
+        // const editor = SUNEDITOR.create((document.getElementById('value') || 'value'), {
+        //     toolbarContainer: '#toolbar_container',
+        //     showPathLabel: false,
+        //     charCounter: true,
+        //     maxCharCount: 720,
+        //     width: 'auto',
+        //     height: 'auto',
+        //     minHeight: '300px',
+        //     maxHeight: '250px',
+        //     plugins: plugins,
+        //     buttonList: [
+        //         ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
+        //         ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+        //         ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+        //         ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
+        //     ],
+        //     callBackSave: function (contents, isChanged) {
+        //         this.value = contents
+        //         console.log(contents);
+        //     },
+        // });
+        // this.suneditorInstance = editor;
+
+        // this.suneditorInstance.onChange = async (contents, core) => {
+        //     this.value = contents;
+        //     await console.log(this.value)
+        // };
+
+        // this.suneditorInstance.setContents(this.value);
     },
 }
 </script>
+
+<style lang="scss" scoped>
+.service-title {
+    color: #2D2D2D;
+    font-family: SVN-Gilroy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.support-hr {
+    margin: 15px 0px 15px 0px;
+}
+
+.img-note {
+    color: #2D2D2D;
+    font-family: SVN-Gilroy;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.box-x {
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid #E5E5E5;
+    background: #FFF;
+
+    .box-img {
+        overflow: hidden;
+        height: 109px;
+        border-radius: 10px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+.input-group-service {
+    margin-bottom: 24px;
+}
+
+.btn-service-upload {
+    cursor: pointer;
+}
+
+.btn-service-delete {
+    cursor: pointer;
+}
+
+.action-benefits {
+    position: absolute;
+    top: 7px;
+    right: 4px;
+    cursor: pointer;
+
+    div {
+        width: 32px;
+    }
+}
+
+.form-benefits {
+    height: calc(1.6em + 1rem + 2px);
+    padding: 0.575rem 0.75rem;
+    border-radius: 10px;
+    border: 1px solid #E5E5E5;
+    background: #FFF;
+    color: #0056B1;
+    font-family: SVN-Gilroy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+</style>

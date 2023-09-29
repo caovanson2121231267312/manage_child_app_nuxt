@@ -11,7 +11,7 @@
                         <div>
                             <b-row>
                                 <b-col cols="4" sm="3">
-                                    <nuxt-link to="/admin/service/edit/4" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
+                                    <nuxt-link to="/admin/service/4/edit" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
                                         title="Bảo mẫu Pro">
                                         <div class="card-service-body">
                                             <div>
@@ -61,7 +61,7 @@
                                 </b-col>
 
                                 <b-col cols="4" sm="3">
-                                    <nuxt-link to="/admin/service/edit/4" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
+                                    <nuxt-link to="/admin/service/4/edit" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
                                         title="Giáo dục sớm">
                                         <div class="card-service-body">
                                             <div>
@@ -134,7 +134,7 @@
                                 </b-col>
 
                                 <b-col cols="4" sm="3">
-                                    <nuxt-link to="/admin/service/edit/4" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
+                                    <nuxt-link to="/admin/service/4/edit" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
                                         title="Thực hành kỹ năng cuộc sống">
                                         <div class="card-service-body">
                                             <div>
@@ -189,7 +189,7 @@
                                 </b-col>
 
                                 <b-col cols="4" sm="3">
-                                    <nuxt-link to="/admin/service/edit/4" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
+                                    <nuxt-link to="/admin/service/4/edit" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
                                         title="Năng khiếu thể thao">
                                         <div class="card-service-body">
                                             <div>
@@ -243,7 +243,7 @@
                                 </b-col>
 
                                 <b-col cols="4" sm="3">
-                                    <nuxt-link to="/admin/service/edit/4" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
+                                    <nuxt-link to="/admin/service/4/edit" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
                                         title="Gia sư">
                                         <div class="card-service-body">
                                             <div>
@@ -329,7 +329,7 @@
                                 </b-col>
 
                                 <b-col cols="4" sm="3">
-                                    <nuxt-link to="/admin/service/edit/4" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
+                                    <nuxt-link to="/admin/service/4/edit" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
                                         title="Tư vấn và đào tạo">
                                         <div class="card-service-body">
                                             <div>

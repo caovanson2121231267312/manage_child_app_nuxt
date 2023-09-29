@@ -48,4 +48,12 @@ export default {
     padding: 8px 28px;
     display: inline;
 }
+
+.btn-add-more-law {
+    width: 44px;
+    height: 44px;
+    text-align: center;
+    display: inline;
+    font-size: 20px;
+}
 </style>
