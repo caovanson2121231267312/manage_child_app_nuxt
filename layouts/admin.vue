@@ -92,7 +92,7 @@
                 <div class="menu-bar mt-29">
                     <div class="w-100">
                         <ul>
-                            <li>
+                            <!-- <li>
                                 <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/dashboard">
                                     <div class="d-flex justify-content-between w-100 align-center">
                                         <div class="d-flex align-center">
@@ -114,7 +114,142 @@
                                         </div>
                                     </div>
                                 </nuxt-link>
-                            </li>
+                            </li> -->
+                            <v-list flat>
+                                <v-list-item class="li-bar" to="/admin/dashboard">
+                                    <v-list-item-icon class="icon-bar" default>
+                                        <svg class="img-avatar" width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M13 19C12.4533 19 12 18.6978 12 18.3333V15.6667C12 15.3022 12.4533 15 13 15C13.5467 15 14 15.3022 14 15.6667V18.3333C14 18.6978 13.5467 19 13 19Z"
+                                                fill="#2D2D2D" />
+                                            <path
+                                                d="M18.2115 23H7.79449C6.10172 23 4.55776 21.6752 4.27873 19.9813L3.04171 12.4393C2.83709 11.2659 3.40445 9.76131 4.32524 9.01373L10.7708 3.76179C12.0171 2.73978 13.9796 2.74925 15.2352 3.77125L21.6808 9.01373C22.5923 9.76131 23.1503 11.2659 22.9643 12.4393L21.7273 19.9719C21.4483 21.6468 19.8671 23 18.2115 23ZM12.9937 4.42419C12.5008 4.42419 12.0078 4.5756 11.6451 4.86895L5.19953 10.1304C4.67867 10.5562 4.30664 11.5403 4.41825 12.2122L5.65527 19.7447C5.82269 20.7384 6.79929 21.5806 7.79449 21.5806H18.2115C19.2067 21.5806 20.1833 20.7384 20.3508 19.7353L21.5878 12.2028C21.6901 11.5403 21.3181 10.5373 20.8065 10.1209L14.361 4.87842C13.9889 4.5756 13.4867 4.42419 12.9937 4.42419Z"
+                                                fill="#2D2D2D" />
+                                        </svg>
+                                    </v-list-item-icon>
+
+                                    <v-list-item-title>Dashboard</v-list-item-title>
+
+                                    <div class="web-m-r">
+                                        <i aria-hidden="true"
+                                            class="v-icon notranslate mdi mdi-chevron-down theme--light"></i>
+                                    </div>
+                                </v-list-item>
+
+                                <v-list-group class="group-list" no-action :value="isCurrentRouteMatching('/admin/system')">
+                                    <template v-slot:activator>
+                                        <v-list-item-icon class="icon-bar" default>
+                                            <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M4 13L12.678 17.3648C12.7961 17.4241 12.8551 17.4538 12.917 17.4655C12.9719 17.4759 13.0281 17.4759 13.083 17.4655C13.1449 17.4538 13.2039 17.4241 13.322 17.3648L22 13M4 17.5267L12.678 21.8915C12.7961 21.9509 12.8551 21.9806 12.917 21.9922C12.9719 22.0026 13.0281 22.0026 13.083 21.9922C13.1449 21.9806 13.2039 21.9509 13.322 21.8915L22 17.5267M4 8.47328L12.678 4.10852C12.7961 4.04914 12.8551 4.01945 12.917 4.00776C12.9719 3.99741 13.0281 3.99741 13.083 4.00776C13.1449 4.01945 13.2039 4.04914 13.322 4.10852L22 8.47328L13.322 12.838C13.2039 12.8974 13.1449 12.9271 13.083 12.9388C13.0281 12.9492 12.9719 12.9492 12.917 12.9388C12.8551 12.9271 12.7961 12.8974 12.678 12.838L4 8.47328Z"
+                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>Quản lý hệ thống</v-list-item-title>
+                                    </template>
+
+                                    <v-list-item-group>
+                                        <v-list-item to="/admin/system/banner">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Banner App</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item to="/admin/system/educational-ecosystem">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Hệ sinh thái giáo dục Mẹ yêu con</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item to="/admin/system/about">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Giới thiệu App</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item to="/admin/system/support">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Liên hệ/ Trợ giúp</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item to="/admin/system/tutorial">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Hướng dẫn App</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                    </v-list-item-group>
+                                </v-list-group>
+
+                                <!--  -->
+
+                                <!-- <v-list-group class="group-list" no-action :value="isCurrentRouteMatching('/admin/system')">
+                                    <template v-slot:activator>
+                                            <v-list-item-icon class="icon-bar" default>
+                                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M12.5 16.0002L9.5 13.0002M12.5 16.0002C13.8968 15.469 15.2369 14.799 16.5 14.0002M12.5 16.0002V21.0002C12.5 21.0002 15.53 20.4502 16.5 19.0002C17.58 17.3802 16.5 14.0002 16.5 14.0002M9.5 13.0002C10.0321 11.6197 10.7022 10.2963 11.5 9.05025C12.6652 7.18723 14.2876 5.6533 16.213 4.59434C18.1384 3.53538 20.3027 2.98662 22.5 3.00025C22.5 5.72025 21.72 10.5002 16.5 14.0002M9.5 13.0002H4.5C4.5 13.0002 5.05 9.97025 6.5 9.00025C8.12 7.92025 11.5 9.00025 11.5 9.00025M5 17.5002C3.5 18.7602 3 22.5002 3 22.5002C3 22.5002 6.74 22.0002 8 20.5002C8.71 19.6602 8.7 18.3702 7.91 17.5902C7.52131 17.2193 7.00929 17.0049 6.47223 16.9883C5.93516 16.9717 5.41088 17.154 5 17.5002Z"
+                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>Quản lý dịch vụ</v-list-item-title>
+                                    </template>
+
+                                    <v-list-item-group>
+                                        <v-list-item to="/admin/system/banner">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Bảo mẫu Pro</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item to="/admin/system/educational-ecosystem">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Giáo dục sớm</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item to="/admin/system/about">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Thực hành kỹ năng cuộc sống</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item to="/admin/system/support">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Năng khiếu thể thao</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item to="/admin/system/tutorial">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Gia sư</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item to="/admin/system/tutorial">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Tư vấn và đào tạo</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                    </v-list-item-group>
+                                </v-list-group> -->
+
+                                <v-list-item class="li-bar" to="/admin/service">
+                                    <v-list-item-icon class="icon-bar" default>
+                                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M12.5 16.0002L9.5 13.0002M12.5 16.0002C13.8968 15.469 15.2369 14.799 16.5 14.0002M12.5 16.0002V21.0002C12.5 21.0002 15.53 20.4502 16.5 19.0002C17.58 17.3802 16.5 14.0002 16.5 14.0002M9.5 13.0002C10.0321 11.6197 10.7022 10.2963 11.5 9.05025C12.6652 7.18723 14.2876 5.6533 16.213 4.59434C18.1384 3.53538 20.3027 2.98662 22.5 3.00025C22.5 5.72025 21.72 10.5002 16.5 14.0002M9.5 13.0002H4.5C4.5 13.0002 5.05 9.97025 6.5 9.00025C8.12 7.92025 11.5 9.00025 11.5 9.00025M5 17.5002C3.5 18.7602 3 22.5002 3 22.5002C3 22.5002 6.74 22.0002 8 20.5002C8.71 19.6602 8.7 18.3702 7.91 17.5902C7.52131 17.2193 7.00929 17.0049 6.47223 16.9883C5.93516 16.9717 5.41088 17.154 5 17.5002Z"
+                                                stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </v-list-item-icon>
+
+                                    <v-list-item-title>Quản lý dịch vụ</v-list-item-title>
+
+                                    <div class="web-m-r">
+                                        <i aria-hidden="true"
+                                            class="v-icon notranslate mdi mdi-chevron-down theme--light"></i>
+                                    </div>
+                                </v-list-item>
+
+                            </v-list>
                             <li>
                                 <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/courses">
                                     <div class="d-flex justify-content-between w-100 align-center">
@@ -286,7 +421,7 @@
                                 </nuxt-link>
                             </li>
                             <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/">
+                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/students">
                                     <div class="d-flex justify-content-between w-100 align-center">
                                         <div class="d-flex align-center">
                                             <span class="icon-bar">
@@ -313,7 +448,7 @@
                                 </nuxt-link>
                             </li>
                             <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/">
+                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/videos">
                                     <div class="d-flex justify-content-between w-100 align-center">
                                         <div class="d-flex align-center">
                                             <span class="icon-bar">
@@ -345,7 +480,7 @@
                                 </nuxt-link>
                             </li>
                             <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/">
+                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/service">
                                     <div class="d-flex justify-content-between w-100 align-center">
                                         <div class="d-flex align-center">
                                             <span class="icon-bar">
@@ -367,7 +502,7 @@
                                 </nuxt-link>
                             </li>
                             <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/">
+                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/materials">
                                     <div class="d-flex justify-content-between w-100 align-center">
                                         <div class="d-flex align-center">
                                             <span class="icon-bar">
@@ -461,6 +596,7 @@
                             </li>
 
                         </ul>
+
                     </div>
                 </div>
                 <!-- <v-list>
@@ -543,11 +679,23 @@
 
 <script>
 import RightSvg from '@/components/icons/RightSvg.vue'
+// import WOW from 'wowjs';
 
 export default {
     name: 'DefaultLayout',
     data() {
         return {
+            visible: true,
+            admins: [
+                ['Management', 'mdi-account-multiple-outline'],
+                ['Settings', 'mdi-cog-outline'],
+            ],
+            cruds: [
+                ['Create', 'mdi-plus-outline'],
+                ['Read', 'mdi-file-outline'],
+                ['Update', 'mdi-update'],
+                ['Delete', 'mdi-delete'],
+            ],
             clipped: false,
             drawer: false,
             fixed: false,
@@ -572,7 +720,51 @@ export default {
             right: true,
             rightDrawer: false,
             title: 'Vuetify.js',
+            menuItems: [
+                {
+                    id: 1,
+                    label: 'Menu 1',
+                    isActive: false,
+                    subMenu: [
+                        { id: 2, label: 'Submenu 1.1' },
+                        { id: 3, label: 'Submenu 1.2' },
+                    ],
+                },
+                {
+                    id: 4,
+                    label: 'Menu 2',
+                    isActive: false,
+                    subMenu: [
+                        { id: 5, label: 'Submenu 2.1' },
+                        { id: 6, label: 'Submenu 2.2' },
+                    ],
+                },
+            ],
+            activeItem: null,
         }
+    },
+    methods: {
+        toggleActive(itemId) {
+            this.menuItems.forEach((item) => {
+                if (item.id === itemId) {
+                    item.isActive = !item.isActive;
+                } else {
+                    item.isActive = false;
+                }
+            });
+        },
+        setActive(itemId) {
+            this.activeItem = itemId;
+        },
+        isCurrentRouteMatching(targetRoute) {
+            // Sử dụng $route.path để lấy path của route hiện tại
+            return this.$route.path.startsWith(targetRoute);
+        },
+    },
+    mounted() {
+        // new WOW.WOW({
+        //     live: false,
+        // }).init();
     },
     components: {
         RightSvg
@@ -581,6 +773,69 @@ export default {
         ready() {
             return this.$store.getters[`title/title`]
         }
+    },
+    head() {
+        return {
+            script: [
+                {
+                    src: 'https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js'
+                },
+            ],
+        }
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.menu-bar .icon-bar {
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 7px !important;
+    align-self: center;
+}
+
+.v-list-item-bar {
+    transition: 0.3s;
+    min-height: auto !important;
+    padding: 12px 18px 12px 27px !important;
+}
+
+.li-bar {
+    transition: 0.3s;
+    min-height: auto;
+    padding: 12px 18px 12px 27px;
+}
+
+// .li-bar:before {
+//     transition: 0.3s;
+//     background-color: #eef7fd !important;
+//     color: #0056b1;
+// }
+
+.v-list-item--active.v-list-item--link {
+    transition: 0.3s;
+    background: #eef7fd !important;
+    color: #0056b1;
+    stroke: #0056b1;
+}
+
+.li-bar:hover {
+    background: #eef7fd !important;
+    color: #0056b1;
+    stroke: #0056b1;
+
+    svg,
+    path {
+        stroke: #0056b1;
+    }
+
+    .v-list-item__title {
+        color: #0056b1;
+    }
+
+    .web-m-r i {
+        color: #0056b1;
+    }
+}
+</style>

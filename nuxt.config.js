@@ -14,14 +14,22 @@ export default {
             { hid: 'description', name: 'description', content: '' },
             { name: 'format-detection', content: 'telephone=no' },
         ],
-        link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+        link: [
+            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+            {rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'},
+        ],
+
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
-    css: ["@/assets/index.scss"],
+    css: ['@/assets/index.scss'],
+
+    // js: ['https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js'],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-    plugins: [{ src: '@/plugins/vuetify.js', mode: 'server' }],
+    plugins: [
+        { src: '@/plugins/vuetify.js', mode: 'server' },
+    ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
     components: true,
@@ -90,5 +98,12 @@ export default {
     },
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
-    build: {},
+    build: {
+        extend(config, { isClient, isServer }) {
+            if (isServer) {
+                config.performance = config.performance || {}
+                config.performance.hints = false
+            }
+        },
+    },
 }
