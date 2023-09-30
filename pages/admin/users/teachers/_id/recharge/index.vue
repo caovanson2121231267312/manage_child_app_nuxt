@@ -1,7 +1,7 @@
 <template>
-    <div class="content-mp recharge">
+    <div class="content-mp">
         <v-row>
-            <v-col class="mt-0 pt-0" xs="12" sm="6" md="4" lg="4" xl="4">
+            <v-col class="mt-0 pt-0" xs="12" sm="12" md="6" lg="5" xl="4">
                 <div class="w-100 teacher-changer-password">
                     <div class="card-vip">
                         <div class="card-vip-title">
@@ -104,7 +104,7 @@
                         <textarea class="form-control textarea" placeholder="Nhập ghi chú"></textarea>
                     </div>
 
-                    <div class="d-flex">
+                    <div class="d-flex w-100">
                         <button class="btn btn-min">Trừ tiền</button>
                         <button class="btn btn-plus">Nạp tiền</button>
                     </div>
@@ -150,6 +150,88 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.web-b {
+        color: #2d2d2d;
+        font-family: SVN-Gilroy;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        span {
+            color: #0056b1;
+            font-family: SVN-Gilroy;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+    }
+
+    .input-text {
+        border-radius: 10px;
+        border: 1px solid #e5e5e5;
+        background: #fff;
+        color: rgba(45, 45, 45, 0.6);
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        padding: 16px 18px;
+        width: 100%;
+    }
+    .textarea {
+        border-radius: 10px;
+        border: 1px solid #e5e5e5;
+        background: #fff;
+        width: 100%;
+        height: 94px;
+        padding: 16px 18px;
+        flex-shrink: 0;
+    }
+    .btn-min {
+        border-radius: 50px;
+        background: #fc4d32;
+        display: flex;
+        // width: 173px;
+        height: 48px;
+        padding: 10px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+        flex-shrink: 0;
+        color: #fff;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 120%;
+        margin-right: 5px;
+    }
+    .btn-plus {
+        flex: 1;
+        border-radius: 50px;
+        background: #00c092;
+        display: flex;
+        // width: 173px;
+        height: 48px;
+        padding: 10px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        color: #fff;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 120%;
+        margin-left: 5px;
+    }
 .card-vip-content {
     position: relative;
     z-index: 10;

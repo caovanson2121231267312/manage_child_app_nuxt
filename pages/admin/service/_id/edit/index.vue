@@ -324,7 +324,7 @@
                         </div>
 
                         <div class="mt-8">
-                            <button-save>Lưu thay đổi</button-save>
+                            <button-component>Lưu thay đổi</button-component>
                         </div>
                     </div>
                 </b-col>
@@ -338,8 +338,10 @@
 import SUNEDITOR from 'suneditor'
 import plugins from 'suneditor/src/plugins'
 import 'suneditor/dist/css/suneditor.min.css'
+import ButtonComponent from '~/components/button/ButtonComponent.vue'
 
 export default {
+  components: { ButtonComponent },
     layout: 'admin',
     head: {
         title: 'Chi tiết dịch vụ',

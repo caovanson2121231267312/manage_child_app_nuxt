@@ -185,7 +185,7 @@
                 </div>
 
                 <div class="mt-8">
-                    <button-save>Lưu thay đổi</button-save>
+                    <button-component>Lưu thay đổi</button-component>
                 </div>
 
             </v-col>
@@ -194,9 +194,11 @@
 </template>
 
 <script>
+import ButtonComponent from '~/components/button/ButtonComponent.vue';
 // import { defineComponent } from '@vue/composition-api'
 
 export default {
+  components: { ButtonComponent },
     layout: 'admin',
     data() {
         return {

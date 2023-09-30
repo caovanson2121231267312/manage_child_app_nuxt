@@ -105,7 +105,7 @@
                         </b-modal>
                     </div>
                     <div class="my-5">
-                        <button-save>Lưu thay đổi</button-save>
+                        <button-component>Lưu thay đổi</button-component>
                     </div>
                 </b-col>
             </b-row>
@@ -116,8 +116,9 @@
 
 <script>
 import ButtonAdd from '~/components/button/ButtonAdd.vue';
+import ButtonComponent from '~/components/button/ButtonComponent.vue';
 export default {
-    components: { ButtonAdd },
+    components: { ButtonAdd, ButtonComponent },
     layout: 'admin',
     data() {
         return {

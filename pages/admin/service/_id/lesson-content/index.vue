@@ -65,7 +65,7 @@
                         </b-modal>
                     </div>
                     <div class="my-5">
-                        <button-save>Lưu thay đổi</button-save>
+                        <button-component>Lưu thay đổi</button-component>
                     </div>
                 </b-col>
             </b-row>
@@ -75,9 +75,10 @@
 </template>
 
 <script>
+import ButtonComponent from '~/components/button/ButtonComponent.vue';
 import Suneditor from '../../../../../components/inputField/Suneditor'
 export default {
-  components: { Suneditor },
+  components: { Suneditor, ButtonComponent },
     layout: 'admin',
     data() {
         return {
