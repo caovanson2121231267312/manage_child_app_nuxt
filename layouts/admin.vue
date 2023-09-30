@@ -1,8 +1,8 @@
 <template>
     <v-app>
         <div class="nav-bar">
-            <v-navigation-drawer floating width="340" v-model="drawer_1" :mini-variant="miniVariant" :clipped="clipped" fixed
-                app>
+            <v-navigation-drawer floating width="340" v-model="drawer" :mini-variant="miniVariant" :clipped="clipped"
+                fixed app>
                 <div class="mt-60 px-27">
                     <div class="d-flex flex-wrap justify-content-between w-100">
                         <div class="w-d-none d-none-mobile">
@@ -249,6 +249,87 @@
                                     </div>
                                 </v-list-item>
 
+
+                                <v-list-group class="group-list" no-action :value="isCurrentRouteMatching('/admin/lsm')">
+                                    <template v-slot:activator>
+                                        <v-list-item-icon class="icon-bar" default>
+                                            <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M6.91 18H19.1C21 18 22 17 22 15.1V3H4V15.1C4.01 17 5.01 18 6.91 18Z"
+                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M9.01001 23L13.01 21V18" stroke="#2D2D2D" stroke-width="1.5"
+                                                    stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M17.01 23L13.01 21" stroke="#2D2D2D" stroke-width="1.5"
+                                                    stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path
+                                                    d="M8.51001 12L11.66 9.37C11.91 9.16 12.24 9.22 12.41 9.5L13.61 11.5C13.78 11.78 14.11 11.83 14.36 11.63L17.51 9"
+                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>LSM</v-list-item-title>
+                                    </template>
+
+                                    <v-list-item-group>
+                                        <v-list-item to="/admin/lsm/teacher-training">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Đào tạo giáo viên</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item to="/admin/lsm">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Chương trình học cho học sinh</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+
+                                    </v-list-item-group>
+                                </v-list-group>
+
+
+                                <v-list-group class="group-list" no-action :value="isCurrentRouteMatching('/admin/users')">
+                                    <template v-slot:activator>
+                                        <v-list-item-icon class="icon-bar" default>
+                                            <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M6.91 18H19.1C21 18 22 17 22 15.1V3H4V15.1C4.01 17 5.01 18 6.91 18Z"
+                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M9.01001 23L13.01 21V18" stroke="#2D2D2D" stroke-width="1.5"
+                                                    stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M17.01 23L13.01 21" stroke="#2D2D2D" stroke-width="1.5"
+                                                    stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path
+                                                    d="M8.51001 12L11.66 9.37C11.91 9.16 12.24 9.22 12.41 9.5L13.61 11.5C13.78 11.78 14.11 11.83 14.36 11.63L17.51 9"
+                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>Quản lý người dùng</v-list-item-title>
+                                    </template>
+
+                                    <v-list-item-group>
+                                        <v-list-item to="/admin/users/teachers">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Danh sách giáo viên</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item to="/admin/users/parent">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Danh sách phụ huynh</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item to="/admin/users/admin">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Danh sách quản trị viên</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+
+                                    </v-list-item-group>
+                                </v-list-group>
+
                             </v-list>
                             <li>
                                 <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/courses">
@@ -480,28 +561,6 @@
                                 </nuxt-link>
                             </li>
                             <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/service">
-                                    <div class="d-flex justify-content-between w-100 align-center">
-                                        <div class="d-flex align-center">
-                                            <span class="icon-bar">
-                                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M12.5 16.0002L9.5 13.0002M12.5 16.0002C13.8968 15.469 15.2369 14.799 16.5 14.0002M12.5 16.0002V21.0002C12.5 21.0002 15.53 20.4502 16.5 19.0002C17.58 17.3802 16.5 14.0002 16.5 14.0002M9.5 13.0002C10.0321 11.6197 10.7022 10.2963 11.5 9.05025C12.6652 7.18723 14.2876 5.6533 16.213 4.59434C18.1384 3.53538 20.3027 2.98662 22.5 3.00025C22.5 5.72025 21.72 10.5002 16.5 14.0002M9.5 13.0002H4.5C4.5 13.0002 5.05 9.97025 6.5 9.00025C8.12 7.92025 11.5 9.00025 11.5 9.00025M5 17.5002C3.5 18.7602 3 22.5002 3 22.5002C3 22.5002 6.74 22.0002 8 20.5002C8.71 19.6602 8.7 18.3702 7.91 17.5902C7.52131 17.2193 7.00929 17.0049 6.47223 16.9883C5.93516 16.9717 5.41088 17.154 5 17.5002Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </svg>
-
-                                            </span>
-                                            <span class="text-style">Quản lý Dịch vụ</span>
-                                        </div>
-                                        <div class="web-m-r">
-                                            <span class="mdi mdi-chevron-right"></span>
-                                        </div>
-                                    </div>
-                                </nuxt-link>
-                            </li>
-                            <li>
                                 <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/materials">
                                     <div class="d-flex justify-content-between w-100 align-center">
                                         <div class="d-flex align-center">
@@ -545,27 +604,6 @@
                                                 </svg>
                                             </span>
                                             <span class="text-style">Tạo phiếu lương tự động</span>
-                                        </div>
-                                        <div class="web-m-r">
-                                            <span class="mdi mdi-chevron-right"></span>
-                                        </div>
-                                    </div>
-                                </nuxt-link>
-                            </li>
-                            <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/">
-                                    <div class="d-flex justify-content-between w-100 align-center">
-                                        <div class="d-flex align-center">
-                                            <span class="icon-bar">
-                                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M6.04488 20.7581L11.9818 14.8945C12.3382 14.5425 12.5164 14.3665 12.7219 14.3006C12.9026 14.2426 13.0974 14.2426 13.2781 14.3006C13.4836 14.3665 13.6618 14.5425 14.0182 14.8946L19.9155 20.719M14.8 15.6667L17.3818 13.1168C17.7382 12.7648 17.9164 12.5888 18.1219 12.5228C18.3026 12.4648 18.4974 12.4648 18.6781 12.5228C18.8836 12.5888 19.0618 12.7648 19.4182 13.1168L22 15.6667M11.2 10.3333C11.2 11.3152 10.3941 12.1111 9.4 12.1111C8.40589 12.1111 7.6 11.3152 7.6 10.3333C7.6 9.35149 8.40589 8.55556 9.4 8.55556C10.3941 8.55556 11.2 9.35149 11.2 10.3333ZM8.32 21H17.68C19.1921 21 19.9482 21 20.5258 20.7094C21.0338 20.4537 21.4469 20.0457 21.7057 19.544C22 18.9735 22 18.2268 22 16.7333V9.26667C22 7.77319 22 7.02646 21.7057 6.45603C21.4469 5.95426 21.0338 5.54631 20.5258 5.29065C19.9482 5 19.1921 5 17.68 5H8.32C6.80786 5 6.05179 5 5.47423 5.29065C4.96619 5.54631 4.55314 5.95426 4.29428 6.45603C4 7.02646 4 7.77319 4 9.26667V16.7333C4 18.2268 4 18.9735 4.29428 19.544C4.55314 20.0457 4.96619 20.4537 5.47423 20.7094C6.05179 21 6.80786 21 8.32 21Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </svg>
-                                            </span>
-                                            <span class="text-style">Home banner</span>
                                         </div>
                                         <div class="web-m-r">
                                             <span class="mdi mdi-chevron-right"></span>
@@ -628,7 +666,7 @@
             </v-btn> -->
             <v-toolbar-title class="m-0 p-0" v-if="ready">
                 <template v-if="ready.name">
-                    {{ ready.name }}
+                    <div class="title-bar text-truncate">{{ ready.name }}</div>
                 </template>
                 <template v-else>
                     <img class="" src="@/static/images/logos/Logo.png">
@@ -762,9 +800,9 @@ export default {
         },
     },
     mounted() {
-        // new WOW.WOW({
-        //     live: false,
-        // }).init();
+        if(window.innerWidth > 800){
+            this.drawer = !this.drawer
+        }
     },
     components: {
         RightSvg
@@ -773,9 +811,6 @@ export default {
         ready() {
             return this.$store.getters[`title/title`]
         },
-        drawer_1() {
-            return !this.drawer
-        }
     },
     head() {
         return {
@@ -790,6 +825,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title-bar {
+    color: #2D2D2D;
+    font-family: SVN-Gilroy;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
 .menu-bar .icon-bar {
     margin-left: 0px;
     margin-top: 0px;

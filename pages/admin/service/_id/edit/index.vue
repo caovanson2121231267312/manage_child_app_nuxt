@@ -81,7 +81,7 @@
                                                 </defs>
                                             </svg>
                                         </div>
-                                        <div class="btn-service-upload" v-b-tooltip.hover title="Tải ảnh lên ảnh">
+                                        <div class="btn-service-upload" v-b-tooltip.hover title="Tải ảnh lên">
                                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -182,13 +182,43 @@
                             </div>
                         </div>
 
-                        <div class="mt-3">
-                            <nuxt-link to="" class="btn-add-service">
-                                <span class="mdi mdi-plus"></span>
-                                <span>Thêm dịch vụ</span>
-                            </nuxt-link>
+                        <hr class="support-hr" />
+
+                        <div class="mt-4 mb-6">
+                            <div class="mb-2">
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <title-header>
+                                            Cam kết
+                                        </title-header>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="">
+                                <textarea v-model="commit" id="commit"></textarea>
+                            </div>
                         </div>
 
+                        <hr class="support-hr" />
+
+                        <div class="mt-4 mb-6">
+                            <div class="mb-2">
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <title-header>
+                                            Hợp đồng dịch vụ
+                                        </title-header>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="">
+                                <input type="text" placeholder="Nhập đường dẫn" class="form-control form-benefits" />
+                            </div>
+                        </div>
+
+                        <hr class="support-hr" />
 
                         <div class="w-100 teacher-detail-info-nav mt-6 pt-5" style="min-width: 300px;">
                             <h3>Tùy chỉnh khác</h3>
@@ -204,21 +234,21 @@
                                                             <circle cx="15" cy="15.5" r="15" fill="#FC4D32"
                                                                 fill-opacity="0.1" />
                                                             <path
-                                                                d="M8.61905 17.6396C6.61952 17.6396 5 19.2864 5 21.3196C5 22.0096 5.19 22.6628 5.52476 23.2148C6.14905 24.282 7.2981 24.9996 8.61905 24.9996C9.94 24.9996 11.089 24.282 11.7133 23.2148C12.0481 22.6628 12.2381 22.0096 12.2381 21.3196C12.2381 19.2864 10.6186 17.6396 8.61905 17.6396ZM10.4014 21.016L8.47429 22.8284C8.34762 22.948 8.17571 23.0124 8.01286 23.0124C7.84095 23.0124 7.66905 22.948 7.53333 22.81L6.63762 21.8992C6.37524 21.6324 6.37524 21.1908 6.63762 20.924C6.9 20.6572 7.33429 20.6572 7.59667 20.924L8.03095 21.3656L9.47857 20.004C9.75 19.7464 10.1843 19.7648 10.4376 20.0408C10.691 20.3168 10.6729 20.7584 10.4014 21.016Z"
+                                                                d="M8.61905 17.6401C6.61952 17.6401 5 19.2869 5 21.3201C5 22.0101 5.19 22.6633 5.52476 23.2153C6.14905 24.2825 7.2981 25.0001 8.61905 25.0001C9.94 25.0001 11.089 24.2825 11.7133 23.2153C12.0481 22.6633 12.2381 22.0101 12.2381 21.3201C12.2381 19.2869 10.6186 17.6401 8.61905 17.6401ZM10.4014 21.0165L8.47429 22.8289C8.34762 22.9485 8.17571 23.0129 8.01286 23.0129C7.84095 23.0129 7.66905 22.9485 7.53333 22.8105L6.63762 21.8997C6.37524 21.6329 6.37524 21.1913 6.63762 20.9245C6.9 20.6577 7.33429 20.6577 7.59667 20.9245L8.03095 21.3661L9.47857 20.0045C9.75 19.7469 10.1843 19.7653 10.4376 20.0413C10.691 20.3173 10.6729 20.7589 10.4014 21.0165Z"
                                                                 fill="#FC4D32" />
                                                             <path
-                                                                d="M23.5475 15.3398H21.2856C20.2904 15.3398 19.4761 16.1678 19.4761 17.1798C19.4761 18.1918 20.2904 19.0198 21.2856 19.0198H23.5475C23.8008 19.0198 23.9999 18.8174 23.9999 18.5598V15.7998C23.9999 15.5422 23.8008 15.3398 23.5475 15.3398Z"
+                                                                d="M23.5476 15.3398H21.2857C20.2905 15.3398 19.4762 16.1678 19.4762 17.1798C19.4762 18.1918 20.2905 19.0198 21.2857 19.0198H23.5476C23.801 19.0198 24 18.8174 24 18.5598V15.7998C24 15.5422 23.801 15.3398 23.5476 15.3398Z"
                                                                 fill="#FC4D32" />
                                                             <path
-                                                                d="M19.051 8.80828C19.3225 9.07507 19.0963 9.48907 18.7163 9.48907L11.2248 9.47987C10.7905 9.47987 10.5734 8.94628 10.881 8.63348L12.4644 7.01429C13.8034 5.6619 15.9658 5.6619 17.3048 7.01429L19.0148 8.77148C19.0239 8.78068 19.042 8.79908 19.051 8.80828Z"
+                                                                d="M19.0509 8.80828C19.3223 9.07507 19.0961 9.48907 18.7161 9.48907L11.2247 9.47987C10.7904 9.47987 10.5733 8.94628 10.8809 8.63348L12.4642 7.01429C13.8033 5.6619 15.9657 5.6619 17.3047 7.01429L19.0147 8.77148C19.0238 8.78068 19.0419 8.79908 19.0509 8.80828Z"
                                                                 fill="#FC4D32" />
                                                             <path
-                                                                d="M23.8825 21.0074C23.3306 22.9026 21.7382 24.0802 19.5668 24.0802H13.6858C13.333 24.0802 13.1068 23.6846 13.2515 23.3534C13.523 22.7094 13.6949 21.9826 13.6949 21.3202C13.6949 18.5326 11.4601 16.2602 8.71868 16.2602C8.03106 16.2602 7.36154 16.4074 6.7463 16.6834C6.41154 16.8306 6.00439 16.6006 6.00439 16.2326V14.8802C6.00439 12.3779 7.4882 10.6299 9.79535 10.3355C10.0215 10.2987 10.2658 10.2803 10.5192 10.2803H19.5668C19.802 10.2803 20.0282 10.2895 20.2453 10.3263C22.073 10.5379 23.3939 11.6695 23.8825 13.353C23.973 13.6566 23.7558 13.9602 23.4482 13.9602H21.3763C19.413 13.9602 17.8568 15.7818 18.282 17.8518C18.5806 19.3606 19.9558 20.4002 21.4668 20.4002H23.4482C23.7649 20.4002 23.973 20.713 23.8825 21.0074Z"
+                                                                d="M23.8824 21.0074C23.3305 22.9026 21.7381 24.0802 19.5667 24.0802H13.6857C13.3328 24.0802 13.1067 23.6846 13.2514 23.3534C13.5228 22.7094 13.6947 21.9826 13.6947 21.3202C13.6947 18.5326 11.46 16.2602 8.71856 16.2602C8.03094 16.2602 7.36142 16.4074 6.74618 16.6834C6.41142 16.8306 6.00427 16.6006 6.00427 16.2326V14.8802C6.00427 12.3779 7.48808 10.6299 9.79523 10.3355C10.0214 10.2987 10.2657 10.2803 10.519 10.2803H19.5667C19.8019 10.2803 20.0281 10.2895 20.2452 10.3263C22.0728 10.5379 23.3938 11.6695 23.8824 13.353C23.9728 13.6566 23.7557 13.9602 23.4481 13.9602H21.3762C19.4128 13.9602 17.8567 15.7818 18.2819 17.8518C18.5805 19.3606 19.9557 20.4002 21.4667 20.4002H23.4481C23.7647 20.4002 23.9728 20.713 23.8824 21.0074Z"
                                                                 fill="#FC4D32" />
                                                         </svg>
                                                     </span>
                                                     <span>
-                                                        Cài đặt giá buổi học
+                                                        Học phí và khuyến mãi
                                                     </span>
                                                 </div>
                                                 <div>
@@ -240,7 +270,7 @@
                                                             <circle cx="15" cy="15.5" r="15" fill="#FFB761"
                                                                 fill-opacity="0.2" />
                                                             <path
-                                                                d="M19.4789 18.3919C20.1695 17.9349 21.0767 18.4334 21.0767 19.2642V20.604C21.0767 21.9229 20.0561 23.3353 18.8294 23.7507L15.541 24.8516C14.9637 25.0489 14.0256 25.0489 13.4586 24.8516L10.1701 23.7507C8.9331 23.3353 7.92285 21.9229 7.92285 20.604V19.2539C7.92285 18.4334 8.83001 17.9349 9.51038 18.3815L11.634 19.7731C12.4484 20.3236 13.4792 20.5936 14.5101 20.5936C15.541 20.5936 16.5718 20.3236 17.3862 19.7731L19.4789 18.3919Z"
+                                                                d="M19.4791 18.3924C20.1698 17.9354 21.0769 18.4339 21.0769 19.2647V20.6045C21.0769 21.9234 20.0564 23.3358 18.8297 23.7512L15.5412 24.8521C14.9639 25.0494 14.0258 25.0494 13.4588 24.8521L10.1704 23.7512C8.93334 23.3358 7.9231 21.9234 7.9231 20.6045V19.2544C7.9231 18.4339 8.83026 17.9354 9.51063 18.382L11.6342 19.7736C12.4486 20.324 13.4795 20.5941 14.5103 20.5941C15.5412 20.5941 16.5721 20.324 17.3864 19.7736L19.4791 18.3924Z"
                                                                 fill="#FFB761" />
                                                             <path
                                                                 d="M22.5685 10.2485L16.5196 6.50696C15.429 5.83101 13.6315 5.83101 12.5409 6.50696L6.46173 10.2485C4.51276 11.4386 4.51276 14.1329 6.46173 15.3324L8.07746 16.3226L12.5409 19.0645C13.6315 19.7404 15.429 19.7404 16.5196 19.0645L20.9528 16.3226L22.3363 15.4657V18.379C22.3363 18.7693 22.6796 19.093 23.0936 19.093C23.5077 19.093 23.851 18.7693 23.851 18.379V13.6949C24.2549 12.4668 23.8409 11.0387 22.5685 10.2485Z"
@@ -248,7 +278,7 @@
                                                         </svg>
                                                     </span>
                                                     <span>
-                                                        Cài đặt nội dung buổi học
+                                                        Thời lượng ca và nội dung buổi học
                                                     </span>
                                                 </div>
                                                 <div>
@@ -260,7 +290,7 @@
                                         </nuxt-link>
                                     </b-card>
 
-                                    <b-card style="min-width: 245px;" class="teacher-nav">
+                                    <!-- <b-card style="min-width: 245px;" class="teacher-nav">
                                         <nuxt-link class="block w-100 teachers " to="/admin/service/3/sale">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <div class="">
@@ -287,14 +317,14 @@
                                                 </div>
                                             </div>
                                         </nuxt-link>
-                                    </b-card>
+                                    </b-card> -->
 
                                 </div>
                             </div>
                         </div>
 
                         <div class="mt-8">
-                            <button class="btn btn-save-pass">Lưu thay đổi</button>
+                            <button-save>Lưu thay đổi</button-save>
                         </div>
                     </div>
                 </b-col>
@@ -329,6 +359,8 @@ export default {
             },
             suneditorInstance: null,
             value: 'Nhập nội dung',
+            suneditorCommitInstance: null,
+            commit: 'Nhập nội dung',
         };
     },
     validate({ params }) {
@@ -346,10 +378,9 @@ export default {
             toolbarContainer: '#toolbar_container',
             showPathLabel: false,
             charCounter: true,
-            maxCharCount: 720,
             width: 'auto',
             height: 'auto',
-            minHeight: '300px',
+            minHeight: '100px',
             maxHeight: '250px',
             plugins: plugins,
             buttonList: [
@@ -371,6 +402,35 @@ export default {
         };
 
         this.suneditorInstance.setContents(this.value);
+
+        const editor1 = SUNEDITOR.create((document.getElementById('commit') || 'commit'), {
+            toolbarContainer: '#toolbar_container',
+            showPathLabel: false,
+            charCounter: true,
+            width: 'auto',
+            height: 'auto',
+            minHeight: '100px',
+            maxHeight: '250px',
+            plugins: plugins,
+            buttonList: [
+                ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
+                ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+                ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
+            ],
+            callBackSave: function (contents, isChanged) {
+                this.commit = contents
+                console.log(contents);
+            },
+        });
+        this.suneditorCommitInstance = editor1;
+
+        this.suneditorCommitInstance.onChange = async (contents, core) => {
+            this.commit = contents;
+            await console.log(this.commit)
+        };
+
+        this.suneditorCommitInstance.setContents(this.commit);
     },
 }
 </script>
@@ -386,7 +446,7 @@ export default {
 }
 
 .support-hr {
-    margin: 15px 0px 15px 0px;
+    margin: 25px 0px 25px 0px;
 }
 
 .img-note {
@@ -452,5 +512,4 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-}
-</style>
+}</style>

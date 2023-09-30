@@ -116,7 +116,7 @@
 <script>
 import CardItem from '@/components/card/CardItem.vue';
 import ButtonAdd from '~/components/button/ButtonAdd.vue';
-import ButtonSave from '~/components/button/ButtonSave.vue';
+import ButtonSave from '~/components/button/ButtonComponent.vue';
 import SUNEDITOR from 'suneditor'
 import plugins from 'suneditor/src/plugins'
 import 'suneditor/dist/css/suneditor.min.css'

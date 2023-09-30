@@ -14,7 +14,6 @@ export default {
     },
     computed: {
         computedClasses() {
-            // Sử dụng class được truyền vào nếu có, nếu không, sử dụng class mặc định
             return this.addClass + ' button';
         },
     },
@@ -22,27 +21,47 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.button {
-    color: #fff;
-    text-align: center;
-    border-radius: 42px;
-    border: 1px solid #0056B1;
-    background: #0056B1;
-    padding: 10px;
-    cursor: pointer;
+.flex-1 {
+    flex: 1;
 }
+
+.button {
+    padding: 9px 27px;
+    border-radius: 46px;
+    background: #E5E5E5;
+    color: #2D2D2D;
+    margin-right: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .hover {
     transition: 0.3s;
     font-family: SVN-Gilroy;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: 20px;
+
+    &:hover {
+        background: #d4d4d4;
+    }
+}
+
+.active {
+    padding: 12px 32px;
+    border-radius: 46px;
+    background: #0056B1;
+    color: white;
+    cursor: pointer;
 
     &:hover {
         background: #004691;
+        color: white;
     }
 }
+
 
 .btn-header {
     padding: 8px 28px;

@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <div>
-            <textarea v-model="contents" :id="app"></textarea>
+            <textarea v-model="contents" :id="id_key"></textarea>
         </div>
     </div>
 </template>
@@ -13,8 +13,8 @@ import plugins from 'suneditor/src/plugins'
 export default {
     props: {
         app: {
-            type: String,
-            default: '',
+            type: Number,
+            default: 9999,
         },
         contents: {
             type: String,
@@ -24,17 +24,21 @@ export default {
     data: () => ({
         suneditorInstance: null,
     }),
+    computed: {
+        id_key() {
+            return 'key-' + this.app
+        }
+    },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
 
-        const editor = SUNEDITOR.create((document.getElementById(app) || app), {
+        const editor = SUNEDITOR.create((document.getElementById(this.id_key) || this.id_key), {
             toolbarContainer: '#toolbar_container',
             showPathLabel: false,
             charCounter: true,
-            maxCharCount: 720,
             width: 'auto',
             height: 'auto',
-            minHeight: '300px',
+            minHeight: '100px',
             maxHeight: '250px',
             plugins: plugins,
             buttonList: [
