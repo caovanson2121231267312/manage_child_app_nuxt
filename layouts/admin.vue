@@ -1,8 +1,8 @@
 <template>
     <v-app>
         <div class="nav-bar">
-            <v-navigation-drawer floating width="340" v-model="drawer" :mini-variant="miniVariant" :clipped="clipped"
-                fixed app>
+            <v-navigation-drawer floating width="340" v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed
+                app>
                 <div class="mt-60 px-27">
                     <div class="d-flex flex-wrap justify-content-between w-100">
                         <div class="w-d-none d-none-mobile">
@@ -294,17 +294,9 @@
                                             <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path
-                                                    d="M6.91 18H19.1C21 18 22 17 22 15.1V3H4V15.1C4.01 17 5.01 18 6.91 18Z"
-                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M9.01001 23L13.01 21V18" stroke="#2D2D2D" stroke-width="1.5"
-                                                    stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M17.01 23L13.01 21" stroke="#2D2D2D" stroke-width="1.5"
-                                                    stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path
-                                                    d="M8.51001 12L11.66 9.37C11.91 9.16 12.24 9.22 12.41 9.5L13.61 11.5C13.78 11.78 14.11 11.83 14.36 11.63L17.51 9"
-                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                    d="M18.9461 16.8369C20.402 17.5683 21.6503 18.742 22.5614 20.2096C22.7418 20.5003 22.832 20.6456 22.8632 20.8468C22.9266 21.2558 22.6469 21.7585 22.2661 21.9204C22.0786 22 21.8678 22 21.4461 22M16.9461 12.5322C18.4278 11.7959 19.4461 10.2669 19.4461 8.5C19.4461 6.73314 18.4278 5.20411 16.9461 4.46776M14.9461 8.5C14.9461 10.9853 12.9314 13 10.4461 13C7.96084 13 5.94613 10.9853 5.94613 8.5C5.94613 6.01472 7.96084 4 10.4461 4C12.9314 4 14.9461 6.01472 14.9461 8.5ZM3.50536 19.9383C5.09966 17.5446 7.6155 16 10.4461 16C13.2768 16 15.7926 17.5446 17.3869 19.9383C17.7362 20.4628 17.9108 20.725 17.8907 21.0599C17.875 21.3207 17.7041 21.64 17.4957 21.7976C17.228 22 16.86 22 16.1238 22H4.76848C4.0323 22 3.6642 22 3.39656 21.7976C3.18817 21.64 3.01721 21.3207 3.00156 21.0599C2.98145 20.725 3.15609 20.4628 3.50536 19.9383Z"
+                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
                                             </svg>
                                         </v-list-item-icon>
                                         <v-list-item-title>Quản lý người dùng</v-list-item-title>
@@ -321,7 +313,7 @@
                                                 <v-list-item-title>Danh sách phụ huynh</v-list-item-title>
                                             </v-list-item-content>
                                         </v-list-item>
-                                        <v-list-item to="/admin/users/admin">
+                                        <v-list-item to="/admin/users/admins">
                                             <v-list-item-content class="p-0 ps-4">
                                                 <v-list-item-title>Danh sách quản trị viên</v-list-item-title>
                                             </v-list-item-content>
@@ -354,49 +346,6 @@
 
                                             </span>
                                             <span class="text-style">Quản lý đơn dịch vụ</span>
-                                        </div>
-                                        <div class="web-m-r">
-                                            <span class="mdi mdi-chevron-right"></span>
-                                        </div>
-                                    </div>
-                                </nuxt-link>
-                            </li>
-                            <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/teachers">
-                                    <div class="d-flex justify-content-between w-100 align-center">
-                                        <div class="d-flex align-center">
-                                            <span class="icon-bar">
-                                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M18.2 15.4965V12.1918C18.2 11.9945 18.2 11.8958 18.1716 11.8087C18.1465 11.7316 18.1054 11.6615 18.0515 11.6033C17.9905 11.5374 17.907 11.4933 17.7401 11.405L13 8.89937M4.68001 9.99888V17.4829C4.68001 17.8918 4.68001 18.0963 4.74034 18.2753C4.79369 18.4335 4.88062 18.5768 4.99448 18.694C5.12327 18.8266 5.29909 18.9118 5.65069 19.0821L12.3067 22.3074C12.5617 22.431 12.6893 22.4928 12.8221 22.5171C12.9398 22.5387 13.0602 22.5387 13.1779 22.5171C13.3108 22.4928 13.4383 22.431 13.6933 22.3074L20.3493 19.0821C20.7009 18.9118 20.8767 18.8266 21.0055 18.694C21.1194 18.5768 21.2063 18.4335 21.2597 18.2753C21.32 18.0963 21.32 17.8918 21.32 17.4829V9.99888M2.60001 8.89937L12.6279 3.59847C12.7644 3.52635 12.8326 3.49029 12.9041 3.4761C12.9675 3.46353 13.0325 3.46353 13.0959 3.4761C13.1674 3.49029 13.2357 3.52635 13.3721 3.59847L23.4 8.89937L13.3721 14.2003C13.2357 14.2724 13.1674 14.3084 13.0959 14.3226C13.0325 14.3352 12.9675 14.3352 12.9041 14.3226C12.8326 14.3084 12.7644 14.2724 12.6279 14.2003L2.60001 8.89937Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </svg>
-                                            </span>
-                                            <span class="text-style">Danh sách Giáo viên</span>
-                                        </div>
-                                        <div class="web-m-r">
-                                            <span class="mdi mdi-chevron-right"></span>
-                                        </div>
-                                    </div>
-                                </nuxt-link>
-                            </li>
-                            <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/parents">
-                                    <div class="d-flex justify-content-between w-100 align-center">
-                                        <div class="d-flex align-center">
-                                            <span class="icon-bar">
-                                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M18.9461 16.8369C20.402 17.5683 21.6503 18.742 22.5614 20.2096C22.7418 20.5003 22.832 20.6456 22.8632 20.8468C22.9266 21.2558 22.6469 21.7585 22.2661 21.9204C22.0786 22 21.8678 22 21.4461 22M16.9461 12.5322C18.4278 11.7959 19.4461 10.2669 19.4461 8.5C19.4461 6.73314 18.4278 5.20411 16.9461 4.46776M14.9461 8.5C14.9461 10.9853 12.9314 13 10.4461 13C7.96084 13 5.94613 10.9853 5.94613 8.5C5.94613 6.01472 7.96084 4 10.4461 4C12.9314 4 14.9461 6.01472 14.9461 8.5ZM3.50536 19.9383C5.09966 17.5446 7.6155 16 10.4461 16C13.2768 16 15.7926 17.5446 17.3869 19.9383C17.7362 20.4628 17.9108 20.725 17.8907 21.0599C17.875 21.3207 17.7041 21.64 17.4957 21.7976C17.228 22 16.86 22 16.1238 22H4.76848C4.0323 22 3.6642 22 3.39656 21.7976C3.18817 21.64 3.01721 21.3207 3.00156 21.0599C2.98145 20.725 3.15609 20.4628 3.50536 19.9383Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </svg>
-
-                                            </span>
-                                            <span class="text-style">Danh sách Phụ huynh</span>
                                         </div>
                                         <div class="web-m-r">
                                             <span class="mdi mdi-chevron-right"></span>
@@ -800,7 +749,7 @@ export default {
         },
     },
     mounted() {
-        if(window.innerWidth > 800){
+        if (window.innerWidth > 800) {
             this.drawer = !this.drawer
         }
     },
@@ -884,5 +833,4 @@ export default {
     .web-m-r i {
         color: #0056b1;
     }
-}
-</style>
+}</style>

@@ -721,16 +721,14 @@ ul {
     background: rgba(0, 192, 146, 0.2);
 }
 
-.parents {
-    .text-field {
-        color: #2d2d2d;
-        font-family: SVN-Gilroy;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: normal;
-    }
+.hover-card {
+    transition: 0.2s;
 }
+
+.hover-card:hover {
+    box-shadow: 0 0 25px -5px #9e9c9e;
+}
+
 
 .parent-detail {
     .layout-user1 {

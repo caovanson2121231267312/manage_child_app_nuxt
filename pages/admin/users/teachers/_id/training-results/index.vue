@@ -75,4 +75,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.hover-card {
+    transition: 0.2s;
+}
+
+.hover-card:hover {
+    box-shadow: 0 0 25px -5px #9e9c9e;
+}
+</style>

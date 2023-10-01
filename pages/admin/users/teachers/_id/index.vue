@@ -323,7 +323,7 @@
                             </b-card>
 
                             <b-card style="min-width: 245px;" class="teacher-nav">
-                                <nuxt-link class="block w-100 teachers " to="/admin/teachers/34/course-history">
+                                <nuxt-link class="block w-100 teachers " to="/admin/users/teachers/34/course-history">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2">
