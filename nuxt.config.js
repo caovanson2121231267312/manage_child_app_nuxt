@@ -9,8 +9,8 @@ export default {
     target: 'server',
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
-        titleTemplate: '%s - child_app',
-        title: 'child_app',
+        titleTemplate: '%s',
+        title: 'Trang quản lý Trông trẻ Pro',
         meta: [
             { charset: 'utf-8' },
             {
