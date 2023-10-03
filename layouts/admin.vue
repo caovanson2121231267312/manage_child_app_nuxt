@@ -322,6 +322,78 @@
                                     </v-list-item-group>
                                 </v-list-group>
 
+                                <v-list-group class="group-list" no-action :value="isCurrentRouteMatching('/admin/users')">
+                                    <template v-slot:activator>
+                                        <v-list-item-icon class="icon-bar" default>
+                                            <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10 16H5.7991C4.8096 16 4 16.7875 4 17.75V23H10V16Z"
+                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path
+                                                    d="M14.2009 12H11.7991C10.8096 12 10 12.825 10 13.8333V23H16V13.8333C16 12.825 15.1994 12 14.2009 12Z"
+                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M20.2009 19H16V23H22V20.6C22 19.72 21.1904 19 20.2009 19Z"
+                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path
+                                                    d="M13.5206 3.43016L14.0498 4.49983C14.1196 4.65119 14.3094 4.79247 14.4691 4.81265L15.4276 4.97412C16.0366 5.07503 16.1864 5.52911 15.7471 5.96304L14.9983 6.71988C14.8685 6.85106 14.7986 7.09326 14.8385 7.26481L15.0482 8.19322C15.2179 8.92988 14.8285 9.21244 14.1895 8.82897L13.2909 8.29414C13.1312 8.19323 12.8616 8.19323 12.7019 8.29414L11.8033 8.82897C11.1643 9.21244 10.7749 8.92988 10.9446 8.19322L11.1543 7.26481C11.1942 7.09326 11.1243 6.84097 10.9945 6.71988L10.2557 5.97314C9.81638 5.52912 9.95616 5.0851 10.5752 4.98419L11.5337 4.82275C11.6934 4.79248 11.8831 4.6512 11.953 4.50993L12.4822 3.44023C12.7718 2.85494 13.231 2.85496 13.5206 3.43016Z"
+                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>Quản lý đánh giá buổi học</v-list-item-title>
+                                    </template>
+
+                                    <v-list-item-group>
+                                        <v-list-item to="/admin/review-lesson">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Đánh giá của giáo viên</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item to="/admin/review-lesson/form-review">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Quản lý form đánh giá</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+
+                                    </v-list-item-group>
+                                </v-list-group>
+
+                                <v-list-item class="li-bar" to="/admin/complain">
+                                    <v-list-item-icon class="icon-bar" default>
+                                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M14.0999 21.5891C13.4949 22.3958 12.5049 22.3958 11.8999 21.5891L10.5249 19.7558C10.3691 19.5541 10.0391 19.3891 9.79159 19.3891H9.33325C5.66659 19.3891 3.83325 18.4725 3.83325 13.8891V9.30579C3.83325 5.63912 5.66659 3.80579 9.33325 3.80579H16.6666C20.3333 3.80579 22.1666 5.63912 22.1666 9.30579V13.8891"
+                                                stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path
+                                                d="M18.6833 21.6167C20.3034 21.6167 21.6167 20.3034 21.6167 18.6833C21.6167 17.0633 20.3034 15.75 18.6833 15.75C17.0633 15.75 15.75 17.0633 15.75 18.6833C15.75 20.3034 17.0633 21.6167 18.6833 21.6167Z"
+                                                stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M22.1667 22.1667L21.25 21.25" stroke="#2D2D2D" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M16.6635 12.0833H16.6717" stroke="#2D2D2D" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M12.9958 12.0833H13.004" stroke="#2D2D2D" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M9.3283 12.0833H9.33653" stroke="#2D2D2D" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </v-list-item-icon>
+
+                                    <v-list-item-title>Khiếu nại của Phụ huynh</v-list-item-title>
+
+                                    <div class="web-m-r">
+                                        <i aria-hidden="true"
+                                            class="v-icon notranslate mdi mdi-chevron-down theme--light"></i>
+                                    </div>
+                                </v-list-item>
+
+
+
                             </v-list>
                             <li>
                                 <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/courses">
@@ -346,72 +418,6 @@
 
                                             </span>
                                             <span class="text-style">Quản lý đơn dịch vụ</span>
-                                        </div>
-                                        <div class="web-m-r">
-                                            <span class="mdi mdi-chevron-right"></span>
-                                        </div>
-                                    </div>
-                                </nuxt-link>
-                            </li>
-                            <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/complain">
-                                    <div class="d-flex justify-content-between w-100 align-center">
-                                        <div class="d-flex align-center">
-                                            <span class="icon-bar">
-                                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M14.1 21.5891C13.495 22.3958 12.505 22.3958 11.9 21.5891L10.525 19.7558C10.3692 19.5541 10.0392 19.3891 9.79168 19.3891H9.33334C5.66668 19.3891 3.83334 18.4725 3.83334 13.8891V9.30579C3.83334 5.63912 5.66668 3.80579 9.33334 3.80579H16.6667C20.3333 3.80579 22.1667 5.63912 22.1667 9.30579V13.8891"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path
-                                                        d="M18.6833 21.6167C20.3034 21.6167 21.6167 20.3034 21.6167 18.6833C21.6167 17.0633 20.3034 15.75 18.6833 15.75C17.0633 15.75 15.75 17.0633 15.75 18.6833C15.75 20.3034 17.0633 21.6167 18.6833 21.6167Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                    <path d="M22.1667 22.1667L21.25 21.25" stroke="#2D2D2D"
-                                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path d="M16.6634 12.0833H16.6716" stroke="#2D2D2D" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path d="M12.9959 12.0833H13.0041" stroke="#2D2D2D" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path d="M9.3283 12.0833H9.33653" stroke="#2D2D2D" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-
-                                            </span>
-                                            <span class="text-style">Khiếu nại của Phụ huynh</span>
-                                        </div>
-                                        <div class="web-m-r">
-                                            <span class="mdi mdi-chevron-right"></span>
-                                        </div>
-                                    </div>
-                                </nuxt-link>
-                            </li>
-                            <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/review-lesson">
-                                    <div class="d-flex justify-content-between w-100 align-center">
-                                        <div class="d-flex align-center">
-                                            <span class="icon-bar">
-                                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M10 16H5.7991C4.8096 16 4 16.7875 4 17.75V23H10V16Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path
-                                                        d="M14.2009 12H11.7991C10.8096 12 10 12.825 10 13.8333V23H16V13.8333C16 12.825 15.1994 12 14.2009 12Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path d="M20.2009 19H16V23H22V20.6C22 19.72 21.1904 19 20.2009 19Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path
-                                                        d="M13.5206 3.43016L14.0498 4.49983C14.1196 4.65119 14.3094 4.79247 14.4691 4.81265L15.4276 4.97412C16.0366 5.07503 16.1864 5.52911 15.7471 5.96304L14.9983 6.71988C14.8685 6.85106 14.7986 7.09326 14.8385 7.26481L15.0482 8.19322C15.2179 8.92988 14.8285 9.21244 14.1895 8.82897L13.2909 8.29414C13.1312 8.19323 12.8616 8.19323 12.7019 8.29414L11.8033 8.82897C11.1643 9.21244 10.7749 8.92988 10.9446 8.19322L11.1543 7.26481C11.1942 7.09326 11.1243 6.84097 10.9945 6.71988L10.2557 5.97314C9.81638 5.52912 9.95616 5.0851 10.5752 4.98419L11.5337 4.82275C11.6934 4.79248 11.8831 4.6512 11.953 4.50993L12.4822 3.44023C12.7718 2.85494 13.231 2.85496 13.5206 3.43016Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </svg>
-
-                                            </span>
-                                            <span class="text-style">Quản lý đánh giá buổi học</span>
                                         </div>
                                         <div class="web-m-r">
                                             <span class="mdi mdi-chevron-right"></span>
@@ -833,4 +839,5 @@ export default {
     .web-m-r i {
         color: #0056b1;
     }
-}</style>
+}
+</style>

@@ -813,49 +813,6 @@ ul {
     align-items: baseline;
 }
 
-.complain-detail {
-    .btn-call {
-        border-radius: 50px;
-        background: #0056b1;
-        color: #fff;
-        text-align: center;
-        font-family: SVN-Gilroy;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 120%;
-        width: 48%;
-        padding: 13px 5px;
-        svg {
-            position: absolute;
-            top: 3px;
-            left: 5px;
-        }
-    }
-    .btn-chat {
-        border-radius: 50px;
-        background: #00c092;
-        color: #fff;
-        text-align: center;
-        font-family: SVN-Gilroy;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 120%;
-        width: 48%;
-        padding: 13px 5px;
-        svg {
-            position: absolute;
-            top: 3px;
-            left: 5px;
-        }
-    }
-    .input-check {
-        width: 30px;
-        height: 30px;
-    }
-}
-
 .review-lesson {
     .btn-form-review {
         border-radius: 46px;

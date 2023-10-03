@@ -38,6 +38,7 @@ export default {
     padding: 12px !important;
     width: 100% !important;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .danger {
@@ -49,9 +50,19 @@ export default {
     }
 }
 
+.silver {
+    background: #E5E5E5 !important;
+    color: #2D2D2D !important;
+
+    &:hover {
+        background: #9c9c9c ;
+    }
+}
+
 .primary {
     border: 1px solid #0056B1 !important;
     background: #0056B1 !important;
+
     &:hover {
         background: #004691 !important;
     }

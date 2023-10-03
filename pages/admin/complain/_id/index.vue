@@ -1,7 +1,7 @@
 <template>
-    <div class="content-mp training-results training-results-detail complain-detail">
+    <div class="content-mp complain-detail">
         <div class="d-flex align-items-center justify-content-between wmt-27">
-            <h1 class="w-title d-inline w-h1">
+            <title-header>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="12" cy="12" r="12" fill="#0056B1" fill-opacity="0.2" />
                     <path
@@ -12,28 +12,21 @@
                         fill="#0056B1" />
                 </svg>
 
-                <span>
+                <span class="ms-1">
                     Thông tin khách hàng
                 </span>
-            </h1>
-
-            <div class="d-inline-block">
-                <div>
-                </div>
-            </div>
+            </title-header>
         </div>
 
-
-
         <v-row>
-            <v-col class="mt-0 pt-0" xs="12" sm="6" md="4" lg="4" xl="3">
+            <v-col class="mt-0 pt-0" xs="12" sm="12" md="8" lg="5" xl="4">
                 <b-card style="min-width: 245px;" class="">
-                    <nuxt-link class="block w-100 teachers teacher-detail" to="#">
+                    <div class="block w-100 teachers teacher-detail">
                         <div class="w-100">
-                            <div class="d-flex align-items-center card-body-p-16">
+                            <div class="d-flex align-items-center card-body-p-16 mb-4">
                                 <div class="d-flex align-items-center ">
-                                    <div class="me-2 layout-user">
-                                        <img width="48" src="@/static/images/users/Ellipse50.png" alt="">
+                                    <div class="me-2 layout-user-complain">
+                                        <img src="@/static/images/users/Ellipse50.png" alt="">
                                     </div>
                                     <div>
                                         <h3 class="user-name">
@@ -46,13 +39,13 @@
                                 </div>
                             </div>
 
-                            <div class="card-body-p-16 w-100 pt-0">
+                            <div class="card-body-p-16 w-100 pt-0 mb-4">
 
                                 <table class="w-100">
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <div style="min-width: 94px;">
+                                                <div class="span1" style="min-width: 94px;">
                                                     <span>
                                                         <svg width="12" height="14" viewBox="0 0 12 14" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
@@ -74,7 +67,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <div class="d-flex">
+                                                <div class="span1 d-flex">
                                                     <span class="me-1">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="15"
                                                             viewBox="0 0 12 15" fill="none">
@@ -96,7 +89,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <div>
+                                                <div class="span1">
                                                     <span>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
                                                             viewBox="0 0 12 12" fill="none">
@@ -120,7 +113,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <div>
+                                                <div class="span1">
                                                     <span>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
                                                             viewBox="0 0 12 12" fill="none">
@@ -182,16 +175,15 @@
                             </div>
 
                         </div>
-                    </nuxt-link>
+                    </div>
                 </b-card>
-            </v-col>
 
-            <v-col class="mt-0 pt-0" xs="12" sm="6" md="4" lg="4" xl="3">
-                <b-card style="min-width: 245px;" class="">
+                <b-card style="min-width: 245px;" class=" my-6">
                     <div class="block w-100 teachers teacher-detail">
                         <div class="card-body-p-16">
                             <div class="d-flex">
-                                <label for="check" class="m-0 p-0 d-block w-100 d-flex justify-content-between align-items-center">
+                                <label for="check"
+                                    class="m-0 p-0 d-block w-100 d-flex justify-content-between align-items-center">
                                     <span>Hoàn tất xử lý phản hồi</span>
                                     <span class="center">
                                         <input id="check" type="checkbox" class="input-check" />
@@ -201,13 +193,31 @@
                         </div>
                     </div>
                 </b-card>
-            </v-col>
 
+                <div class="mb-5">
+                    <div class="title-complain mb-2">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M8.4 0H3.6C1.2 0 0 1.2 0 3.6V11.4C0 11.73 0.27 12 0.6 12H8.4C10.8 12 12 10.8 12 8.4V3.6C12 1.2 10.8 0 8.4 0ZM5.466 8.796C5.316 8.946 5.04 9.084 4.836 9.114L3.588 9.288C3.54 9.294 3.492 9.3 3.45 9.3C3.24 9.3 3.048 9.228 2.91 9.09C2.742 8.922 2.67 8.676 2.712 8.412L2.886 7.164C2.916 6.96 3.054 6.678 3.204 6.534L5.466 4.272C5.502 4.38 5.55 4.488 5.604 4.608C5.658 4.716 5.712 4.824 5.772 4.926C5.82 5.01 5.874 5.094 5.922 5.154C5.982 5.244 6.042 5.322 6.084 5.364C6.108 5.4 6.132 5.424 6.138 5.436C6.27 5.586 6.408 5.73 6.54 5.838C6.576 5.874 6.6 5.892 6.606 5.898C6.684 5.958 6.756 6.024 6.828 6.066C6.906 6.126 6.99 6.18 7.074 6.228C7.176 6.288 7.284 6.348 7.398 6.402C7.512 6.456 7.62 6.498 7.728 6.534L5.466 8.796ZM8.73 5.538L8.262 6.006C8.232 6.036 8.19 6.054 8.148 6.054C8.136 6.054 8.112 6.054 8.1 6.048C7.068 5.754 6.246 4.932 5.952 3.9C5.934 3.846 5.952 3.786 5.994 3.744L6.468 3.27C7.242 2.496 7.974 2.514 8.73 3.27C9.114 3.654 9.306 4.026 9.3 4.41C9.3 4.788 9.114 5.154 8.73 5.538Z"
+                                fill="#4EAEEA" />
+                        </svg>
+                        Kết quả xử lý
+                    </div>
+
+                    <div>
+                        <textarea class="form-control text-input" placeholder="Nhập thông tin ">
+
+                        </textarea>
+                    </div>
+                </div>
+
+                <div class="mt-7">
+                    <button-component>Lưu</button-component>
+                </div>
+            </v-col>
         </v-row>
 
-        <div class="mt-5">
-            <button class="btn btn-save-pass">Lưu</button>
-        </div>
+
     </div>
 </template>
 
@@ -240,3 +250,111 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+.text-input {
+    border-radius: 10px;
+    border: 1px solid #E5E5E5;
+    background: #FFF;
+}
+
+.title-complain {
+    color: #2D2D2D;
+    font-family: SVN-Gilroy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.span1 {
+    color: #2D2D2D;
+    font-family: SVN-Gilroy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: flex;
+    align-items: start;
+
+    p {
+        margin-left: 6px;
+    }
+}
+
+
+.p-text {
+    color: #2D2D2D;
+    font-family: SVN-Gilroy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+}
+
+tr {
+    td {
+        padding-bottom: 10px;
+    }
+}
+
+.complain-detail {
+    .lauout-user-complain {
+        width: 48px;
+        height: 48px;
+        overflow: hidden;
+        border-radius: 50%;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .btn-call {
+        border-radius: 50px;
+        background: #0056b1;
+        color: #fff;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 120%;
+        width: 48%;
+        padding: 13px 5px;
+
+        svg {
+            position: absolute;
+            top: 3px;
+            left: 5px;
+        }
+    }
+
+    .btn-chat {
+        border-radius: 50px;
+        background: #00c092;
+        color: #fff;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 120%;
+        width: 48%;
+        padding: 13px 5px;
+
+        svg {
+            position: absolute;
+            top: 3px;
+            left: 5px;
+        }
+    }
+
+    .input-check {
+        width: 30px;
+        height: 30px;
+    }
+}
+</style>
