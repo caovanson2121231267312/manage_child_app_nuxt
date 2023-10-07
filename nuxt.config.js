@@ -44,6 +44,7 @@ export default {
     plugins: [
         { src: '@/plugins/vuetify.js', mode: 'server' },
         { src: '@/plugins/suneditor.js', mode: 'client' },
+        { src: '@/plugins/chart.js', mode: 'client' }
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components

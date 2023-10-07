@@ -29,7 +29,9 @@
     "vue-template-compiler": "^2.7.10",
     "vue2-editor": "^2.10.3",
     "vuetify": "^2.6.10",
-    "wow.js": "^1.2.2"
+    "wow.js": "^1.2.2",
+    "chart.js": "2.9.4",
+    "vue-chartjs": "^3.5.1"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.12.3",
