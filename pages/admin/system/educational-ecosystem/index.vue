@@ -141,7 +141,6 @@ export default {
             toolbarContainer: '#toolbar_container',
             showPathLabel: false,
             charCounter: true,
-            maxCharCount: 720,
             width: 'auto',
             height: 'auto',
             minHeight: '300px',

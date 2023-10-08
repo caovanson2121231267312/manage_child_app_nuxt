@@ -23,7 +23,7 @@
 
         <!-- <client-only> -->
         <div class="w-100">
-            <canvas id="myChart"></canvas>
+            <canvas class="w-100 h-100" id="myChart"></canvas>
         </div>
         <!-- </client-only> -->
     </div>

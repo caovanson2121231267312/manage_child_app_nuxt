@@ -322,7 +322,8 @@
                                     </v-list-item-group>
                                 </v-list-group>
 
-                                <v-list-group class="group-list" no-action :value="isCurrentRouteMatching('/admin/users')">
+                                <v-list-group class="group-list" no-action
+                                    :value="isCurrentRouteMatching('/admin/review-lesson')">
                                     <template v-slot:activator>
                                         <v-list-item-icon class="icon-bar" default>
                                             <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
@@ -392,7 +393,70 @@
                                     </div>
                                 </v-list-item>
 
+                                <v-list-item class="li-bar" to="/admin/media">
+                                    <v-list-item-icon class="icon-bar" default>
+                                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M22.1668 15.75V10.25C22.1668 5.66671 20.3335 3.83337 15.7502 3.83337H10.2502C5.66683 3.83337 3.8335 5.66671 3.8335 10.25V15.75C3.8335 20.3334 5.66683 22.1667 10.2502 22.1667H15.7502C20.3335 22.1667 22.1668 20.3334 22.1668 15.75Z"
+                                                stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M4.31006 8.51746H21.6901" stroke="#2D2D2D" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M9.81006 3.9342V8.3892" stroke="#2D2D2D" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M16.1899 3.9342V7.9767" stroke="#2D2D2D" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path
+                                                d="M10.9375 15.2459V14.1459C10.9375 12.7342 11.9367 12.1567 13.1558 12.8625L14.1092 13.4125L15.0625 13.9625C16.2817 14.6684 16.2817 15.8234 15.0625 16.5292L14.1092 17.0792L13.1558 17.6292C11.9367 18.335 10.9375 17.7575 10.9375 16.3459V15.2459V15.2459Z"
+                                                stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </v-list-item-icon>
+                                    <v-list-item-title>Quản lý Media</v-list-item-title>
 
+                                    <div class="web-m-r">
+                                        <i aria-hidden="true"
+                                            class="v-icon notranslate mdi mdi-chevron-down theme--light"></i>
+                                    </div>
+                                </v-list-item>
+
+                                <v-list-item class="li-bar" to="/admin/materials">
+                                    <v-list-item-icon class="icon-bar" default>
+                                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M4 18.5563L8.59386 13.9625M19.5563 3C23.2663 6.70998 23.2663 12.725 19.5563 16.435C15.8464 20.145 9.8313 20.145 6.12132 16.435M18.3388 22.2175H8.33883M13.3388 22.2175V19.2175M18.8388 9.71751C18.8388 13.0312 16.1525 15.7175 12.8388 15.7175C9.52513 15.7175 6.83883 13.0312 6.83883 9.71751C6.83883 6.40381 9.52513 3.71751 12.8388 3.71751C16.1525 3.71751 18.8388 6.40381 18.8388 9.71751Z"
+                                                stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </v-list-item-icon>
+                                    <v-list-item-title>Quản lý giáo cụ</v-list-item-title>
+
+                                    <div class="web-m-r">
+                                        <i aria-hidden="true"
+                                            class="v-icon notranslate mdi mdi-chevron-down theme--light"></i>
+                                    </div>
+                                </v-list-item>
+
+                                <v-list-item class="li-bar" to="/admin/notification">
+                                    <v-list-item-icon class="icon-bar" default>
+                                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M12 5H8.8C7.11984 5 6.27976 5 5.63803 5.32698C5.07354 5.6146 4.6146 6.07354 4.32698 6.63803C4 7.27976 4 8.11984 4 9.8V17.2C4 18.8802 4 19.7202 4.32698 20.362C4.6146 20.9265 5.07354 21.3854 5.63803 21.673C6.27976 22 7.11984 22 8.8 22H16.2C17.8802 22 18.7202 22 19.362 21.673C19.9265 21.3854 20.3854 20.9265 20.673 20.362C21 19.7202 21 18.8802 21 17.2V14M14 18H8M16 14H8M21.1213 4.87868C22.2929 6.05025 22.2929 7.94975 21.1213 9.12132C19.9497 10.2929 18.0503 10.2929 16.8787 9.12132C15.7071 7.94975 15.7071 6.05025 16.8787 4.87868C18.0503 3.70711 19.9497 3.70711 21.1213 4.87868Z"
+                                                stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </v-list-item-icon>
+
+                                    <v-list-item-title>Quản lý thông báo</v-list-item-title>
+
+                                    <div class="web-m-r">
+                                        <i aria-hidden="true"
+                                            class="v-icon notranslate mdi mdi-chevron-down theme--light"></i>
+                                    </div>
+                                </v-list-item>
 
                             </v-list>
                             <li>
@@ -425,7 +489,7 @@
                                     </div>
                                 </nuxt-link>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/teacher-training">
                                     <div class="d-flex justify-content-between w-100 align-center">
                                         <div class="d-flex align-center">
@@ -455,7 +519,7 @@
                                         </div>
                                     </div>
                                 </nuxt-link>
-                            </li>
+                            </li> -->
                             <li>
                                 <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/students">
                                     <div class="d-flex justify-content-between w-100 align-center">
@@ -476,60 +540,6 @@
                                                 </svg>
                                             </span>
                                             <span class="text-style">Chương trình học cho học sinh</span>
-                                        </div>
-                                        <div class="web-m-r">
-                                            <span class="mdi mdi-chevron-right"></span>
-                                        </div>
-                                    </div>
-                                </nuxt-link>
-                            </li>
-                            <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/videos">
-                                    <div class="d-flex justify-content-between w-100 align-center">
-                                        <div class="d-flex align-center">
-                                            <span class="icon-bar">
-                                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M20.1667 13.75V8.25004C20.1667 3.66671 18.3333 1.83337 13.75 1.83337H8.25001C3.66668 1.83337 1.83334 3.66671 1.83334 8.25004V13.75C1.83334 18.3334 3.66668 20.1667 8.25001 20.1667H13.75C18.3333 20.1667 20.1667 18.3334 20.1667 13.75Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                    <path d="M2.31 6.51746H19.69" stroke="#2D2D2D" stroke-width="1.5"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path d="M7.81 1.9342V6.3892" stroke="#2D2D2D" stroke-width="1.5"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path d="M14.19 1.9342V5.9767" stroke="#2D2D2D" stroke-width="1.5"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path
-                                                        d="M8.9375 13.2459V12.1459C8.9375 10.7342 9.93667 10.1567 11.1558 10.8625L12.1092 11.4125L13.0625 11.9625C14.2817 12.6684 14.2817 13.8234 13.0625 14.5292L12.1092 15.0792L11.1558 15.6292C9.93667 16.335 8.9375 15.7575 8.9375 14.3459V13.2459V13.2459Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-
-                                            </span>
-                                            <span class="text-style">Quản lý Video</span>
-                                        </div>
-                                        <div class="web-m-r">
-                                            <span class="mdi mdi-chevron-right"></span>
-                                        </div>
-                                    </div>
-                                </nuxt-link>
-                            </li>
-                            <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/materials">
-                                    <div class="d-flex justify-content-between w-100 align-center">
-                                        <div class="d-flex align-center">
-                                            <span class="icon-bar">
-                                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M4 18.5563L8.59386 13.9625M19.5563 3C23.2663 6.70998 23.2663 12.725 19.5563 16.435C15.8464 20.145 9.8313 20.145 6.12132 16.435M18.3388 22.2175H8.33883M13.3388 22.2175V19.2175M18.8388 9.71751C18.8388 13.0312 16.1525 15.7175 12.8388 15.7175C9.52513 15.7175 6.83883 13.0312 6.83883 9.71751C6.83883 6.40381 9.52513 3.71751 12.8388 3.71751C16.1525 3.71751 18.8388 6.40381 18.8388 9.71751Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </svg>
-
-                                            </span>
-                                            <span class="text-style">Quản lý giáo cụ</span>
                                         </div>
                                         <div class="web-m-r">
                                             <span class="mdi mdi-chevron-right"></span>
@@ -634,7 +644,7 @@
             <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
             <div class="d-flex">
                 <div class="ms-1">
-                    <v-btn icon large x-large>
+                    <v-btn icon large x-large to="/admin/my/notification">
                         <img class="v-btn" src="@/static/images/icons/bell.svg">
                     </v-btn>
                 </div>
@@ -842,5 +852,4 @@ export default {
     .web-m-r i {
         color: #0056b1;
     }
-}
-</style>
+}</style>
