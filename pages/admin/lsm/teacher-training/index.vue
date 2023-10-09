@@ -8,9 +8,13 @@
                 <b-row>
                     <b-col cols="12" sm="7">
                         <div class="mb-7 ">
-                            <div class="d-flex align-items-center">
-                                <button-filter active="active">Quản lý chương trình</button-filter>
-                                <button-filter>Quản lý kết quả đào tạo</button-filter>
+                            <div class="d-flex align-items-center flex-wrap">
+                                <nuxt-link to="/admin/lsm/teacher-training">
+                                    <button-filter active="active">Quản lý chương trình</button-filter>
+                                </nuxt-link>
+                                <nuxt-link to="/admin/lsm/result-training">
+                                    <button-filter>Quản lý kết quả đào tạo</button-filter>
+                                </nuxt-link>
                             </div>
                         </div>
                         <div>
@@ -305,7 +309,7 @@ export default {
     data() {
         return {
             title: {
-                name: 'Quản lý dịch vụ',
+                name: 'Đào tạo giáo viên',
                 previous: '/admin/dashboard'
             },
         };
@@ -359,4 +363,5 @@ export default {
     font-weight: 600;
     line-height: 120%;
     margin-top: 10px;
-}</style>
+}
+</style>

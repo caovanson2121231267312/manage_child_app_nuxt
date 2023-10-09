@@ -4,7 +4,7 @@
             <!-- <div :class="computedClasses + ' hover'">
                 <slot></slot>
             </div> -->
-            <v-btn rounded :color="isActive" dark>
+            <v-btn rounded :color="'button-type ' + isActive" dark>
                 <slot></slot>
             </v-btn>
         <!-- </v-btn> -->
@@ -33,6 +33,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .button {
     padding: 9px 27px;
     border-radius: 46px;
@@ -63,8 +64,20 @@ export default {
     }
 }
 
+.button-type {
+    margin-bottom: 5px;
+}
+
 .btn-header {
     padding: 8px 28px;
     display: inline;
+}
+
+@media (max-width: 600px) {
+    .button-type {
+        span {
+            font-size: 13px!important;
+        }
+    }
 }
 </style>
