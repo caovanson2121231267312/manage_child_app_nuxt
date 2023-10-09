@@ -1,18 +1,16 @@
 <template>
     <div class="content-mp review-lesson">
-        <div class="d-flex align-items-center wmt-27 ">
+        <!-- <div class="d-flex align-items-center wmt-27 ">
             <nuxt-link class="btn btn-form-review me-3" to="/admin/review-lesson/form-review">
                 Quản lý form đánh giá
             </nuxt-link>
             <nuxt-link class="btn btn-add-form-review" to="/admin/review-lesson/form-review/create">
                 <span class="icon-plus mdi mdi-plus"></span> Tạo form đánh giá
             </nuxt-link>
-        </div>
+        </div> -->
 
         <div class="d-flex justify-content-between align-items-center wmt-27 ">
-            <h1 class="w-title d-inline w-h1">
-                Đánh giá của giáo viên
-            </h1>
+            <title-header>Đánh giá của giáo viên</title-header>
 
             <div class="d-inline-block">
                 <div>
@@ -27,7 +25,8 @@
         <div class="">
             <v-row>
                 <v-col v-for="n in 4" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
-                    <div class="w-card w-bg-success" style="min-width: 353px">
+                    <div class="w-card w-bg-success hover-card wow animate__animated animate__zoomIn"
+                        style="min-width: 353px">
                         <div class="w-card-title w-bg-success d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
                                 <div class="me-2">
@@ -131,7 +130,7 @@
                                                     </td>
                                                     <td>
                                                         <span class="w-p-service-i">
-                                                            5
+                                                            5/10
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -232,3 +231,101 @@ export default {
     components: { CardItem }
 }
 </script>
+
+<style lang="scss" scoped>
+.review-lesson {
+    .btn-form-review {
+        border-radius: 46px;
+        background: #0056b1;
+        display: flex;
+        width: 173px;
+        height: 38px;
+        padding: 13px 5px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        color: #fff;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .btn-add-form-review {
+        border-radius: 46px;
+        border: 1px solid #4eaeea;
+        background: #e8f3ff;
+        display: flex;
+        width: 173px;
+        height: 38px;
+        padding: 13px 5px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        color: #4eaeea;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .icon-plus {
+        color: #4eaeea;
+    }
+
+    .w-blade-card-success {
+        display: flex;
+        padding: 8px 24px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        color: #009874;
+        text-align: center;
+        font-family: SVN-Gilroy;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        border-radius: 46px;
+        background: rgba(0, 192, 146, 0.2);
+    }
+
+    .btn-view {
+        border-radius: 51px;
+        background: #00c092;
+        display: inline-flex;
+        padding: 12px 10px;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        color: #fff;
+        width: 100%;
+        font-family: SVN-Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+
+        .icon-right {
+            position: absolute;
+            right: 3px;
+            font-size: 29px;
+            top: 6px;
+        }
+    }
+
+    .w-card-body-svg {
+        top: -22px;
+        min-width: 235px;
+        max-width: 300px;
+        height: 219px;
+        position: relative;
+    }
+}</style>

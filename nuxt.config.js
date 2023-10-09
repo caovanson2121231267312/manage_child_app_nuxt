@@ -32,6 +32,11 @@ export default {
                 type: 'text/css',
                 href: 'https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css',
             },
+            {
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css',
+            },
         ],
     },
 
