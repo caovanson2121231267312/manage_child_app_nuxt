@@ -2,7 +2,7 @@
     <div class="content-mp">
         <div class="d-flex justify-content-between align-items-center wmt-27 ">
             <h1 class="w-title d-inline w-h1">
-                Danh sách khóa học
+                Danh sách đơn
             </h1>
 
             <div class="d-inline-block">

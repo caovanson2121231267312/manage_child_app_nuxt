@@ -249,6 +249,32 @@
                                     </div>
                                 </v-list-item>
 
+                                <v-list-item class="li-bar" to="/admin/orders">
+                                    <v-list-item-icon class="icon-bar" default>
+                                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M5 19V8.6875C5 4.9375 5.94118 4 9.70588 4H16.2941C20.0588 4 21 4.9375 21 8.6875V18.0625C21 18.1938 21 18.325 20.9906 18.4563"
+                                                stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path
+                                                d="M7.68235 16H21V19C21 20.6543 19.5224 22 17.7059 22H8.29412C6.47765 22 5 20.6543 5 19V18.4429C5 17.0971 6.20471 16 7.68235 16Z"
+                                                stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M9 8H17" stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M9 12H14" stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </v-list-item-icon>
+                                    <v-list-item-title>Quản lý đơn dịch vụ</v-list-item-title>
+
+                                    <div class="web-m-r">
+                                        <i aria-hidden="true"
+                                            class="v-icon notranslate mdi mdi-chevron-down theme--light"></i>
+                                    </div>
+                                </v-list-item>
+
 
                                 <v-list-group class="group-list" no-action :value="isCurrentRouteMatching('/admin/lsm')">
                                     <template v-slot:activator>
@@ -487,36 +513,6 @@
                                 </v-list-item>
 
                             </v-list>
-                            <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/courses">
-                                    <div class="d-flex justify-content-between w-100 align-center">
-                                        <div class="d-flex align-center">
-                                            <span class="icon-bar">
-                                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M5 19V8.6875C5 4.9375 5.94118 4 9.70588 4H16.2941C20.0588 4 21 4.9375 21 8.6875V18.0625C21 18.1938 21 18.325 20.9906 18.4563"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                    <path
-                                                        d="M7.68235 16H21V19C21 20.6543 19.5224 22 17.7059 22H8.29412C6.47765 22 5 20.6543 5 19V18.4429C5 17.0971 6.20471 16 7.68235 16Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                    <path d="M9 8H17" stroke="#2D2D2D" stroke-width="1.5"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path d="M9 12H14" stroke="#2D2D2D" stroke-width="1.5"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-
-                                            </span>
-                                            <span class="text-style">Quản lý đơn dịch vụ</span>
-                                        </div>
-                                        <div class="web-m-r">
-                                            <span class="mdi mdi-chevron-right"></span>
-                                        </div>
-                                    </div>
-                                </nuxt-link>
-                            </li>
                             <!-- <li>
                                 <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/teacher-training">
                                     <div class="d-flex justify-content-between w-100 align-center">
@@ -549,7 +545,7 @@
                                 </nuxt-link>
                             </li> -->
                             <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/">
+                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/login">
                                     <div class="d-flex justify-content-between w-100 align-center">
                                         <div class="d-flex align-center">
                                             <span class="icon-bar">
@@ -827,5 +823,4 @@ export default {
     .web-m-r i {
         color: #0056b1;
     }
-}
-</style>
+}</style>

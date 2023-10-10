@@ -1,6 +1,6 @@
 <template>
     <div class="content-mp">
-        <div class="d-flex align-items-center wmt-27">
+        <div class="d-flex justify-content-between align-items-center wmt-27">
             <title-header>Tổng quan</title-header>
 
             <div class="d-inline-block">
