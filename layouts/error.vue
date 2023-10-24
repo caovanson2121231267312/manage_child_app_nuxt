@@ -23,7 +23,7 @@
 <script>
 export default {
     name: 'EmptyLayout',
-    layout: 'admin',
+    layout: 'empty',
     props: {
         error: {
             type: Object,

@@ -58,31 +58,34 @@
                 </div>
 
                 <div class="form-login">
-                    <div class="h-title">
-                        Đăng nhập
-                    </div>
-                    <div class="form-login-body">
-                        <div>
+                    <form id="form">
+                        <div class="h-title">
+                            Đăng nhập
+                        </div>
+                        <div class="form-login-body">
                             <div>
-                                <input type="text" placeholder="Số điện thoại" class="form-control input-login" />
-                            </div>
-                            <div class="my-6 position-relative">
-                                <input :type="showPassword ? 'text' : 'password'" v-model="password" placeholder="Mật khẩu"
-                                    class="form-control input-login">
-                                <span @click="togglePasswordVisibility">
-                                    <i
-                                        :class="showPassword ? 'mdi mdi-eye-outline show' : 'mdi mdi-eye-off-outline show'"></i>
-                                </span>
-                            </div>
-                            <div class="mb-8">
-                                <div @click="login">
-                                    <button-component>
-                                        Đăng nhập
-                                    </button-component>
+                                <div>
+                                    <input name="dien_thoai" type="text" placeholder="Số điện thoại"
+                                        class="form-control input-login" />
+                                </div>
+                                <div class="my-6 position-relative">
+                                    <input name="password" :type="showPassword ? 'text' : 'password'" v-model="password"
+                                        placeholder="Mật khẩu" class="form-control input-login">
+                                    <span @click="togglePasswordVisibility">
+                                        <i
+                                            :class="showPassword ? 'mdi mdi-eye-outline show' : 'mdi mdi-eye-off-outline show'"></i>
+                                    </span>
+                                </div>
+                                <div class="mb-8">
+                                    <div @click="login_form">
+                                        <button-component>
+                                            Đăng nhập
+                                        </button-component>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
                 <div class="w-100">
@@ -117,6 +120,8 @@
 </template>
 
 <script>
+import api from '../store/axios'
+
 export default {
     name: 'IndexPage',
     layout: 'empty',
@@ -133,8 +138,44 @@ export default {
         login() {
             console.log('home')
             this.$router.push('/');
+        },
+        async login_form(event) {
+            event.preventDefault();
+            try {
+                const formData = await new FormData(document.getElementById('form'))
+
+                const data = await api.post('admin-api/login', formData, {
+                    'Content-Type': 'application/json',
+                    // 'Authorization': 'Bearer ' + this.auth.token
+                })
+
+                console.log(data)
+                if (await data?.status == 200) {
+                    await this.$toast.success(data?.data?.message)
+                    const loginTime = await new Date().getTime();
+                    await localStorage.removeItem('user');
+                    await localStorage.removeItem('timeLogin');
+                    await localStorage.setItem('user', JSON.stringify(data?.data?.data));
+                    await localStorage.setItem('timeLogin', loginTime);
+                    await this.$router.push('/admin/dashboard');
+                }
+
+            } catch (error) {
+                if (error?.response?.status != 200) {
+                    // this.$toast.error(error?.response?.data?.message)
+                    this.$toasted.error(error?.response?.data?.message, {
+                        theme: "bubble",
+                        position: "top-right",
+                        icon: {
+                            name: 'fas fa-yin-yang',
+                            after: true
+                        },
+                        duration: 115000
+                    });
+                }
+            }
         }
-    },
+    }
 }
 </script>
 

@@ -1,4 +1,4 @@
-
+import api from './axios'
 
 export const state = () => ({
     auth: null,
@@ -46,14 +46,19 @@ export const actions = {
     // },
     async login({ commit }, formData) {
         try {
-            commit('CLEAR_ERROR')
-            const response = await this.$axios.post('/api/auth/login', formData)
+            const data = await api.post('admin-api/login', formData ,{
+                'Content-Type': 'application/json',
+                // 'Authorization': 'Bearer ' + this.auth.token
+            })
+            // commit('CLEAR_ERROR')
+            const response = await this.$axios.post('/admin-api/login', formData)
+            console.log(response)
             commit('LOGIN', response.data)
         } catch (error) {
             console.log(error)
-            if (error.response.status == 422 || error.response.status == 500) {
-                commit('SET_ERROR', error.response.data)
-            }
+            // if (error.response.status == 422 || error.response.status == 500) {
+            //     commit('SET_ERROR', error.response.data)
+            // }
         }
     },
     async getUser(auth) {

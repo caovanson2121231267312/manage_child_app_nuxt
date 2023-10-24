@@ -544,8 +544,8 @@
                                     </div>
                                 </nuxt-link>
                             </li> -->
-                            <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/login">
+                            <li @click="logout">
+                                <a href="javascript:void(0)" class="px-27 w-mt-17 d-block w-100">
                                     <div class="d-flex justify-content-between w-100 align-center">
                                         <div class="d-flex align-center">
                                             <span class="icon-bar">
@@ -563,7 +563,7 @@
                                             <!-- <span class="mdi mdi-chevron-right"></span> -->
                                         </div>
                                     </div>
-                                </nuxt-link>
+                                </a>
                             </li>
 
                         </ul>
@@ -650,10 +650,12 @@
 
 <script>
 import RightSvg from '@/components/icons/RightSvg.vue'
+import api from '../store/axios'
 // import WOW from 'wowjs';
 
 export default {
     name: 'DefaultLayout',
+    middleware: 'checkLogin',
     data() {
         return {
             visible: true,
@@ -731,6 +733,45 @@ export default {
             // Sử dụng $route.path để lấy path của route hiện tại
             return this.$route.path.startsWith(targetRoute);
         },
+        async logout() {
+            console.log('log 1')
+            try {
+                // const data = await api.get('admin-api/logout', {
+                //     'Content-Type': 'application/json',
+                //     // 'Authorization': 'Bearer ' + this.token
+                // })
+
+                // console.log(data)
+                await localStorage.removeItem('user');
+                await localStorage.removeItem('timeLogin');
+                await this.$bvToast.toast('Đăng xuất tài khoản thành công', {
+                        title: `Thông báo`,
+                        variant: 'success',
+                        solid: true
+                })
+                await this.$router.push('/login');
+                // if (await data?.status == 200) {
+                    // await this.$bvToast.toast(data?.data?.message, {
+                    //     title: `Thông báo`,
+                    //     variant: 'success',
+                    //     solid: true
+                    // })
+                // localStorage.removeItem('user');
+                // localStorage.removeItem('timeLogin');
+                // this.$router.push('/login');
+                // }
+                console.log('log')
+
+            } catch (error) {
+                if (error?.response?.status != 200) {
+                    this.$bvToast.toast(error?.response?.data?.message, {
+                        title: `Thông báo`,
+                        variant: 'danger',
+                        solid: true
+                    })
+                }
+            }
+        }
     },
     mounted() {
         if (window.innerWidth > 800) {
@@ -744,6 +785,10 @@ export default {
         ready() {
             return this.$store.getters[`title/title`]
         },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
     },
     head() {
         return {
