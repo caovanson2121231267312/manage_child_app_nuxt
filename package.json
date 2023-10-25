@@ -16,7 +16,7 @@
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/toast": "^3.3.1",
-    "@tiptap/pm": "^2.1.11",
+    "@tiptap/pm": "^2.1.12",
     "@tiptap/starter-kit": "^2.1.11",
     "@tiptap/vue-2": "^2.1.11",
     "bootstrap-vue": "^2.23.1",
