@@ -37,6 +37,21 @@ export default {
                 type: 'text/css',
                 href: 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css',
             },
+            {
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: 'https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css',
+            },
+            {
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: 'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.32/sweetalert2.css',
+            },
+            {
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css',
+            },
         ],
     },
 

@@ -651,8 +651,9 @@
 <script>
 import RightSvg from '@/components/icons/RightSvg.vue'
 import api from '../store/axios'
+import toastr from 'toastr';
 // import WOW from 'wowjs';
-
+// import 'sweetalert2/src/sweetalert2.scss'
 export default {
     name: 'DefaultLayout',
     middleware: 'checkLogin',
@@ -744,11 +745,7 @@ export default {
                 // console.log(data)
                 await localStorage.removeItem('user');
                 await localStorage.removeItem('timeLogin');
-                await this.$bvToast.toast('Đăng xuất tài khoản thành công', {
-                        title: `Thông báo`,
-                        variant: 'success',
-                        solid: true
-                })
+                toastr.error('Đăng xuất tài khoản thành công')
                 await this.$router.push('/login');
                 // if (await data?.status == 200) {
                     // await this.$bvToast.toast(data?.data?.message, {
@@ -764,11 +761,7 @@ export default {
 
             } catch (error) {
                 if (error?.response?.status != 200) {
-                    this.$bvToast.toast(error?.response?.data?.message, {
-                        title: `Thông báo`,
-                        variant: 'danger',
-                        solid: true
-                    })
+                    toastr.error(error?.response?.data?.message)
                 }
             }
         }
@@ -801,6 +794,12 @@ export default {
                 },
                 {
                     src: 'https://cdn.jsdelivr.net/npm/chart.js'
+                },
+                {
+                    src: 'https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js'
+                },
+                {
+                    src: 'https://cdn.jsdelivr.net/npm/sweetalert2@11'
                 },
             ],
         }

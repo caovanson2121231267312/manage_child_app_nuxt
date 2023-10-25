@@ -121,6 +121,8 @@
 
 <script>
 import api from '../store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     name: 'IndexPage',
@@ -151,7 +153,7 @@ export default {
 
                 console.log(data)
                 if (await data?.status == 200) {
-                    await this.$toast.success(data?.data?.message)
+                    await toastr.success(data?.data?.message)
                     const loginTime = await new Date().getTime();
                     await localStorage.removeItem('user');
                     await localStorage.removeItem('timeLogin');
@@ -161,17 +163,20 @@ export default {
                 }
 
             } catch (error) {
+                console.log(error)
                 if (error?.response?.status != 200) {
-                    // this.$toast.error(error?.response?.data?.message)
-                    this.$toasted.error(error?.response?.data?.message, {
-                        theme: "bubble",
-                        position: "top-right",
-                        icon: {
-                            name: 'fas fa-yin-yang',
-                            after: true
-                        },
-                        duration: 115000
-                    });
+                    Swal.fire({
+                        title: 'Thông báo',
+                        icon: 'warning',
+                        html: error?.response?.data?.message,
+                        timer: 3500,
+                        timerProgressBar: true,
+                    }).then((result) => {
+                        /* Read more about handling dismissals below */
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            console.log('I was closed by the timer')
+                        }
+                    })
                 }
             }
         }

@@ -697,6 +697,9 @@
 <script>
 import ButtonAdd from '~/components/button/ButtonAdd.vue'
 import BarChart from '~/components/Chart/BarChart.vue'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
+
 export default {
     layout: 'admin',
     components: { BarChart, ButtonAdd },
@@ -957,4 +960,5 @@ export default {
         line-height: normal;
         width: 55px;
     }
-}</style>
+}
+</style>

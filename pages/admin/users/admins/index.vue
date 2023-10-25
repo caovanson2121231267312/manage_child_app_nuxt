@@ -83,7 +83,8 @@
                             </div>
 
                             <div class="action">
-                                <nuxt-link to="/admin/users/admins/34" class="action-btn" v-b-tooltip.hover.right="'Sửa'" title="Sửa">
+                                <nuxt-link to="/admin/users/admins/34" class="action-btn" v-b-tooltip.hover.right="'Sửa'"
+                                    title="Sửa">
                                     <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="15" cy="15" r="15" fill="#F2F2F2" />
@@ -128,6 +129,9 @@
 </template>
 
 <script>
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -147,9 +151,25 @@ export default {
             ]
         };
     },
-    computed: {},
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_data() {
+            console.log(this.token)
+            const data = await api.get('admin-api/danh-sach-user?page=1&limit=2&sort=0&vai_tro_id=', {
+                'Content-Type': 'application/json',
+                'Accept': '*',
+                Authorization: 'Bearer ' + this.token
+            })
+        }
+    },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data();
     },
     components: {}
 }
