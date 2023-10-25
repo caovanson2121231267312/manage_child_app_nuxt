@@ -20,7 +20,7 @@
     "@tiptap/starter-kit": "^2.1.11",
     "@tiptap/vue-2": "^2.1.11",
     "bootstrap-vue": "^2.23.1",
-    "chart.js": "2.9.4",
+    "chart.js": "4.4.0",
     "core-js": "^3.25.3",
     "mosha-vue-toastify": "^1.0.23",
     "notyf": "^3.10.0",
