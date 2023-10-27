@@ -1,5 +1,6 @@
 import axios from 'axios'
 // import { createToast } from 'mosha-vue-toastify'
+import toastr from 'toastr';
 
 const domain = process.env.link_api
 
@@ -7,35 +8,38 @@ const api = {
     async get(url, headers = {}) {
         try {
             console.log(headers)
-            const data = await fetch(domain + url,  {
-                method: "GET", // *GET, POST, PUT, DELETE, etc.
-                mode: "cors", // no-cors, *cors, same-origin
-                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: "same-origin", // include, *same-origin, omit
-                headers: headers,
-                redirect: "follow", // manual, *follow, error
-                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify(data), // body data type must match "Content-Type" header
-              });
 
-            // const data = await axios.get(domain + url, { headers: headers })
+            const data = await axios.get(domain + url, { headers: headers })
             console.log(url)
             console.log(data)
             return data
-        } catch (e) {
-            throw e
+        } catch (error) {
+            console.log(error)
+            toastr.error('Đã có lỗi xảy ra');
+            if(error?.response?.status == 401) {
+                toastr.error(error?.response?.data?.message);
+            }
+
+            throw error
             // return e
         }
     },
 
     async post(url, formData = {}, headers = {}) {
         try {
-            const data = await axios.post(domain + url, formData, { headers: headers })
+            console.log(url)
+            const data = await axios.post(domain + url, formData, {
+                headers: headers,
+            })
             return data
-        } catch (e) {
-            console.log(e)
-            console.log(e?.response)
-            throw e
+        } catch (error) {
+            console.log(error)
+            if(error?.response?.status == 401) {
+                toastr.error(error?.response?.data?.message);
+            } else if (error?.response?.status == 500) {
+                toastr.error(error?.response?.data?.message);
+            }
+            // throw error
             // return e
         }
     },

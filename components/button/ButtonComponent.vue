@@ -1,5 +1,5 @@
 <template>
-    <v-btn height="100%" :class="computedClasses + ' hover'">
+    <v-btn height="100%" :type="typeBtn" :class="computedClasses + ' hover'">
         <slot></slot>
     </v-btn>
 </template>
@@ -10,6 +10,10 @@ export default {
         addClass: {
             type: String,
             default: '', // Giá trị mặc định là chuỗi rỗng
+        },
+        typeBtn: {
+            type: String,
+            default: 'button', // Giá trị mặc định là chuỗi rỗng
         },
     },
     computed: {
