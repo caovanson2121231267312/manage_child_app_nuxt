@@ -127,16 +127,18 @@
                             </template>
                         </div>
                         <div class="pt-5">
-                            <button-component addClass="silver">
-                                <svg class="me-2" width="16" height="18" viewBox="0 0 16 18" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M5.66667 1H10.3333M1 3.66667H15M13.4444 3.66667L12.899 13.0171C12.8172 14.42 12.7762 15.1215 12.5111 15.6533C12.2777 16.1216 11.9256 16.498 11.5013 16.7331C11.0193 17 10.4042 17 9.17394 17H6.82607C5.59582 17 4.98069 17 4.49871 16.7331C4.07437 16.498 3.72229 16.1216 3.48888 15.6533C3.22375 15.1215 3.18284 14.42 3.101 13.0171L2.55556 3.66667M6.44444 7.66667V12.1111M9.55556 7.66667V12.1111"
-                                        stroke="#2D2D2D" stroke-width="1.3" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                </svg>
-                                Xóa tài khoản
-                            </button-component>
+                            <div @click="delete_item(data?.id, data?.hoten)">
+                                <button-component addClass="silver">
+                                    <svg class="me-2" width="16" height="18" viewBox="0 0 16 18" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M5.66667 1H10.3333M1 3.66667H15M13.4444 3.66667L12.899 13.0171C12.8172 14.42 12.7762 15.1215 12.5111 15.6533C12.2777 16.1216 11.9256 16.498 11.5013 16.7331C11.0193 17 10.4042 17 9.17394 17H6.82607C5.59582 17 4.98069 17 4.49871 16.7331C4.07437 16.498 3.72229 16.1216 3.48888 15.6533C3.22375 15.1215 3.18284 14.42 3.101 13.0171L2.55556 3.66667M6.44444 7.66667V12.1111M9.55556 7.66667V12.1111"
+                                            stroke="#2D2D2D" stroke-width="1.3" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    Xóa tài khoản
+                                </button-component>
+                            </div>
                         </div>
                     </form>
                 </v-col>
@@ -228,6 +230,42 @@ export default {
                     this.load_role()
                 }
             })
+        },
+        async delete_item(user_id, name) {
+            const formData = new FormData();
+            formData.append('id', user_id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá người dùng ${name}!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có xoá nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('admin-api/xoa-tai-khoan', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Deleted!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            this.$router.push('/admin/users/admins');
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
+
         },
     },
     mounted() {

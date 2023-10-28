@@ -51,7 +51,7 @@
 
                 <template v-if="data">
                     <v-col class="mt-0 pt-0" v-for="(item, index) in data" :key="index" xs="12" sm="6" md="4" lg="4" xl="3">
-                        <b-card style="min-width: 245px;" class="hover-card">
+                        <b-card style="min-width: 245px;" class="hover-card wow animate__animated animate__flipInY">
                             <div class="block w-100 card-admins">
                                 <div class="d-flex align-center">
                                     <div class="me-2 layout-user">
@@ -95,7 +95,8 @@
                                                 fill="#979797" />
                                         </svg>
                                     </nuxt-link>
-                                    <div class="action-btn mt-2" v-b-tooltip.hover.right="'Xoá'" title="Xoá">
+                                    <div class="action-btn mt-2" @click="delete_item(item?.id, item?.hoten)"
+                                        v-b-tooltip.hover.right="'Xoá'" title="Xoá">
                                         <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="15" cy="15" r="15" fill="#F2F2F2" />
@@ -159,7 +160,6 @@ export default {
     },
     methods: {
         async load_role() {
-            console.log(this.token)
             await api.get('admin-api/danh-sach-quyen', {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
@@ -169,14 +169,50 @@ export default {
             })
         },
         async load_data() {
-            console.log(this.token)
-            await api.get('admin-api/danh-sach-user?page=1&limit=20&sort=0&vai_tro_id=' + this.selectedFilter, {
+            await api.get('admin-api/danh-sach-user?page=1&limit=20&sort=1&vai_tro_id=' + this.selectedFilter, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 console.log(res)
                 this.data = res?.data?.data
             })
+        },
+        async delete_item(user_id, name) {
+            const formData = new FormData();
+            formData.append('id', user_id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá người dùng ${name}!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có xoá nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('admin-api/xoa-tai-khoan', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Deleted!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            this.load_data()
+                            this.load_role()
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
+
         },
         async updateFilter(filter) {
             this.selectedFilter = await filter ?? '';

@@ -3,15 +3,15 @@
         <v-row>
             <v-col class="mt-0 pt-0" xs="12" sm="6" md="4" lg="4" xl="3">
                 <b-card style="min-width: 245px;" class="">
-                    <nuxt-link class="block w-100 teachers teacher-detail" to="/admin/teachers/34">
+                    <nuxt-link class="block w-100 teachers teacher-detail" to="#">
                         <div class="d-flex align-center">
                             <div class="me-2 layout-user">
-                                <img src="@/static/images/teacher/Rectangle4006.png" alt="">
+                                <img :src="data?.anh_nguoi_dung" :alt="data?.hoten">
                             </div>
                             <div class="flex-1">
                                 <div class="d-flex align-items-center w-100 justify-content-between">
                                     <div class="d-flex align-items-center">
-                                        <span class="blade-id me-2"># 250</span>
+                                        <span class="blade-id me-2"># {{ data?.id }}</span>
                                         <span class="blade-rate">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="11" height="10"
                                                 viewBox="0 0 11 10" fill="none">
@@ -19,11 +19,11 @@
                                                     d="M4.46066 1.32835C4.85351 0.710079 5.75587 0.710078 6.14872 1.32835L7.01485 2.69149C7.16144 2.92219 7.39607 3.08284 7.66418 3.13605L9.203 3.44151C9.98137 3.59602 10.2783 4.55212 9.72438 5.12038L8.7729 6.09651C8.56414 6.31067 8.4622 6.60703 8.49504 6.9043L8.6476 8.28556C8.73067 9.03764 7.98069 9.60595 7.2791 9.32255L5.67923 8.67629C5.43897 8.57924 5.17041 8.57924 4.93015 8.67629L3.33027 9.32255C2.62869 9.60595 1.8787 9.03764 1.96178 8.28556L2.11434 6.9043C2.14717 6.60703 2.04523 6.31067 1.83647 6.09651L0.884995 5.12038C0.331079 4.55212 0.628003 3.59602 1.40638 3.44151L2.9452 3.13605C3.2133 3.08284 3.44794 2.92219 3.59452 2.69149L4.46066 1.32835Z"
                                                     fill="#FFB761" />
                                             </svg>
-                                            <span class="span-text">5/5</span>
+                                            <span class="span-text">{{ data?.danh_gia }}</span>
                                         </span>
                                     </div>
                                     <div>
-                                        <nuxt-link to="/admin/users/teachers/34/edit" v-b-tooltip.hover
+                                        <nuxt-link :to="'/admin/users/teachers/' +data?.id+ '/edit'" v-b-tooltip.hover
                                             title="Sửa thông tin">
                                             <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -42,10 +42,10 @@
                                     </div>
                                 </div>
                                 <h3 class="name">
-                                    Nguyễn Hoàng Anh Thư
+                                    {{ data?.hoten }}
                                 </h3>
                                 <p class="w-p p-0 m-0 position">
-                                    Giáo viên - Nữ
+                                    {{ data?.trinh_do_name }} - {{ data?.gioi_tinh }}
                                 </p>
                                 <div class="d-flex align-items-center blade-infor">
                                     <span class="me-3">
@@ -56,7 +56,7 @@
                                                 d="M13.9703 11.5492L15.4486 13.0275C15.7531 13.3321 15.7531 13.8258 15.4486 14.1304C13.802 15.777 11.1952 15.9622 9.33236 14.5651L9.22376 14.4836C7.81856 13.4297 6.57029 12.1814 5.51639 10.7762L5.43494 10.6676C4.03778 8.80476 4.22304 6.19801 5.86961 4.55145C6.17416 4.24689 6.66794 4.24689 6.9725 4.55145L8.45079 6.02974C8.84131 6.42026 8.84131 7.05342 8.45079 7.44395L7.4477 8.44704C7.2432 8.65154 7.1925 8.96395 7.32184 9.22262C8.06951 10.718 9.28203 11.9305 10.7774 12.6782C11.036 12.8075 11.3485 12.7568 11.553 12.5523L12.5561 11.5492C12.9466 11.1587 13.5797 11.1587 13.9703 11.5492Z"
                                                 fill="#0056B1" />
                                         </svg>
-                                        <span>0123 456 789</span>
+                                        <span>{{ data?.dien_thoai }}</span>
                                     </span>
                                     <span class="">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"
@@ -71,7 +71,7 @@
                                                 d="M5.19385 5.22911C5.19385 5.8381 5.41085 5.9571 5.76784 6.0831L6.47484 6.3281V4.32611H6.01984C5.56485 4.32611 5.19385 4.73211 5.19385 5.22911Z"
                                                 fill="#FFA02F" />
                                         </svg>
-                                        <span class="span-text">500.000 đ</span>
+                                        <span class="span-text">{{ data?.vi_dien_tu }} đ</span>
                                     </span>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                                     </td>
                                     <td>
                                         <span class="w-text-p-1">
-                                            Nguyễn Hoàng Anh Thư
+                                            {{ data?.hoten }}
                                         </span>
                                     </td>
                                 </tr>
@@ -110,7 +110,7 @@
                                     </td>
                                     <td>
                                         <span class="w-text-p-1">
-                                            12/05/1990
+                                            {{ data?.ngay_sinh }}
                                         </span>
                                     </td>
                                 </tr>
@@ -124,7 +124,7 @@
                                     </td>
                                     <td>
                                         <span class="w-text-p-1">
-                                            03667826472
+                                            {{ data?.cmnd_cccd }}
                                         </span>
                                     </td>
                                 </tr>
@@ -138,7 +138,7 @@
                                     </td>
                                     <td>
                                         <span class="w-text-p-1">
-                                            anhthu256@gmail.com
+                                            {{ data?.email == '' ? 'Chưa cập nhật' : data?.email }}
                                         </span>
                                     </td>
                                 </tr>
@@ -152,7 +152,7 @@
                                     </td>
                                     <td>
                                         <span class="w-text-p-1">
-                                            Thạc sỹ • Trường ĐH Sư phạm Hà Nội
+                                            {{ data?.bang_cap == '' ?? 'Chưa cập nhật' }}
                                         </span>
                                     </td>
                                 </tr>
@@ -165,25 +165,35 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="card-certificate">
-                                            <div class="card-certificate-body">
-                                                <div class="box-certificate">
-                                                    <img src="@/static/images/teacher/certificate.png" />
-                                                </div>
-
-                                                <a href="" target="_blank" v-b-tooltip.hover
-                                                    title="Xem chi tiết Chứng chỉ - Chứng nhận">
-                                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
-                                                        <path
-                                                            d="M19.5556 12.4444L24 8M24 8H19.5556M24 8V12.4444M12.4444 12.4444L8 8M8 8L8 12.4444M8 8L12.4444 8M12.4444 19.5556L8 24M8 24H12.4444M8 24L8 19.5556M19.5556 19.5556L24 24M24 24V19.5556M24 24H19.5556"
-                                                            stroke="#979797" stroke-width="1.5" stroke-linecap="round"
-                                                            stroke-linejoin="round" />
-                                                    </svg>
-                                                </a>
-                                            </div>
+                                        <div class="cp text-primary" @click="open = !open" v-b-toggle.collapse-1
+                                            variant="primary">
+                                            {{ open == true ? 'Xem chi tiết' : 'Thu gọn' }}
                                         </div>
+                                        <b-collapse id="collapse-1" class="mt-2">
+                                            <div v-if="chungNhan?.length == 0">
+                                                <p class="text-danger">Chưa cập nhật Chứng chỉ/ Chứng nhận</p>
+                                            </div>
+                                            <div v-else v-for="(item, index) in chungNhan" v-bind:key="index"
+                                                class="card-certificate mb-2">
+                                                <div class="card-certificate-body">
+                                                    <div class="box-certificate">
+                                                        <img :src="item?.file_path" />
+                                                    </div>
+
+                                                    <a :href="item?.file_path" target="_blank" v-b-tooltip.hover
+                                                        title="Xem chi tiết Chứng chỉ - Chứng nhận">
+                                                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
+                                                            <path
+                                                                d="M19.5556 12.4444L24 8M24 8H19.5556M24 8V12.4444M12.4444 12.4444L8 8M8 8L8 12.4444M8 8L12.4444 8M12.4444 19.5556L8 24M8 24H12.4444M8 24L8 19.5556M19.5556 19.5556L24 24M24 24V19.5556M24 24H19.5556"
+                                                                stroke="#979797" stroke-width="1.5" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </b-collapse>
                                     </td>
                                 </tr>
                             </tbody>
@@ -199,36 +209,9 @@
                     <h3>Tùy chỉnh</h3>
                     <div class="w-100">
                         <div>
-                            <!-- <b-card style="min-width: 245px;" class="teacher-nav">
-                        <nuxt-link class="block w-100 teachers " to="/admin/teachers/34/change-password">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="">
-                                    <span class="me-2">
-                                        <svg width="30" height="31" viewBox="0 0 30 31" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="15" cy="15.5" r="15" fill="#FC4D32" fill-opacity="0.1" />
-                                            <path
-                                                d="M20.4917 9.01672C18.025 6.55839 14.025 6.55839 11.575 9.01672C9.85004 10.7251 9.33337 13.1834 10 15.3501L6.08337 19.2667C5.80837 19.5501 5.61671 20.1084 5.67504 20.5084L5.92504 22.3251C6.01671 22.9251 6.57504 23.4917 7.17504 23.5751L8.99171 23.8251C9.39171 23.8834 9.95004 23.7001 10.2334 23.4084L10.9167 22.7251C11.0834 22.5667 11.0834 22.3001 10.9167 22.1334L9.30004 20.5167C9.05837 20.2751 9.05837 19.8751 9.30004 19.6334C9.54171 19.3917 9.94171 19.3917 10.1834 19.6334L11.8084 21.2584C11.9667 21.4167 12.2334 21.4167 12.3917 21.2584L14.1584 19.5001C16.3167 20.1751 18.775 19.6501 20.4917 17.9417C22.95 15.4834 22.95 11.4751 20.4917 9.01672ZM16.0834 15.5001C14.9334 15.5001 14 14.5667 14 13.4167C14 12.2667 14.9334 11.3334 16.0834 11.3334C17.2334 11.3334 18.1667 12.2667 18.1667 13.4167C18.1667 14.5667 17.2334 15.5001 16.0834 15.5001Z"
-                                                fill="#FC4D32" />
-                                        </svg>
-                                    </span>
-                                    <span>
-                                        Reset mật khẩu
-                                    </span>
-                                </div>
-                                <div>
-                                    <div class="web-icon">
-                                        <span class="mdi mdi-chevron-right"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </nuxt-link>
-                    </b-card> -->
-
-
 
                             <b-card style="min-width: 245px;" class="teacher-nav">
-                                <nuxt-link class="block w-100 teachers " to="/admin/users/teachers/34/change-service">
+                                <nuxt-link class="block w-100 teachers " :to="'/admin/users/teachers/'+ data?.id +'/change-service'">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2">
@@ -260,7 +243,7 @@
                             </b-card>
 
                             <b-card style="min-width: 245px;" class="teacher-nav">
-                                <nuxt-link class="block w-100 teachers " to="/admin/users/teachers/34/change-level">
+                                <nuxt-link class="block w-100 teachers " :to="'/admin/users/teachers/'+ data?.id +'/change-level'">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2">
@@ -290,7 +273,7 @@
                             </b-card>
 
                             <b-card style="min-width: 245px;" class="teacher-nav">
-                                <nuxt-link class="block w-100 teachers " to="/admin/users/teachers/34/training-results">
+                                <nuxt-link class="block w-100 teachers " :to="'/admin/users/teachers/'+ data?.id +'/training-results'">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2">
@@ -323,7 +306,7 @@
                             </b-card>
 
                             <b-card style="min-width: 245px;" class="teacher-nav">
-                                <nuxt-link class="block w-100 teachers " to="/admin/users/teachers/34/course-history">
+                                <nuxt-link class="block w-100 teachers " :to="'/admin/users/teachers/'+ data?.id +'/course-history'">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2">
@@ -350,7 +333,7 @@
                             </b-card>
 
                             <b-card style="min-width: 245px;" class="teacher-nav">
-                                <nuxt-link class="block w-100 teachers " to="/admin/users/teachers/34/recharge">
+                                <nuxt-link class="block w-100 teachers " :to="'/admin/users/teachers/'+ data?.id +'/recharge'">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2">
@@ -454,6 +437,9 @@
 
 <script>
 // import { defineComponent } from '@vue/composition-api'
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -463,23 +449,44 @@ export default {
                 name: 'Chi tiết Giáo viên',
                 previous: '/admin/users/teachers'
             },
+            data: null,
+            chungNhan: null,
+            open: true,
         };
     },
     validate({ params }) {
-        return /^[0-9]{0,2}$/.test(params.id)
+        return /^\d+$/.test(params.id);
     },
     computed: {
-        // id() {
-        //     return $route.params.id
-        // }
+        id() {
+            return this.$route.params.id
+        },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
     },
     methods: {
         changeLink() {
             console.log(this)
-        }
+        },
+        async load_data() {
+            await api.get('giao-vien/chi-tiet?id=' + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data.user
+                this.chungNhan = res?.data?.data.chungNhan
+                this.data = user
+                // this.hoten = user?.hoten
+                // this.dien_thoai = user?.dien_thoai
+                // this.selected = user?.vai_tro
+            })
+        },
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
 }
 </script>

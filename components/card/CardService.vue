@@ -3,6 +3,85 @@
         <div :class="'w-card-title d-flex justify-content-between align-items-center' + card">
             <div class="d-flex align-items-center">
                 <div class="me-2">
+                    <!-- if (this.status == 'Chưa có GV') {
+                return ' card-yellow'
+            } else if (this.status == 'Đang khảo sát') {
+                return ' card-info'
+            } else if (this.status == 'Đang dạy') {
+                return ' card-info'
+            } else if (this.status == 'Đã huỷ') {
+                return ' card-info'
+            } else if (this.status == 'Đã hoàn thành') {
+                return ' card-info'
+            } else if (this.status == 'Đơn hoàn') {
+                return ' card-info'
+            } else if (this.status == 'done') {
+                return ' card-success'
+            } else {
+                return ' card-success' -->
+                    <!-- } -->
+                    <svg v-if="status == 'Chưa có GV'" width="34" height="34" viewBox="0 0 34 34" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <rect width="34" height="34" rx="7" fill="#FFA02F" />
+                        <path opacity="0.4"
+                            d="M21.8199 7H12.1799C10.0499 7 8.31995 8.74 8.31995 10.86V24.95C8.31995 26.75 9.60995 27.51 11.1899 26.64L16.0699 23.93C16.5899 23.64 17.4299 23.64 17.9399 23.93L22.8199 26.64C24.3999 27.52 25.6899 26.76 25.6899 24.95V10.86C25.6799 8.74 23.9499 7 21.8199 7Z"
+                            fill="white" />
+                        <path
+                            d="M19.5 16.4H14.5C14.09 16.4 13.75 16.06 13.75 15.65C13.75 15.24 14.09 14.9 14.5 14.9H19.5C19.91 14.9 20.25 15.24 20.25 15.65C20.25 16.06 19.91 16.4 19.5 16.4Z"
+                            fill="white" />
+                    </svg>
+                    <svg v-if="status == 'Đang khảo sát'" width="34" height="34" viewBox="0 0 34 34" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <rect width="34" height="34" rx="7" fill="#FC4D32" />
+                        <path opacity="0.4"
+                            d="M21.8201 7H12.1801C10.0501 7 8.32007 8.74 8.32007 10.86V24.95C8.32007 26.75 9.61007 27.51 11.1901 26.64L16.0701 23.93C16.5901 23.64 17.4301 23.64 17.9401 23.93L22.8201 26.64C24.4001 27.52 25.6901 26.76 25.6901 24.95V10.86C25.6801 8.74 23.9501 7 21.8201 7Z"
+                            fill="white" />
+                        <path
+                            d="M19.5 16.4H14.5C14.09 16.4 13.75 16.06 13.75 15.65C13.75 15.24 14.09 14.9 14.5 14.9H19.5C19.91 14.9 20.25 15.24 20.25 15.65C20.25 16.06 19.91 16.4 19.5 16.4Z"
+                            fill="white" />
+                    </svg>
+                    <svg v-if="status == 'Đang dạy'" width="34" height="34" viewBox="0 0 34 34" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <rect width="34" height="34" rx="7" fill="#0056B1" />
+                        <path opacity="0.4"
+                            d="M21.8201 7H12.1801C10.0501 7 8.32007 8.74 8.32007 10.86V24.95C8.32007 26.75 9.61007 27.51 11.1901 26.64L16.0701 23.93C16.5901 23.64 17.4301 23.64 17.9401 23.93L22.8201 26.64C24.4001 27.52 25.6901 26.76 25.6901 24.95V10.86C25.6801 8.74 23.9501 7 21.8201 7Z"
+                            fill="white" />
+                        <path
+                            d="M19.5 16.4H14.5C14.09 16.4 13.75 16.06 13.75 15.65C13.75 15.24 14.09 14.9 14.5 14.9H19.5C19.91 14.9 20.25 15.24 20.25 15.65C20.25 16.06 19.91 16.4 19.5 16.4Z"
+                            fill="white" />
+                    </svg>
+                    <svg v-if="status == 'Đã huỷ'" width="34" height="34" viewBox="0 0 34 34" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <rect width="34" height="34" rx="7" fill="#E4002B" />
+                        <path opacity="0.4"
+                            d="M21.8201 7H12.1801C10.0501 7 8.32007 8.74 8.32007 10.86V24.95C8.32007 26.75 9.61007 27.51 11.1901 26.64L16.0701 23.93C16.5901 23.64 17.4301 23.64 17.9401 23.93L22.8201 26.64C24.4001 27.52 25.6901 26.76 25.6901 24.95V10.86C25.6801 8.74 23.9501 7 21.8201 7Z"
+                            fill="white" />
+                        <path
+                            d="M19.5 16.4H14.5C14.09 16.4 13.75 16.06 13.75 15.65C13.75 15.24 14.09 14.9 14.5 14.9H19.5C19.91 14.9 20.25 15.24 20.25 15.65C20.25 16.06 19.91 16.4 19.5 16.4Z"
+                            fill="white" />
+                    </svg>
+                    <svg v-if="status == 'Đã hoàn thành'" width="34" height="34" viewBox="0 0 34 34" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <rect width="34" height="34" rx="7" fill="#00C092" />
+                        <path opacity="0.4"
+                            d="M21.8201 7H12.1801C10.0501 7 8.32007 8.74 8.32007 10.86V24.95C8.32007 26.75 9.61007 27.51 11.1901 26.64L16.0701 23.93C16.5901 23.64 17.4301 23.64 17.9401 23.93L22.8201 26.64C24.4001 27.52 25.6901 26.76 25.6901 24.95V10.86C25.6801 8.74 23.9501 7 21.8201 7Z"
+                            fill="white" />
+                        <path
+                            d="M19.5 16.4H14.5C14.09 16.4 13.75 16.06 13.75 15.65C13.75 15.24 14.09 14.9 14.5 14.9H19.5C19.91 14.9 20.25 15.24 20.25 15.65C20.25 16.06 19.91 16.4 19.5 16.4Z"
+                            fill="white" />
+                    </svg>
+                    <svg v-if="status == 'Đơn hoàn'" width="34" height="34" viewBox="0 0 34 34" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <rect width="34" height="34" rx="7" fill="#4EAEEA" />
+                        <path opacity="0.4"
+                            d="M21.8201 7H12.1801C10.0501 7 8.32007 8.74 8.32007 10.86V24.95C8.32007 26.75 9.61007 27.51 11.1901 26.64L16.0701 23.93C16.5901 23.64 17.4301 23.64 17.9401 23.93L22.8201 26.64C24.4001 27.52 25.6901 26.76 25.6901 24.95V10.86C25.6801 8.74 23.9501 7 21.8201 7Z"
+                            fill="white" />
+                        <path
+                            d="M19.5 16.4H14.5C14.09 16.4 13.75 16.06 13.75 15.65C13.75 15.24 14.09 14.9 14.5 14.9H19.5C19.91 14.9 20.25 15.24 20.25 15.65C20.25 16.06 19.91 16.4 19.5 16.4Z"
+                            fill="white" />
+                    </svg>
+
+
                     <svg v-if="status == 'done'" width="34" height="34" viewBox="0 0 34 34" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <rect width="34" height="34" rx="7" fill="#00C092" />
@@ -29,17 +108,18 @@
 
                 <div>
                     <div class="w-text-p-card">
-                        Mã đơn: <span>0123456789</span>
+                        Mã đơn: <span>{{ data?.ma_don_hang }}</span>
                     </div>
                     <div class="w-text-p-card">
-                        04/08/2023 • 08:30
+                        {{ data?.created }}
                     </div>
                 </div>
             </div>
 
             <div>
-                <span v-if="status == 'done'" class="blade-card blade-card-success">Đã hoàn thành</span>
-                <span v-if="status == 'doing'" class="blade-card blade-card-info">Đang dạy</span>
+                <!-- <span v-if="status == 'done'" class="blade-card blade-card-success">Đã hoàn thành</span> -->
+                <!-- <span v-if="status == 'doing'" class="blade-card blade-card-info">Đang dạy</span> -->
+                <span class="blade-card blade-card-color">{{ status }}</span>
             </div>
         </div>
         <div class="w-card-body">
@@ -53,20 +133,20 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center">
                         <div class="me-2 layout-user">
-                            <img src="@/static/images/users/Ellipse50.png" alt="">
+                            <img :src="data?.phuHuynh?.anh_nguoi_dung" alt="">
                         </div>
                         <div>
                             <h3 class="user-name">
-                                Nguyễn Thị Anh
+                                {{ data?.phuHuynh?.hoten }}
                             </h3>
                             <p class="w-p p-0 m-0">
-                                Phụ huynh
+                                {{ data?.phuHuynh?.vai_tro }}
                             </p>
                         </div>
                     </div>
 
                     <div class="d-flex">
-                        <div class="me-2">
+                        <div class="me-2 cp" v-b-tooltip.hover.top="data?.phuHuynh?.dien_thoai">
                             <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="19" cy="19" r="19" fill="#0056B1" fill-opacity="0.1" />
                                 <path
@@ -74,7 +154,7 @@
                                     fill="#0056B1" />
                             </svg>
                         </div>
-                        <div>
+                        <div class="cp">
                             <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="19" cy="19" r="19" fill="#0056B1" fill-opacity="0.1" />
                                 <path opacity="0.4"
@@ -113,7 +193,30 @@
                                     </td>
                                     <td>
                                         <span class="w-p-service-i">
-                                            Bảo mẫu Pro
+                                            {{ data?.dichVu }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr
+                                    v-if="this.status == 'Đã hoàn thành' || this.status == 'Đang dạy' || this.status == 'Đơn hoàn'">
+                                    <td>
+                                        <div class="align-top">
+                                            <span class="me-1">
+                                                <svg width="12" height="13" viewBox="0 0 12 13" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M6 0.666626C2.685 0.666626 0 3.35163 0 6.66663C0 7.79163 0.315 8.85663 0.87 9.75663C1.905 11.4966 3.81 12.6666 6 12.6666C8.19 12.6666 10.095 11.4966 11.13 9.75663C11.685 8.85663 12 7.79163 12 6.66663C12 3.35163 9.315 0.666626 6 0.666626ZM8.955 6.17163L5.76 9.12663C5.55 9.32162 5.265 9.42663 4.995 9.42663C4.71 9.42663 4.425 9.32163 4.2 9.09663L2.715 7.61162C2.28 7.17662 2.28 6.45663 2.715 6.02163C3.15 5.58663 3.87 5.58663 4.305 6.02163L5.025 6.74162L7.425 4.52163C7.875 4.10163 8.595 4.13163 9.015 4.58163C9.435 5.03163 9.405 5.75163 8.955 6.17163Z"
+                                                        fill="#00C092" />
+                                                </svg>
+                                            </span>
+                                            <span class="w-p-service">
+                                                Trạng thái
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="w-p-service-i">
+                                            {{ data?.chonCa1 ?? '...' }}
                                         </span>
                                     </td>
                                 </tr>
@@ -138,7 +241,7 @@
                                     </td>
                                     <td>
                                         <span class="w-p-service-i">
-                                            Ca sáng (7:00 - 11:00)
+                                            {{ data?.chonCa }}
                                         </span>
                                     </td>
                                 </tr>
@@ -158,7 +261,7 @@
                                     </td>
                                     <td>
                                         <span class="w-p-service-i">
-                                            Số 5, Ngách 128/6/6 Khâm Thiên, Đống Đa, Hà Nội
+                                            {{ data?.dia_chi }}
                                         </span>
                                     </td>
                                 </tr>
@@ -170,24 +273,24 @@
             </div>
             <div class="w-w-10"></div>
             <div class="">
-                <div class="w-card-footer">
+                <div class="w-card-footer" v-if="data?.giaoVien">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
                             <div class="me-2 layout-user">
-                                <img src="@/static/images/users/Ellipse49.png" alt="">
+                                <img :src="data?.giaoVien?.anh_nguoi_dung" alt="">
                             </div>
                             <div>
                                 <h3 class="user-name">
-                                    Nguyễn Thị Anh
+                                    {{ data?.giaoVien?.hoten }}
                                 </h3>
                                 <p class="w-p p-0 m-0">
-                                    Giáo viên
+                                    {{ data?.giaoVien?.trinh_do }}
                                 </p>
                             </div>
                         </div>
 
                         <div class="d-flex">
-                            <div class="me-2">
+                            <div class="me-2 cp" v-b-tooltip.hover.top="data?.giaoVien?.dien_thoai">
                                 <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="19" cy="19" r="19" fill="#0056B1" fill-opacity="0.1" />
@@ -196,7 +299,7 @@
                                         fill="#0056B1" />
                                 </svg>
                             </div>
-                            <div>
+                            <div class="cp">
                                 <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="19" cy="19" r="19" fill="#0056B1" fill-opacity="0.1" />
@@ -225,19 +328,31 @@ export default {
             type: String,
             default: 'success', // Giá trị mặc định là chuỗi rỗng
         },
+        data: {
+            type: Object,
+            // default: 'success', // Giá trị mặc định là chuỗi rỗng
+            require: true,
+        },
     },
     computed: {
         card() {
-            if (this.status == 'pending') {
+            if (this.status == 'Chưa có GV') {
                 return ' card-yellow'
-            } else if (this.status == 'doing') {
-                return ' card-info'
-            } else if (this.status == 'done') {
+            } else if (this.status == 'Đang khảo sát') {
+                return ' card-red'
+            } else if (this.status == 'Đang dạy') {
+                return ' card-primary'
+            } else if (this.status == 'Đã huỷ') {
+                return ' card-danger'
+            } else if (this.status == 'Đã hoàn thành') {
                 return ' card-success'
+            } else if (this.status == 'Đơn hoàn') {
+                return ' card-info'
             } else {
                 return ' card-success'
             }
-        }
+        },
+
     },
 }
 </script>
@@ -277,13 +392,62 @@ export default {
     background: rgba(0, 86, 177, 0.15);
 }
 
-.card-info {
+.card-primary {
     background: #E8F3FF;
     box-shadow: 0px 0px 10px 0px rgba(0, 86, 177, 0.15);
+
+    .blade-card-color {
+        color: #0056B1;
+        background: rgba(0, 86, 177, 0.15);
+    }
 }
 
 .card-success {
     background: #CBF8ED;
     box-shadow: 0px 0px 10px 0px rgba(0, 86, 177, 0.15);
+
+    .blade-card-color {
+        color: #009874;
+        background: rgba(0, 192, 146, 0.20);
+    }
 }
-</style>
+
+.card-yellow {
+    background: #FFEDD8;
+    box-shadow: 0px 0px 10px 0px rgba(0, 86, 177, 0.15);
+
+    .blade-card-color {
+        color: #E47C00;
+        background: rgba(255, 183, 97, 0.20);
+    }
+}
+
+.card-red {
+    background: #FFD9D3;
+    box-shadow: 0px 0px 10px 0px rgba(0, 86, 177, 0.15);
+
+    .blade-card-color {
+        color: #FC4D32;
+        background: rgba(252, 77, 50, 0.15);
+    }
+}
+
+.card-danger {
+    background: #FFE5EA;
+    box-shadow: 0px 0px 10px 0px rgba(0, 86, 177, 0.15);
+
+    .blade-card-color {
+        color: #E4002B;
+        background: rgba(228, 0, 43, 0.10);
+    }
+}
+
+.card-info {
+    background: #D6EFFF;
+    box-shadow: 0px 0px 10px 0px rgba(0, 86, 177, 0.15);
+
+    .blade-card-color {
+        background: rgba(78, 174, 234, 0.15);
+        color: #29A0EB;
+    }
+}</style>

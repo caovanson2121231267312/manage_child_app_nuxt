@@ -123,14 +123,25 @@ export default {
         }
     },
     methods: {
-        changeLink() {
-            console.log(this)
-        }
+        async load_data() {
+            await api.get('giao-vien/chi-tiet?id=' + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data.user
+                this.chungNhan = res?.data?.data.chungNhan
+                this.data = user
+                // this.hoten = user?.hoten
+                // this.dien_thoai = user?.dien_thoai
+                // this.selected = user?.vai_tro
+            })
+        },
     },
     mounted() {
         this.title.previous = '/admin/users/teachers/' + this.id
 
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
 }
 </script>

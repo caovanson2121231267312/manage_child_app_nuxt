@@ -11,8 +11,8 @@
         </div>
 
         <v-row>
-            <v-col v-for="n in 9" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
-                <card-service :status="generateRandomNumber()"></card-service>
+            <v-col v-for="(item, index) in data" :key="index" xs="12" sm="6" md="4" lg="4" xl="3">
+                <card-service :data="item" :status="item?.trang_thai"></card-service>
             </v-col>
         </v-row>
     </div>
@@ -20,6 +20,10 @@
 
 
 <script>
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
+
 export default {
     layout: 'admin',
     data() {
@@ -28,8 +32,9 @@ export default {
                 name: 'Lịch sử đăng ký dịch vụ',
                 previous: '/admin/users/parent/' + this.id ?? 0
             },
+            data: null,
             value: '',
-            arrange: 1,
+            arrange: 0,
             arranges: [
                 { value: '0', text: 'Mới nhất' },
                 { value: '1', text: 'Cũ nhất' },
@@ -41,13 +46,15 @@ export default {
         };
     },
     validate({ params }) {
-        return /^[0-9]{0,2}$/.test(params.id)
+        return /^\d+$/.test(params.id);
     },
-    components: {},
     computed: {
         id() {
-            console.log(this.$route.params.id)
             return this.$route.params.id
+        },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
         }
     },
     methods: {
@@ -55,12 +62,30 @@ export default {
             const result = this.status[Math.floor(Math.random() * 2)]
             console.log(result)
             return result;
-        }
+        },
+        async load_data() {
+            await api.get(`phu-huynh/danh-sach-don?tuKhoa=&page=1&limit=100&sort=${this.arrange}&phu_huynh_id=` + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data
+                this.data = user
+                // this.hoten = user?.hoten
+                // this.dien_thoai = user?.dien_thoai
+                // this.selected = user?.vai_tro
+            })
+        },
     },
     mounted() {
-        this.title.previous = '/admin/users/parent/' + this.id ?? 0
+        this.title.previous = '/admin/users/parent/' + (this.id ?? 0)
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data();
     },
+    watch: {
+        arrange() {
+            this.load_data();
+        }
+    }
 }
 </script>
 

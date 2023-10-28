@@ -27,6 +27,9 @@
 
 <script>
 import CardItem from '../../../components/card/CardItem.vue';
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -36,6 +39,7 @@ export default {
                 name: 'Quản lý đơn dịch vụ',
                 previous: '/admin/dashboard'
             },
+            data: null,
             items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
             selected: 'A',
             options: [
@@ -47,8 +51,26 @@ export default {
         };
     },
     computed: {},
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_data() {
+            await api.get(`don-dich-vu/danh-sach?tuKhoa=&giaoVien=&dich_vu_id=&thang=&trang_thai=&sort=1&limit=20&page=1`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data
+            })
+        },
+    },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
     components: { CardItem }
 }

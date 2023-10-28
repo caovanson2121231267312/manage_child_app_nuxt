@@ -6,18 +6,18 @@
                     <div class="block w-100 teachers teacher-detail">
                         <div class="d-flex align-center">
                             <div class="me-2 layout-user1">
-                                <img src="@/static/images/teacher/Rectangle4006.png" alt="">
+                                <img :src="data?.anh_nguoi_dung" alt="">
                             </div>
                             <div class="d-flex justify-content-between w-100">
                                 <div>
                                     <div class="d-flex align-items-center">
-                                        <span class="blade-id me-2"># 250</span>
+                                        <span class="blade-id me-2"># {{ data?.id }}</span>
                                     </div>
                                     <h3 class="name">
-                                        Nguyễn Thị Anh
+                                        {{ data?.hoten ?? 'Chưa cập nhật' }}
                                     </h3>
                                     <p class="w-p p-0 m-0 position">
-                                        Phụ huynh
+                                        {{ data?.vai_tro_name ?? 'Chưa cập nhật' }}
                                     </p>
                                     <div class="d-flex align-items-center blade-infor">
                                         <span class="me-3">
@@ -28,7 +28,7 @@
                                                     d="M13.9703 11.5492L15.4486 13.0275C15.7531 13.3321 15.7531 13.8258 15.4486 14.1304C13.802 15.777 11.1952 15.9622 9.33236 14.5651L9.22376 14.4836C7.81856 13.4297 6.57029 12.1814 5.51639 10.7762L5.43494 10.6676C4.03778 8.80476 4.22304 6.19801 5.86961 4.55145C6.17416 4.24689 6.66794 4.24689 6.9725 4.55145L8.45079 6.02974C8.84131 6.42026 8.84131 7.05342 8.45079 7.44395L7.4477 8.44704C7.2432 8.65154 7.1925 8.96395 7.32184 9.22262C8.06951 10.718 9.28203 11.9305 10.7774 12.6782C11.036 12.8075 11.3485 12.7568 11.553 12.5523L12.5561 11.5492C12.9466 11.1587 13.5797 11.1587 13.9703 11.5492Z"
                                                     fill="#0056B1" />
                                             </svg>
-                                            <span>0123 456 789</span>
+                                            <span>{{ data?.dien_thoai ?? 'Chưa cập nhật' }}</span>
                                         </span>
                                     </div>
                                 </div>
@@ -77,7 +77,7 @@
                                     </td>
                                     <td>
                                         <span class="w-text-p-1">
-                                            Nguyễn Hoàng Anh Thư
+                                            {{ data?.hoten ?? 'Chưa cập nhật' }}
                                         </span>
                                     </td>
                                 </tr>
@@ -91,7 +91,7 @@
                                     </td>
                                     <td>
                                         <span class="w-text-p-1">
-                                            anhthu256@gmail.com
+                                            {{ data?.email ?? 'Chưa cập nhật' }}
                                         </span>
                                     </td>
                                 </tr>
@@ -105,7 +105,7 @@
                                     </td>
                                     <td>
                                         <span class="w-text-p-1">
-                                            0123 456 789
+                                            {{ data?.dien_thoai ?? 'Chưa cập nhật' }}
                                         </span>
                                     </td>
                                 </tr>
@@ -119,7 +119,7 @@
                                     </td>
                                     <td>
                                         <span class="w-text-p-1">
-                                            Số 5, Ngách 128/6/6 Khâm Thiên, Đống Đa, Hà Nội
+                                            {{ data?.dia_chi ?? 'Chưa cập nhật' }}
                                         </span>
                                     </td>
                                 </tr>
@@ -140,7 +140,8 @@
                         <div class="input-group-parent">
                             <div class="parent-label mb-2">Họ và tên con</div>
                             <div class="position-relative">
-                                <input type="text" value="Nguyễn Minh Anh" class="form-control parent-detail-input" />
+                                <input type="text" :value="data?.ho_ten_con ?? 'Chưa cập nhật'"
+                                    class="form-control parent-detail-input" />
                             </div>
                         </div>
                     </div>
@@ -149,7 +150,8 @@
                         <div class="input-group-parent">
                             <div class="parent-label mb-2">Ngày sinh</div>
                             <div class="position-relative">
-                                <input type="text" value="13/05/2016" class="form-control parent-detail-input" />
+                                <input type="text" :value="data?.ngay_sinh_cua_con ?? 'Chưa cập nhật'"
+                                    class="form-control parent-detail-input" />
                             </div>
                         </div>
                     </div>
@@ -158,7 +160,12 @@
                         <div class="input-group-parent">
                             <div class="parent-label mb-2">CMND/CCCD</div>
                             <div class="position-relative">
-                                <input type="text" value="****************" class="form-control parent-detail-input" />
+                                <input :type="showPassword ? 'text' : 'password'"
+                                    :value="data?.cmnd_cccd ?? 'Chưa cập nhật'" class="form-control parent-detail-input" />
+                                <span @click="togglePasswordVisibility" class="password">
+                                    <i
+                                        :class="showPassword ? 'mdi mdi-eye-outline show' : 'mdi mdi-eye-off-outline show'"></i>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -168,7 +175,7 @@
                             <div class="parent-label mb-2">Ghi chú</div>
                             <div class="position-relative">
                                 <textarea class="form-control parent-detail-input"
-                                    style="height: 100px;"> Nhập nội dung</textarea>
+                                    style="height: 100px;">{{ data?.ghi_chu ?? 'Chưa cập nhật' }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -185,7 +192,7 @@
                         <div>
 
                             <b-card style="min-width: 245px;" class="teacher-nav">
-                                <nuxt-link class="block w-100 teachers " to="/admin/users/parent/12/history_service">
+                                <nuxt-link class="block w-100 teachers " :to="'/admin/users/parent/' +data?.id+ '/history_service'">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2">
@@ -217,7 +224,7 @@
                             </b-card>
 
                             <b-card style="min-width: 245px;" class="teacher-nav">
-                                <nuxt-link class="block w-100 teachers " to="/admin/users/parent/12/complain">
+                                <nuxt-link class="block w-100 teachers " :to="'/admin/users/parent/' + data?.id + '/complain'">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2">
@@ -257,38 +264,97 @@
 
 <script>
 // import { defineComponent } from '@vue/composition-api'
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
     data() {
         return {
             title: {
-                name: 'Chi tiết Giáo viên',
-                previous: '/admin/users/teachers'
+                name: 'Chi tiết phụ huynh',
+                previous: '/admin/users/parent'
             },
+            data: null,
+            showPassword: false,
         };
     },
     validate({ params }) {
-        return /^[0-9]{0,2}$/.test(params.id)
+        return /^\d+$/.test(params.id);
     },
     computed: {
-        // id() {
-        //     return $route.params.id
-        // }
-    },
-    methods: {
-        changeLink() {
-            console.log(this)
+        id() {
+            return this.$route.params.id
+        },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
         }
     },
+    methods: {
+        togglePasswordVisibility() {
+            this.showPassword = !this.showPassword;
+        },
+        async load_data() {
+            await api.get('phu-huynh/chi-tiet?id=' + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data
+                this.data = user
+                // this.hoten = user?.hoten
+                // this.dien_thoai = user?.dien_thoai
+                // this.selected = user?.vai_tro
+            })
+        },
+        async send_data(event) {
+            event.preventDefault();
+            console.log(123)
+            const formData = new FormData(document.getElementById('form'))
+            await api.post('admin-api/cap-nhat-quan-tri-vien', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.load_data()
+                    this.load_role()
+                }
+            })
+        },
+    },
     mounted() {
+        // this.title.previous =
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
 }
 </script>
 
 
 <style lang="scss" scoped>
+.password {
+    position: absolute;
+    top: 7px;
+    right: 12px;
+    font-size: 23px;
+    cursor: pointer;
+}
+.layout-user1 {
+    min-width: 80px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
 .input-group-parent {
     margin-bottom: 20px;
 
@@ -361,4 +427,5 @@ tr {
         font-weight: 400;
         line-height: normal;
     }
-}</style>
+}
+</style>

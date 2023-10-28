@@ -331,7 +331,7 @@
                                     <v-list-item-group>
                                         <v-list-item to="/admin/users/teachers">
                                             <v-list-item-content class="p-0 ps-4">
-                                                <v-list-item-title>Danh sách giáo viên</v-list-item-title>
+                                                <v-list-item-title>Danh sách người dùng </v-list-item-title>
                                             </v-list-item-content>
                                         </v-list-item>
                                         <v-list-item to="/admin/users/parent">

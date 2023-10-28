@@ -14,6 +14,16 @@
                 </div>
 
                 <div class="admins-group-btn mb-5 mt-4">
+                    <div class="btn btn-filter" :class="{ active: selectedFilter === '' }" @click="updateFilter('')">
+                        Mới nhất
+                    </div>
+                    <div class="btn btn-filter" v-for="(item, index) in type" :key="index"
+                        :class="{ active: selectedFilter === item?.id }" @click="updateFilter(item?.id)">
+                        {{ item?.name }}
+                    </div>
+                </div>
+
+                <!-- <div class="admins-group-btn mb-5 mt-4">
                     <div class="btn btn-filter active">
                         Mới nhất
                     </div>
@@ -26,26 +36,33 @@
                     <div class="btn btn-filter">
                         Hoạt động
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <b-row>
-                <b-col cols="12" sm="12" md="6" lg="4" xl="3" class="border-bottom-baner" v-for="n in 6" v-bind:key="n">
-                    <div class="card-media hover-card position-relative">
+                <b-col cols="12" sm="12" md="6" lg="4" xl="3" class="border-bottom-baner" v-for="(item, index) in data"
+                    :key="index">
+                    <div class="card-media hover-card position-relative  wow animate__animated animate__flipInY">
                         <div class="card-media-body">
                             <div class="media-content">
-                                <div class="media-title">Ưu đãi đặc biệt khi thanh toán bằng VNPAY-QR tại Trông Trẻ Pro
+                                <div class="media-title">
+                                    {{ item?.tieu_de }}
                                 </div>
-                                <div class="media-des mt-2">Mừng sinh nhật lần thứ 2 của Trông Trẻ Pro! Để kỷ niệm sự kiện
-                                    này, VNPAY-QR hân hạnh phối hợp cùng Trông Trẻ Pro...</div>
+                                <div class="media-des mt-2" v-html="item?.noi_dung">
+
+                                </div>
                             </div>
                             <div class="box-img">
-                                <img src="@/static/images/media/img.png" />
+                                <!-- <img src="@/static/images/media/img.png" /> -->
+                                <iframe src="https://www.youtube.com/embed/Zknq_nzLNvE" :title="item?.tieu_de"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen></iframe>
                             </div>
                         </div>
                         <hr class="m-0" />
                         <div class="card-media-footer">
-                            <div class="button" v-b-tooltip.hover title="Xoá tin">
+                            <div class="button" v-b-tooltip.hover title="Xoá tin" @click="delete_item(item?.id, item?.tieu_de)">
                                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -101,7 +118,7 @@
                                     d="M6 3V6L8 7M11 6C11 8.76142 8.76142 11 6 11C3.23858 11 1 8.76142 1 6C1 3.23858 3.23858 1 6 1C8.76142 1 11 3.23858 11 6Z"
                                     stroke="white" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                            26/08/2023
+                            {{ item?.created }}
                         </div>
                     </div>
                 </b-col>
@@ -115,6 +132,9 @@
 <script>
 import CardItem from '@/components/card/CardItem.vue';
 import ButtonAdd from '~/components/button/ButtonAdd.vue';
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -124,11 +144,82 @@ export default {
                 name: 'Quản lý Media',
                 previous: '/admin/dashboard'
             },
+            type: '',
+            data: null,
+            roles: null,
+            selectedFilter: '',
         };
     },
-    computed: {},
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_type() {
+            await api.get(`tin-tuc/get-loai-tin-tuc`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.type = res?.data?.data
+            })
+        },
+        async load_data() {
+            await api.get(`tin-tuc/danh-sach?tuKhoa=&type=${this.selectedFilter}&page=1&limit=35&sort=1`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data?.tinTuc
+            })
+        },
+        async delete_item(user_id, name) {
+            const formData = new FormData();
+            formData.append('id', user_id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá bài viết ${name}!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có xoá nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('tin-tuc/xoa', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Deleted!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            this.load_type()
+                            this.load_data()
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
+        },
+        async updateFilter(filter) {
+            this.selectedFilter = await filter ?? '';
+            await this.load_data()
+        },
+    },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+        this.load_type()
+        this.load_data()
     },
     components: { CardItem, ButtonAdd }
 }
@@ -228,9 +319,15 @@ export default {
 .box-img {
     width: 80px;
     height: 80px;
+    min-width: 80px;
     overflow: hidden;
     border-radius: 10px;
     margin-top: 12px;
+
+    iframe {
+        width: 100%;
+        height: 100%;
+    }
 
     img {
         width: 100%;
@@ -255,6 +352,12 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: 18px;
+    max-height: 107px;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+    }
 }
 
 .card-media {

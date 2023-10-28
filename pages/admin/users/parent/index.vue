@@ -2,19 +2,19 @@
     <div class="content-mp parents">
         <div class="">
             <v-row>
-                <v-col class="mt-0 pt-0" v-for="n in 6" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
-                    <b-card style="min-width: 245px;" class="">
-                        <nuxt-link class="block w-100 teachers" to="/admin/users/parent/34">
+                <v-col class="mt-0 pt-0" v-for="(item, index) in data" :key="index" xs="12" sm="6" md="4" lg="4" xl="3">
+                    <b-card style="min-width: 245px;" class="wow animate__animated animate__flipInY ">
+                        <nuxt-link class="block w-100 teachers" :to="'/admin/users/parent/' + item?.id">
                             <div class="d-flex align-center">
                                 <div class="me-2 layout-user">
-                                    <img src="@/static/images/teacher/Ellipse49.png" alt="">
+                                    <img :src="item?.anh_nguoi_dung" :alt="item?.hoten">
                                 </div>
                                 <div>
                                     <div class="d-flex align-items-center">
-                                        <span class="blade-id me-2"># {{ n + 200 }}</span>
+                                        <span class="blade-id me-2"># {{ item?.id }}</span>
                                     </div>
                                     <h3 class="name">
-                                        Nguyễn Hoàng Anh Thư
+                                        {{ item?.hoten ?? 'Chưa cập nhật' }}
                                     </h3>
                                     <p class="w-p p-0 m-0 position">
                                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -25,7 +25,7 @@
                                                 fill="#0056B1" />
                                         </svg>
                                         <span class="text-field">
-                                            ******** 789
+                                            {{ item?.dien_thoai ?? 'Chưa cập nhật' }}
                                         </span>
                                     </p>
                                 </div>
@@ -39,6 +39,9 @@
 </template>
 
 <script>
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -48,21 +51,36 @@ export default {
                 name: 'Danh sách Phụ huynh',
                 previous: '/admin/dashboard'
             },
-            items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
-            selected: 'A',
-            options: [
-                { item: 'A', name: 'Option A' },
-                { item: 'B', name: 'Option B' },
-                { item: 'D', name: 'Option C', notEnabled: true },
-                { item: { d: 1 }, name: 'Option D' }
-            ]
+            data: null,
+            selectedFilter: '',
         };
     },
-    computed: {},
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_data() {
+            await api.get(`phu-huynh/danh-sach?tuKhoa=&page=1&limit=20&sort=1`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data
+            })
+        },
+        async updateFilter(filter) {
+            this.selectedFilter = await filter ?? '';
+            await this.load_data()
+        }
+    },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
-    components: {  }
+    components: {}
 }
 </script>
 
