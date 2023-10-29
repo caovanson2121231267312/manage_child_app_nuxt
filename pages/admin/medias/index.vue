@@ -53,11 +53,13 @@
                                 </div>
                             </div>
                             <div class="box-img">
-                                <!-- <img src="@/static/images/media/img.png" /> -->
-                                <iframe src="https://www.youtube.com/embed/Zknq_nzLNvE" :title="item?.tieu_de"
+                                <a :href="item?.link" class="d-block" target="_blank">
+                                    <img src="@/static/images/media/yt.jpg" v-b-tooltip.hover :title="item?.link ?? 'Chưa cập nhật'" />
+                                </a>
+                                <!-- <iframe src="https://www.youtube.com/embed/Zknq_nzLNvE" :title="item?.tieu_de"
                                     frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowfullscreen></iframe>
+                                    allowfullscreen></iframe> -->
                             </div>
                         </div>
                         <hr class="m-0" />

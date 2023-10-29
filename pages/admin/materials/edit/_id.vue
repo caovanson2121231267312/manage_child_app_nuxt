@@ -21,7 +21,7 @@
                                     Chủ đề thông báo
                                 </div>
                                 <div class="w-100">
-                                    <input type="text" class="form-control input-text" />
+                                    <input v-model="code" type="text" class="form-control input-text" />
                                 </div>
                             </b-form-group>
                         </div>
@@ -46,7 +46,7 @@
                                     Số lượng tổng
                                 </div>
                                 <div class="w-100">
-                                    <input type="text" class="form-control input-text" />
+                                    <input v-model="so_luong_tong" type="text" class="form-control input-text" />
                                 </div>
                             </b-form-group>
                         </div>
@@ -64,7 +64,7 @@
                                     Số tồn kho
                                 </div>
                                 <div class="w-100">
-                                    <input type="text" class="form-control input-text" />
+                                    <input v-model="so_luong_ton" type="text" class="form-control input-text" />
                                 </div>
                             </b-form-group>
                         </div>
@@ -83,7 +83,7 @@
                                     Ghí chú
                                 </div>
                                 <div class="w-100">
-                                    <textarea class="form-control input-text"></textarea>
+                                    <textarea v-model="ghi_chu" class="form-control input-text"></textarea>
                                 </div>
                             </b-form-group>
                         </div>
@@ -108,11 +108,13 @@
                                 </div>
                                 <div class="w-100 card-img">
                                     <div class="box-img">
-                                        <img src="@/static/images/material/Rectangle4043.png" />
+                                        <img :src="image" />
                                     </div>
 
                                     <div class="">
-                                        <div class="mb-3 btn-banner-delete" v-b-tooltip.hover title="Xoá ảnh">
+                                        <!-- <input type="file" hidden v-model="file" ref="file-input" id="file-default" /> -->
+                                        <b-form-file v-model="file"  @change="handleFileChange" hidden ref="file-input" class="d-none" id="file-default"></b-form-file>
+                                        <div @click="delete_img" class="mb-3 btn-banner-delete" v-b-tooltip.hover title="Xoá ảnh">
                                             <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="16.5" cy="16" r="16" fill="#F2F2F2" />
@@ -133,7 +135,7 @@
                                             </svg>
                                         </div>
 
-                                        <div class="btn-banner-save" v-b-tooltip.hover title="Tải ảnh lên">
+                                        <label for="file-default" class="btn-banner-save d-block" v-b-tooltip.hover title="Tải ảnh lên">
                                             <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="16.5" cy="16" r="16" fill="#F2F2F2" />
@@ -144,14 +146,18 @@
                                                     d="M15.5 15V18.9375C15.5 19.4898 15.9477 19.9375 16.5 19.9375C17.0523 19.9375 17.5 19.4898 17.5 18.9375V15H23.5C24.6046 15 25.5 15.8954 25.5 17V22C25.5 23.1046 24.6046 24 23.5 24H9.5C8.39543 24 7.5 23.1046 7.5 22V17C7.5 15.8954 8.39543 15 9.5 15H15.5Z"
                                                     fill="#979797" />
                                             </svg>
-                                        </div>
+                                        </label>
                                     </div>
                                 </div>
                             </b-form-group>
                         </div>
 
-                        <div class="mt-6">
-                            <button-component>Lưu</button-component>
+                        <div class="mt-7">
+                            <form id="form" @submit="send_data">
+                                <button-component typeBtn="submit">
+                                    Lưu
+                                </button-component>
+                            </form>
                         </div>
 
                     </div>
@@ -166,6 +172,9 @@
 import SUNEDITOR from 'suneditor'
 import plugins from 'suneditor/src/plugins'
 import 'suneditor/dist/css/suneditor.min.css'
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -175,27 +184,82 @@ export default {
                 name: 'Chỉnh sửa gói giáo cụ',
                 previous: '/admin/materials'
             },
-            selected: 0,
-            options: [
-                { value: 0, text: 'Khuyến mại' },
-                { value: 1, text: 'Đơn hàng' },
-                { value: 2, text: 'Kết quả đào tạo' },
-                { value: 3, text: 'Khác' }
-            ],
+            code: null,
+            so_luong_tong: null,
+            so_luong_ton: null,
+            ghi_chu: null,
+            file: null,
+            image: null,
+            clearFiles() {
+                this.$refs['file-input'].reset()
+            }
         };
     },
     validate({ params }) {
-        const idRegex = /^[0-9]{0,2}$/;
-        return idRegex.test(params.id);
+        return /^\d+$/.test(params.id);
     },
     computed: {
         id() {
             return this.$route.params.id
         },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        delete_img() {
+            this.image = null;
+            this.file = null;
+        },
+        handleFileChange(event) {
+            const img = event.target.files[0];
+            this.file = img;
+            if (img) {
+                this.image = URL.createObjectURL(img);
+            }
+        },
+        async load_data() {
+            await api.get('giao-cu/chi-tiet?id=' + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data
+                this.data = user
+                this.code = user?.code
+                this.so_luong_tong = user?.so_luong_tong
+                this.so_luong_ton = user?.so_luong_ton
+                this.ghi_chu = user?.ghi_chu
+                this.file = user?.image
+                this.image = user?.image
+            })
+        },
+        async send_data(event) {
+            event.preventDefault();
+            const formData = new FormData()
+            formData.append('id', this.id);
+            formData.append('code', this.code )
+            formData.append('so_luong_tong', this.so_luong_tong )
+            formData.append('so_luong_ton', this.so_luong_ton )
+            formData.append('ghi_chu', this.ghi_chu )
+            formData.append('image', this.file )
+
+            await api.post('giao-cu/sua', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.load_data()
+                    this.$router.push(this.title.previous);
+                }
+            })
+        },
     },
     mounted() {
         this.title.previous = '/admin/materials/detail/' + this.id
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
     components: {}
 }

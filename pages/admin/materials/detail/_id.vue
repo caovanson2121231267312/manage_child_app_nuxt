@@ -4,7 +4,7 @@
             <v-row>
                 <v-col class="w-100" xs="12" sm="12" md="6" lg="6" xl="6">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <title-header>Gói giáo cụ MS023</title-header>
+                        <title-header>Gói giáo cụ {{ data?.code }}</title-header>
 
                         <nuxt-link :to="'/admin/materials/edit/' + this.id" class="btn btn-edit">
                             <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,7 +38,7 @@
                                             d="M5.1377 6.67868V10.4314C5.1377 10.8496 5.52031 11.1247 5.8582 10.9431C6.88181 10.3874 8.60604 9.3474 8.60604 9.3474C9.21226 8.96773 9.70915 8.01029 9.70915 7.22343V4.38413C9.70915 3.94944 9.29673 3.67431 8.95884 3.88891L5.38614 6.18346C5.23707 6.288 5.1377 6.47509 5.1377 6.67868Z"
                                             fill="white" />
                                     </svg>
-                                    Tổng: <span class="span2 ms-1">10 bộ</span>
+                                    Tổng: <span class="span2 ms-1">{{ data?.so_luong_tong }} bộ</span>
                                 </span>
                                 <span class="span1 ms-3">
                                     <svg width="10" height="9" viewBox="0 0 10 9" fill="none"
@@ -50,12 +50,12 @@
                                             d="M1.69933 4.1626C1.43233 4.1626 1.21387 4.3651 1.21387 4.6126V7.6501C1.21387 8.5501 1.4566 9.0001 2.67026 9.0001H7.03945C8.25311 9.0001 8.49584 8.5501 8.49584 7.6501V4.6126C8.49584 4.3651 8.27738 4.1626 8.01038 4.1626H1.69933ZM5.7384 6.1876H3.97131C3.77227 6.1876 3.60721 6.0346 3.60721 5.8501C3.60721 5.6656 3.77227 5.5126 3.97131 5.5126H5.7384C5.93744 5.5126 6.1025 5.6656 6.1025 5.8501C6.1025 6.0346 5.93744 6.1876 5.7384 6.1876Z"
                                             fill="white" />
                                     </svg>
-                                    Tồn kho: <span class="span2 ms-1">10 bộ</span>
+                                    Tồn kho: <span class="span2 ms-1">{{ data?.so_luong_ton }} bộ</span>
                                 </span>
                             </div>
                         </div>
                         <div class="box-img">
-                            <img src="@/static/images/material/Rectangle4043.png" />
+                            <img :src="data?.image" />
                         </div>
                     </div>
 
@@ -83,6 +83,9 @@
 
 <script>
 import ButtonComponent from '~/components/button/ButtonComponent.vue';
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -92,19 +95,35 @@ export default {
                 name: 'Chi tiết gói giáo cụ',
                 previous: '/admin/materials'
             },
+            data: null,
         };
     },
     validate({ params }) {
-        const idRegex = /^[0-9]{0,2}$/;
-        return idRegex.test(params.id);
+        return /^\d+$/.test(params.id);
     },
     computed: {
         id() {
             return this.$route.params.id
         },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_data() {
+            await api.get('giao-cu/chi-tiet?id=' + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data
+                this.data = user
+            })
+        },
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
     components: { ButtonComponent }
 }
@@ -120,6 +139,7 @@ export default {
 
 .box-img {
     min-width: 353px;
+    height: 225px;
     width: 100%;
     border-radius: 0px 10px 10px 10px;
     border: 1px solid #E5E5E5;

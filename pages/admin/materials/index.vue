@@ -20,7 +20,7 @@
 
                 <card-materials></card-materials>
 
-                <div class="d-flex justify-content-between align-items-center mb-4 mt-6">
+                <div class="d-flex justify-content-between align-items-center mb-4 mt-6 mb-5">
                     <title-header>Danh sách giáo cụ</title-header>
 
                     <nuxt-link to="/admin/materials/create">
@@ -32,13 +32,13 @@
 
                 <div class="mb-11">
                     <v-row>
-                        <v-col v-for="n in 8" v-bind:key="n" cols="6" xs="6" sm="6" md="4" lg="3" xl="3">
+                        <v-col v-for="(item, index) in data" :key="index" cols="6" xs="6" sm="6" md="4" lg="3" xl="3">
                             <div class="card-material hover-card">
                                 <div class="card-material-header">
                                     <strong>
                                         Gói giáo cụ
                                     </strong>
-                                    <span class="blade-card">MS023</span>
+                                    <span class="blade-card">{{ item?.code }}</span>
                                 </div>
                                 <div class="card-material-body">
                                     <div class="svg-card">
@@ -51,7 +51,7 @@
                                     </div>
                                     <div class="main-card">
                                         <div class="img-box-card-main">
-                                            <img src="@/static/images/material/Rectangle4043.png" />
+                                            <img :src="item?.image" />
                                         </div>
 
                                         <div>
@@ -70,7 +70,7 @@
                                                                 d="M5.84668 6.67868V10.4314C5.84668 10.8496 6.22929 11.1247 6.56718 10.9431C7.59079 10.3874 9.31502 9.3474 9.31502 9.3474C9.92124 8.96773 10.4181 8.01029 10.4181 7.22343V4.38413C10.4181 3.94944 10.0057 3.67431 9.66782 3.88891L6.09513 6.18346C5.94606 6.288 5.84668 6.47509 5.84668 6.67868Z"
                                                                 fill="#FC4D32" />
                                                         </svg>
-                                                        <span class="span-info">Tổng <span class="span2">10 bộ</span></span>
+                                                        <span class="span-info">Tổng <span class="span2">{{ item?.so_luong_tong }} bộ</span></span>
                                                     </span>
                                                 </div>
                                                 <div class="d-flex align-items-center">
@@ -84,12 +84,12 @@
                                                                 d="M2.40832 4.1626C2.14131 4.1626 1.92285 4.3651 1.92285 4.6126V7.6501C1.92285 8.5501 2.16558 9.0001 3.37925 9.0001H7.74843C8.9621 9.0001 9.20483 8.5501 9.20483 7.6501V4.6126C9.20483 4.3651 8.98637 4.1626 8.71936 4.1626H2.40832ZM6.44739 6.1876H4.68029C4.48125 6.1876 4.31619 6.0346 4.31619 5.8501C4.31619 5.6656 4.48125 5.5126 4.68029 5.5126H6.44739C6.64643 5.5126 6.81149 5.6656 6.81149 5.8501C6.81149 6.0346 6.64643 6.1876 6.44739 6.1876Z"
                                                                 fill="#FC4D32" />
                                                         </svg>
-                                                        <span class="span-info">Tồn kho <span class="span2">2
+                                                        <span class="span-info">Tồn kho <span class="span2">{{ item?.so_luong_ton }}
                                                                 bộ</span></span>
                                                     </span>
                                                 </div>
                                             </div>
-                                            <nuxt-link to="/admin/materials/detail/2" class="read-more mt-2">
+                                            <nuxt-link :to="'/admin/materials/detail/' + item?.id" class="read-more mt-2">
                                                 <span>Xem thêm</span>
                                                 <span class="mdi mdi-chevron-right"></span>
                                             </nuxt-link>
@@ -109,6 +109,9 @@
 
 <script>
 import CardItem from '../../../components/card/CardItem.vue';
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -118,11 +121,29 @@ export default {
                 name: 'Quản lý giáo cụ',
                 previous: '/admin/dashboard'
             },
+            data: null,
         };
     },
-    computed: {},
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_data() {
+            await api.get('giao-cu/danh-sach?page=1&limit=8&sort=1&tuKhoa=', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data
+            })
+        },
+    },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
     components: { CardItem }
 }
@@ -246,7 +267,7 @@ export default {
         img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            // object-fit: cover;
             // border: 1px solid #e5e5e5;
         }
     }

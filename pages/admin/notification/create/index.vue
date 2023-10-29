@@ -8,6 +8,22 @@
                             <b-form-group>
                                 <div class="label">
                                     <span class="me-2">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M10.52 1.3335H5.48004C2.96004 1.3335 2.33337 2.00683 2.33337 4.6935V12.2002C2.33337 13.9735 3.30671 14.3935 4.48671 13.1268L4.49337 13.1202C5.04004 12.5402 5.87337 12.5868 6.34671 13.2202L7.02004 14.1202C7.56004 14.8335 8.43337 14.8335 8.97337 14.1202L9.64671 13.2202C10.1267 12.5802 10.96 12.5335 11.5067 13.1202C12.6934 14.3868 13.66 13.9668 13.66 12.1935V4.6935C13.6667 2.00683 13.04 1.3335 10.52 1.3335ZM9.89337 6.66016L9.56004 7.00016H9.55337L7.53337 9.02016C7.44671 9.10683 7.26671 9.20016 7.14004 9.2135L6.24004 9.34683C5.91337 9.3935 5.68671 9.16016 5.73337 8.84016L5.86004 7.9335C5.88004 7.80683 5.96671 7.6335 6.05337 7.54016L8.08004 5.52016L8.41337 5.18016C8.63337 4.96016 8.88004 4.80016 9.14671 4.80016C9.37337 4.80016 9.62004 4.90683 9.89337 5.18016C10.4934 5.78016 10.3 6.2535 9.89337 6.66016Z"
+                                                fill="#0056B1" />
+                                        </svg>
+                                    </span>
+                                    Tiêu đề thông báo
+                                </div>
+                                <b-form-input v-model="tieu_de" placeholder="Nhập tiêu đề thông báo"></b-form-input>
+                            </b-form-group>
+                        </div>
+                        <div>
+                            <b-form-group>
+                                <div class="label">
+                                    <span class="me-2">
                                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -38,7 +54,7 @@
                                     </span>
                                     Nội dung
                                 </div>
-                                <textarea v-model="contents" id="sample"></textarea>
+                                <textarea v-model="noi_dung" id="sample"></textarea>
                             </b-form-group>
                         </div>
                         <div class="mt-1">
@@ -100,7 +116,8 @@
                                     </span>
                                     Gán giáo viên
                                 </div>
-                                <b-form-select disabled v-model="selected2" :options="options2" class="mb-3"></b-form-select>
+                                <b-form-select disabled v-model="selected2" :options="options2"
+                                    class="mb-3"></b-form-select>
                             </b-form-group>
                         </div>
 
@@ -117,7 +134,8 @@
                                     </span>
                                     Gán phụ huynh
                                 </div>
-                                <b-form-select disabled v-model="selected2" :options="options2" class="mb-3"></b-form-select>
+                                <b-form-select disabled v-model="selected2" :options="options2"
+                                    class="mb-3"></b-form-select>
                             </b-form-group>
                         </div>
 
@@ -134,7 +152,8 @@
                                     </span>
                                     Nhóm dịch vụ
                                 </div>
-                                <b-form-select disabled v-model="selected2" :options="options2" class="mb-3"></b-form-select>
+                                <b-form-select disabled v-model="selected2" :options="options2"
+                                    class="mb-3"></b-form-select>
                             </b-form-group>
                         </div>
 
@@ -151,12 +170,17 @@
                                     </span>
                                     Phân loại lao động
                                 </div>
-                                <b-form-select disabled v-model="selected2" :options="options2" class="mb-3"></b-form-select>
+                                <b-form-select disabled v-model="selected2" :options="options2"
+                                    class="mb-3"></b-form-select>
                             </b-form-group>
                         </div>
 
                         <div class="mt-6">
-                            <button-component>Lưu</button-component>
+                            <form id="form" @submit="send_data">
+                                <button-component typeBtn="submit">
+                                    Lưu
+                                </button-component>
+                            </form>
                         </div>
 
                     </div>
@@ -180,6 +204,7 @@ export default {
                 name: 'Tạo thông báo',
                 previous: '/admin/notification'
             },
+            tieu_de: null,
             selected: 0,
             options: [
                 { value: 0, text: 'Khuyến mại' },
@@ -199,10 +224,39 @@ export default {
                 { value: 0, text: 'Tất cả' },
             ],
             suneditorInstance: null,
-            contents: 'Nhập nội dung',
+            noi_dung: 'Nhập nội dung',
         };
     },
-    computed: {},
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async send_data(event) {
+            event.preventDefault();
+            const formData = new FormData()
+            formData.append('type_id', this.type_id)
+            formData.append('noi_dung', this.noi_dung)
+            formData.append('image', this.image)
+            formData.append('to_id', this.to_id)
+            formData.append('giao_vien_id', this.giao_vien_id)
+            formData.append('phu_huynh_id', this.phu_huynh_id)
+            formData.append('dich_vu_id', this.dich_vu_id)
+            formData.append('lao_dong_id', this.lao_dong_id)
+
+            await api.post('thong-bao/tao-moi', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$router.push('/admin/users/admins');
+                }
+            })
+        }
+    },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
 
@@ -221,19 +275,18 @@ export default {
                 ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
                 ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
             ],
-            callBackSave: function (contents, isChanged) {
-                this.contents = contents
-                console.log(contents);
+            callBackSave: function (noi_dung, isChanged) {
+                this.noi_dung = noi_dung
+                console.log(noi_dung);
             },
         });
         this.suneditorInstance = editor; // Store the Suneditor instance in a component property
 
-        this.suneditorInstance.onChange = async (contents, core) => {
-            this.contents = contents;
-            await console.log(this.contents)
+        this.suneditorInstance.onChange = async (noi_dung, core) => {
+            this.noi_dung = noi_dung;
         };
 
-        this.suneditorInstance.setContents(this.contents);
+        this.suneditorInstance.setContents(this.noi_dung);
     },
     components: {}
 }

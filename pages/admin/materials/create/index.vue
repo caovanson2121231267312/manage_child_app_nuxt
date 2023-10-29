@@ -21,7 +21,8 @@
                                     Chủ đề thông báo
                                 </div>
                                 <div class="w-100">
-                                    <input placeholder="Nhập mã gói giáo cụ" type="text" class="form-control input-text" />
+                                    <input v-model="code" placeholder="Nhập mã gói giáo cụ" type="text"
+                                        class="form-control input-text" />
                                 </div>
                             </b-form-group>
                         </div>
@@ -46,7 +47,8 @@
                                     Số lượng tổng
                                 </div>
                                 <div class="w-100">
-                                    <input placeholder="Nhập số lượng" type="text" class="form-control input-text" />
+                                    <input v-model="so_luong_tong" placeholder="Nhập số lượng" type="number"
+                                        class="form-control input-text" />
                                 </div>
                             </b-form-group>
                         </div>
@@ -64,7 +66,8 @@
                                     Số tồn kho
                                 </div>
                                 <div class="w-100">
-                                    <input placeholder="Nhập số lượng" type="text" class="form-control input-text" />
+                                    <input v-model="so_luong_ton" placeholder="Nhập số lượng" type="number"
+                                        class="form-control input-text" />
                                 </div>
                             </b-form-group>
                         </div>
@@ -88,13 +91,36 @@
                                     Hình ảnh <i>(Tối thiểu không quá 2mb)</i>
                                 </div>
                                 <div class="w-100">
-                                    <b-form-file id="file-default"></b-form-file>
+                                    <b-form-file v-model="file" ref="file-input" id="file-default"></b-form-file>
+                                </div>
+                            </b-form-group>
+                        </div>
+                        <div>
+                            <b-form-group>
+                                <div class="label">
+                                    <span class="me-2">
+                                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M8.4 0H3.6C1.2 0 0 1.2 0 3.6V11.4C0 11.73 0.27 12 0.6 12H8.4C10.8 12 12 10.8 12 8.4V3.6C12 1.2 10.8 0 8.4 0ZM5.466 8.796C5.316 8.946 5.04 9.084 4.836 9.114L3.588 9.288C3.54 9.294 3.492 9.3 3.45 9.3C3.24 9.3 3.048 9.228 2.91 9.09C2.742 8.922 2.67 8.676 2.712 8.412L2.886 7.164C2.916 6.96 3.054 6.678 3.204 6.534L5.466 4.272C5.502 4.38 5.55 4.488 5.604 4.608C5.658 4.716 5.712 4.824 5.772 4.926C5.82 5.01 5.874 5.094 5.922 5.154C5.982 5.244 6.042 5.322 6.084 5.364C6.108 5.4 6.132 5.424 6.138 5.436C6.27 5.586 6.408 5.73 6.54 5.838C6.576 5.874 6.6 5.892 6.606 5.898C6.684 5.958 6.756 6.024 6.828 6.066C6.906 6.126 6.99 6.18 7.074 6.228C7.176 6.288 7.284 6.348 7.398 6.402C7.512 6.456 7.62 6.498 7.728 6.534L5.466 8.796ZM8.73 5.538L8.262 6.006C8.232 6.036 8.19 6.054 8.148 6.054C8.136 6.054 8.112 6.054 8.1 6.048C7.068 5.754 6.246 4.932 5.952 3.9C5.934 3.846 5.952 3.786 5.994 3.744L6.468 3.27C7.242 2.496 7.974 2.514 8.73 3.27C9.114 3.654 9.306 4.026 9.3 4.41C9.3 4.788 9.114 5.154 8.73 5.538Z"
+                                                fill="#00C092" />
+                                        </svg>
+                                    </span>
+                                    Ghi chú
+                                </div>
+                                <div class="w-100">
+                                    <b-form-textarea id="textarea" v-model="ghi_chu" placeholder="Nhập..." rows="3"
+                                        max-rows="6"></b-form-textarea>
                                 </div>
                             </b-form-group>
                         </div>
 
-                        <div class="mt-6">
-                            <button-component>Lưu</button-component>
+                        <div class="mt-7">
+                            <form id="form" @submit="send_data">
+                                <button-component typeBtn="submit">
+                                    Lưu
+                                </button-component>
+                            </form>
                         </div>
 
                     </div>
@@ -109,6 +135,9 @@
 import SUNEDITOR from 'suneditor'
 import plugins from 'suneditor/src/plugins'
 import 'suneditor/dist/css/suneditor.min.css'
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -118,16 +147,41 @@ export default {
                 name: 'Thêm mới giáo cụ',
                 previous: '/admin/materials'
             },
-            selected: 0,
-            options: [
-                { value: 0, text: 'Khuyến mại' },
-                { value: 1, text: 'Đơn hàng' },
-                { value: 2, text: 'Kết quả đào tạo' },
-                { value: 3, text: 'Khác' }
-            ],
+            code: null,
+            so_luong_tong: null,
+            so_luong_ton: null,
+            ghi_chu: null,
+            file: null,
+            clearFiles() {
+                this.$refs['file-input'].reset()
+            }
         };
     },
     computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async send_data(event) {
+            event.preventDefault();
+            const formData = new FormData()
+            formData.append('code', this.code )
+            formData.append('so_luong_tong', this.so_luong_tong )
+            formData.append('so_luong_ton', this.so_luong_ton )
+            formData.append('ghi_chu', this.ghi_chu )
+            formData.append('image', this.file )
+            await api.post('giao-cu/tao-moi', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$router.push('/admin/materials');
+                }
+            })
+        }
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
@@ -145,6 +199,7 @@ export default {
     //     transform: scale(1.05);
     // }
 }
+
 .btn-banner-delete {
     cursor: pointer;
     transition: 0.3s;
@@ -153,6 +208,7 @@ export default {
     //     transform: scale(1.05);
     // }
 }
+
 .card-img {
     padding: 10px;
     border-radius: 10px;
@@ -204,5 +260,4 @@ export default {
             margin-bottom: 7px;
         }
     }
-}
-</style>
+}</style>

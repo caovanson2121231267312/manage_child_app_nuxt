@@ -34,7 +34,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scope>
+<style lang="scss" scoped>
 .border-4 {
     border-width: 2px!important;
 }
