@@ -374,4 +374,27 @@ export default {
         }
     }
 }
+
+@media (max-width: 600px) {
+    .nav-bar .v-navigation-drawer {
+        width: 100% !important;
+    }
+    .img-avatar {
+        width: auto !important;
+    }
+    .student {
+        .w-title {
+            max-width: 140px !important;
+        }
+    }
+    .student-detail {
+        .w-title {
+            max-width: 138px !important;
+        }
+        .btn-delete-form {
+            min-width: 185px;
+        }
+    }
+}
+
 </style>

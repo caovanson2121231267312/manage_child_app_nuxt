@@ -24,11 +24,13 @@
                         <div class="card-about">
                             <div class="card-about-body">
                                 <div class="about-img">
-                                    <img src="@/static/images/banner/banner3.png" />
+                                    <img :src="image" />
                                 </div>
 
                                 <div>
-                                    <div class="mb-3 btn-about-delete" v-b-tooltip.hover title="Xoá ảnh">
+                                    <input type="file" hidden @change="handleFileChange" id="img" />
+                                    <label @click="delete_img()" class="d-block mb-3 btn-about-delete"
+                                        v-b-tooltip.hover title="Xoá ảnh">
                                         <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="16.5" cy="16" r="16" fill="#F2F2F2" />
@@ -47,9 +49,10 @@
                                                 </clipPath>
                                             </defs>
                                         </svg>
-                                    </div>
+                                    </label>
 
-                                    <div class="btn-about-save" v-b-tooltip.hover title="Tải ảnh lên">
+                                    <label for="img" class="d-block btn-about-save" v-b-tooltip.hover
+                                        title="Tải ảnh lên">
                                         <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="16.5" cy="16" r="16" fill="#F2F2F2" />
@@ -60,7 +63,7 @@
                                                 d="M15.5 15V18.9375C15.5 19.4898 15.9477 19.9375 16.5 19.9375C17.0523 19.9375 17.5 19.4898 17.5 18.9375V15H23.5C24.6046 15 25.5 15.8954 25.5 17V22C25.5 23.1046 24.6046 24 23.5 24H9.5C8.39543 24 7.5 23.1046 7.5 22V17C7.5 15.8954 8.39543 15 9.5 15H15.5Z"
                                                 fill="#979797" />
                                         </svg>
-                                    </div>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -102,9 +105,11 @@
                     </div>
 
                     <div class="my-7">
-                        <button-save>
-                            Lưu thay đổi
-                        </button-save>
+                        <form @submit="send_data">
+                            <button-save typeBtn="submit">
+                                Lưu thay đổi
+                            </button-save>
+                        </form>
                     </div>
                 </b-col>
             </b-row>
@@ -120,6 +125,9 @@ import ButtonSave from '~/components/button/ButtonComponent.vue';
 import SUNEDITOR from 'suneditor'
 import plugins from 'suneditor/src/plugins'
 import 'suneditor/dist/css/suneditor.min.css'
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -130,10 +138,58 @@ export default {
                 previous: '/admin/dashboard'
             },
             suneditorInstance: null,
-            contents: 'Nhập nội dung giới thiệu',
+            contents: 'Nhập nội dung',
+            image: null,
+            file: null,
         };
     },
-    computed: {},
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        delete_img() {
+            this.image = null;
+            this.file = null;
+        },
+        handleFileChange(event) {
+            const img = event.target.files[0];
+            this.file = img;
+            if (img) {
+                this.image = URL.createObjectURL(img);
+            }
+        },
+        async load_data() {
+            await api.get('he-thong/gioi-thieu-app', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data
+                this.data = user
+                this.image = user?.image
+                this.contents = user?.content
+                this.suneditorInstance.setContents(user?.content);
+            })
+        },
+        async send_data(event) {
+            event.preventDefault();
+            const formData = new FormData()
+            formData.append('image', this.file)
+            formData.append('content', this.contents)
+
+            await api.post('he-thong/cap-nhat-gioi-thieu-app', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.load_data()
+                }
+            })
+        },
+    },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
 
@@ -141,7 +197,6 @@ export default {
             toolbarContainer: '#toolbar_container',
             showPathLabel: false,
             charCounter: true,
-            maxCharCount: 720,
             width: 'auto',
             height: 'auto',
             minHeight: '300px',
@@ -165,7 +220,7 @@ export default {
             await console.log(this.contents)
         };
 
-        this.suneditorInstance.setContents(this.contents);
+        this.load_data();
     },
     components: { CardItem, ButtonAdd, ButtonSave }
 }

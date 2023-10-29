@@ -24,11 +24,13 @@
                         <div class="card-support">
                             <div class="card-support-body">
                                 <div class="support-img">
-                                    <img src="@/static/images/banner/banner3.png" />
+                                    <img :src="image" />
                                 </div>
 
                                 <div>
-                                    <div class="mb-3 btn-support-delete" v-b-tooltip.hover title="Xoá ảnh">
+                                    <input type="file" hidden @change="handleFileChange" id="img" />
+                                    <label @click="delete_img()" class="mb-3 btn-support-delete d-block" v-b-tooltip.hover
+                                        title="Xoá ảnh">
                                         <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="16.5" cy="16" r="16" fill="#F2F2F2" />
@@ -47,9 +49,9 @@
                                                 </clipPath>
                                             </defs>
                                         </svg>
-                                    </div>
+                                    </label>
 
-                                    <div class="btn-support-save" v-b-tooltip.hover title="Tải ảnh lên">
+                                    <label for="img" class="btn-support-save d-block" v-b-tooltip.hover title="Tải ảnh lên">
                                         <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="16.5" cy="16" r="16" fill="#F2F2F2" />
@@ -60,7 +62,7 @@
                                                 d="M15.5 15V18.9375C15.5 19.4898 15.9477 19.9375 16.5 19.9375C17.0523 19.9375 17.5 19.4898 17.5 18.9375V15H23.5C24.6046 15 25.5 15.8954 25.5 17V22C25.5 23.1046 24.6046 24 23.5 24H9.5C8.39543 24 7.5 23.1046 7.5 22V17C7.5 15.8954 8.39543 15 9.5 15H15.5Z"
                                                 fill="#979797" />
                                         </svg>
-                                    </div>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +85,8 @@
                                 Đơn vị chủ quản
                             </div>
                             <div class="position-relative">
-                                <input placeholder="Nhập thông tin" class="form-control support-input" type="text" />
+                                <input placeholder="Nhập thông tin" v-model="donViChuQuan"
+                                    class="form-control support-input" type="text" />
                             </div>
                         </div>
 
@@ -99,7 +102,8 @@
                             </div>
                             <div class="position-relative">
                                 <!-- <input placeholder="Nhập thông tin" class="form-control support-input" type="text" /> -->
-                                <textarea placeholder="Nhập thông tin" class="form-control support-input"></textarea>
+                                <textarea placeholder="Nhập thông tin" v-model="truSo"
+                                    class="form-control support-input"></textarea>
                             </div>
                         </div>
 
@@ -138,7 +142,24 @@
                                 Website
                             </div>
                             <div class="position-relative">
-                                <input placeholder="Nhập thông tin" class="form-control support-input" type="text" />
+                                <input placeholder="Nhập thông tin" v-model="website" class="form-control support-input"
+                                    type="text" />
+                            </div>
+                        </div>
+
+                        <div class="mt-5">
+                            <div class="input-title mb-2">
+                                <svg width="15" height="14" viewBox="0 0 15 14" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M10.751 2.04169H4.91764C3.16764 2.04169 2.00098 2.91669 2.00098 4.95835V9.04169C2.00098 11.0834 3.16764 11.9584 4.91764 11.9584H10.751C12.501 11.9584 13.6676 11.0834 13.6676 9.04169V4.95835C13.6676 2.91669 12.501 2.04169 10.751 2.04169ZM11.0251 5.59419L9.19931 7.05252C8.81431 7.36169 8.32431 7.51335 7.83431 7.51335C7.34431 7.51335 6.84848 7.36169 6.46931 7.05252L4.64348 5.59419C4.45681 5.44252 4.42764 5.16252 4.57348 4.97585C4.72514 4.78919 4.99931 4.75419 5.18598 4.90585L7.01181 6.36419C7.45514 6.72002 8.20764 6.72002 8.65098 6.36419L10.4768 4.90585C10.6635 4.75419 10.9435 4.78335 11.0893 4.97585C11.241 5.16252 11.2118 5.44252 11.0251 5.59419Z"
+                                        fill="#0056B1" />
+                                </svg>
+                                Email
+                            </div>
+                            <div class="position-relative">
+                                <input placeholder="Nhập thông tin" v-model="email" class="form-control support-input"
+                                    type="text" />
                             </div>
                         </div>
 
@@ -162,25 +183,12 @@
                                 Hotline - Zalo 24/7
                             </div>
                             <div class="position-relative">
-                                <textarea placeholder="Nhập thông tin" class="form-control support-input"
+                                <textarea placeholder="Nhập thông tin" v-model="hotline" class="form-control support-input"
                                     id="hotline"></textarea>
                             </div>
                         </div>
 
-                        <div class="mt-5">
-                            <div class="input-title mb-2">
-                                <svg width="15" height="14" viewBox="0 0 15 14" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M10.751 2.04169H4.91764C3.16764 2.04169 2.00098 2.91669 2.00098 4.95835V9.04169C2.00098 11.0834 3.16764 11.9584 4.91764 11.9584H10.751C12.501 11.9584 13.6676 11.0834 13.6676 9.04169V4.95835C13.6676 2.91669 12.501 2.04169 10.751 2.04169ZM11.0251 5.59419L9.19931 7.05252C8.81431 7.36169 8.32431 7.51335 7.83431 7.51335C7.34431 7.51335 6.84848 7.36169 6.46931 7.05252L4.64348 5.59419C4.45681 5.44252 4.42764 5.16252 4.57348 4.97585C4.72514 4.78919 4.99931 4.75419 5.18598 4.90585L7.01181 6.36419C7.45514 6.72002 8.20764 6.72002 8.65098 6.36419L10.4768 4.90585C10.6635 4.75419 10.9435 4.78335 11.0893 4.97585C11.241 5.16252 11.2118 5.44252 11.0251 5.59419Z"
-                                        fill="#0056B1" />
-                                </svg>
-                                Email
-                            </div>
-                            <div class="position-relative">
-                                <input placeholder="Nhập thông tin" class="form-control support-input" type="text" />
-                            </div>
-                        </div>
+
 
                         <hr class="support-hr" />
 
@@ -233,9 +241,11 @@
                     </div>
 
                     <div class="my-7">
-                        <button-save>
-                            Lưu thay đổi
-                        </button-save>
+                        <form @submit="send_data">
+                            <button-save typeBtn="submit">
+                                Lưu thay đổi
+                            </button-save>
+                        </form>
                     </div>
                 </b-col>
             </b-row>
@@ -251,6 +261,9 @@ import ButtonSave from '~/components/button/ButtonComponent.vue';
 import SUNEDITOR from 'suneditor'
 import plugins from 'suneditor/src/plugins'
 import 'suneditor/dist/css/suneditor.min.css'
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -268,42 +281,82 @@ export default {
             hotline: 'Nhập hotline',
             tutorial: 'Nhập nội dung',
             tutorial_money: 'Nhập nội dung',
+            image: null,
+            file: null,
+            donViChuQuan: "",
+            email: "",
+            nhanLich: "",
+            rutTien: "",
+            truSo: "",
+            website: "",
         };
     },
-    computed: {},
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        delete_img() {
+            this.image = null;
+            this.file = null;
+        },
+        handleFileChange(event) {
+            const img = event.target.files[0];
+            this.file = img;
+            if (img) {
+                this.image = URL.createObjectURL(img);
+            }
+        },
+        async load_data() {
+            await api.get('he-thong/lien-he-va-tro-giup', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data
+                this.data = user
+                this.image = user?.image
+                this.donViChuQuan = user?.donViChuQuan
+                this.email = user?.email
+                this.hotline = user?.hotline
+                this.nhanLich = user?.nhanLich
+                this.rutTien = user?.rutTien
+                this.truSo = user?.truSo
+                this.website = user?.website
+
+                this.suneditorHotlineInstance.setContents(user?.hotline);
+                this.suneditorTutorialInstance.setContents(user?.nhanLich);
+                this.suneditorTutorialMoneyInstance.setContents(user?.rutTien);
+
+                // this.suneditorInstance.setContents(user?.content);
+            })
+        },
+        async send_data(event) {
+            event.preventDefault();
+            const formData = new FormData()
+            formData.append('image', this.file)
+            formData.append('donViChuQuan', this.donViChuQuan)
+            formData.append('email', this.email)
+            formData.append('hotline', this.hotline)
+            formData.append('nhanLich', this.nhanLich)
+            formData.append('rutTien', this.rutTien)
+            formData.append('truSo', this.truSo)
+            formData.append('website', this.website)
+
+            await api.post('he-thong/cap-nhat-lien-he-va-tro-giup', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.load_data()
+                }
+            })
+        },
+    },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
-
-        // const editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'), {
-        //     toolbarContainer: '#toolbar_container',
-        //     showPathLabel: false,
-        //     charCounter: true,
-        //     width: 'auto',
-        //     height: 'auto',
-        //     minHeight: '300px',
-        //     maxHeight: '250px',
-        //     plugins: plugins,
-        //     buttonList: [
-        //         ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
-        //         ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
-        //         ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
-        //         ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
-        //     ],
-        //     callBackSave: function (contents, isChanged) {
-        //         this.contents = contents
-        //         console.log(contents);
-        //     },
-        // });
-        // this.suneditorInstance = editor;
-
-        // this.suneditorInstance.onChange = async (contents, core) => {
-        //     this.contents = contents;
-        //     await console.log(this.contents)
-        // };
-
-        // this.suneditorInstance.setContents(this.contents);
-
-        //
 
         const editor1 = SUNEDITOR.create((document.getElementById('hotline') || 'hotline'), {
             toolbarContainer: '#toolbar_container',
@@ -317,7 +370,7 @@ export default {
             buttonList: [
                 ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
                 ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
-                ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+                // ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
                 // ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
             ],
             callBackSave: function (contents, isChanged) {
@@ -331,9 +384,6 @@ export default {
             this.hotline = contents;
             await console.log(this.hotline)
         };
-
-        this.suneditorHotlineInstance.setContents(this.hotline);
-
         //
 
         const editor2 = SUNEDITOR.create((document.getElementById('tutorial') || 'tutorial'), {
@@ -348,22 +398,21 @@ export default {
             buttonList: [
                 ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
                 ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
-                ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+                // ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
                 // ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
             ],
             callBackSave: function (contents, isChanged) {
-                this.tutorial = contents
+                this.nhanLich = contents
                 console.log(contents);
             },
         });
         this.suneditorTutorialInstance = editor2; // Store the Suneditor instance in a component property
 
         this.suneditorTutorialInstance.onChange = async (contents, core) => {
-            this.tutorial = contents;
-            await console.log(this.tutorial)
+            this.nhanLich = contents;
+            await console.log(this.nhanLich)
         };
 
-        this.suneditorTutorialInstance.setContents(this.tutorial);
 
         //
 
@@ -379,22 +428,23 @@ export default {
             buttonList: [
                 ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
                 ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
-                ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+                // ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
                 // ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
             ],
             callBackSave: function (contents, isChanged) {
-                this.tutorial_money = contents
+                this.rutTien = contents
                 console.log(contents);
             },
         });
         this.suneditorTutorialMoneyInstance = editor3; // Store the Suneditor instance in a component property
 
         this.suneditorTutorialMoneyInstance.onChange = async (contents, core) => {
-            this.tutorial_money = contents;
-            await console.log(this.tutorial_money)
+            this.rutTien = contents;
+            await console.log(this.rutTien)
         };
 
-        this.suneditorTutorialMoneyInstance.setContents(this.tutorial_money);
+
+        this.load_data();
     },
     components: { CardItem, ButtonAdd, ButtonSave }
 }
@@ -404,6 +454,7 @@ export default {
 .support-hr {
     margin: 35px 0px;
 }
+
 .support-content {
     margin: 0px 0px;
 }
@@ -519,4 +570,5 @@ export default {
     //     stroke: rgb(238, 50, 50);
     //     transform: scale(1.05);
     // }
-}</style>
+}
+</style>

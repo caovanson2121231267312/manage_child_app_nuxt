@@ -62,7 +62,8 @@
                         </div>
                         <hr class="m-0" />
                         <div class="card-media-footer">
-                            <div class="button" v-b-tooltip.hover title="Xoá tin" @click="delete_item(item?.id, item?.tieu_de)">
+                            <div class="button" v-b-tooltip.hover title="Xoá tin"
+                                @click="delete_item(item?.id, item?.tieu_de)">
                                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -100,7 +101,8 @@
                                     </defs>
                                 </svg>
                             </div>
-                            <nuxt-link to="/admin/medias/34/edit" class="btn btn-edit" v-b-tooltip.hover title="Sửa">
+                            <nuxt-link :to="'/admin/medias/' + item?.id + '/edit'" class="btn btn-edit" v-b-tooltip.hover
+                                title="Sửa bài viết">
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path

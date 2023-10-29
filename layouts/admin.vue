@@ -6,21 +6,7 @@
                 <div class="mt-60 px-27">
                     <div class="d-flex flex-wrap justify-content-between w-100">
                         <div class="w-d-none d-none-mobile">
-                            <div class="d-flex flex-wrap">
-                                <img class="img-avatar" src="@/static/images/users/avatar.png" alt="">
-
-                                <div class="pt-2 ms-2">
-                                    <div>
-                                        <span class="blade ">
-                                            admin
-                                        </span>
-                                        <h3 class="user-name text mt-1">
-                                            Nguyen Van A
-                                        </h3>
-                                    </div>
-
-                                </div>
-                            </div>
+                            <avatar-siderbar></avatar-siderbar>
                         </div>
                         <div class="w-d-none d-none-desktop">
                             <svg xmlns="http://www.w3.org/2000/svg" width="222" height="47" viewBox="0 0 222 47"
@@ -92,29 +78,6 @@
                 <div class="menu-bar mt-29">
                     <div class="w-100">
                         <ul>
-                            <!-- <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/dashboard">
-                                    <div class="d-flex justify-content-between w-100 align-center">
-                                        <div class="d-flex align-center">
-                                            <span class="icon-bar">
-                                                <svg class="img-avatar" width="26" height="26" viewBox="0 0 26 26"
-                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M13 19C12.4533 19 12 18.6978 12 18.3333V15.6667C12 15.3022 12.4533 15 13 15C13.5467 15 14 15.3022 14 15.6667V18.3333C14 18.6978 13.5467 19 13 19Z"
-                                                        fill="#2D2D2D" />
-                                                    <path
-                                                        d="M18.2115 23H7.79449C6.10172 23 4.55776 21.6752 4.27873 19.9813L3.04171 12.4393C2.83709 11.2659 3.40445 9.76131 4.32524 9.01373L10.7708 3.76179C12.0171 2.73978 13.9796 2.74925 15.2352 3.77125L21.6808 9.01373C22.5923 9.76131 23.1503 11.2659 22.9643 12.4393L21.7273 19.9719C21.4483 21.6468 19.8671 23 18.2115 23ZM12.9937 4.42419C12.5008 4.42419 12.0078 4.5756 11.6451 4.86895L5.19953 10.1304C4.67867 10.5562 4.30664 11.5403 4.41825 12.2122L5.65527 19.7447C5.82269 20.7384 6.79929 21.5806 7.79449 21.5806H18.2115C19.2067 21.5806 20.1833 20.7384 20.3508 19.7353L21.5878 12.2028C21.6901 11.5403 21.3181 10.5373 20.8065 10.1209L14.361 4.87842C13.9889 4.5756 13.4867 4.42419 12.9937 4.42419Z"
-                                                        fill="#2D2D2D" />
-                                                </svg>
-                                            </span>
-                                            <span class="text-style">Dashboard</span>
-                                        </div>
-                                        <div class="web-m-r">
-                                            <span class="mdi mdi-chevron-right"></span>
-                                        </div>
-                                    </div>
-                                </nuxt-link>
-                            </li> -->
                             <v-list flat>
                                 <v-list-item class="li-bar" to="/admin/dashboard">
                                     <v-list-item-icon class="icon-bar" default>
@@ -179,56 +142,6 @@
                                         </v-list-item>
                                     </v-list-item-group>
                                 </v-list-group>
-
-                                <!--  -->
-
-                                <!-- <v-list-group class="group-list" no-action :value="isCurrentRouteMatching('/admin/system')">
-                                    <template v-slot:activator>
-                                            <v-list-item-icon class="icon-bar" default>
-                                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M12.5 16.0002L9.5 13.0002M12.5 16.0002C13.8968 15.469 15.2369 14.799 16.5 14.0002M12.5 16.0002V21.0002C12.5 21.0002 15.53 20.4502 16.5 19.0002C17.58 17.3802 16.5 14.0002 16.5 14.0002M9.5 13.0002C10.0321 11.6197 10.7022 10.2963 11.5 9.05025C12.6652 7.18723 14.2876 5.6533 16.213 4.59434C18.1384 3.53538 20.3027 2.98662 22.5 3.00025C22.5 5.72025 21.72 10.5002 16.5 14.0002M9.5 13.0002H4.5C4.5 13.0002 5.05 9.97025 6.5 9.00025C8.12 7.92025 11.5 9.00025 11.5 9.00025M5 17.5002C3.5 18.7602 3 22.5002 3 22.5002C3 22.5002 6.74 22.0002 8 20.5002C8.71 19.6602 8.7 18.3702 7.91 17.5902C7.52131 17.2193 7.00929 17.0049 6.47223 16.9883C5.93516 16.9717 5.41088 17.154 5 17.5002Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </svg>
-                                            </v-list-item-icon>
-                                            <v-list-item-title>Quản lý dịch vụ</v-list-item-title>
-                                    </template>
-
-                                    <v-list-item-group>
-                                        <v-list-item to="/admin/system/banner">
-                                            <v-list-item-content class="p-0 ps-4">
-                                                <v-list-item-title>Bảo mẫu Pro</v-list-item-title>
-                                            </v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item to="/admin/system/educational-ecosystem">
-                                            <v-list-item-content class="p-0 ps-4">
-                                                <v-list-item-title>Giáo dục sớm</v-list-item-title>
-                                            </v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item to="/admin/system/about">
-                                            <v-list-item-content class="p-0 ps-4">
-                                                <v-list-item-title>Thực hành kỹ năng cuộc sống</v-list-item-title>
-                                            </v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item to="/admin/system/support">
-                                            <v-list-item-content class="p-0 ps-4">
-                                                <v-list-item-title>Năng khiếu thể thao</v-list-item-title>
-                                            </v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item to="/admin/system/tutorial">
-                                            <v-list-item-content class="p-0 ps-4">
-                                                <v-list-item-title>Gia sư</v-list-item-title>
-                                            </v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item to="/admin/system/tutorial">
-                                            <v-list-item-content class="p-0 ps-4">
-                                                <v-list-item-title>Tư vấn và đào tạo</v-list-item-title>
-                                            </v-list-item-content>
-                                        </v-list-item>
-                                    </v-list-item-group>
-                                </v-list-group> -->
 
                                 <v-list-item class="li-bar" to="/admin/service">
                                     <v-list-item-icon class="icon-bar" default>
@@ -347,46 +260,6 @@
 
                                     </v-list-item-group>
                                 </v-list-group>
-
-                                <!-- <v-list-group class="group-list" no-action
-                                    :value="isCurrentRouteMatching('/admin/review-lesson')">
-                                    <template v-slot:activator>
-                                        <v-list-item-icon class="icon-bar" default>
-                                            <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M10 16H5.7991C4.8096 16 4 16.7875 4 17.75V23H10V16Z"
-                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                                <path
-                                                    d="M14.2009 12H11.7991C10.8096 12 10 12.825 10 13.8333V23H16V13.8333C16 12.825 15.1994 12 14.2009 12Z"
-                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M20.2009 19H16V23H22V20.6C22 19.72 21.1904 19 20.2009 19Z"
-                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                                <path
-                                                    d="M13.5206 3.43016L14.0498 4.49983C14.1196 4.65119 14.3094 4.79247 14.4691 4.81265L15.4276 4.97412C16.0366 5.07503 16.1864 5.52911 15.7471 5.96304L14.9983 6.71988C14.8685 6.85106 14.7986 7.09326 14.8385 7.26481L15.0482 8.19322C15.2179 8.92988 14.8285 9.21244 14.1895 8.82897L13.2909 8.29414C13.1312 8.19323 12.8616 8.19323 12.7019 8.29414L11.8033 8.82897C11.1643 9.21244 10.7749 8.92988 10.9446 8.19322L11.1543 7.26481C11.1942 7.09326 11.1243 6.84097 10.9945 6.71988L10.2557 5.97314C9.81638 5.52912 9.95616 5.0851 10.5752 4.98419L11.5337 4.82275C11.6934 4.79248 11.8831 4.6512 11.953 4.50993L12.4822 3.44023C12.7718 2.85494 13.231 2.85496 13.5206 3.43016Z"
-                                                    stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
-                                                    stroke-linejoin="round" />
-                                            </svg>
-                                        </v-list-item-icon>
-                                        <v-list-item-title>Quản lý đánh giá buổi học</v-list-item-title>
-                                    </template>
-
-                                    <v-list-item-group>
-                                        <v-list-item to="/admin/review-lesson">
-                                            <v-list-item-content class="p-0 ps-4">
-                                                <v-list-item-title>Đánh giá của giáo viên</v-list-item-title>
-                                            </v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item to="/admin/review-lesson/form-review">
-                                            <v-list-item-content class="p-0 ps-4">
-                                                <v-list-item-title>Quản lý form đánh giá</v-list-item-title>
-                                            </v-list-item-content>
-                                        </v-list-item>
-
-                                    </v-list-item-group>
-                                </v-list-group> -->
 
                                 <v-list-item class="li-bar" to="/admin/review-lesson">
                                     <v-list-item-icon class="icon-bar" default>
@@ -513,37 +386,7 @@
                                 </v-list-item>
 
                             </v-list>
-                            <!-- <li>
-                                <nuxt-link class="px-27 w-mt-17 d-block w-100" to="/admin/teacher-training">
-                                    <div class="d-flex justify-content-between w-100 align-center">
-                                        <div class="d-flex align-center">
-                                            <span class="icon-bar">
-                                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M6.91 18H19.1C21 18 22 17 22 15.1V3H4V15.1C4.01 17 5.01 18 6.91 18Z"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path d="M9.01001 23L13.01 21V18" stroke="#2D2D2D" stroke-width="1.5"
-                                                        stroke-miterlimit="10" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                    <path d="M17.01 23L13.01 21" stroke="#2D2D2D" stroke-width="1.5"
-                                                        stroke-miterlimit="10" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                    <path
-                                                        d="M8.51001 12L11.66 9.37C11.91 9.16 12.24 9.22 12.41 9.5L13.61 11.5C13.78 11.78 14.11 11.83 14.36 11.63L17.51 9"
-                                                        stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-                                            </span>
-                                            <span class="text-style">Đào tạo giáo viên</span>
-                                        </div>
-                                        <div class="web-m-r">
-                                            <span class="mdi mdi-chevron-right"></span>
-                                        </div>
-                                    </div>
-                                </nuxt-link>
-                            </li> -->
+
                             <li @click="logout">
                                 <a href="javascript:void(0)" class="px-27 w-mt-17 d-block w-100">
                                     <div class="d-flex justify-content-between w-100 align-center">
@@ -570,16 +413,7 @@
 
                     </div>
                 </div>
-                <!-- <v-list>
-                    <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
-                        <v-list-item-action>
-                            <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>{{ item.title }}</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-list> -->
+
             </v-navigation-drawer>
         </div>
         <v-app-bar :clipped-left="clipped" fixed app>
@@ -621,6 +455,11 @@
                         <img class="v-btn" src="@/static/images/icons/menu.svg">
                     </v-btn>
                 </div>
+                <div class="avatar-user">
+                    <div class="d-flex justify-content-between align-items-center ms-2">
+                        <avatar></avatar>
+                    </div>
+                </div>
             </div>
 
             <!-- <v-btn icon @click.stop="rightDrawer = !rightDrawer">
@@ -652,6 +491,8 @@
 import RightSvg from '@/components/icons/RightSvg.vue'
 import api from '../store/axios'
 import toastr from 'toastr';
+import Avatar from '~/components/user/Avatar.vue';
+import AvatarSiderbar from '~/components/user/AvatarSiderbar.vue';
 // import WOW from 'wowjs';
 // import 'sweetalert2/src/sweetalert2.scss'
 export default {
@@ -748,11 +589,11 @@ export default {
                 toastr.error('Đăng xuất tài khoản thành công')
                 await this.$router.push('/login');
                 // if (await data?.status == 200) {
-                    // await this.$bvToast.toast(data?.data?.message, {
-                    //     title: `Thông báo`,
-                    //     variant: 'success',
-                    //     solid: true
-                    // })
+                // await this.$bvToast.toast(data?.data?.message, {
+                //     title: `Thông báo`,
+                //     variant: 'success',
+                //     solid: true
+                // })
                 // localStorage.removeItem('user');
                 // localStorage.removeItem('timeLogin');
                 // this.$router.push('/login');
@@ -772,7 +613,9 @@ export default {
         }
     },
     components: {
-        RightSvg
+        RightSvg,
+        Avatar,
+        AvatarSiderbar
     },
     computed: {
         ready() {
@@ -867,4 +710,11 @@ export default {
     .web-m-r i {
         color: #0056b1;
     }
-}</style>
+}
+
+@media (max-width: 600px) {
+    .avatar-user {
+        display: none !important;
+    }
+}
+</style>

@@ -53,9 +53,9 @@
     .nav-bar .v-navigation-drawer {
         width: 100% !important;
     }
-    .img-avatar {
-        width: auto !important;
-    }
+    // .img-avatar {
+    //     width: auto !important;
+    // }
     .student {
         .w-title {
             max-width: 140px !important;
@@ -72,7 +72,7 @@
 }
 
 @media (max-width: 400px) {
-    .img-avatar {
-        width: auto !important;
-    }
+    // .img-avatar {
+    //     width: auto !important;
+    // }
 }
