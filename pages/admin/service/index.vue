@@ -11,7 +11,8 @@
                         <div>
                             <b-row>
                                 <b-col cols="4" sm="3">
-                                    <nuxt-link to="/admin/service/4/edit" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
+                                    <nuxt-link to="/admin/service/4/edit"
+                                        class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
                                         title="Bảo mẫu Pro">
                                         <div class="card-service-body">
                                             <div>
@@ -61,7 +62,8 @@
                                 </b-col>
 
                                 <b-col cols="4" sm="3">
-                                    <nuxt-link to="/admin/service/4/edit" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
+                                    <nuxt-link to="/admin/service/4/edit"
+                                        class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
                                         title="Giáo dục sớm">
                                         <div class="card-service-body">
                                             <div>
@@ -134,7 +136,8 @@
                                 </b-col>
 
                                 <b-col cols="4" sm="3">
-                                    <nuxt-link to="/admin/service/4/edit" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
+                                    <nuxt-link to="/admin/service/4/edit"
+                                        class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
                                         title="Thực hành kỹ năng cuộc sống">
                                         <div class="card-service-body">
                                             <div>
@@ -189,7 +192,8 @@
                                 </b-col>
 
                                 <b-col cols="4" sm="3">
-                                    <nuxt-link to="/admin/service/4/edit" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
+                                    <nuxt-link to="/admin/service/4/edit"
+                                        class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
                                         title="Năng khiếu thể thao">
                                         <div class="card-service-body">
                                             <div>
@@ -243,7 +247,8 @@
                                 </b-col>
 
                                 <b-col cols="4" sm="3">
-                                    <nuxt-link to="/admin/service/4/edit" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
+                                    <nuxt-link to="/admin/service/4/edit"
+                                        class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
                                         title="Gia sư">
                                         <div class="card-service-body">
                                             <div>
@@ -329,7 +334,8 @@
                                 </b-col>
 
                                 <b-col cols="4" sm="3">
-                                    <nuxt-link to="/admin/service/4/edit" class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
+                                    <nuxt-link to="/admin/service/4/edit"
+                                        class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
                                         title="Tư vấn và đào tạo">
                                         <div class="card-service-body">
                                             <div>
@@ -345,65 +351,69 @@
                                                         d="M13.9737 5.97195C13.358 5.59337 12.9516 6.10629 12.7792 6.32612C12.1759 7.08329 11.9296 8.01143 11.8064 8.63427C11.5232 10.0021 11.7326 11.3332 12.4098 12.5667C13.555 14.6672 15.3774 15.7786 17.8279 15.8763C17.951 15.8885 18.0865 15.9007 18.2096 15.9007C18.8253 15.9007 19.4533 15.7541 20.1675 15.461C21.6698 14.826 22.7411 13.8368 23.443 12.4446C24.2803 10.7714 24.3173 9.08613 23.5784 7.44966C23.5661 7.41302 23.5538 7.3886 23.5415 7.37639C23.5415 7.37639 23.5661 7.35196 23.6031 7.31532C24.0956 6.85125 24.5758 6.38718 25.0684 5.91089L25.4624 5.53231C25.6471 5.34912 25.7457 5.14151 25.7457 4.9339C25.7457 4.71407 25.6471 4.49425 25.4378 4.29885C25.0807 3.94469 24.662 3.92026 24.268 4.22557C23.8863 4.51867 23.5415 4.86062 23.2213 5.19036C23.0612 5.34912 22.9135 5.49567 22.7165 5.67886C22.6672 5.7277 22.618 5.77655 22.5687 5.81319C22.5194 5.77655 22.4702 5.71549 22.4086 5.66664C20.5369 3.84699 18.382 3.28522 15.9931 4.01796C15.8454 4.06681 15.6976 4.12787 15.5498 4.18894L15.4021 4.25C14.6017 4.57973 14.6756 5.12929 14.7494 5.34912C14.8356 5.61779 15.008 5.8254 15.242 5.93532C15.4021 6.00859 15.6853 6.06965 16.0424 5.93532C16.5719 5.71549 17.1137 5.59337 17.6801 5.58116C19.0962 5.52009 20.266 5.99638 21.2019 7.02222C21.2142 7.04665 21.2265 7.05886 21.2388 7.05886C21.2388 7.05886 21.2142 7.08329 21.2019 7.0955C20.0197 8.19462 18.8499 9.30595 17.6801 10.4295C17.6062 10.3562 17.5447 10.2829 17.4831 10.2097C17.3353 10.0387 17.1753 9.85551 16.9413 9.72118C16.498 9.44029 15.9931 9.53799 15.6607 9.97764C15.3898 10.3318 15.439 10.7226 15.7715 11.0523C15.9439 11.2233 16.104 11.3943 16.2764 11.5653C16.5349 11.8461 16.7935 12.1148 17.0767 12.3713C17.4092 12.6766 17.9264 12.6766 18.2958 12.3591C18.7022 11.9927 19.0962 11.6141 19.4902 11.2233L20.3399 10.3929C20.9063 9.8433 21.4728 9.30595 22.0885 8.73197C22.2239 9.28153 22.3101 9.80666 22.2239 10.344C22.0638 11.4065 21.5467 12.3224 20.6354 13.1162C20.0567 13.6292 19.3548 13.9467 18.616 14.0444C17.4215 14.1909 16.4364 14.0077 15.5868 13.4704C14.4416 12.7499 13.7643 11.6752 13.5673 10.2829C13.4442 9.36702 13.6658 8.45108 14.2815 7.37639C14.614 6.8024 14.5155 6.33833 13.986 6.0208L13.9737 5.97195Z"
                                                         fill="#0056B1" />
                                                     <path
-                                                    d="M23.5415 35.4648C23.1967 35.4404 22.8519 35.4893 22.5317 35.5381L22.347 35.5625C20.8571 35.7702 19.3671 35.9533 17.9018 36.1243C17.52 36.1732 17.0398 36.2709 16.695 36.7227C16.498 36.9792 16.2886 37.2357 16.067 37.4799L15.5006 38.1394C14.5647 39.2507 13.6166 40.362 12.6807 41.4734C12.3359 41.8886 12.3729 42.3649 12.7915 42.7435C12.9886 42.9144 13.1856 42.9999 13.3826 42.9999C13.6042 42.9999 13.8259 42.89 14.0229 42.6702C14.2446 42.4259 14.4662 42.1817 14.6755 41.9252L15.5868 40.8261C16.2148 40.0812 16.8305 39.3362 17.4585 38.6034C17.5077 38.5424 17.5693 38.4813 17.6185 38.408C17.8894 38.0783 18.0741 37.8707 18.3943 37.8707C18.3943 37.8707 18.4066 37.8707 18.4189 37.8707C18.616 37.8707 18.8007 37.8463 18.9977 37.8219C19.0716 37.8219 19.1578 37.7974 19.2316 37.7852C19.6873 37.7364 20.1305 37.6875 20.5738 37.6265C21.4604 37.5165 22.3717 37.4066 23.2829 37.3578C23.9355 37.3211 24.4034 36.9303 24.4157 36.393C24.4157 35.8801 24.0463 35.4893 23.5168 35.4526L23.5415 35.4648Z"
-                                                    fill="#0056B1" />
-                                                <ellipse cx="39.9997" cy="4.03297" rx="2.00011" ry="1.9983"
-                                                    fill="url(#paint0_linear_662_5788)" />
-                                                <ellipse cx="35.9996" cy="9.02893" rx="1.00006" ry="0.999149"
-                                                    fill="url(#paint1_linear_662_5788)" />
-                                                <ellipse cx="41.9999" cy="13.0256" rx="2.00011" ry="1.9983"
-                                                    fill="url(#paint2_linear_662_5788)" />
-                                                <defs>
-                                                    <linearGradient id="paint0_linear_662_5788" x1="39.9997"
-                                                        y1="2.03467" x2="39.9997" y2="6.03126"
-                                                        gradientUnits="userSpaceOnUse">
-                                                        <stop stop-color="#7CBCFF" />
-                                                        <stop offset="1" stop-color="#0056B1" />
-                                                    </linearGradient>
-                                                    <linearGradient id="paint1_linear_662_5788" x1="35.9996"
-                                                        y1="8.02979" x2="35.9996" y2="10.0281"
-                                                        gradientUnits="userSpaceOnUse">
-                                                        <stop stop-color="#7CBCFF" />
-                                                        <stop offset="1" stop-color="#0056B1" />
-                                                    </linearGradient>
-                                                    <linearGradient id="paint2_linear_662_5788" x1="41.9999"
-                                                        y1="11.0273" x2="41.9999" y2="15.0239"
-                                                        gradientUnits="userSpaceOnUse">
-                                                        <stop stop-color="#7CBCFF" />
-                                                        <stop offset="1" stop-color="#0056B1" />
-                                                    </linearGradient>
-                                                </defs>
-                                            </svg>
+                                                        d="M23.5415 35.4648C23.1967 35.4404 22.8519 35.4893 22.5317 35.5381L22.347 35.5625C20.8571 35.7702 19.3671 35.9533 17.9018 36.1243C17.52 36.1732 17.0398 36.2709 16.695 36.7227C16.498 36.9792 16.2886 37.2357 16.067 37.4799L15.5006 38.1394C14.5647 39.2507 13.6166 40.362 12.6807 41.4734C12.3359 41.8886 12.3729 42.3649 12.7915 42.7435C12.9886 42.9144 13.1856 42.9999 13.3826 42.9999C13.6042 42.9999 13.8259 42.89 14.0229 42.6702C14.2446 42.4259 14.4662 42.1817 14.6755 41.9252L15.5868 40.8261C16.2148 40.0812 16.8305 39.3362 17.4585 38.6034C17.5077 38.5424 17.5693 38.4813 17.6185 38.408C17.8894 38.0783 18.0741 37.8707 18.3943 37.8707C18.3943 37.8707 18.4066 37.8707 18.4189 37.8707C18.616 37.8707 18.8007 37.8463 18.9977 37.8219C19.0716 37.8219 19.1578 37.7974 19.2316 37.7852C19.6873 37.7364 20.1305 37.6875 20.5738 37.6265C21.4604 37.5165 22.3717 37.4066 23.2829 37.3578C23.9355 37.3211 24.4034 36.9303 24.4157 36.393C24.4157 35.8801 24.0463 35.4893 23.5168 35.4526L23.5415 35.4648Z"
+                                                        fill="#0056B1" />
+                                                    <ellipse cx="39.9997" cy="4.03297" rx="2.00011" ry="1.9983"
+                                                        fill="url(#paint0_linear_662_5788)" />
+                                                    <ellipse cx="35.9996" cy="9.02893" rx="1.00006" ry="0.999149"
+                                                        fill="url(#paint1_linear_662_5788)" />
+                                                    <ellipse cx="41.9999" cy="13.0256" rx="2.00011" ry="1.9983"
+                                                        fill="url(#paint2_linear_662_5788)" />
+                                                    <defs>
+                                                        <linearGradient id="paint0_linear_662_5788" x1="39.9997"
+                                                            y1="2.03467" x2="39.9997" y2="6.03126"
+                                                            gradientUnits="userSpaceOnUse">
+                                                            <stop stop-color="#7CBCFF" />
+                                                            <stop offset="1" stop-color="#0056B1" />
+                                                        </linearGradient>
+                                                        <linearGradient id="paint1_linear_662_5788" x1="35.9996"
+                                                            y1="8.02979" x2="35.9996" y2="10.0281"
+                                                            gradientUnits="userSpaceOnUse">
+                                                            <stop stop-color="#7CBCFF" />
+                                                            <stop offset="1" stop-color="#0056B1" />
+                                                        </linearGradient>
+                                                        <linearGradient id="paint2_linear_662_5788" x1="41.9999"
+                                                            y1="11.0273" x2="41.9999" y2="15.0239"
+                                                            gradientUnits="userSpaceOnUse">
+                                                            <stop stop-color="#7CBCFF" />
+                                                            <stop offset="1" stop-color="#0056B1" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                </svg>
 
+                                            </div>
+                                            <div class="service-title">
+                                                Tư vấn và đào tạo
+                                            </div>
                                         </div>
-                                        <div class="service-title">
-                                            Tư vấn và đào tạo
-                                        </div>
-                                    </div>
-                                </nuxt-link>
-                            </b-col>
-                        </b-row>
-                    </div>
-                </b-col>
+                                    </nuxt-link>
+                                </b-col>
+                            </b-row>
+                        </div>
+                    </b-col>
 
-                <b-col cols="12" sm="7">
-                    <div class="mt-3">
-                        <button-add>
-                            <span class="mdi mdi-plus"></span> Thêm dịch vụ
-                        </button-add>
-                    </div>
-                </b-col>
-            </b-row>
+                    <b-col cols="12" sm="7">
+                        <div class="mt-3">
+                            <button-add>
+                                <span class="mdi mdi-plus"></span> Thêm dịch vụ
+                            </button-add>
+                        </div>
+                    </b-col>
+                </b-row>
 
 
+            </div>
         </div>
-    </div>
 
-</div></template>
+    </div>
+</template>
 
 <script>
 import ButtonAdd from '~/components/button/ButtonAdd.vue';
 import TitleHeader from '~/components/title/TitleHeader.vue';
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 // import { defineComponent } from '@vue/composition-api'
 
 export default {
@@ -415,20 +425,67 @@ export default {
                 name: 'Quản lý dịch vụ',
                 previous: '/admin/dashboard'
             },
+            data: null,
         };
     },
     computed: {
-        // id() {
-        //     return $route.params.id
-        // }
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
     },
     methods: {
-        changeLink() {
-            console.log(this)
-        }
+        async load_data() {
+            await api.get('dich-vu/danh-sach?page=1&limit=30&sort=1&tuKhoa=', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data
+            })
+        },
+        async delete_item(user_id, name) {
+            const formData = new FormData();
+            formData.append('id', user_id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá người dùng ${name}!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có xoá nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('admin-api/xoa-tai-khoan', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Deleted!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            this.load_data()
+                            this.load_role()
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
+
+        },
+
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
 }
 </script>
@@ -466,4 +523,5 @@ export default {
     font-weight: 600;
     line-height: 120%;
     margin-top: 10px;
-}</style>
+}
+</style>

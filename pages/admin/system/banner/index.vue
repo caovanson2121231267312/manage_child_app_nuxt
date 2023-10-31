@@ -6,14 +6,48 @@
                     <title-header>
                         Danh sách Banner
                     </title-header>
-                    <button-add :addClass="'btn-header'">
+                    <button-add addClass="btn-header" v-b-modal.my-modal>
                         <span class="mdi mdi-plus"></span> Thêm banner
                     </button-add>
                 </div>
             </div>
 
+            <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Thông banner mới">
+                <!-- <template #modal-header="{ close }">
+                            <h5>Thông báo</h5>
+                        </template> -->
+                <template #default="{ hide }">
+                    <form id="form" @submit="send_data">
+
+                        <div class="my-4 pb-3">
+                            <div>
+                                <b-form-group>
+                                    <label>Ảnh banner:</label>
+                                    <b-form-file name="image" accept="image/*" v-model="file" ref="file-input"
+                                        id="file-large"></b-form-file>
+                                </b-form-group>
+                            </div>
+                            <div>
+                                <b-form-group>
+                                    <label>Link:</label>
+                                    <b-form-input name="link" v-model="link" placeholder="Nhập đường dẫn"></b-form-input>
+                                </b-form-group>
+                            </div>
+
+                        </div>
+                        <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                            <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                            <button class=" btn-delete ms-1" type="submit">Thêm</button>
+                        </div>
+                    </form>
+
+                </template>
+            </b-modal>
+
             <b-row>
-                <b-col cols="12" sm="12" md="6" lg="4" xl="3" class="border-bottom-baner" v-for="n in 6" v-bind:key="n">
+                <b-col cols="12" sm="12" md="6" lg="4" xl="3"
+                    class="border-bottom-baner wow animate__animated animate__zoomIn" v-for="(item, index) in data"
+                    :key="index">
                     <div>
                         <div class="mb-2">
                             <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,18 +62,19 @@
                                     fill="#FC4D32" />
                             </svg>
                             <span class="title-banner">
-                                Ảnh {{ n }} <i>(Tối thiểu không quá 2mb)</i>
+                                Ảnh {{ index + 1 }} <i>(Tối thiểu không quá 2mb)</i>
                             </span>
                         </div>
 
                         <div class="card-banner">
                             <div class="card-banner-body">
                                 <div class="banner-img">
-                                    <img src="@/static/images/banner/banner.png" />
+                                    <img :src="item?.image" />
                                 </div>
 
                                 <div>
-                                    <div class="mb-3 btn-banner-delete" v-b-tooltip.hover title="Xoá banner">
+                                    <div class="mb-3 btn-banner-delete" v-b-tooltip.hover title="Xoá banner"
+                                        @click="delete_item(item?.id, item?.id)">
                                         <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="16.5" cy="16" r="16" fill="#F2F2F2" />
@@ -80,9 +115,10 @@
                             Gán liên kết
                         </div>
                         <div class="position-relative">
-                            <input placeholder="Nhập đường dẫn" class="form-control banner-input" type="text" />
-                            <div class="copy-link">
-                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                            <input placeholder="Nhập đường dẫn" :value="item?.link" class="form-control banner-input"
+                                type="text" />
+                            <div class="copy-link" @click="copyText(item?.link)">
+                                <svg  v-b-tooltip.hover title="Copy link" width="18" height="18" viewBox="0 0 18 18" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M9.86204 14.5083L8.63796 15.7324C6.94786 17.4225 4.20767 17.4225 2.51757 15.7324C0.827475 14.0423 0.827476 11.3021 2.51757 9.61204L3.74165 8.38796M14.7583 9.61204L15.9824 8.38796C17.6725 6.69786 17.6725 3.95767 15.9824 2.26757C14.2923 0.577475 11.5521 0.577476 9.86204 2.26757L8.63796 3.49165M6.22056 12.0294L12.2794 5.97054"
@@ -96,7 +132,7 @@
             </b-row>
 
             <div class="my-5 d-sm-none">
-                <button-add>
+                <button-add v-b-modal.my-modal>
                     <span class="mdi mdi-plus"></span> Thêm banner
                 </button-add>
             </div>
@@ -108,6 +144,9 @@
 <script>
 import CardItem from '@/components/card/CardItem.vue';
 import ButtonAdd from '~/components/button/ButtonAdd.vue';
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -117,11 +156,101 @@ export default {
                 name: 'Banner App',
                 previous: '/admin/dashboard'
             },
+            data: null,
+            file: null,
+            link: null,
         };
     },
-    computed: {},
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        clearFiles() {
+            this.$refs['file-input'].reset()
+        },
+        copyText(textToCopy) {
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            toastr.success('Đã sao chép nội dung');
+            // alert("Đã sao chép nội dung: " + textToCopy);
+        },
+        async load_data() {
+            await api.get('he-thong/danh-sach?page=1&limit=40&sort=1&tuKhoa=', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data
+            })
+        },
+        async send_data(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('form'))
+            await api.post('he-thong/them-moi-banner', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal'].hide()
+                    this.clearFiles();
+                    this.link = null
+                    this.load_data();
+                }
+            })
+        },
+        async delete_item(user_id, name) {
+            const formData = new FormData();
+            formData.append('banner_id', user_id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá banner đã chọn!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có xoá nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('he-thong/xoa-banner', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Deleted!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            this.load_data()
+                            this.load_role()
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
+
+        },
+        async updateFilter(filter) {
+            this.selectedFilter = await filter ?? '';
+            await this.load_data()
+        }
+    },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
     components: { CardItem, ButtonAdd }
 }
@@ -231,6 +360,7 @@ export default {
     //     transform: scale(1.05);
     // }
 }
+
 .btn-banner-delete {
     cursor: pointer;
     transition: 0.3s;

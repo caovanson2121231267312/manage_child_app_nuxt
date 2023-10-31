@@ -1,7 +1,7 @@
 <template>
     <div class="w-100 ">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <label class="chart-title">Tổng quan đơn hàng</label>
+            <label class="chart-title">Tổng quan doanh thu</label>
             <div>
                 <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
                     <template v-slot:activator="{ on, attrs }">

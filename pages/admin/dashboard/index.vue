@@ -156,20 +156,15 @@
                 <div class="col-12 col-md-12 col-lg-6 mb-2 wow animate__animated animate__zoomIn">
                     <div class="d-flex justify-content-between align-center mb-3">
                         <div class="h3-title">Báo cáo doanh thu</div>
-                        <nuxt-link class="watch-more" to="/">Xem thêm</nuxt-link>
+                        <nuxt-link class="watch-more" to="/admin/dashboard/sales_report">Xem thêm</nuxt-link>
                     </div>
-                    <b-card style="min-width: 245px;" class="mb-2 hover-card">
-                        <div class="d-flex justify-content-between align-center">
-                            <!-- <Bar id="my-chart-id" :options="chartOptions" :data="chartData" /> -->
-                            <bar-chart />
-                        </div>
-                    </b-card>
+                    <sales-report></sales-report>
                 </div>
 
                 <div class="col-12 col-md-12 col-lg-6 mb-2 wow animate__animated animate__zoomIn">
                     <div class="d-flex justify-content-between align-center mb-3">
                         <div class="h3-title">Báo cáo khách hàng</div>
-                        <nuxt-link class="watch-more" to="/">Xem thêm</nuxt-link>
+                        <nuxt-link class="watch-more" to="/admin/dashboard/customer_reports">Xem thêm</nuxt-link>
                     </div>
                     <b-card style="min-width: 245px;" class="mb-2 hover-card h-100">
                         <div class="d-flex justify-content-between align-center">
@@ -699,10 +694,11 @@ import ButtonAdd from '~/components/button/ButtonAdd.vue'
 import BarChart from '~/components/Chart/BarChart.vue'
 import Swal from 'sweetalert2'
 import toastr from 'toastr';
+import SalesReport from '~/components/Report/SalesReport.vue';
 
 export default {
     layout: 'admin',
-    components: { BarChart, ButtonAdd },
+    components: { BarChart, ButtonAdd, SalesReport },
     data() {
         return {
             title: {
