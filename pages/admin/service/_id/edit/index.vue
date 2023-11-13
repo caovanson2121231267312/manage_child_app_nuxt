@@ -38,6 +38,7 @@
                         <div class="mt-3 mb-6">
                             <div class="mb-2">
                                 <strong class="service-title">
+
                                     <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -58,7 +59,9 @@
                             <div class="input-grop">
                                 <div class="box-x d-flex justify-content-between p-2">
                                     <div class="box-img">
-                                        <img src="@/static/images/teacher-training/Rectangle4052.png" alt="">
+                                        <img v-if="image" :src="image" alt="">
+                                        <img v-else src="@/static/images/teacher-training/Rectangle4052.png" alt="">
+                                        <input id="images" type="file" class="d-none" />
                                     </div>
                                     <div class="action">
                                         <div class="mb-3 btn-service-delete" v-b-tooltip.hover title="Xoá ảnh">
@@ -81,7 +84,7 @@
                                                 </defs>
                                             </svg>
                                         </div>
-                                        <div class="btn-service-upload" v-b-tooltip.hover title="Tải ảnh lên">
+                                        <label for="images" class="btn-service-upload d-block" v-b-tooltip.hover title="Tải ảnh lên">
                                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -91,7 +94,7 @@
                                                     d="M15 15V18.9375C15 19.4898 15.4477 19.9375 16 19.9375C16.5523 19.9375 17 19.4898 17 18.9375V15H23C24.1046 15 25 15.8954 25 17V22C25 23.1046 24.1046 24 23 24H9C7.89543 24 7 23.1046 7 22V17C7 15.8954 7.89543 15 9 15H15Z"
                                                     fill="#979797" />
                                             </svg>
-                                        </div>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +181,7 @@
                             </div>
 
                             <div class="">
-                                <textarea v-model="value" id="value"></textarea>
+                                <textarea v-model="gia_tri" id="gia_tri"></textarea>
                             </div>
                         </div>
 
@@ -196,7 +199,7 @@
                             </div>
 
                             <div class="">
-                                <textarea v-model="commit" id="commit"></textarea>
+                                <textarea v-model="cam_ket" id="cam_ket"></textarea>
                             </div>
                         </div>
 
@@ -214,7 +217,7 @@
                             </div>
 
                             <div class="">
-                                <input type="text" placeholder="Nhập đường dẫn" class="form-control form-benefits" />
+                                <input type="text" v-model="hop_dong_dich_vu" placeholder="Nhập đường dẫn" class="form-control form-benefits" />
                             </div>
                         </div>
 
@@ -225,7 +228,7 @@
                             <div class="w-100">
                                 <div>
                                     <b-card style="min-width: 245px;" class="teacher-nav">
-                                        <nuxt-link class="block w-100 teachers " to="/admin/service/3/lesson-price">
+                                        <nuxt-link class="block w-100 teachers " :to="'/admin/service/' + this.id + '/lesson-price'">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <div class="">
                                                     <span class="me-2">
@@ -261,7 +264,7 @@
                                     </b-card>
 
                                     <b-card style="min-width: 245px;" class="teacher-nav">
-                                        <nuxt-link class="block w-100 teachers " to="/admin/service/3/lesson-content">
+                                        <nuxt-link class="block w-100 teachers " :to="'/admin/service/' + this.id + '/lesson-content'">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <div class="">
                                                     <span class="me-2">
@@ -339,9 +342,12 @@ import SUNEDITOR from 'suneditor'
 import plugins from 'suneditor/src/plugins'
 import 'suneditor/dist/css/suneditor.min.css'
 import ButtonComponent from '~/components/button/ButtonComponent.vue'
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
-  components: { ButtonComponent },
+    components: { ButtonComponent },
     layout: 'admin',
     head: {
         title: 'Chi tiết dịch vụ',
@@ -356,27 +362,88 @@ export default {
     data() {
         return {
             title: {
-                name: 'Bảo mẫu Pro',
+                name: 'Dich vụ',
                 previous: '/admin/service'
             },
+            khoa_dich_vu: false,
             suneditorInstance: null,
-            value: 'Nhập nội dung',
-            suneditorCommitInstance: null,
-            commit: 'Nhập nội dung',
+            image: null,
+            hop_dong_dich_vu: null,
+            ten_dich_vu: null,
+            // ten_dich_vu: null,
+            gia_tri: 'Nhập nội dung',
+            suneditorcam_ketInstance: null,
+            cam_ket: 'Nhập nội dung',
         };
     },
     validate({ params }) {
-        return /^[0-9]{0,2}$/.test(params.id)
+        return /^\d+$/.test(params.id);
     },
     computed: {
         id() {
             return this.$route.params.id
         },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_role() {
+            await api.get('admin-api/danh-sach-quyen', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.roles = res?.data?.data.map(item => {
+                    return {
+                        gia_tri: item.id,
+                        text: item.name
+                    };
+                })
+            })
+        },
+        async load_data() {
+            await api.get('dich-vu/chi-tiet?id=' + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data.dichVu
+                this.data = user
+                this.khoa_dich_vu = user?.khoa_dich_vu == 0 ? flase : true
+                this.cam_ket = user?.cam_ket
+                this.suneditorcam_ketInstance.setContents(this.cam_ket);
+                this.gia_tri = user?.gia_tri
+                this.suneditorInstance.setContents(this.gia_tri);
+                this.image = user?.image
+                this.hop_dong_dich_vu = user?.hop_dong_dich_vu
+                this.ten_dich_vu = user?.ten_dich_vu
+                this.title.name = this.ten_dich_vu ?? 'Dich vụ'
+                this.$store.dispatch('title/set_title', this.title);
+
+            })
+        },
+        async send_data(event) {
+            event.preventDefault();
+            console.log(123)
+            const formData = new FormData(document.getElementById('form'))
+            await api.post('admin-api/cap-nhat-quan-tri-vien', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.load_data()
+                    this.load_role()
+                }
+            })
+        },
     },
     mounted() {
-        this.$store.dispatch('title/set_title', this.title);
+        this.load_data();
+        // this.$store.dispatch('title/set_title', this.title);
 
-        const editor = SUNEDITOR.create((document.getElementById('value') || 'value'), {
+
+        const editor = SUNEDITOR.create((document.getElementById('gia_tri') || 'gia_tri'), {
             toolbarContainer: '#toolbar_container',
             showPathLabel: false,
             charCounter: true,
@@ -392,20 +459,19 @@ export default {
                 ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
             ],
             callBackSave: function (contents, isChanged) {
-                this.value = contents
+                this.gia_tri = contents
                 console.log(contents);
             },
         });
         this.suneditorInstance = editor;
 
         this.suneditorInstance.onChange = async (contents, core) => {
-            this.value = contents;
-            await console.log(this.value)
+            this.gia_tri = contents;
+            await console.log(this.gia_tri)
         };
 
-        this.suneditorInstance.setContents(this.value);
 
-        const editor1 = SUNEDITOR.create((document.getElementById('commit') || 'commit'), {
+        const editor1 = SUNEDITOR.create((document.getElementById('cam_ket') || 'cam_ket'), {
             toolbarContainer: '#toolbar_container',
             showPathLabel: false,
             charCounter: true,
@@ -421,18 +487,17 @@ export default {
                 ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
             ],
             callBackSave: function (contents, isChanged) {
-                this.commit = contents
+                this.cam_ket = contents
                 console.log(contents);
             },
         });
-        this.suneditorCommitInstance = editor1;
+        this.suneditorcam_ketInstance = editor1;
 
-        this.suneditorCommitInstance.onChange = async (contents, core) => {
-            this.commit = contents;
-            await console.log(this.commit)
+        this.suneditorcam_ketInstance.onChange = async (contents, core) => {
+            this.cam_ket = contents;
+            await console.log(this.cam_ket)
         };
 
-        this.suneditorCommitInstance.setContents(this.commit);
     },
 }
 </script>
@@ -514,4 +579,5 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-}</style>
+}
+</style>

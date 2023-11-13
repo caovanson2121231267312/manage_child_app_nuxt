@@ -20,7 +20,7 @@
                         <div class="d-flex justify-content-between align-center">
                             <div>
                                 <div class="alanysis-title mb-1">Tổng doanh thu</div>
-                                <h3 class="wh3-text">328,256,256</h3>
+                                <h3 class="wh3-text">{{ data?.tong_tien }}</h3>
                                 <div>
                                     <span class="">
                                         <svg width="26" height="18" viewBox="0 0 26 18" fill="none"
@@ -53,7 +53,7 @@
                         <div class="d-flex justify-content-between align-center">
                             <div>
                                 <div class="alanysis-title mb-1">Lợi nhuận thực tế</div>
-                                <h3 class="wh3-text">295,256,554</h3>
+                                <h3 class="wh3-text">{{ data?.tong_tien_thuc_te }}</h3>
                                 <div>
                                     <span class="">
                                         <svg width="26" height="18" viewBox="0 0 26 18" fill="none"
@@ -86,7 +86,7 @@
                         <div class="d-flex justify-content-between align-center">
                             <div>
                                 <div class="alanysis-title mb-1">Số đơn</div>
-                                <h3 class="wh3-text">2236</h3>
+                                <h3 class="wh3-text">{{ data?.so_don }}</h3>
                                 <div>
                                     <span class="">
                                         <svg width="26" height="18" viewBox="0 0 26 18" fill="none"
@@ -119,7 +119,7 @@
                         <div class="d-flex justify-content-between align-center">
                             <div>
                                 <div class="alanysis-title mb-1">Số khách hàng</div>
-                                <h3 class="wh3-text">1236</h3>
+                                <h3 class="wh3-text">{{ data?.so_khach }}</h3>
                                 <div>
                                     <span class="">
                                         <svg width="26" height="18" viewBox="0 0 26 18" fill="none"
@@ -166,62 +166,8 @@
                         <div class="h3-title">Báo cáo khách hàng</div>
                         <nuxt-link class="watch-more" to="/admin/dashboard/customer_reports">Xem thêm</nuxt-link>
                     </div>
-                    <b-card style="min-width: 245px;" class="mb-2 hover-card h-100">
-                        <div class="d-flex justify-content-between align-center">
-                            <div class="w-100 ">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <label class="chart-title">Tổng quan đơn hàng</label>
-                                    <div>
-                                        <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent
-                                            width="290px">
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field v-model="date" label="" class="month-picker"
-                                                    prepend-icon="mdi-calendar" readonly v-bind="attrs"
-                                                    v-on="on"></v-text-field>
-                                            </template>
-                                            <v-date-picker v-model="date" type="month" scrollable>
-                                                <v-spacer></v-spacer>
-                                                <v-btn text color="primary" @click="modal = false">
-                                                    Cancel
-                                                </v-btn>
-                                                <v-btn text color="primary" @click="$refs.dialog.save(date)">
-                                                    OK
-                                                </v-btn>
-                                            </v-date-picker>
-                                        </v-dialog>
-                                    </div>
-                                </div>
 
-                                <div class="w-100 mb-4" v-for="n in 4" v-bind:key="n">
-                                    <div class="order-service-title mb-2">Bảo mẫu Pro</div>
-                                    <b-progress class="mb-1" max="100" show-value>
-                                        <b-progress-bar value="60" class="c-primary" variant="success"></b-progress-bar>
-                                        <b-progress-bar value="5" class="c-warning" variant="warning"></b-progress-bar>
-                                        <b-progress-bar value="15" class="c-danger" variant="danger"></b-progress-bar>
-                                        <b-progress-bar value="20" class="c-success" variant="info"></b-progress-bar>
-                                    </b-progress>
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <div class="text-admin">
-                                            <span class="text text-c-primary">34</span>
-                                            <span class="text-span">Đang dạy</span>
-                                        </div>
-                                        <div class="text-admin">
-                                            <span class="text text-c-warning">4</span>
-                                            <span class="text-span">Đang tìm GV</span>
-                                        </div>
-                                        <div class="text-admin">
-                                            <span class="text text-c-danger">3</span>
-                                            <span class="text-span">Hủy</span>
-                                        </div>
-                                        <div class="text-admin">
-                                            <span class="text text-c-success">10</span>
-                                            <span class="text-span">Hoàn thành</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </b-card>
+                    <customer-report></customer-report>
                 </div>
 
                 <div class="col-12 col-md-12 col-lg-6 mb-2 mt-5 wow animate__animated animate__zoomIn">
@@ -692,19 +638,22 @@
 <script>
 import ButtonAdd from '~/components/button/ButtonAdd.vue'
 import BarChart from '~/components/Chart/BarChart.vue'
+import api from '@/store/axios'
 import Swal from 'sweetalert2'
 import toastr from 'toastr';
 import SalesReport from '~/components/Report/SalesReport.vue';
+import CustomerReport from '~/components/Report/CustomerReport.vue'
 
 export default {
     layout: 'admin',
-    components: { BarChart, ButtonAdd, SalesReport },
+    components: { BarChart, ButtonAdd, SalesReport, CustomerReport },
     data() {
         return {
             title: {
                 name: null,
                 previous: '/admin/dashboard'
             },
+            data: null,
             date: new Date().toISOString().substr(0, 7),
             menu: false,
             modal: false,
@@ -716,9 +665,29 @@ export default {
         }
     },
     computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_data() {
+            await api.get('bao-cao/tong-quan', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data?.[0]
+            })
+        },
+        async updateFilter(filter) {
+            this.selectedFilter = await filter ?? '';
+            await this.load_data()
+        }
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title)
+        this.load_data()
     }
 }
 </script>

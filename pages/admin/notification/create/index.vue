@@ -36,7 +36,7 @@
                                     </span>
                                     Chủ đề thông báo
                                 </div>
-                                <b-form-select v-model="selected" :options="options" class="mb-3">
+                                <b-form-select v-model="selected" :options="types" class="mb-3">
 
                                 </b-form-select>
                             </b-form-group>
@@ -195,6 +195,9 @@
 import SUNEDITOR from 'suneditor'
 import plugins from 'suneditor/src/plugins'
 import 'suneditor/dist/css/suneditor.min.css'
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -205,6 +208,7 @@ export default {
                 previous: '/admin/notification'
             },
             tieu_de: null,
+            types: null,
             selected: 0,
             options: [
                 { value: 0, text: 'Khuyến mại' },
@@ -234,6 +238,20 @@ export default {
         }
     },
     methods: {
+        async load_type() {
+            await api.get('thong-bao/get-type', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.types = res?.data?.data.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+                this.selected = this.types[0].value
+            })
+        },
         async send_data(event) {
             event.preventDefault();
             const formData = new FormData()
@@ -287,6 +305,8 @@ export default {
         };
 
         this.suneditorInstance.setContents(this.noi_dung);
+
+        this.load_type()
     },
     components: {}
 }

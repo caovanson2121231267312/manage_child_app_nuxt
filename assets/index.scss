@@ -2046,3 +2046,25 @@ ul {
 .media-des img {
     width: 100%;
 }
+
+.btn-export-excel {
+    border-radius: 46px;
+    background: #00c092;
+    display: flex;
+    padding: 10px 28px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    color: #fff;
+    text-align: center;
+    font-family: SVN-Gilroy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-export-excel:hover {
+    background: #029976;
+}
