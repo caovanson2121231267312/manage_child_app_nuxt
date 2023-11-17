@@ -31,6 +31,7 @@ const api = {
             const data = await axios.post(domain + url, formData, {
                 headers: headers,
             })
+            console.log(data)
             return data
         } catch (error) {
             console.log(error)
@@ -38,6 +39,8 @@ const api = {
                 toastr.error(error?.response?.data?.message);
             } else if (error?.response?.status == 500) {
                 toastr.error(error?.response?.data?.message);
+            } else {
+                toastr.error('Vui lòng nhập đủ thông tin');
             }
             // throw error
             // return e

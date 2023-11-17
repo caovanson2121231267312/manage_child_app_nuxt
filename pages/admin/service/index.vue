@@ -68,10 +68,12 @@
                     </b-col>
 
                     <b-col cols="12" sm="7">
-                        <div class="mt-3">
-                            <button-add>
-                                <span class="mdi mdi-plus"></span> Thêm dịch vụ
-                            </button-add>
+                        <div class="mt-3" @click="add_service()">
+                            <template >
+                                <button-add>
+                                    <span class="mdi mdi-plus"></span> Thêm dịch vụ
+                                </button-add>
+                            </template>
                         </div>
                     </b-col>
                 </b-row>
@@ -119,6 +121,9 @@ export default {
                 this.data = res?.data?.data
             })
         },
+        add_service() {
+            this.$router.push('/admin/service/create')
+        }
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);

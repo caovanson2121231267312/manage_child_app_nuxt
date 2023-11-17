@@ -101,8 +101,8 @@ export default {
     },
     methods: {
         async load_data() {
-            // await api.get('bao-cao/tong-quan-khach-hang?thang=' + (this.month ?? ''), {
-            await api.get('bao-cao/tong-quan-khach-hang?thang=', {
+            await api.get('bao-cao/tong-quan-khach-hang?thang=' + (this.month ?? ''), {
+            // await api.get('bao-cao/tong-quan-khach-hang?thang=', {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
