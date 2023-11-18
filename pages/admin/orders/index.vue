@@ -49,14 +49,15 @@
                 </div>
             </div>
             <div class="search">
-                <b-form-input v-model="keyword" placeholder="Tìm giáo viên"></b-form-input>
+                <b-form-input v-model.lazy="giaoVien" placeholder="Tìm giáo viên"></b-form-input>
             </div>
         </div>
 
         <div class="">
             <v-row>
-                <v-col v-for="n in 4" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
-                    <CardItem />
+                <v-col v-for="(item, n) in data" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
+                    <!-- <CardItem /> -->
+                    <card-service-order :data="item" :status="item?.trang_thai"></card-service-order>
                 </v-col>
             </v-row>
         </div>
@@ -68,6 +69,7 @@ import CardItem from '../../../components/card/CardItem.vue';
 import api from '@/store/axios'
 import Swal from 'sweetalert2'
 import toastr from 'toastr';
+import CardServiceOrder from '~/components/card/CardServiceOrder.vue';
 
 export default {
     layout: 'admin',
@@ -78,11 +80,16 @@ export default {
                 previous: '/admin/dashboard'
             },
             date: new Date().toISOString().substr(0, 7),
+            month: '',
             menu: false,
             modal: false,
             data: null,
             keyword: null,
-            items: null,
+            giaoVien: '',
+            timeOut: null,
+            timer: 700,
+            items: [],
+            trang_thai: '',
             item: 0,
             selected: 'A',
             options: [
@@ -99,7 +106,6 @@ export default {
             },
         };
     },
-    computed: {},
     computed: {
         token() {
             const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -112,17 +118,26 @@ export default {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                this.items = res?.data?.data.map(item => {
-                    return {
-                        value: item.id,
-                        text: item.name
-                    };
-                })
+                // this.items = res?.data?.data.map(item => {
+                //     return {
+                //         value: item.id,
+                //         text: item.name
+                //     };
+                // })
+                this.items.unshift({
+                    value: '',
+                    text: 'Tất cả trạng thái'
+                });
+                this.items.push(...res?.data?.data.map(item => ({
+                    value: item.id,
+                    text: item.name
+                })));
+
                 this.item = this.items[0].value
             })
         },
         async load_data() {
-            await api.get(`don-dich-vu/danh-sach?tuKhoa=&giaoVien=&dich_vu_id=&thang=&trang_thai=&sort=1&limit=20&page=1`, {
+            await api.get(`don-dich-vu/danh-sach?tuKhoa=&giaoVien=${this.giaoVien}&dich_vu_id=&thang=${this.month}&trang_thai=${this?.item?.text == 'Tất cả trạng thái' ? '' : (this?.item?.text ?? '')}&sort=1&limit=30&page=1`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -136,10 +151,26 @@ export default {
         this.load_type()
         this.load_data()
     },
-    components: { CardItem },
+    components: { CardItem, CardServiceOrder },
     watch: {
         item() {
             console.log(this.item)
+            this.load_data()
+        },
+        giaoVien() {
+            clearTimeout(this.timeOut);
+
+            this.timeOut = setTimeout(() => {
+                // this.$emit("click");
+                this.load_data()
+
+            }, this.timer);
+        },
+        date() {
+            console.log(this.date)
+            const dateArray = this.date.split("-");
+            this.month = dateArray[1];
+            this.load_data();
         }
     }
 }

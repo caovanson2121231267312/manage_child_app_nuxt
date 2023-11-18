@@ -29,7 +29,7 @@
                                 <span class="service-title">Khóa dịch vụ</span>
                             </span>
                             <span>
-                                <b-form-checkbox switch size="lg"></b-form-checkbox>
+                                <b-form-checkbox v-model="khoa_dich_vu" switch size="lg"></b-form-checkbox>
                             </span>
                         </div>
 
@@ -59,12 +59,13 @@
                             <div class="input-grop">
                                 <div class="box-x d-flex justify-content-between p-2">
                                     <div class="box-img">
+                                        <input type="file" hidden @change="handleFileChange" id="img" />
                                         <img v-if="image" :src="image" alt="">
                                         <img v-else src="@/static/images/teacher-training/Rectangle4052.png" alt="">
                                         <input id="images" type="file" class="d-none" />
                                     </div>
                                     <div class="action">
-                                        <div class="mb-3 btn-service-delete" v-b-tooltip.hover title="Xoá ảnh">
+                                        <div @click="delete_img()" class="mb-3 btn-service-delete" v-b-tooltip.hover title="Xoá ảnh">
                                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -84,7 +85,7 @@
                                                 </defs>
                                             </svg>
                                         </div>
-                                        <label for="images" class="btn-service-upload d-block" v-b-tooltip.hover title="Tải ảnh lên">
+                                        <label for="img" class="btn-service-upload d-block" v-b-tooltip.hover title="Tải ảnh lên">
                                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -102,6 +103,66 @@
 
                         <hr class="support-hr" />
 
+                        <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
+                            <span>
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M13.0588 6.87422L12.9518 6.72022C12.7645 6.48222 12.5438 6.29322 12.2896 6.15321C11.9485 5.95021 11.5606 5.84521 11.1593 5.84521H2.83224C2.43094 5.84521 2.0497 5.95021 1.7019 6.15321C1.44105 6.30022 1.20696 6.50322 1.013 6.75522C0.631757 7.26622 0.451171 7.89622 0.511366 8.52622L0.758837 11.7952C0.845786 12.7822 0.959489 14.0002 3.07971 14.0002H10.9185C13.0387 14.0002 13.1457 12.7822 13.2394 11.7882L13.4869 8.53322C13.547 7.94522 13.3999 7.35722 13.0588 6.87422ZM8.59764 10.7382H5.39389C5.13305 10.7382 4.92571 10.5142 4.92571 10.2482C4.92571 9.98222 5.13305 9.75822 5.39389 9.75822H8.59764C8.85848 9.75822 9.06582 9.98222 9.06582 10.2482C9.06582 10.5212 8.85848 10.7382 8.59764 10.7382Z"
+                                        fill="#4EAEEA" />
+                                    <path
+                                        d="M12.6927 4.34012C12.7476 4.72504 12.318 4.98641 11.9403 4.89386C11.6905 4.83262 11.4319 4.80201 11.166 4.80201H2.83229C2.56037 4.80201 2.2915 4.83564 2.03302 4.9006C1.66012 4.99432 1.23376 4.74232 1.23376 4.35783V3.262C1.23376 0.763001 1.9628 0 4.35056 0H5.13979C6.09623 0 6.3972 0.322 6.78513 0.847001L7.58774 1.967C7.75495 2.205 7.76164 2.219 8.05593 2.219H9.64776C11.6278 2.219 12.4653 2.74472 12.6927 4.34012Z"
+                                        fill="#4EAEEA" />
+                                </svg>
+
+                                <span class="service-title">Tên dịch vụ</span>
+                            </span>
+
+                        </div>
+                        <div>
+                            <input type="text" v-model="ten_dich_vu" placeholder="Nhập tên"
+                                class="form-control form-benefits" />
+                        </div>
+
+                        <hr class="support-hr" />
+
+                        <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
+                            <span>
+                                <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M13.5068 3.90016L9.54678 1.6135C8.90011 1.24016 8.10011 1.24016 7.44678 1.6135L3.49344 3.90016C2.84678 4.2735 2.44678 4.96683 2.44678 5.72016V10.2802C2.44678 11.0268 2.84678 11.7202 3.49344 12.1002L7.45344 14.3868C8.10011 14.7602 8.90011 14.7602 9.55344 14.3868L13.5134 12.1002C14.1601 11.7268 14.5601 11.0335 14.5601 10.2802V5.72016C14.5534 4.96683 14.1534 4.28016 13.5068 3.90016ZM10.0001 8.9335L9.30678 9.3335L8.61344 9.7335C7.72678 10.2468 7.00011 9.82683 7.00011 8.80016V8.00016V7.20016C7.00011 6.1735 7.72678 5.7535 8.61344 6.26683L9.30678 6.66683L10.0001 7.06683C10.8868 7.58016 10.8868 8.42016 10.0001 8.9335Z"
+                                        fill="#FC4D32" />
+                                </svg>
+
+                                <span class="service-title">Link</span>
+                            </span>
+
+                        </div>
+                        <div>
+                            <input type="text" v-model="link" placeholder="Nhập link" class="form-control form-benefits" />
+                        </div>
+
+                        <hr class="support-hr" />
+
+                        <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
+                            <span>
+                                <svg width="16" height="11" viewBox="0 0 16 11" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M2.75 4.71429C3.57734 4.71429 4.25 4.0096 4.25 3.14286C4.25 2.27612 3.57734 1.57143 2.75 1.57143C1.92266 1.57143 1.25 2.27612 1.25 3.14286C1.25 4.0096 1.92266 4.71429 2.75 4.71429ZM13.25 4.71429C14.0773 4.71429 14.75 4.0096 14.75 3.14286C14.75 2.27612 14.0773 1.57143 13.25 1.57143C12.4227 1.57143 11.75 2.27612 11.75 3.14286C11.75 4.0096 12.4227 4.71429 13.25 4.71429ZM14 5.5H12.5C12.0875 5.5 11.7148 5.67433 11.443 5.9567C12.3875 6.49933 13.0578 7.47902 13.2031 8.64286H14.75C15.1648 8.64286 15.5 8.29174 15.5 7.85714V7.07143C15.5 6.20469 14.8273 5.5 14 5.5ZM8 5.5C9.45078 5.5 10.625 4.26987 10.625 2.75C10.625 1.23013 9.45078 0 8 0C6.54922 0 5.375 1.23013 5.375 2.75C5.375 4.26987 6.54922 5.5 8 5.5ZM9.8 6.28571H9.60547C9.11797 6.53125 8.57656 6.67857 8 6.67857C7.42344 6.67857 6.88438 6.53125 6.39453 6.28571H6.2C4.70937 6.28571 3.5 7.55268 3.5 9.11429V9.82143C3.5 10.4721 4.00391 11 4.625 11H11.375C11.9961 11 12.5 10.4721 12.5 9.82143V9.11429C12.5 7.55268 11.2906 6.28571 9.8 6.28571ZM4.55703 5.9567C4.28516 5.67433 3.9125 5.5 3.5 5.5H2C1.17266 5.5 0.5 6.20469 0.5 7.07143V7.85714C0.5 8.29174 0.835156 8.64286 1.25 8.64286H2.79453C2.94219 7.47902 3.6125 6.49933 4.55703 5.9567Z"
+                                        fill="#00C092" />
+                                </svg>
+                                <span class="service-title">Độ tuổi</span>
+                            </span>
+
+                        </div>
+                        <div>
+                            <b-form-select v-model="do_tuoi_id" :options="do_tuoi" aria-placeholder="Chọn"></b-form-select>
+                        </div>
+
+                        <hr class="support-hr" />
+
                         <div class="mt-4 mb-6">
                             <div class="mb-2">
                                 <div class="mb-3">
@@ -109,14 +170,74 @@
                                         <title-header>
                                             Quyền lợi
                                         </title-header>
-                                        <button-add :addClass="'btn-add-more-law'">
+                                        <button-add :addClass="'btn-add-more-law'" v-b-modal.my-modal>
                                             <span class="mdi mdi-plus"></span>
                                         </button-add>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="input-group-service" v-for="n in 3" v-bind:key="n">
+                            <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Thêm quyền lợi">
+                                <template #default="{ hide }">
+                                    <div>
+
+                                        <div class="my-4 pb-3">
+                                            <div>
+                                                <b-form-group>
+                                                    <label>Tên quyền lợi:</label>
+                                                    <b-form-input name="link" v-model="name_benefit"
+                                                        placeholder="Nhập tên quyền lợi"></b-form-input>
+                                                </b-form-group>
+                                            </div>
+                                            <div>
+                                                <b-form-group>
+                                                    <label>Đường dẫn:</label>
+                                                    <b-form-input name="link" v-model="link_benefit"
+                                                        placeholder="Nhập đường dẫn"></b-form-input>
+                                                </b-form-group>
+                                            </div>
+
+                                        </div>
+                                        <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                            <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                            <button class=" btn-delete ms-1" @click="add_benefit()">Thêm</button>
+                                        </div>
+                                    </div>
+
+                                </template>
+                            </b-modal>
+
+                            <b-modal id="my-modal-edit" ref="my-modal-edit" hide-footer centered title="Sửa quyền lợi">
+                                <template #default="{ hide }">
+                                    <div>
+
+                                        <div class="my-4 pb-3">
+                                            <div>
+                                                <b-form-group>
+                                                    <label>Tên quyền lợi:</label>
+                                                    <b-form-input name="link" v-model="name_benefit_edit"
+                                                        placeholder="Nhập tên quyền lợi"></b-form-input>
+                                                </b-form-group>
+                                            </div>
+                                            <div>
+                                                <b-form-group>
+                                                    <label>Đường dẫn:</label>
+                                                    <b-form-input name="link" v-model="link_benefit_edit"
+                                                        placeholder="Nhập đường dẫn"></b-form-input>
+                                                </b-form-group>
+                                            </div>
+
+                                        </div>
+                                        <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                            <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                            <button class=" btn-delete ms-1" @click="edit_benefit()">Sửa</button>
+                                        </div>
+                                    </div>
+
+                                </template>
+                            </b-modal>
+
+                            <div class="input-group-service" v-for="(item, n) in todos" v-bind:key="n">
                                 <div class="service-title mb-2">
                                     <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -127,10 +248,11 @@
                                             d="M7.63999 3.13995C6.41999 2.47995 4.57333 1.89329 3.31999 1.78662H3.27333C2.47333 1.78662 1.82666 2.43329 1.82666 3.23329V11.16C1.82666 11.8066 2.35333 12.4 2.99999 12.48L3.20666 12.5066C4.29999 12.6533 5.83999 13.1066 7.07999 13.6266C7.51333 13.8066 7.99333 13.48 7.99333 13.0066V3.73329C7.99333 3.47995 7.85999 3.25995 7.63999 3.13995ZM3.83333 5.15995H5.33333C5.60666 5.15995 5.83333 5.38662 5.83333 5.65995C5.83333 5.93995 5.60666 6.15995 5.33333 6.15995H3.83333C3.55999 6.15995 3.33333 5.93995 3.33333 5.65995C3.33333 5.38662 3.55999 5.15995 3.83333 5.15995ZM5.83333 8.15995H3.83333C3.55999 8.15995 3.33333 7.93995 3.33333 7.65995C3.33333 7.38662 3.55999 7.15995 3.83333 7.15995H5.83333C6.10666 7.15995 6.33333 7.38662 6.33333 7.65995C6.33333 7.93995 6.10666 8.15995 5.83333 8.15995Z"
                                             fill="#FC4D32" />
                                     </svg>
-                                    <span>Chương trình {{ n }}</span>
+                                    <span>{{ item?.name_benefit }}</span>
                                 </div>
                                 <div class="d-block position-relative">
-                                    <input type="text" placeholder="Nhập đường dẫn" class="form-control form-benefits" />
+                                    <input type="text" :value="item?.link_benefit" placeholder="Nhập đường dẫn"
+                                        class="form-control form-benefits" />
 
                                     <div class="text-center action-benefits">
                                         <v-menu offset-y open-on-hover transition="scale-transition">
@@ -155,10 +277,11 @@
                                             </template>
                                             <v-list>
                                                 <v-list-item>
-                                                    <v-list-item-title>Sửa quyền lợi</v-list-item-title>
+                                                    <v-list-item-title @click="show_edit(item?.id)"
+                                                        v-b-modal.my-modal-edit>Sửa quyền lợi</v-list-item-title>
                                                 </v-list-item>
                                                 <v-list-item>
-                                                    <v-list-item-title>Xóa</v-list-item-title>
+                                                    <v-list-item-title @click="deleteTodo(item?.id)">Xóa</v-list-item-title>
                                                 </v-list-item>
                                             </v-list>
                                         </v-menu>
@@ -168,6 +291,7 @@
                         </div>
 
                         <hr class="support-hr" />
+                        <!--  -->
 
                         <div class="mt-4 mb-6">
                             <div class="mb-2">
@@ -326,7 +450,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-8">
+                        <div class="mt-8" @click="send_data()">
                             <button-component>Lưu thay đổi</button-component>
                         </div>
                     </div>
@@ -374,6 +498,17 @@ export default {
             gia_tri: 'Nhập nội dung',
             suneditorcam_ketInstance: null,
             cam_ket: 'Nhập nội dung',
+            name_benefit: '',
+            link_benefit: '',
+            name_benefit_edit: '',
+            link_benefit_edit: '',
+            id_benefit_edit: '',
+            do_tuoi: [],
+            do_tuoi_id: 0,
+            todos: [],
+            image: null,
+            file: null,
+            link: null,
         };
     },
     validate({ params }) {
@@ -389,17 +524,75 @@ export default {
         }
     },
     methods: {
+        delete_img() {
+            this.image = null;
+            this.file = null;
+        },
+        handleFileChange(event) {
+            const img = event.target.files[0];
+            this.file = img;
+            if (img) {
+                this.image = URL.createObjectURL(img);
+            }
+        },
+        add_benefit() {
+            console.log(this.name_benefit, this.link_benefit)
+            if (this.name_benefit == '' || this.link_benefit == '') {
+                toastr.error('Bạn cần nhập đầy đủ thông tin');
+                return
+            }
+            const newId = this.todos.length + 1;
+            this.todos.push({ id: newId, name_benefit: this.name_benefit, link_benefit: this.link_benefit });
+            this.name_benefit = ''
+            this.link_benefit = ''
+            this.$refs['my-modal'].hide()
+        },
+        deleteTodo(id) {
+            this.todos = this.todos.filter((todo) => todo.id !== id);
+        },
+        show_edit(id) {
+            // if(this.name_benefit_edit == '' || this.link_benefit_edit == '') {
+            //     toastr.success('Bạn cần nhập đầy đủ thông tin');
+            // }
+            const todoIndex = this.todos.find((todo) => todo.id === id);
+            if (!todoIndex) {
+                toastr.error('Lỗi thao tác id:' + id);
+                return
+            }
+            console.log(todoIndex)
+            this.name_benefit_edit = todoIndex.name_benefit;
+            this.link_benefit_edit = todoIndex.link_benefit;
+            this.id_benefit_edit = todoIndex.id;
+        },
+        edit_benefit() {
+            if (this.name_benefit_edit == '' || this.link_benefit_edit == '') {
+                toastr.error('Bạn cần nhập đầy đủ thông tin');
+                return
+            }
+            console.log(this.name_benefit_edit, this.id_benefit_edit)
+            const todoIndex = this.todos.findIndex((todo) => todo.id === this.id_benefit_edit);
+            if (todoIndex !== -1) {
+                this.todos[todoIndex].name_benefit = this.name_benefit_edit;
+                this.todos[todoIndex].link_benefit = this.link_benefit_edit;
+                this.$refs['my-modal-edit'].hide()
+
+                this.name_benefit_edit = ''
+                this.link_benefit_edit = ''
+                this.id_benefit_edit = ''
+            }
+        },
         async load_role() {
-            await api.get('admin-api/danh-sach-quyen', {
+            await api.get('dich-vu/get-do-tuoi', {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                this.roles = res?.data?.data.map(item => {
+                this.do_tuoi = res?.data?.data.map(item => {
                     return {
-                        gia_tri: item.id,
+                        value: item.id,
                         text: item.name
                     };
                 })
+                this.do_tuoi_id = this.do_tuoi[0].value
             })
         },
         async load_data() {
@@ -409,7 +602,7 @@ export default {
             }).then(res => {
                 const user = res?.data?.data.dichVu
                 this.data = user
-                this.khoa_dich_vu = user?.khoa_dich_vu == 0 ? flase : true
+                this.khoa_dich_vu = user?.khoa_dich_vu == 0 ? false : true
                 this.cam_ket = user?.cam_ket
                 this.suneditorcam_ketInstance.setContents(this.cam_ket);
                 this.gia_tri = user?.gia_tri
@@ -417,28 +610,57 @@ export default {
                 this.image = user?.image
                 this.hop_dong_dich_vu = user?.hop_dong_dich_vu
                 this.ten_dich_vu = user?.ten_dich_vu
-                this.title.name = this.ten_dich_vu ?? 'Dich vụ'
+                this.do_tuoi_id = user?.do_tuoi_id
+                const ql = res?.data?.data?.quyenLoi.map(function(item,index){
+                    return {
+                        id: item.index,
+                        name_benefit: item.name,
+                        link_benefit: item.link,
+                    }
+                })
+                this.todos = ql
+
+
+                this.title.name = this.ten_dich_vu ?? 'Chi tiết dịch vụ'
                 this.$store.dispatch('title/set_title', this.title);
 
             })
         },
         async send_data(event) {
-            event.preventDefault();
-            console.log(123)
-            const formData = new FormData(document.getElementById('form'))
-            await api.post('admin-api/cap-nhat-quan-tri-vien', formData, {
+            // event.preventDefault();
+            const formData = new FormData()
+            formData.append('khoa_dich_vu', this.khoa_dich_vu ? 1 : 0)
+            formData.append('ten_dich_vu', this.ten_dich_vu)
+            formData.append('gia_tri', this.gia_tri)
+            formData.append('do_tuoi_id', this.do_tuoi_id)
+            formData.append('cam_ket', this.cam_ket)
+            formData.append('hop_dong_dich_vu', this.hop_dong_dich_vu)
+            formData.append('image', this.file)
+            formData.append('link', this.link)
+            formData.append('id', this.id)
+
+            this.todos.forEach((value, key) => {
+                formData.append(`quyen_loi[${key}][name]`, value.name_benefit)
+                formData.append(`quyen_loi[${key}][link]`, value.link_benefit)
+            });
+
+            formData.forEach((value, key) => {
+                console.log(`${key}: ${value}`);
+            });
+
+            await api.post('dich-vu/sua', formData, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
-                    this.load_data()
-                    this.load_role()
+                    this.$router.push('/admin/service');
                 }
             })
         },
     },
     mounted() {
+        this.load_role();
         this.load_data();
         // this.$store.dispatch('title/set_title', this.title);
 
@@ -456,7 +678,7 @@ export default {
                 ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
                 ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
                 ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
-                ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
+                // ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
             ],
             callBackSave: function (contents, isChanged) {
                 this.gia_tri = contents
@@ -484,7 +706,7 @@ export default {
                 ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
                 ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
                 ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
-                ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
+                // ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
             ],
             callBackSave: function (contents, isChanged) {
                 this.cam_ket = contents

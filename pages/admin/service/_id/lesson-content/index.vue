@@ -133,7 +133,7 @@ export default {
             })
         },
         async load_data() {
-            await api.get(`dich-vu/danh-sach-khung-gio?type=${this.selectedFilter ?? ''}&page=1&limit=20&sort=1&dich_vu_id=` + this.id, {
+            await api.get(`dich-vu/danh-sach-khung-gio?type=${this.selectedFilter ?? ''}&page=1&limit=100&sort=1&dich_vu_id=` + this.id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

@@ -26,7 +26,7 @@
                                 <span class="service-title">Khóa dịch vụ</span>
                             </span>
                             <span>
-                                <b-form-checkbox switch size="lg"></b-form-checkbox>
+                                <b-form-checkbox v-model="khoa_dich_vu" switch size="lg"></b-form-checkbox>
                             </span>
                         </div>
 
@@ -497,14 +497,24 @@ export default {
             formData.append('image', this.file)
             formData.append('link', this.link)
 
+            this.todos.forEach((value, key) => {
+                formData.append(`quyen_loi[${key}][name]`, value.name_benefit)
+                formData.append(`quyen_loi[${key}][link]`, value.link_benefit)
+            });
+
+            formData.forEach((value, key) => {
+                console.log(`${key}: ${value}`);
+            });
+
+            // return;
+
             await api.post('dich-vu/tao-moi', formData, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
-                    this.load_data()
-                    this.load_role()
+                    this.$router.push('/admin/service');
                 }
             })
         },

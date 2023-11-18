@@ -20,7 +20,7 @@
                         <div class="d-flex justify-content-between align-center">
                             <div>
                                 <div class="alanysis-title mb-1">Tổng doanh thu</div>
-                                <h3 class="wh3-text">{{ data?.tong_tien }}</h3>
+                                <h3 class="wh3-text">{{ formatCurrency(data?.tong_tien) }}</h3>
                                 <div>
                                     <span class="">
                                         <svg width="26" height="18" viewBox="0 0 26 18" fill="none"
@@ -53,7 +53,7 @@
                         <div class="d-flex justify-content-between align-center">
                             <div>
                                 <div class="alanysis-title mb-1">Lợi nhuận thực tế</div>
-                                <h3 class="wh3-text">{{ data?.tong_tien_thuc_te }}</h3>
+                                <h3 class="wh3-text">{{ formatCurrency(data?.tong_tien_thuc_te) }}</h3>
                                 <div>
                                     <span class="">
                                         <svg width="26" height="18" viewBox="0 0 26 18" fill="none"

@@ -85,7 +85,7 @@
                             <template #default="{ hide }">
                                 <div class="w-100">
                                     <div class="mb-3">
-                                        <b-form-select v-model="selected" :options="options"></b-form-select>
+                                        <b-form-select v-model="trinhDo_id" :options="trinhDo"></b-form-select>
                                     </div>
                                     <div class="mb-3">
                                         <b-form-input placeholder="Nhập số buổi"></b-form-input>
@@ -117,6 +117,10 @@
 <script>
 import ButtonAdd from '~/components/button/ButtonAdd.vue';
 import ButtonComponent from '~/components/button/ButtonComponent.vue';
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
+
 export default {
     components: { ButtonAdd, ButtonComponent },
     layout: 'admin',
@@ -126,25 +130,151 @@ export default {
                 name: 'Học phí và khuyến mãi',
                 previous: '/admin/service/' + this.id + '/edit'
             },
-            selected: 1,
-            options: [
-                { value: '1', text: 'Giáo viên' },
-                { value: '2', text: 'Phụ huynh' },
-                { value: '3', text: 'Học sinh' },
-            ]
+            data: null,
+            trinhDo_id: 1,
+            trinhDo: [],
+            giaBuoiHoc: [],
         };
     },
     validate({ params }) {
-        return /^[0-9]{0,2}$/.test(params.id)
+        return /^\d+$/.test(params.id);
     },
     computed: {
         id() {
             return this.$route.params.id
         },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
     },
     methods: {
+        add_benefit() {
+            console.log(this.name_benefit, this.link_benefit)
+            if (this.name_benefit == '' || this.link_benefit == '') {
+                toastr.error('Bạn cần nhập đầy đủ thông tin');
+                return
+            }
+            const newId = this.todos.length + 1;
+            this.todos.push({ id: newId, so_buoi: this.so_buoi, tong_tien: this.tong_tien, khuyen_mai: this.khuyen_mai });
+            this.so_buoi = ''
+            this.tong_tien = ''
+            this.khuyen_mai = ''
+            this.khuyen_mai = ''
+            this.$refs['my-modal'].hide()
+        },
+        deleteTodo(id) {
+            this.todos = this.todos.filter((todo) => todo.id !== id);
+        },
+        show_edit(id) {
+            const todoIndex = this.todos.find((todo) => todo.id === id);
+            if (!todoIndex) {
+                toastr.error('Lỗi thao tác id:' + id);
+                return
+            }
+            console.log(todoIndex)
+            this.name_benefit_edit = todoIndex.name_benefit;
+            this.link_benefit_edit = todoIndex.link_benefit;
+            this.id_benefit_edit = todoIndex.id;
+        },
+        edit_benefit() {
+            if (this.name_benefit_edit == '' || this.link_benefit_edit == '') {
+                toastr.error('Bạn cần nhập đầy đủ thông tin');
+                return
+            }
+            console.log(this.name_benefit_edit, this.id_benefit_edit)
+            const todoIndex = this.todos.findIndex((todo) => todo.id === this.id_benefit_edit);
+            if (todoIndex !== -1) {
+                this.todos[todoIndex].name_benefit = this.name_benefit_edit;
+                this.todos[todoIndex].link_benefit = this.link_benefit_edit;
+                this.$refs['my-modal-edit'].hide()
+
+                this.name_benefit_edit = ''
+                this.link_benefit_edit = ''
+                this.id_benefit_edit = ''
+            }
+        },
+        async load_role() {
+            await api.get('dich-vu/get-do-tuoi', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.do_tuoi = res?.data?.data.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+                this.do_tuoi_id = this.do_tuoi[0].value
+            })
+        },
+        async load_data() {
+            await api.get('dich-vu/danh-sach-gia-buoi-hoc?trinh_do=&page=1&limit=1&sort=0&dich_vu_id=' + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data.dichVu
+                this.data = user
+
+                this.trinhDo = res?.data?.data?.trinhDo.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+                this.trinhDo_id = this.trinhDo[0].value
+
+                const ql = res?.data?.data?.giaBuoiHoc.map(function(item,index){
+                    return {
+                        id: item.index,
+                        name_benefit: item.so_buoi,
+                        link_benefit: item.tong_tien,
+                        link_benefit: item.khuyen_mai,
+                    }
+                })
+                this.todos = ql
+
+
+                // this.title.name = this.ten_dich_vu ?? 'Chi tiết dịch vụ'
+                // this.$store.dispatch('title/set_title', this.title);
+
+            })
+        },
+        async send_data(event) {
+            // event.preventDefault();
+            const formData = new FormData()
+            formData.append('khoa_dich_vu', this.khoa_dich_vu ? 1 : 0)
+            formData.append('ten_dich_vu', this.ten_dich_vu)
+            formData.append('gia_tri', this.gia_tri)
+            formData.append('do_tuoi_id', this.do_tuoi_id)
+            formData.append('cam_ket', this.cam_ket)
+            formData.append('hop_dong_dich_vu', this.hop_dong_dich_vu)
+            formData.append('image', this.file)
+            formData.append('link', this.link)
+            formData.append('id', this.id)
+
+            this.todos.forEach((value, key) => {
+                formData.append(`quyen_loi[${key}][name]`, value.name_benefit)
+                formData.append(`quyen_loi[${key}][link]`, value.link_benefit)
+            });
+
+            formData.forEach((value, key) => {
+                console.log(`${key}: ${value}`);
+            });
+
+            await api.post('dich-vu/cap-nhat-gia-buoi-hoc', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$router.push('/admin/service/' + this.id + '/edit');
+                }
+            })
+        },
     },
     mounted() {
+        this.load_data()
         this.title.previous = '/admin/service/' + this.id + '/edit'
         this.$store.dispatch('title/set_title', this.title);
     },
