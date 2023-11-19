@@ -244,7 +244,7 @@ export default {
             }
         },
         async load_data() {
-            await api.get(`/phu-huynh/danh-sach-khieu-nai?tuKhoa=&page=1&limit=30&sort=${this.arrange}&thang=${this.selected_date ?? ''}`, {
+            await api.get(`/khieu-nai/danh-sach-khieu-nai?tuKhoa=&page=1&limit=30&sort=${this.arrange}&thang=${this.selected_date ?? ''}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

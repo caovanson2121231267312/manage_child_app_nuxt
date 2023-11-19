@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <div>
-            <textarea v-model="contents" :id="id_key"></textarea>
+            <textarea v-model="value_contents" :id="id_key"></textarea>
         </div>
     </div>
 </template>
@@ -23,11 +23,12 @@ export default {
     },
     data: () => ({
         suneditorInstance: null,
+        value_contents: '',
     }),
     computed: {
         id_key() {
             return 'key-' + this.app
-        }
+        },
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
@@ -55,8 +56,9 @@ export default {
         this.suneditorInstance = editor; // Store the Suneditor instance in a component property
 
         this.suneditorInstance.onChange = async (contents, core) => {
-            this.contents = contents;
-            await console.log(this.contents)
+            this.value_contents = contents;
+            this.$emit('valueChanged', contents);
+            await console.log(this.value_contents)
         };
 
         this.suneditorInstance.setContents(this.contents);

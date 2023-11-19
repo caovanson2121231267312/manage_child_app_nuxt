@@ -3,13 +3,14 @@
         <div class="service-edit-lesson-content">
 
             <b-row>
-                <b-col class="mt-0 pt-0" cols="12" sm="9" md="7">
+                <b-col class="mt-5 pt-" cols="12" sm="9" md="7">
                     <div class="mb-7 ">
                         <div class="d-flex align-items-center">
-                            <button-filter v-for="(item, index) in chonCa" :key="index"
-                                :active="{ active: selectedFilter === item?.id }" @click="updateFilter(item?.id)">
-                                {{ item?.name }}
-                            </button-filter>
+                            <span @click="updateFilter(item?.value)" v-for="(item, index) in chonCa" :key="index">
+                                <button-filter :active="selectedFilter == item?.value ? 'active' : ''">
+                                    {{ item?.text }}
+                                </button-filter>
+                            </span>
                         </div>
                     </div>
                     <div v-for="(item, n) in data" v-bind:key="n">
@@ -26,11 +27,15 @@
                                 <span class="span-title">Thời lượng: </span>
                                 <b class="span-title">{{ item?.khung_gio }}</b>
                             </div>
-                            <div>
+                            <div class=" wow animate__animated animate__zoomIn">
                                 <Suneditor :app="n" :contents="item?.noi_dung"></Suneditor>
                             </div>
                         </div>
                         <hr class="support-hr" />
+                    </div>
+                    <div v-if="data == null || data?.length == 0">
+                        <b-alert class="wow animate__animated animate__bounce" show dismissible variant="primary">Danh sách
+                            trống</b-alert>
                     </div>
                 </b-col>
                 <b-col class="mt-0 pt-0" cols="12" sm="9" md="7">
@@ -39,27 +44,27 @@
                             <span class="mdi mdi-plus"></span> Thêm nội dung
                         </button-add>
 
-                        <b-modal size="lg" id="my-modal" hide-footer centered title="Thêm nội dung buổi học">
+                        <b-modal size="lg" id="my-modal" ref="my-modal" hide-footer centered title="Thêm nội dung buổi học">
                             <!-- <template #modal-header="{ close }">
                 <h5>Thông báo</h5>
             </template> -->
                             <template #default="{ hide }">
                                 <div class="w-100">
                                     <div class="mb-3">
-                                        <b-form-select v-model="selected" :options="options"></b-form-select>
+                                        <b-form-select v-model="selected" :options="chonCa"></b-form-select>
                                     </div>
                                     <div class="mb-3">
-                                        <b-form-select v-model="selected1" :options="options1"></b-form-select>
+                                        <b-form-select v-model="khung_gio" :options="khung_gios"></b-form-select>
                                     </div>
 
                                     <div class="mb-3">
-                                        <Suneditor></Suneditor>
+                                        <Suneditor :contents="noi_dung" @valueChanged="handleValueChanged"></Suneditor>
                                     </div>
 
                                 </div>
                                 <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
                                     <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                                    <button class=" btn-delete ms-1">Tạo</button>
+                                    <button class=" btn-delete ms-1" @click="send_data()">Tạo</button>
                                 </div>
                             </template>
                         </b-modal>
@@ -93,20 +98,11 @@ export default {
             },
             data: null,
             chonCa: null,
+            noi_dung: 'Nhập nội dung',
             selectedFilter: '',
-            selected: 1,
-            options: [
-                { value: '1', text: 'Cả ngày' },
-                { value: '2', text: 'Sáng' },
-                { value: '3', text: 'Chiều' },
-                { value: '4', text: 'Tối' },
-            ],
+            khung_gio: 1,
+            khung_gios: [],
             selected1: 1,
-            options1: [
-                { value: '1', text: '7h - 17h' },
-                { value: '2', text: '7h30 - 17h30' },
-                { value: '3', text: '8h - 18h' },
-            ]
         };
     },
     validate({ params }) {
@@ -127,8 +123,30 @@ export default {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                this.chonCa = res?.data?.data.chonCa
-                this.selectedFilter = this.chonCa[0].id
+
+                this.chonCa = res?.data?.data?.chonCa.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+                this.selectedFilter = this.chonCa[0].value
+                this.selected = this.chonCa[0].value
+
+            })
+
+            await api.get('dich-vu/get-khung-thoi-gian?type=10', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+
+                this.khung_gios = res?.data?.data?.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+                this.khung_gio = this.khung_gios[0].value
 
             })
         },
@@ -143,19 +161,30 @@ export default {
             })
         },
         async send_data(event) {
-            event.preventDefault();
-            console.log(123)
-            const formData = new FormData(document.getElementById('form'))
-            await api.post('admin-api/cap-nhat-quan-tri-vien', formData, {
+            // event.preventDefault();
+
+            const formData = new FormData()
+            formData.append('dich_vu_id', this.id)
+            formData.append('type', this.selected)
+            formData.append('khung_gio', this.khung_gio)
+            formData.append('noi_dung', this.noi_dung)
+
+            await api.post('dich-vu/them-khung-gio', formData, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
                     this.load_data()
-                    this.load_role()
+                    this.$refs['my-modal'].hide()
+                    // this.load_role()
                 }
             })
+        },
+        handleValueChanged(newValue) {
+            // Xử lý khi giá trị thay đổi trong thành phần con
+            console.log('Value changed in child component:', newValue);
+            this.noi_dung = newValue
         },
         async updateFilter(filter) {
             this.selectedFilter = await filter ?? '';
@@ -163,11 +192,11 @@ export default {
         }
     },
     mounted() {
-        this.title.previous = '/admin/service/' + this.id + '/edit'
-        this.$store.dispatch('title/set_title', this.title);
-
         this.load_role()
         this.load_data()
+        this.title.name = 'Thời lượng ca và nội dung buổi học'
+        this.title.previous = '/admin/service/' + this.id + '/edit'
+        this.$store.dispatch('title/set_title', this.title);
     },
 }
 </script>

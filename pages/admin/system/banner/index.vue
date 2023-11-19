@@ -36,7 +36,7 @@
 
                         </div>
                         <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
-                            <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                            <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
                             <button class=" btn-delete ms-1" type="submit">Thêm</button>
                         </div>
                     </form>
@@ -129,6 +129,10 @@
                         </div>
                     </div>
                 </b-col>
+
+                <v-col v-if="data == null || data?.length == 0">
+                    <b-alert class="wow animate__animated animate__flash" show dismissible variant="primary">Danh sách trống</b-alert>
+                </v-col>
             </b-row>
 
             <div class="my-5 d-sm-none">
