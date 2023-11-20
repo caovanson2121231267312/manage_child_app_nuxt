@@ -99,10 +99,12 @@
                     <div class="w-100 mt-2">
                         <div class="swiper" id="sw1">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide max-box" v-for="n in 9" v-bind:key="n">
-                                    <nuxt-link class="position-relative" to="/admin/lsm/teacher-training/34/detail">
+                                <div class="swiper-slide max-box" v-for="(item, n) in coBan" v-bind:key="n">
+                                    <nuxt-link class="position-relative"
+                                        :to="'/admin/lsm/teacher-training/' + item?.id + '/detail'">
                                         <div class="card-body-bg img-box">
-                                            <img src="@/static/images/students/Rectangle444.png" alt="">
+                                            <img :src="item?.image" alt="">
+                                            <!-- <img src="@/static/images/students/Rectangle444.png" alt=""> -->
                                             <div class="box-edit">
                                                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
@@ -149,9 +151,7 @@
                                                     </linearGradient>
                                                 </defs>
                                             </svg>
-                                            <strong class="title-box text-start w-100"> Bảo mẫu cơ bản {{ n * 3 }} - {{ (n +
-                                                1) * 3 }}
-                                                tháng</strong>
+                                            <strong class="title-box text-start w-100">{{ item?.tieu_de }}</strong>
                                         </div>
                                     </nuxt-link>
                                 </div>
@@ -180,10 +180,12 @@
                     <div class="w-100 mt-2">
                         <div class="swiper" id="sw2">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide max-box" v-for="n in 9" v-bind:key="n">
-                                    <nuxt-link class="position-relative" to="/admin/lsm/teacher-training/34/detail">
+                                <div class="swiper-slide max-box" v-for="(item, n) in nangCao" v-bind:key="n">
+                                    <nuxt-link class="position-relative"
+                                        :to="'/admin/lsm/teacher-training/' + item?.id + '/detail'">
                                         <div class="card-body-bg img-box">
-                                            <img src="@/static/images/students/Rectangle444.png" alt="">
+                                            <img :src="item?.image" alt="">
+                                            <!-- <img src="@/static/images/students/Rectangle444.png" alt=""> -->
                                             <div class="box-edit">
                                                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
@@ -230,10 +232,9 @@
                                                     </linearGradient>
                                                 </defs>
                                             </svg>
-                                            <strong class="title-box text-start w-100"> Kĩ năng massage trẻ sơ sinh {{ n * 3
-                                            }} - {{ (n +
-    1) * 3 }}
-                                                tháng</strong>
+                                            <strong class="title-box text-start w-100">
+                                                {{ item?.tieu_de }}
+                                            </strong>
                                         </div>
                                     </nuxt-link>
                                 </div>
@@ -264,6 +265,9 @@ import { Swiper, SwiperSlide } from 'swiper';
 import 'swiper/swiper.css';
 // import 'swiper/css/pagination';
 // import './style.css';
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 import { Pagination } from 'swiper/modules';
 
 export default {
@@ -274,10 +278,12 @@ export default {
                 name: 'Khóa học',
                 previous: '/admin/lsm/teacher-training'
             },
+            coBan: [],
+            nangCao: [],
+            data: [],
+            file: null,
+            image: null,
         };
-    },
-    validate({ params }) {
-        return /^[0-9]{0,2}$/.test(params.id)
     },
     setup() {
         return {
@@ -288,21 +294,60 @@ export default {
         Swiper,
         SwiperSlide,
     },
+    validate({ params }) {
+        return /^\d+$/.test(params.id);
+    },
     computed: {
         id() {
             return this.$route.params.id
         },
-        results_id() {
-            return this.$route.params.results_id
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
         }
     },
     methods: {
-        togglePassword() {
-            this.showPassword = !this.showPassword;
+        clearFiles() {
+            this.$refs['file-input'].reset()
+        },
+        async load_data() {
+            await api.get(`dao-tao/danh-sach-hoc-phan`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.coBan = res?.data?.data?.coBan
+                this.nangCao = res?.data?.data?.nangCao
+            })
+
+            await api.get(`dao-tao/chi-tiet-hoc-phan?hoc_phan_id=${this.id}`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data
+            })
+        },
+        async send_data(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('form'))
+            await api.post('dao-tao/tao-moi', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal'].hide()
+                    this.clearFiles();
+                    this.name = null
+                    this.load_data();
+                }
+            })
         },
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
 
         const swiper = new Swiper('#sw1', {
             modules: [Pagination],
