@@ -36,8 +36,8 @@
                             d="M19.5 16.4H14.5C14.09 16.4 13.75 16.06 13.75 15.65C13.75 15.24 14.09 14.9 14.5 14.9H19.5C19.91 14.9 20.25 15.24 20.25 15.65C20.25 16.06 19.91 16.4 19.5 16.4Z"
                             fill="white" />
                     </svg>
-                    <svg v-if="status == 'Đã huỷ' || status == 'Đã hủy'" width="34" height="34" viewBox="0 0 34 34" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
+                    <svg v-if="status == 'Đã huỷ' || status == 'Đã hủy'" width="34" height="34" viewBox="0 0 34 34"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="34" height="34" rx="7" fill="#E4002B" />
                         <path opacity="0.4"
                             d="M21.8201 7H12.1801C10.0501 7 8.32007 8.74 8.32007 10.86V24.95C8.32007 26.75 9.61007 27.51 11.1901 26.64L16.0701 23.93C16.5901 23.64 17.4301 23.64 17.9401 23.93L22.8201 26.64C24.4001 27.52 25.6901 26.76 25.6901 24.95V10.86C25.6801 8.74 23.9501 7 21.8201 7Z"
@@ -222,6 +222,60 @@
                                 </td>
                             </tr>
                         </table>
+                    </div>
+                </v-card-text>
+
+                <v-divider class="m-0 p-0"></v-divider>
+                <v-card-text>
+                    <div v-if="data?.noi_dung_khao_sat">
+                        <table v-if="data?.trang_thai != 'Chưa có GV' && data?.trang_thai != 'Đang khảo sát'"
+                            class="table table-borderless">
+                            <tr>
+                                <td>
+                                    <span>
+                                        <svg width="13" height="14" viewBox="0 0 13 14" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M9.96094 1.62905V0.528914C9.96094 0.239774 9.73331 0 9.45881 0C9.18431 0 8.95668 0.239774 8.95668 0.528914V1.58674H4.6049V0.528914C4.6049 0.239774 4.37727 0 4.10277 0C3.82828 0 3.60065 0.239774 3.60065 0.528914V1.62905C1.79298 1.80536 0.915932 2.94076 0.782031 4.62623C0.768641 4.83075 0.929322 5 1.11678 5H12.4448C12.639 5 12.7996 4.8237 12.7796 4.62623C12.6456 2.94076 11.7686 1.80536 9.96094 1.62905Z"
+                                                fill="#00C092" />
+                                            <path
+                                                d="M12.1146 6H1.44792C1.08125 6 0.78125 6.29605 0.78125 6.65789V10.7105C0.78125 12.6842 1.78125 14 4.11458 14H9.44792C11.7812 14 12.7812 12.6842 12.7812 10.7105V6.65789C12.7812 6.29605 12.4813 6 12.1146 6ZM4.92125 11.5066C4.88792 11.5329 4.85458 11.5658 4.82125 11.5855C4.78125 11.6118 4.74125 11.6316 4.70125 11.6447C4.66125 11.6645 4.62125 11.6776 4.58125 11.6842C4.53458 11.6908 4.49458 11.6974 4.44792 11.6974C4.36125 11.6974 4.27458 11.6776 4.19458 11.6447C4.10792 11.6118 4.04125 11.5658 3.97458 11.5066C3.85458 11.3816 3.78125 11.2105 3.78125 11.0395C3.78125 10.8684 3.85458 10.6974 3.97458 10.5724C4.04125 10.5132 4.10792 10.4671 4.19458 10.4342C4.31458 10.3816 4.44792 10.3684 4.58125 10.3947C4.62125 10.4013 4.66125 10.4145 4.70125 10.4342C4.74125 10.4474 4.78125 10.4671 4.82125 10.4934C4.85458 10.5197 4.88792 10.5461 4.92125 10.5724C5.04125 10.6974 5.11458 10.8684 5.11458 11.0395C5.11458 11.2105 5.04125 11.3816 4.92125 11.5066ZM4.92125 9.20395C4.79458 9.32237 4.62125 9.39474 4.44792 9.39474C4.27458 9.39474 4.10125 9.32237 3.97458 9.20395C3.85458 9.07895 3.78125 8.90789 3.78125 8.73684C3.78125 8.56579 3.85458 8.39474 3.97458 8.26974C4.16125 8.08553 4.45458 8.02632 4.70125 8.13158C4.78792 8.16447 4.86125 8.21053 4.92125 8.26974C5.04125 8.39474 5.11458 8.56579 5.11458 8.73684C5.11458 8.90789 5.04125 9.07895 4.92125 9.20395ZM7.25458 11.5066C7.12792 11.625 6.95458 11.6974 6.78125 11.6974C6.60792 11.6974 6.43458 11.625 6.30792 11.5066C6.18792 11.3816 6.11458 11.2105 6.11458 11.0395C6.11458 10.8684 6.18792 10.6974 6.30792 10.5724C6.55458 10.3289 7.00792 10.3289 7.25458 10.5724C7.37458 10.6974 7.44792 10.8684 7.44792 11.0395C7.44792 11.2105 7.37458 11.3816 7.25458 11.5066ZM7.25458 9.20395C7.22125 9.23026 7.18792 9.25658 7.15458 9.28289C7.11458 9.30921 7.07458 9.32895 7.03458 9.34211C6.99458 9.36184 6.95458 9.375 6.91458 9.38158C6.86792 9.38816 6.82792 9.39474 6.78125 9.39474C6.60792 9.39474 6.43458 9.32237 6.30792 9.20395C6.18792 9.07895 6.11458 8.90789 6.11458 8.73684C6.11458 8.56579 6.18792 8.39474 6.30792 8.26974C6.36792 8.21053 6.44125 8.16447 6.52792 8.13158C6.77458 8.02632 7.06792 8.08553 7.25458 8.26974C7.37458 8.39474 7.44792 8.56579 7.44792 8.73684C7.44792 8.90789 7.37458 9.07895 7.25458 9.20395ZM9.58792 11.5066C9.46125 11.625 9.28792 11.6974 9.11458 11.6974C8.94125 11.6974 8.76792 11.625 8.64125 11.5066C8.52125 11.3816 8.44792 11.2105 8.44792 11.0395C8.44792 10.8684 8.52125 10.6974 8.64125 10.5724C8.88792 10.3289 9.34125 10.3289 9.58792 10.5724C9.70792 10.6974 9.78125 10.8684 9.78125 11.0395C9.78125 11.2105 9.70792 11.3816 9.58792 11.5066ZM9.58792 9.20395C9.55458 9.23026 9.52125 9.25658 9.48792 9.28289C9.44792 9.30921 9.40792 9.32895 9.36792 9.34211C9.32792 9.36184 9.28792 9.375 9.24792 9.38158C9.20125 9.38816 9.15458 9.39474 9.11458 9.39474C8.94125 9.39474 8.76792 9.32237 8.64125 9.20395C8.52125 9.07895 8.44792 8.90789 8.44792 8.73684C8.44792 8.56579 8.52125 8.39474 8.64125 8.26974C8.70792 8.21053 8.77458 8.16447 8.86125 8.13158C8.98125 8.07895 9.11458 8.06579 9.24792 8.09211C9.28792 8.09868 9.32792 8.11184 9.36792 8.13158C9.40792 8.14474 9.44792 8.16447 9.48792 8.19079C9.52125 8.21711 9.55458 8.24342 9.58792 8.26974C9.70792 8.39474 9.78125 8.56579 9.78125 8.73684C9.78125 8.90789 9.70792 9.07895 9.58792 9.20395Z"
+                                                fill="#00C092" />
+                                        </svg>
+                                    </span>
+                                    <span class="ms-1 span-text">
+                                        Lịch sinh hoạt của trẻ
+                                    </span>
+                                </td>
+                                <td>
+                                    <b-button class="w-100 text- rounded-pill" variant="outline-primary">
+                                        Nội dung khảo sát
+                                        <span class="ms-2 mdi mdi-chevron-right"></span>
+                                    </b-button>
+                                </td>
+                            </tr>
+                        </table>
+                        <div v-else>
+                            <h6 class="text-dark">
+                                Gán nội dung khảo sát
+                            </h6>
+
+                            <div>
+                                <b-form-input @change="khao_sat()" v-model="noi_dung_khao_sat"
+                                    placeholder="Nhập đường dẫn"></b-form-input>
+                                <i class="sm-i">{{ data?.noi_dung_khao_sat }}</i>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <h6 class="text-dark">
+                            Gán nội dung khảo sát
+                        </h6>
+
+                        <div>
+                            <b-form-input @change="khao_sat()" v-model="noi_dung_khao_sat"
+                                placeholder="Nhập đường dẫn"></b-form-input>
+                        </div>
                     </div>
                 </v-card-text>
             </v-card>
@@ -536,7 +590,7 @@
                                 <td>
                                     <span class="text-dark span-2">
                                         <a :href="data?.ghi_chu_thanh_toan" class="d-block img-thumbnail" target="_blank">
-                                            <img :src="data?.ghi_chu_thanh_toan" />
+                                            <img class="max-img" :src="data?.ghi_chu_thanh_toan" />
                                         </a>
                                     </span>
                                 </td>
@@ -652,8 +706,8 @@
                                 </span>
                             </td>
                             <td>
-                                <span class="text-primary span-2 fs-2 fw-bold">
-                                    {{ formatCurrency(data?.tongTien) }}
+                                <span class="text-danger span-2 fs-2 fw-bold">
+                                    <b>{{ formatCurrency(data?.tongTien) }}</b>
                                 </span>
                             </td>
                         </tr>
@@ -666,8 +720,17 @@
 </template>
 
 <script>
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
+
 export default {
     name: 'DetailServiceInfo',
+    data() {
+        return {
+            noi_dung_khao_sat: null,
+        };
+    },
     props: {
         data: {
             type: Object,
@@ -675,6 +738,9 @@ export default {
         status: {
             type: String,
             default: '',
+        },
+        load_data: {
+            type: Function,
         },
     },
     computed: {
@@ -696,8 +762,35 @@ export default {
                 return ' card-success'
             }
         },
-
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
     },
+    methods: {
+        async khao_sat() {
+            if (!this.noi_dung_khao_sat) {
+                toastr.error('Bạn cần nhập đường dẫn khảo sát');
+                return
+            }
+            const formData = new FormData()
+            formData.append('id', this.data?.id)
+            formData.append('noi_dung_khao_sat', this.noi_dung_khao_sat)
+
+            await api.post('don-dich-vu/cap-nhat-noi-dung-khao-sat', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.load_data()
+                }
+            })
+        }
+    },
+    mounted() {
+        this.noi_dung_khao_sat = this.data?.noi_dung_khao_sat
+    }
 }
 </script>
 
@@ -792,5 +885,13 @@ table {
         background: rgba(78, 174, 234, 0.15);
         color: #29A0EB;
     }
+}
+
+.max-img {
+    max-width: 200px;
+}
+
+.sm-i {
+    font-size: 8px;
 }
 </style>

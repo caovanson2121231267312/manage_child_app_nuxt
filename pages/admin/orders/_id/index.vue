@@ -3,36 +3,319 @@
 
         <v-row>
             <v-col xs="12" sm="12" md="12" lg="7" xl="7">
-                <!-- <div class="d-flex align-items-center justify-content-between wmt-27">
-                    <title-header>
-                        <span class="me-1">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path opacity="0.4"
-                                    d="M12 5.30019V21.3302C11.83 21.3302 11.65 21.3002 11.51 21.2202L11.47 21.2002C9.55 20.1502 6.2 19.0502 4.03 18.7602L3.74 18.7202C2.78 18.6002 2 17.7002 2 16.7402V4.66019C2 3.47019 2.97 2.57019 4.16 2.67019C6.26 2.84019 9.44 3.90019 11.22 5.01019L11.47 5.16019C11.62 5.25019 11.81 5.30019 12 5.30019Z"
-                                    fill="#0056B1" />
-                                <path
-                                    d="M22 4.67003V16.74C22 17.7 21.22 18.6 20.26 18.72L19.93 18.76C17.75 19.05 14.39 20.16 12.47 21.22C12.34 21.3 12.18 21.33 12 21.33V5.30003C12.19 5.30003 12.38 5.25003 12.53 5.16003L12.7 5.05003C14.48 3.93003 17.67 2.86003 19.77 2.68003H19.83C21.02 2.58003 22 3.47003 22 4.67003Z"
-                                    fill="#0056B1" />
-                                <path
-                                    d="M7.75 9.24023H5.5C5.09 9.24023 4.75 8.90023 4.75 8.49023C4.75 8.08023 5.09 7.74023 5.5 7.74023H7.75C8.16 7.74023 8.5 8.08023 8.5 8.49023C8.5 8.90023 8.16 9.24023 7.75 9.24023Z"
-                                    fill="#0056B1" />
-                                <path
-                                    d="M8.5 12.2402H5.5C5.09 12.2402 4.75 11.9002 4.75 11.4902C4.75 11.0802 5.09 10.7402 5.5 10.7402H8.5C8.91 10.7402 9.25 11.0802 9.25 11.4902C9.25 11.9002 8.91 12.2402 8.5 12.2402Z"
-                                    fill="#0056B1" />
-                            </svg>
-                        </span>
-                        Chương trình Bảo mẫu Pro
-                    </title-header>
-                </div> -->
 
-                <detail-service-info :data="data" :status="data?.trang_thai"></detail-service-info>
 
-                <div class="mt-6" v-if="data?.trang_thai == 'Chưa có GV' || data?.trang_thai == 'Đang khảo sát' || data?.trang_thai == 'Đang dạy'">
+                <detail-service-info :data="data" :status="data?.trang_thai" :load_data="load_data"></detail-service-info>
+
+                <!-- xac nhan thanh toan -->
+                <div class="mt-4">
+                    <v-card
+                        v-if="data?.trang_thai == 'Chưa có GV' || data?.trang_thai == 'Đang khảo sát' || data?.trang_thai == 'Đang dạy'">
+                        <v-card-text>
+                            <div>
+                                <b-form-checkbox v-model="xac_nhan_thanh_toan" size="lg">
+                                    <span class="text-dark">
+                                        Xác nhận thanh toán
+                                    </span>
+                                </b-form-checkbox>
+                            </div>
+                        </v-card-text>
+
+                        <v-divider class="m-0 p-0"></v-divider>
+
+                        <v-card-text>
+                            <table class="table table-borderless">
+                                <tr v-for="(item, n) in data?.phuPhi" v-bind:key="n">
+                                    <td>
+                                        <span>
+                                            <svg width="14" height="13" viewBox="0 0 14 13" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                            </svg>
+                                        </span>
+                                        <span class="ms-1 span-text">
+                                            {{ item?.tieu_de }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="text-danger fw-bold span-2 cp" v-b-popover.hover.right="item?.ghi_chu"
+                                            :title="item?.tieu_de">
+                                            <b>{{ formatCurrency(item?.tong_tien) }}</b>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <b-button class="w-100 text-primary rounded-pill" variant="outline-primary"
+                                v-b-modal.my-modal-them-phu-phi>
+                                <span class="mdi mdi-plus-circle-outline"></span>
+                                <span>
+                                    Thêm phụ phí
+                                </span>
+                            </b-button>
+                        </v-card-text>
+                    </v-card>
+
+                    <v-card v-else>
+                        <v-card-text>
+                            <div>
+                                <b-form-checkbox disabled v-model="xac_nhan_thanh_toan" size="lg">
+                                    <span class="text-dark">
+                                        Xác nhận thanh toán
+                                    </span>
+                                </b-form-checkbox>
+                            </div>
+                        </v-card-text>
+
+                        <v-divider class="m-0 p-0"></v-divider>
+
+                        <v-card-text>
+                            <table class="table table-borderless">
+                                <tr v-for="(item, n) in data?.phuPhi" v-bind:key="n">
+                                    <td>
+                                        <span>
+                                            <svg width="14" height="13" viewBox="0 0 14 13" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                            </svg>
+                                        </span>
+                                        <span class="ms-1 span-text">
+                                            {{ item?.tieu_de }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="text-danger fw-bold span-2 cp" v-b-popover.hover.right="item?.ghi_chu"
+                                            :title="item?.tieu_de">
+                                            <b>{{ formatCurrency(item?.tong_tien) }}</b>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <b-button class="w-100 text-secondary rounded-pill" variant="outline-secondary">
+                                <span class="mdi mdi-plus-circle-outline"></span>
+                                <span>
+                                    Thêm phụ phí
+                                </span>
+                            </b-button>
+                        </v-card-text>
+                    </v-card>
+                </div>
+
+
+                <!-- Thông tin quản lý  -->
+                <div v-if="data?.trang_thai == 'Đang khảo sát'">
+                    <div class="mt-6">
+                        <div>
+                            <h5>
+                                Thông tin quản lý
+                            </h5>
+                        </div>
+                        <v-card>
+                            <v-card-text>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-3 layout-user">
+                                            <img :src="data?.leaderKD?.anh_nguoi_dung" alt="">
+                                        </div>
+                                        <div>
+                                            <b-badge pill variant="success">
+                                                {{ data?.leaderKD?.vai_tro ?? 'Chưa cập nhật' }}
+                                            </b-badge>
+                                            <h6 class="text-dark mt-1">
+                                                {{ data?.leaderKD?.hoten }}
+                                            </h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex">
+                                        <div class="me-2 cp" v-b-tooltip.hover.top="data?.leaderKD?.dien_thoai">
+                                            <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="19" cy="19" r="19" fill="#0056B1" fill-opacity="0.1" />
+                                                <path
+                                                    d="M11.6796 9.84669L12.8192 8.70711C13.2097 8.31658 13.8429 8.31658 14.2334 8.70711L17.2403 11.7139C17.6308 12.1045 17.6308 12.7376 17.2403 13.1282L15.1847 15.1837C14.8544 15.514 14.7725 16.0187 14.9814 16.4365C16.1892 18.8521 18.1479 20.8108 20.5635 22.0186C20.9813 22.2275 21.486 22.1456 21.8163 21.8153L23.8718 19.7597C24.2624 19.3692 24.8955 19.3692 25.2861 19.7597L28.2929 22.7666C28.6834 23.1571 28.6834 23.7903 28.2929 24.1808L27.1533 25.3204C25.042 27.4317 21.6994 27.6693 19.3107 25.8777L17.2602 24.3398C15.5166 23.0322 13.9678 21.4834 12.6602 19.7399L11.1223 17.6893C9.33072 15.3006 9.56827 11.958 11.6796 9.84669Z"
+                                                    fill="#0056B1" />
+                                            </svg>
+                                        </div>
+                                        <div class="cp">
+                                            <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="19" cy="19" r="19" fill="#0056B1" fill-opacity="0.1" />
+                                                <path opacity="0.4"
+                                                    d="M29 13.25V18.35C29 19.62 28.58 20.69 27.83 21.43C27.09 22.18 26.02 22.6 24.75 22.6V24.41C24.75 25.09 23.99 25.5 23.43 25.12L22.46 24.48C22.55 24.17 22.59 23.83 22.59 23.47V19.4C22.59 17.36 21.23 16 19.19 16H12.4C12.26 16 12.13 16.01 12 16.02V13.25C12 10.7 13.7 9 16.25 9H24.75C27.3 9 29 10.7 29 13.25Z"
+                                                    fill="#0056B1" />
+                                                <path
+                                                    d="M22.59 19.4V23.47C22.59 23.83 22.55 24.17 22.46 24.48C22.09 25.95 20.87 26.87 19.19 26.87H16.47L13.45 28.88C13 29.19 12.4 28.86 12.4 28.32V26.87C11.38 26.87 10.53 26.53 9.94 25.94C9.34 25.34 9 24.49 9 23.47V19.4C9 17.5 10.18 16.19 12 16.02C12.13 16.01 12.26 16 12.4 16H19.19C21.23 16 22.59 17.36 22.59 19.4Z"
+                                                    fill="#0056B1" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </v-card-text>
+                        </v-card>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <div v-if="data?.giaoVien == null || data?.giaoVien?.length == 0">
+                        <div v-if="data?.trang_thai != 'Chưa có GV'">
+                            <div>
+                                <h5>
+                                    Thông tin Giáo viên
+                                </h5>
+                            </div>
+                            <v-card>
+                                <v-card-text>
+                                    <div>
+                                        Chưa có giáo viên
+                                    </div>
+                                    <div class="mt-3">
+                                        <b-button class="w-100 text-light rounded-pill" variant="primary"
+                                            v-b-modal.my-modal-teacher>
+                                            Điều giáo viên
+                                        </b-button>
+                                    </div>
+                                </v-card-text>
+                            </v-card>
+                        </div>
+                    </div>
+
+                    <!--  -->
+
+                    <div v-else>
+                        <div>
+                            <h5>
+                                Thông tin Giáo viên
+                            </h5>
+                        </div>
+                        <v-card>
+                            <v-card-text>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-3 layout-user">
+                                            <img :src="data?.giaoVien?.anh_nguoi_dung" alt="">
+                                        </div>
+                                        <div>
+                                            <h6 class="text-dark mt-1">
+                                                {{ data?.giaoVien?.hoten }}
+                                            </h6>
+                                            <div>
+                                                <span class="me-5">
+                                                    {{ data?.giaoVien?.trinh_do }}
+                                                </span>
+                                                <span class="text-warning">
+                                                    <span class="mdi mdi-star me-1"></span>
+                                                    {{ data?.giaoVien?.danh_gia }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex">
+                                        <div class="me-2 cp" v-b-tooltip.hover.top="data?.giaoVien?.dien_thoai">
+                                            <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="19" cy="19" r="19" fill="#0056B1" fill-opacity="0.1" />
+                                                <path
+                                                    d="M11.6796 9.84669L12.8192 8.70711C13.2097 8.31658 13.8429 8.31658 14.2334 8.70711L17.2403 11.7139C17.6308 12.1045 17.6308 12.7376 17.2403 13.1282L15.1847 15.1837C14.8544 15.514 14.7725 16.0187 14.9814 16.4365C16.1892 18.8521 18.1479 20.8108 20.5635 22.0186C20.9813 22.2275 21.486 22.1456 21.8163 21.8153L23.8718 19.7597C24.2624 19.3692 24.8955 19.3692 25.2861 19.7597L28.2929 22.7666C28.6834 23.1571 28.6834 23.7903 28.2929 24.1808L27.1533 25.3204C25.042 27.4317 21.6994 27.6693 19.3107 25.8777L17.2602 24.3398C15.5166 23.0322 13.9678 21.4834 12.6602 19.7399L11.1223 17.6893C9.33072 15.3006 9.56827 11.958 11.6796 9.84669Z"
+                                                    fill="#0056B1" />
+                                            </svg>
+                                        </div>
+                                        <div class="cp">
+                                            <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="19" cy="19" r="19" fill="#0056B1" fill-opacity="0.1" />
+                                                <path opacity="0.4"
+                                                    d="M29 13.25V18.35C29 19.62 28.58 20.69 27.83 21.43C27.09 22.18 26.02 22.6 24.75 22.6V24.41C24.75 25.09 23.99 25.5 23.43 25.12L22.46 24.48C22.55 24.17 22.59 23.83 22.59 23.47V19.4C22.59 17.36 21.23 16 19.19 16H12.4C12.26 16 12.13 16.01 12 16.02V13.25C12 10.7 13.7 9 16.25 9H24.75C27.3 9 29 10.7 29 13.25Z"
+                                                    fill="#0056B1" />
+                                                <path
+                                                    d="M22.59 19.4V23.47C22.59 23.83 22.55 24.17 22.46 24.48C22.09 25.95 20.87 26.87 19.19 26.87H16.47L13.45 28.88C13 29.19 12.4 28.86 12.4 28.32V26.87C11.38 26.87 10.53 26.53 9.94 25.94C9.34 25.34 9 24.49 9 23.47V19.4C9 17.5 10.18 16.19 12 16.02C12.13 16.01 12.26 16 12.4 16H19.19C21.23 16 22.59 17.36 22.59 19.4Z"
+                                                    fill="#0056B1" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </v-card-text>
+                            <v-divider class="m-0 p-0"></v-divider>
+                            <v-card-text>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <b-button class="w-100 text- rounded-pill" variant="outline-danger"
+                                        v-b-modal.my-modal-teacher>
+                                        Đổi giáo viên
+                                    </b-button>
+                                    <b-button class="w-100 text- rounded-pill ms-4" variant="outline-primary"
+                                        v-b-modal.my-modal-teacher>
+                                        Điều lại
+                                    </b-button>
+                                </div>
+                            </v-card-text>
+                        </v-card>
+
+                    </div>
+                </div>
+
+                <b-modal id="my-modal-teacher" ref="my-modal-teacher" hide-footer centered title="Điều giáo viên">
+                    <template #default="{ hide }">
+                        <form>
+
+                            <div class="my-2">
+                                <div v-for="(item, n) in teachers" v-bind:key="n">
+                                    <div :class="'card-teacher ' + (teacher_id == item?.id ? ' active' : '')">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-3 layout-user">
+                                                    <img :src="item?.anh_nguoi_dung" alt="">
+                                                </div>
+                                                <div class="ps-2" style="margin-left: 5px;">
+                                                    <div>
+                                                        <b-badge pill variant="danger">
+                                                            # {{ item?.id }}
+                                                        </b-badge>
+                                                        <b-badge pill variant="success">
+                                                            Đang trống ca
+                                                        </b-badge>
+                                                    </div>
+                                                    <strong>
+                                                        <span class="user-name">
+                                                            {{ item?.hoten }}
+                                                        </span>
+                                                    </strong>
+                                                    <p class="w-p p-0 m-0">
+                                                        {{ item?.trinh_do }}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="">
+                                                <b-button @click="set_teacher(item?.id)" size="sm"
+                                                    style="min-width: 130px;padding: 0.325rem 0.75rem !important;"
+                                                    :class="'w-100 rounded-pill ' + (teacher_id == item?.id ? 'text-light' : 'text-primary')"
+                                                    :variant="teacher_id == item?.id ? 'primary' : 'outline-primary'">
+                                                    Chọn
+                                                </b-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button type="button" class=" btn-delete ms-1" @click="add_teacher()">Điều giáo
+                                    viên</button>
+                            </div>
+                        </form>
+
+                    </template>
+                </b-modal>
+
+
+                <!-- duyệt đơn -->
+
+                <div class="mt-6"
+                    v-if="data?.trang_thai == 'Chưa có GV' || data?.trang_thai == 'Đang khảo sát' || data?.trang_thai == 'Đang dạy'">
                     <div class="d-flex">
                         <b-button class="w-100 text-light rounded-pill" variant="danger" v-b-modal.my-modal-cancel>
                             Hủy đơn
                         </b-button>
-                        <b-button class="w-100 text-light rounded-pill mx-3" variant="info">
+                        <b-button class="w-100 text-light rounded-pill mx-4" variant="info" v-b-modal.my-modal-rollback>
                             Hoàn tiền
                         </b-button>
                         <b-button class="w-100 text-light rounded-pill" variant="warning">
@@ -40,7 +323,7 @@
                         </b-button>
                     </div>
 
-                    <div class="mt-3" v-if="data?.trang_thai == 'Chưa có GV'">
+                    <div class="mt-4" v-if="data?.trang_thai == 'Chưa có GV'">
                         <b-button class="w-100 text-light rounded-pill" variant="primary" v-b-modal.my-modal>
                             Duyệt đơn
                         </b-button>
@@ -76,7 +359,7 @@
                         <b-button disabled class="w-100 text-light rounded-pill" variant="danger">
                             Hủy đơn
                         </b-button>
-                        <b-button disabled class="w-100 text-light rounded-pill mx-3" variant="info">
+                        <b-button disabled class="w-100 text-light rounded-pill mx-4" variant="info">
                             Hoàn tiền
                         </b-button>
                         <b-button disabled class="w-100 text-light rounded-pill" variant="warning">
@@ -84,8 +367,8 @@
                         </b-button>
                     </div>
 
-                    <div class="mt-3">
-                        <b-button class="w-100 text-danger rounded-pill" variant="outline-danger">
+                    <div class="mt-4">
+                        <b-button class="w-100 text-danger rounded-pill" variant="danger">
                             <span class="mdi mdi-close-circle-outline"></span>
                             <span>Đơn đã hủy</span>
                         </b-button>
@@ -98,7 +381,7 @@
                         <b-button disabled class="w-100 text-light rounded-pill" variant="danger">
                             Hủy đơn
                         </b-button>
-                        <b-button disabled class="w-100 text-light rounded-pill mx-3" variant="info">
+                        <b-button disabled class="w-100 text-light rounded-pill mx-4" variant="info">
                             Hoàn tiền
                         </b-button>
                         <b-button disabled class="w-100 text-light rounded-pill" variant="warning">
@@ -106,7 +389,7 @@
                         </b-button>
                     </div>
 
-                    <div class="mt-3">
+                    <div class="mt-4">
                         <b-button class="w-100 text-success rounded-pill" variant="outline-success">
                             <span class="mdi mdi-check-circle"></span>
                             <span>Đơn đã hoàn thành</span>
@@ -120,7 +403,7 @@
                         <b-button disabled class="w-100 text-light rounded-pill" variant="danger">
                             Hủy đơn
                         </b-button>
-                        <b-button disabled class="w-100 text-light rounded-pill mx-3" variant="info">
+                        <b-button disabled class="w-100 text-light rounded-pill mx-4" variant="info">
                             Hoàn tiền
                         </b-button>
                         <b-button disabled class="w-100 text-light rounded-pill" variant="warning">
@@ -128,7 +411,7 @@
                         </b-button>
                     </div>
 
-                    <div class="mt-3">
+                    <div class="mt-4">
                         <b-button class="w-100 text-primary rounded-pill" variant="outline-primary">
                             <span class="mdi mdi-check-circle"></span>
                             <span>Đơn hoàn</span>
@@ -163,6 +446,66 @@
             </template>
         </b-modal>
 
+        <b-modal id="my-modal-rollback" ref="my-modal-rollback" hide-footer centered title="Hoàn tiền">
+            <template #default="{ hide }">
+                <form>
+
+                    <div class="my-2">
+                        <div>
+                            <b-form-group>
+                                <label>Số lượng buổi hoàn:</label>
+                                <b-form-input v-model="text" type="number" placeholder="Số lượng buổi hoàn"></b-form-input>
+                            </b-form-group>
+                        </div>
+                        <div>
+                            <b-form-group>
+                                <label>Số tiền:</label>
+                                <b-form-input v-model="text" type="number" placeholder="Số tiền"></b-form-input>
+                            </b-form-group>
+                        </div>
+
+                    </div>
+                    <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                        <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                        <button type="button" class=" btn-delete ms-1">Đồng ý</button>
+                    </div>
+                </form>
+
+            </template>
+        </b-modal>
+
+
+        <!-- them-phu-phi -->
+        <b-modal id="my-modal-them-phu-phi" ref="my-modal-them-phu-phi" hide-footer centered title="Thêm phụ phí">
+            <template #default="{ hide }">
+                <form>
+
+                    <div class="my-2">
+                        <div>
+                            <b-form-group>
+                                <label>Nhập số tiền:</label>
+                                <b-form-input v-model="phu_phi_tien" type="number"
+                                    placeholder="Số lượng buổi hoàn"></b-form-input>
+                            </b-form-group>
+                        </div>
+                        <div>
+                            <b-form-group>
+                                <label>Nhập ghi chú:</label>
+                                <b-form-textarea id="textarea" v-model="phu_phi_li_do" placeholder="Nhập ghi chú..."
+                                    rows="3" max-rows="6"></b-form-textarea>
+                            </b-form-group>
+                        </div>
+
+                    </div>
+                    <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                        <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                        <button type="button" class=" btn-delete ms-1" @click="add_phu_phi()">Thêm phụ phí</button>
+                    </div>
+                </form>
+
+            </template>
+        </b-modal>
+
     </div>
 </template>
 
@@ -185,7 +528,12 @@ export default {
             image: null,
             kds: null,
             kds_id: null,
+            teachers: null,
+            teacher_id: null,
             li_do_huy: null,
+            phu_phi_li_do: null,
+            phu_phi_tien: null,
+            xac_nhan_thanh_toan: false,
         };
     },
     components: {
@@ -207,6 +555,35 @@ export default {
         clearFiles() {
             this.$refs['file-input'].reset()
         },
+        set_teacher(id) {
+            if (this.teacher_id == id) {
+                this.teacher_id = null
+            } else {
+                this.teacher_id = id
+            }
+            console.log(this.teacher_id)
+        },
+        async add_teacher() {
+            if (!this.teacher_id) {
+                toastr.error('Chọn giáo viên để tiếp tục');
+                return
+            }
+            const formData = new FormData()
+            formData.append('id', this.id)
+            formData.append('giao_vien_id', this.teacher_id)
+
+            await api.post('don-dich-vu/dieu-giao-vien', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-teacher'].hide()
+                    this.teacher_id = null
+                    this.load_data();
+                }
+            })
+        },
         async load_kd() {
             await api.get('don-dich-vu/leader-kinh-doanh', {
                 'Content-Type': 'multipart/form-data',
@@ -219,6 +596,13 @@ export default {
                     };
                 })
             })
+
+            await api.get('don-dich-vu/danh-sach-giao-vien?tuKhoa=&page=1&limit=100&id=' + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.teachers = res?.data?.data
+            })
         },
         async load_data() {
             await api.get(`don-dich-vu/chi-tiet?id=` + this.id, {
@@ -229,12 +613,31 @@ export default {
                 this.data = res?.data?.data
             })
         },
+        async add_phu_phi() {
+            const formData = new FormData()
+            formData.append('id', this.id)
+            formData.append('tong_tien', this.phu_phi_tien)
+            formData.append('ghi_chu', this.phu_phi_li_do)
+
+            await api.post('don-dich-vu/them-phu-phi', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-them-phu-phi'].hide()
+                    this.phu_phi_tien = null
+                    this.phu_phi_li_do = null
+                    this.load_data();
+                }
+            })
+        },
         async duyet_don() {
             const formData = new FormData()
             formData.append('id', this.id)
             formData.append('leader_kd_id', this.kds_id)
-            formData.append('noi_dung_khao_sat', this.noi_dung_khao_sat)
-            formData.append('xac_nhan_thanh_toan', this.xac_nhan_thanh_toan)
+            // formData.append('noi_dung_khao_sat', this.noi_dung_khao_sat)
+            formData.append('xac_nhan_thanh_toan', this.xac_nhan_thanh_toan ? 1 : 0)
 
             await api.post('don-dich-vu/duyet-don', formData, {
                 'Content-Type': 'multipart/form-data',
@@ -243,8 +646,7 @@ export default {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
                     this.$refs['my-modal'].hide()
-                    this.clearFiles();
-                    this.name = null
+                    this.kds_id = null
                     this.load_data();
                 }
             })
@@ -296,15 +698,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+table {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 button:hover {
     span {
         color: white;
     }
 }
+
 button {
     transition: 0.3s;
+
     span {
         transition: 0.3s;
     }
+}
+
+.btn {
+    padding: 0.575rem 0.75rem !important;
+}
+
+.card-teacher {
+    border-radius: 10px;
+    background: #FFF;
+    border: 1px solid #c9c8c8;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.card-teacher.active {
+    border-radius: 10px;
+    border: 1px solid #4EAEEA;
+
+    background: #E7F6FF;
 }
 </style>
