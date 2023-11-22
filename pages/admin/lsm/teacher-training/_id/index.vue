@@ -249,11 +249,11 @@
                 </div>
                 <!--  -->
 
-                <nuxt-link class="w-100 mt-7" to="/admin/students/create">
+                <div class="w-100 mt-7" @click="create_new()">
                     <button-add>
                         <span class="icon-plus mdi mdi-plus"></span> Thêm khóa học
                     </button-add>
-                </nuxt-link>
+                </div>
             </v-col>
         </v-row>
 
@@ -310,8 +310,11 @@ export default {
         clearFiles() {
             this.$refs['file-input'].reset()
         },
+        create_new() {
+            this.$router.push('/admin/lsm/teacher-training/' + this.id + '/create_course')
+        },
         async load_data() {
-            await api.get(`dao-tao/danh-sach-hoc-phan`, {
+            await api.get(`dao-tao/chi-tiet-khoa-hoc?id=` + this.id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -320,13 +323,13 @@ export default {
                 this.nangCao = res?.data?.data?.nangCao
             })
 
-            await api.get(`dao-tao/chi-tiet-hoc-phan?hoc_phan_id=${this.id}`, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                console.log(res)
-                this.data = res?.data?.data
-            })
+            // await api.get(`dao-tao/chi-tiet-hoc-phan?hoc_phan_id=${this.id}`, {
+            //     'Content-Type': 'multipart/form-data',
+            //     Authorization: 'Bearer ' + this.token
+            // }).then(res => {
+            //     console.log(res)
+            //     this.data = res?.data?.data
+            // })
         },
         async send_data(event) {
             event.preventDefault();

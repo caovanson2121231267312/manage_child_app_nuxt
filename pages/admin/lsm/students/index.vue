@@ -8,13 +8,10 @@
                 <b-row>
                     <b-col cols="12" sm="7">
                         <div class="mb-7 ">
-                            <div class="d-flex align-items-center flex-wrap">
-                                <nuxt-link to="/admin/lsm/teacher-training">
-                                    <button-filter active="active">Quản lý chương trình</button-filter>
-                                </nuxt-link>
-                                <nuxt-link to="/admin/lsm/result-training">
-                                    <button-filter>Quản lý kết quả đào tạo</button-filter>
-                                </nuxt-link>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <title-header>
+                                    Danh sách chương trình
+                                </title-header>
                             </div>
                         </div>
                         <div>
@@ -45,8 +42,8 @@
                     </b-col>
 
                     <b-col cols="12" sm="7">
-                        <div class="mt-3">
-                            <button-add v-b-modal.my-modal>
+                        <div class="mt-3" @click="create_new()">
+                            <button-add>
                                 <span class="mdi mdi-plus"></span> Thêm chương trình
                             </button-add>
                         </div>
@@ -55,36 +52,36 @@
 
 
                 <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Thêm chương trình mới">
-                <!-- <template #modal-header="{ close }">
+                    <!-- <template #modal-header="{ close }">
                             <h5>Thông báo</h5>
                         </template> -->
-                <template #default="{ hide }">
-                    <form id="form" @submit="send_data">
+                    <template #default="{ hide }">
+                        <form id="form" @submit="send_data">
 
-                        <div class="my-4 pb-3">
-                            <div>
-                                <b-form-group>
-                                    <label>Ảnh:</label>
-                                    <b-form-file name="image" accept="image/*" v-model="file" ref="file-input"
-                                        id="file-large"></b-form-file>
-                                </b-form-group>
+                            <div class="my-4 pb-3">
+                                <div>
+                                    <b-form-group>
+                                        <label>Ảnh:</label>
+                                        <b-form-file name="image" accept="image/*" v-model="file" ref="file-input"
+                                            id="file-large"></b-form-file>
+                                    </b-form-group>
+                                </div>
+                                <div>
+                                    <b-form-group>
+                                        <label>Tên chương trình:</label>
+                                        <b-form-input name="tieu_de" v-model="name" placeholder="Nhập tên"></b-form-input>
+                                    </b-form-group>
+                                </div>
+
                             </div>
-                            <div>
-                                <b-form-group>
-                                    <label>Tên chương trình:</label>
-                                    <b-form-input name="tieu_de" v-model="name" placeholder="Nhập tên"></b-form-input>
-                                </b-form-group>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button class=" btn-delete ms-1" type="submit">Thêm</button>
                             </div>
+                        </form>
 
-                        </div>
-                        <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
-                            <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                            <button class=" btn-delete ms-1" type="submit">Thêm</button>
-                        </div>
-                    </form>
-
-                </template>
-            </b-modal>
+                    </template>
+                </b-modal>
 
             </div>
         </div>
@@ -106,7 +103,7 @@ export default {
     data() {
         return {
             title: {
-                name: 'Đào tạo giáo viên',
+                name: 'Chương trình học',
                 previous: '/admin/dashboard'
             },
             data: [],
@@ -127,8 +124,11 @@ export default {
         clearFiles() {
             this.$refs['file-input'].reset()
         },
+        create_new() {
+            this.$router.push('/admin/lsm/students/create')
+        },
         async load_data() {
-            await api.get(`dao-tao/danh-sach?page=1&limit=30&sort=1&tuKhoa`, {
+            await api.get(`chuong-trinh-hoc/danh-sach?page=1&limit=30&sort=1`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -139,7 +139,7 @@ export default {
         async send_data(event) {
             event.preventDefault();
             const formData = new FormData(document.getElementById('form'))
-            await api.post('dao-tao/tao-moi', formData, {
+            await api.post('chuong-trinh-hoc/tao-moi', formData, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

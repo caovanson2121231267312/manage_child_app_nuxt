@@ -122,6 +122,9 @@
 <script>
 import ButtonComponent from '~/components/button/ButtonComponent.vue';
 // import { defineComponent } from '@vue/composition-api'
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
   components: { ButtonComponent },
@@ -139,7 +142,7 @@ export default {
         };
     },
     validate({ params }) {
-        return /^[0-9]{0,2}$/.test(params.id)
+        return /^\d+$/.test(params.id);
     },
     computed: {
         id() {

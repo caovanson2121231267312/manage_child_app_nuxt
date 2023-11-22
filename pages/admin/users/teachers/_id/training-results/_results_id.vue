@@ -320,9 +320,10 @@ export default {
             },
         };
     },
+
     validate({ params }) {
         // return /^[0-9]{0,2}$/.test(params.id)
-        const idRegex = /^[0-9]{0,2}$/;
+        const idRegex = /^\d+$/;
         return (
             idRegex.test(params.id) &&
             idRegex.test(params.results_id)

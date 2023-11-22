@@ -217,7 +217,7 @@
                                                 <v-list-item-title>Đào tạo giáo viên</v-list-item-title>
                                             </v-list-item-content>
                                         </v-list-item>
-                                        <v-list-item to="/admin/lsm">
+                                        <v-list-item to="/admin/lsm/students">
                                             <v-list-item-content class="p-0 ps-4">
                                                 <v-list-item-title>Chương trình học cho học sinh</v-list-item-title>
                                             </v-list-item-content>

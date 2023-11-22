@@ -32,13 +32,17 @@
 </template>
 
 <script>
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
+
 export default {
     layout: 'admin',
     data() {
         return {
             title: {
                 name: 'Kết quả đào tạo',
-                previous: '/admin/teachers/' + this.id ?? 0
+                previous: '/admin/users/teachers/' + this.id ?? 0
             },
             status: [
                 'pending',
@@ -52,7 +56,7 @@ export default {
         };
     },
     validate({ params }) {
-        return /^[0-9]{0,2}$/.test(params.id)
+        return /^\d+$/.test(params.id)
     },
     computed: {
         id() {
@@ -69,7 +73,7 @@ export default {
         }
     },
     mounted() {
-        this.title.previous = '/admin/teachers/' + this.id ?? 0
+        this.title.previous = '/admin/users/teachers/' + (this.id ?? 0)
         this.$store.dispatch('title/set_title', this.title);
     },
 }
