@@ -33,16 +33,9 @@
                         <div v-for="(i, n) in item?.data" v-bind:key="n" style="min-width: 245px;"
                             class="mt-3 card-notification hover-card wow animate__animated animate__zoomIn">
                             <div class="me-3">
-                                <svg width="48" height="48" viewBox="0 0 48 48" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="24" cy="24" r="24" fill="#FFB761" fill-opacity="0.2" />
-                                    <path opacity="0.4"
-                                        d="M29.6233 12.3334H18.3766C15.8916 12.3334 13.8733 14.3634 13.8733 16.8367V33.275C13.8733 35.375 15.3783 36.2617 17.2216 35.2467L22.915 32.085C23.5216 31.7467 24.5016 31.7467 25.0966 32.085L30.79 35.2467C32.6333 36.2734 34.1383 35.3867 34.1383 33.275V16.8367C34.1266 14.3634 32.1083 12.3334 29.6233 12.3334Z"
-                                        fill="#FFA02F" />
-                                    <path
-                                        d="M26.9166 23.3H21.0833C20.6049 23.3 20.2083 22.9034 20.2083 22.425C20.2083 21.9467 20.6049 21.55 21.0833 21.55H26.9166C27.3949 21.55 27.7916 21.9467 27.7916 22.425C27.7916 22.9034 27.3949 23.3 26.9166 23.3Z"
-                                        fill="#FFA02F" />
-                                </svg>
+                                <div class="box-img-no">
+                                    <img :src="i?.image" />
+                                </div>
                             </div>
                             <div class="w-100">
                                 <div class="notification-title">{{ i?.tieu_de }} !</div>
@@ -100,7 +93,7 @@ export default {
             })
         },
         async load_data() {
-            await api.get(`thong-bao/danh-sach?type=${this.selectedFilter}&page=1&limit=30&sort=1&tuKhoa`, {
+            await api.get(`thong-bao/danh-sach?type=${this.selectedFilter}&page=1&limit=150&sort=1&tuKhoa`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -122,6 +115,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.box-img-no {
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    border-radius: 50%;
+
+    img {
+        width: 100%;
+    }
+}
 .notification {
     .card-notification {
         border-radius: 10px;

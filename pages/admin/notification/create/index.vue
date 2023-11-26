@@ -76,7 +76,7 @@
                                     </span>
                                     Hình ảnh <i>(Tối thiểu không quá 2mb)</i>
                                 </div>
-                                <b-form-file id="file-default"></b-form-file>
+                                <b-form-file v-model="file" ref="file-input" id="file-default"></b-form-file>
                             </b-form-group>
                         </div>
 
@@ -97,13 +97,13 @@
                                     </span>
                                     Gửi tới
                                 </div>
-                                <b-form-select v-model="selected1" :options="options1" class="mb-3">
+                                <b-form-select v-model="get_toi_id" :options="get_toi" class="mb-3">
 
                                 </b-form-select>
                             </b-form-group>
                         </div>
 
-                        <div class="mt-1">
+                        <div class="mt-1" v-show="disabled_giao_vien">
                             <b-form-group>
                                 <div class="label">
                                     <span class="me-2">
@@ -111,17 +111,17 @@
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M1.06323 4.49908L4.4974 1.06007C5.21759 0.338865 6.21069 -0.0483076 7.22654 0.00483383L11.017 0.187033C12.5332 0.255358 13.7386 1.46243 13.8144 2.97316L13.9963 6.76897C14.0418 7.78625 13.6628 8.78076 12.9426 9.50196L9.50841 12.941C8.09835 14.353 5.8089 14.353 4.39127 12.941L1.06323 9.60824C-0.354409 8.20379 -0.354409 5.91112 1.06323 4.49908ZM8.89435 7.2928C10.0997 7.2928 11.0777 6.31348 11.0777 5.10641C11.0777 3.89934 10.0997 2.92002 8.89435 2.92002C7.68898 2.92002 6.71104 3.89934 6.71104 5.10641C6.71104 6.31348 7.68898 7.2928 8.89435 7.2928Z"
-                                                fill="#979797" />
+                                                fill="#00C092" />
                                         </svg>
                                     </span>
                                     Gán giáo viên
                                 </div>
-                                <b-form-select disabled v-model="selected2" :options="options2"
-                                    class="mb-3"></b-form-select>
+                                <v-select v-model="giao_vien_id" :items="giao_vien" label="Chọn giáo viên" multiple filled
+                                    flat chips item-text="itemName" item-value="itemId"></v-select>
                             </b-form-group>
                         </div>
 
-                        <div class="mt-1">
+                        <div class="mt-1" v-show="disabled_phu_huynh">
                             <b-form-group>
                                 <div class="label">
                                     <span class="me-2">
@@ -129,17 +129,17 @@
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M1.06323 4.49908L4.4974 1.06007C5.21759 0.338865 6.21069 -0.0483076 7.22654 0.00483383L11.017 0.187033C12.5332 0.255358 13.7386 1.46243 13.8144 2.97316L13.9963 6.76897C14.0418 7.78625 13.6628 8.78076 12.9426 9.50196L9.50841 12.941C8.09835 14.353 5.8089 14.353 4.39127 12.941L1.06323 9.60824C-0.354409 8.20379 -0.354409 5.91112 1.06323 4.49908ZM8.89435 7.2928C10.0997 7.2928 11.0777 6.31348 11.0777 5.10641C11.0777 3.89934 10.0997 2.92002 8.89435 2.92002C7.68898 2.92002 6.71104 3.89934 6.71104 5.10641C6.71104 6.31348 7.68898 7.2928 8.89435 7.2928Z"
-                                                fill="#979797" />
+                                                fill="#00C092" />
                                         </svg>
                                     </span>
                                     Gán phụ huynh
                                 </div>
-                                <b-form-select disabled v-model="selected2" :options="options2"
-                                    class="mb-3"></b-form-select>
+                                <v-select v-model="phu_huynh_id" :items="phu_huynh" label="Chọn phụ huynh" multiple filled
+                                    flat chips item-text="itemName" item-value="itemId"></v-select>
                             </b-form-group>
                         </div>
 
-                        <div class="mt-1">
+                        <div class="mt-1" v-show="disabled_dich_vu">
                             <b-form-group>
                                 <div class="label">
                                     <span class="me-2">
@@ -147,17 +147,17 @@
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M1.06323 4.49908L4.4974 1.06007C5.21759 0.338865 6.21069 -0.0483076 7.22654 0.00483383L11.017 0.187033C12.5332 0.255358 13.7386 1.46243 13.8144 2.97316L13.9963 6.76897C14.0418 7.78625 13.6628 8.78076 12.9426 9.50196L9.50841 12.941C8.09835 14.353 5.8089 14.353 4.39127 12.941L1.06323 9.60824C-0.354409 8.20379 -0.354409 5.91112 1.06323 4.49908ZM8.89435 7.2928C10.0997 7.2928 11.0777 6.31348 11.0777 5.10641C11.0777 3.89934 10.0997 2.92002 8.89435 2.92002C7.68898 2.92002 6.71104 3.89934 6.71104 5.10641C6.71104 6.31348 7.68898 7.2928 8.89435 7.2928Z"
-                                                fill="#979797" />
+                                                fill="#00C092" />
                                         </svg>
                                     </span>
                                     Nhóm dịch vụ
                                 </div>
-                                <b-form-select disabled v-model="selected2" :options="options2"
-                                    class="mb-3"></b-form-select>
+                                <v-select v-model="phu_huynh_id" :items="phu_huynh" label="Chọn dịch vụ" multiple filled
+                                    flat chips item-text="itemName" item-value="itemId"></v-select>
                             </b-form-group>
                         </div>
 
-                        <div class="mt-1">
+                        <div class="mt-1" v-show="disabled_lao_dong">
                             <b-form-group>
                                 <div class="label">
                                     <span class="me-2">
@@ -165,13 +165,13 @@
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M1.06323 4.49908L4.4974 1.06007C5.21759 0.338865 6.21069 -0.0483076 7.22654 0.00483383L11.017 0.187033C12.5332 0.255358 13.7386 1.46243 13.8144 2.97316L13.9963 6.76897C14.0418 7.78625 13.6628 8.78076 12.9426 9.50196L9.50841 12.941C8.09835 14.353 5.8089 14.353 4.39127 12.941L1.06323 9.60824C-0.354409 8.20379 -0.354409 5.91112 1.06323 4.49908ZM8.89435 7.2928C10.0997 7.2928 11.0777 6.31348 11.0777 5.10641C11.0777 3.89934 10.0997 2.92002 8.89435 2.92002C7.68898 2.92002 6.71104 3.89934 6.71104 5.10641C6.71104 6.31348 7.68898 7.2928 8.89435 7.2928Z"
-                                                fill="#979797" />
+                                                fill="#00C092" />
                                         </svg>
                                     </span>
                                     Phân loại lao động
                                 </div>
-                                <b-form-select disabled v-model="selected2" :options="options2"
-                                    class="mb-3"></b-form-select>
+                                <v-select v-model="phu_huynh_id" :items="phu_huynh" label="Chọn lao động" multiple filled
+                                    flat chips item-text="itemName" item-value="itemId"></v-select>
                             </b-form-group>
                         </div>
 
@@ -201,36 +201,32 @@ import toastr from 'toastr';
 
 export default {
     layout: 'admin',
-    data() {
-        return {
-            title: {
-                name: 'Tạo thông báo',
-                previous: '/admin/notification'
-            },
-            tieu_de: null,
-            types: null,
-            selected: 0,
-            options: [
-                { value: 0, text: 'Khuyến mại' },
-                { value: 1, text: 'Đơn hàng' },
-                { value: 2, text: 'Kết quả đào tạo' },
-                { value: 3, text: 'Khác' }
-            ],
-            selected1: 0,
-            options1: [
-                { value: 0, text: 'Giáo viên' },
-                { value: 1, text: 'Phụ huynh' },
-                { value: 2, text: 'Nhóm dịch vụ' },
-                { value: 3, text: 'Loại lao động' }
-            ],
-            selected2: 0,
-            options2: [
-                { value: 0, text: 'Tất cả' },
-            ],
-            suneditorInstance: null,
-            noi_dung: 'Nhập nội dung',
-        };
-    },
+    data: () => ({
+        title: {
+            name: 'Tạo thông báo',
+            previous: '/admin/notification'
+        },
+        selected: 0,
+        tieu_de: null,
+        types: null,
+        get_toi: [],
+        giao_vien_id: [],
+        giao_vien: [],
+        phu_huynh_id: [],
+        phu_huynh: [],
+        get_toi_id: 0,
+        selected2: 0,
+        options2: [
+            { value: 0, text: 'Tất cả' },
+        ],
+        suneditorInstance: null,
+        noi_dung: 'Nhập nội dung',
+        file: null,
+        disabled_giao_vien: false,
+        disabled_phu_huynh: false,
+        disabled_dich_vu: false,
+        disabled_lao_dong: false,
+    }),
     computed: {
         token() {
             const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -251,18 +247,81 @@ export default {
                 })
                 this.selected = this.types[0].value
             })
+
+            await api.get('thong-bao/get-to', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.get_toi = res?.data?.data.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+                this.get_toi_id = this.get_toi[0].value
+            })
+
+            await api.get('thong-bao/danh-sach-giao-vien?tuKhoa=', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.giao_vien = res?.data?.data.map(item => {
+                    return {
+                        itemId: item?.id,
+                        itemName: item?.hoten ?? item?.id,
+                    }
+                })
+
+                this.giao_vien.unshift({itemId:0, itemName:'Tất cả'});
+            })
+
+            await api.get('thong-bao/danh-sach-phu-huynh?tuKhoa=', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.phu_huynh = res?.data?.data.map(item => {
+                    return {
+                        itemId: item?.id,
+                        itemName: item?.hoten ?? item?.id,
+                    }
+                })
+
+                this.phu_huynh.unshift({itemId:0, itemName:'Tất cả'});
+            })
         },
         async send_data(event) {
             event.preventDefault();
             const formData = new FormData()
-            formData.append('type_id', this.type_id)
+            formData.append('type_id', this.selected)
             formData.append('noi_dung', this.noi_dung)
-            formData.append('image', this.image)
-            formData.append('to_id', this.to_id)
-            formData.append('giao_vien_id', this.giao_vien_id)
-            formData.append('phu_huynh_id', this.phu_huynh_id)
-            formData.append('dich_vu_id', this.dich_vu_id)
-            formData.append('lao_dong_id', this.lao_dong_id)
+            formData.append('image', this.file)
+            formData.append('to_id', this.get_toi_id)
+            formData.append('tieu_de', this.tieu_de)
+
+            if(this.disabled_giao_vien) {
+                const check = this.giao_vien.some(item => item.itemId == 0);
+                if(check){
+                    formData.append('giao_vien_id', '0')
+                } else {
+                    formData.append('giao_vien_id', this.giao_vien.map(item => item.itemId).join(','))
+                }
+            }else {
+                formData.append('giao_vien_id', '')
+            }
+
+            if(this.disabled_phu_huynh) {
+                const check = this.phu_huynh.some(item => item.itemId == 0);
+                if(check){
+                    formData.append('phu_huynh_id', '0')
+                } else {
+                    formData.append('phu_huynh_id', this.phu_huynh.map(item => item.itemId).join(','))
+                }
+            }else {
+                formData.append('phu_huynh_id', '')
+            }
+
+            formData.append('dich_vu_id', '')
+            formData.append('lao_dong_id', '')
 
             await api.post('thong-bao/tao-moi', formData, {
                 'Content-Type': 'multipart/form-data',
@@ -270,7 +329,7 @@ export default {
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
-                    this.$router.push('/admin/users/admins');
+                    this.$router.push('/admin/notification');
                 }
             })
         }
@@ -308,7 +367,39 @@ export default {
 
         this.load_type()
     },
-    components: {}
+    components: {},
+    watch: {
+        get_toi_id() {
+            if (this.get_toi_id == 60) {
+                this.disabled_giao_vien = true
+                this.disabled_phu_huynh = false
+                this.disabled_dich_vu = false
+                this.disabled_lao_dong = false
+            }
+            if (this.get_toi_id == 61) {
+                this.disabled_giao_vien = false
+                this.disabled_phu_huynh = true
+                this.disabled_dich_vu = false
+                this.disabled_lao_dong = false
+            }
+            if (this.get_toi_id == 62) {
+                this.disabled_giao_vien = false
+                this.disabled_phu_huynh = false
+                this.disabled_dich_vu = true
+                this.disabled_lao_dong = false
+            }
+            if (this.get_toi_id == 63) {
+                this.disabled_giao_vien = false
+                this.disabled_phu_huynh = false
+                this.disabled_dich_vu = false
+                this.disabled_lao_dong = true
+            }
+            console.log(this.disabled_giao_vien)
+        },
+        giao_vien_id() {
+            console.log(this.giao_vien_id)
+        }
+    }
 }
 </script>
 
@@ -343,4 +434,5 @@ export default {
             margin-bottom: 7px;
         }
     }
-}</style>
+}
+</style>
