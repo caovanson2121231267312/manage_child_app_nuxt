@@ -11,7 +11,7 @@
                                 fill="white" />
                         </svg>
                         <span class="span-h">
-                            Chương trình Bảo mẫu Pro
+                            {{ data?.khoaHoc ?? 'Loading...' }}
                         </span>
                     </div>
 
@@ -28,12 +28,13 @@
                 </div>
                 <div class="my-2">
                     <title-header>
-                        Bảo mẫu cơ bản 0 - 6 tuổi
+                        {{ data?.tieu_de ?? 'Loading...' }}
                     </title-header>
                 </div>
 
                 <div class="w-100">
-                    <img class="img-w" src="@/static/images/teacher-training/Rectangle4052.png" alt="">
+                    <img v-if="data?.image" class="img-w" :src="data?.image" alt="">
+                    <img v-else class="img-w" src="@/static/images/teacher-training/Rectangle4052.png" alt="">
                 </div>
 
                 <div>
@@ -57,7 +58,7 @@
                                 </div>
                             </td>
                             <td>
-                                <span class="span2">Cơ bản</span>
+                                <span class="span2">{{ data?.capDo ?? 'Loading...' }}</span>
                             </td>
                         </tr>
                         <tr>
@@ -76,7 +77,7 @@
                                 </div>
                             </td>
                             <td>
-                                <span class="span2">User giáo viên cụ thể</span>
+                                <span class="span2">{{ data?.type ?? 'Loading...' }}</span>
                             </td>
                         </tr>
                     </table>
@@ -89,7 +90,7 @@
                     </div>
 
                     <div>
-                        <nuxt-link v-for="n in 6" v-bind:key="n"
+                        <nuxt-link v-for="(item, n) in lesson" v-bind:key="n"
                             class="d-flex justify-content-between align-items-center card-lsm hover-card mt-4" to="">
                             <div class="">
                                 <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
@@ -117,9 +118,11 @@
                     </div>
 
                     <div class="my-7">
-                        <button-add>
-                            <span class="mdi mdi-plus"></span> Thêm bài học
-                        </button-add>
+                        <nuxt-link class="d-block" :to="'/admin/lsm/teacher-training/' + id + '/detail/' + course_id + '/create'">
+                            <button-add>
+                                <span class="mdi mdi-plus"></span> Thêm bài học
+                            </button-add>
+                        </nuxt-link>
                     </div>
                 </div>
 
@@ -131,17 +134,17 @@
                     </div>
 
                     <div class="card-teacher">
-                        <div class="card-item mt-3" v-for="n in 9" v-bind:key="n">
+                        <div class="card-item mt-3" v-for="(item, n) in teachers" v-bind:key="n">
                             <div class="d-flex">
                                 <div class="box-img me-2">
-                                    <img src="@/static/images/users/user1.png" alt="">
+                                    <img :src="item?.anh_nguoi_dung" alt="">
                                 </div>
                                 <div>
                                     <div class="user-id mb-2">
-                                        <span class="blade-id"># 252</span>
+                                        <span class="blade-id"># {{ item?.id }}</span>
                                     </div>
                                     <div class="user-name">
-                                        Nguyễn Hoàng Anh Thư
+                                        {{ item?.hoten ?? 'Chưa cập nhật tên' }}
                                     </div>
                                 </div>
                             </div>
@@ -174,6 +177,10 @@
 
 <script>
 import ButtonAdd from '~/components/button/ButtonAdd.vue';
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
+
 export default {
     components: { ButtonAdd },
     layout: 'admin',
@@ -184,6 +191,9 @@ export default {
                 previous: '/admin/lsm/teacher-training/' + (this.id ?? 0)
             },
             panel: [0],
+            data: null,
+            teachers: null,
+            lesson: null,
         };
     },
     validate({ params }) {
@@ -193,15 +203,43 @@ export default {
         id() {
             return this.$route.params.id
         },
+        course_id() {
+            return this.$route.params.course_id
+        },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
     },
     methods: {
-        togglePassword() {
-            this.showPassword = !this.showPassword;
+        async load_data() {
+            await api.get(`dao-tao/chi-tiet-hoc-phan?hoc_phan_id=` + this.course_id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.data = res?.data?.data
+            })
+
+            await api.get(`dao-tao/danh-sach-bai-hoc?page=1&limit=1000&sort=1&tuKhoa=&hoc_phan_id=` + this.course_id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.lesson = res?.data?.data
+            })
+
+            await api.get(`dao-tao/danh-sach-giao-vien-da-gan?page=1&limit=100&sort=1&tuKhoa=&hoc_phan_id=` + this.course_id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.teachers = res?.data?.data
+            })
         },
     },
     mounted() {
         this.title.previous = '/admin/lsm/teacher-training/' + (this.id ?? 0)
         this.$store.dispatch('title/set_title', this.title);
+
+        this.load_data()
     },
 }
 </script>
@@ -242,6 +280,8 @@ export default {
     .box-img {
         width: 40px;
         height: 40px;
+        overflow: hidden;
+        border-radius: 50%;
 
         img {
             width: 100%;

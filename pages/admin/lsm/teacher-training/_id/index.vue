@@ -21,7 +21,7 @@
                                     fill="#0056B1" />
                             </svg>
                         </span>
-                        Chương trình Bảo mẫu Pro
+                        {{ data?.tieu_de ?? 'Loading...' }}
                     </title-header>
 
 
@@ -46,10 +46,11 @@
                     </div>
                     <div class="card-img">
                         <div class="box-img">
-                            <img src="@/static/images/teacher-training/Rectangle4278.png" />
+                            <img :src="image" />
+                            <input type="file" hidden @change="handleFileChange" id="img" />
                         </div>
                         <div>
-                            <div class="cp mb-2" v-b-tooltip.hover title="Xoá ảnh">
+                            <div class="cp mb-2" @click="delete_img()"  v-b-tooltip.hover title="Xoá ảnh">
                                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -68,7 +69,7 @@
                                     </defs>
                                 </svg>
                             </div>
-                            <div class="cp" v-b-tooltip.hover title="Tải ảnh lên">
+                            <label for="img" class="cp b-block" v-b-tooltip.hover title="Tải ảnh lên">
                                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -78,7 +79,7 @@
                                         d="M15 15V18.9375C15 19.4898 15.4477 19.9375 16 19.9375C16.5523 19.9375 17 19.4898 17 18.9375V15H23C24.1046 15 25 15.8954 25 17V22C25 23.1046 24.1046 24 23 24H9C7.89543 24 7 23.1046 7 22V17C7 15.8954 7.89543 15 9 15H15Z"
                                         fill="#979797" />
                                 </svg>
-                            </div>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -101,7 +102,7 @@
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide max-box" v-for="(item, n) in coBan" v-bind:key="n">
                                     <nuxt-link class="position-relative"
-                                        :to="'/admin/lsm/teacher-training/' + item?.id + '/detail'">
+                                        :to="'/admin/lsm/teacher-training/' + id + '/detail/' + item?.id">
                                         <div class="card-body-bg img-box">
                                             <img :src="item?.image" alt="">
                                             <!-- <img src="@/static/images/students/Rectangle444.png" alt=""> -->
@@ -182,7 +183,7 @@
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide max-box" v-for="(item, n) in nangCao" v-bind:key="n">
                                     <nuxt-link class="position-relative"
-                                        :to="'/admin/lsm/teacher-training/' + item?.id + '/detail'">
+                                        :to="'/admin/lsm/teacher-training/' + id + '/detail/' + item?.id">
                                         <div class="card-body-bg img-box">
                                             <img :src="item?.image" alt="">
                                             <!-- <img src="@/static/images/students/Rectangle444.png" alt=""> -->
@@ -280,7 +281,7 @@ export default {
             },
             coBan: [],
             nangCao: [],
-            data: [],
+            data: null,
             file: null,
             image: null,
         };
@@ -307,6 +308,44 @@ export default {
         }
     },
     methods: {
+        async delete_img() {
+            this.image = null;
+            this.file = null;
+
+            const formData = new FormData()
+            formData.append('id', this.id)
+
+            await api.post('dao-tao/delete-image-khoa-hoc', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.load_data();
+                }
+            })
+        },
+        async handleFileChange(event) {
+            const img = event.target.files[0];
+            this.file = img;
+            if (await img) {
+                this.image = URL.createObjectURL(img);
+            }
+
+            const formData = new FormData()
+            formData.append('id', this.id)
+            formData.append('image', this.file)
+
+            await api.post('dao-tao/update-image-khoa-hoc', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.load_data();
+                }
+            })
+        },
         clearFiles() {
             this.$refs['file-input'].reset()
         },
@@ -321,18 +360,12 @@ export default {
                 console.log(res)
                 this.coBan = res?.data?.data?.coBan
                 this.nangCao = res?.data?.data?.nangCao
+                this.data = res?.data?.data
+                this.image = res?.data?.data?.image
             })
-
-            // await api.get(`dao-tao/chi-tiet-hoc-phan?hoc_phan_id=${this.id}`, {
-            //     'Content-Type': 'multipart/form-data',
-            //     Authorization: 'Bearer ' + this.token
-            // }).then(res => {
-            //     console.log(res)
-            //     this.data = res?.data?.data
-            // })
         },
         async send_data(event) {
-            event.preventDefault();
+            // event.preventDefault();
             const formData = new FormData(document.getElementById('form'))
             await api.post('dao-tao/tao-moi', formData, {
                 'Content-Type': 'multipart/form-data',

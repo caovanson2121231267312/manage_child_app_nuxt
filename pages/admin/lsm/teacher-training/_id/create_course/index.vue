@@ -12,6 +12,25 @@
                 <b-col class="mt-0 pt-0" cols="12" sm="9" md="7">
                     <div class="w-100">
 
+                        <div class="mt-3 d-flex justify-content-between  align-items-center">
+                            <strong class="strong-title">
+                                <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M14.3263 6.4735C14.0997 6.38016 13.7997 6.3335 13.4263 6.3335H9.90634C8.74634 6.3335 8.33301 6.74683 8.33301 7.92016V13.0802C8.33301 13.4668 8.37967 13.7668 8.47967 14.0002C8.68634 14.4802 9.12634 14.6668 9.90634 14.6668H13.4263C14.5863 14.6668 14.9997 14.2468 14.9997 13.0802V7.92016C14.9997 7.12683 14.813 6.68016 14.3263 6.4735ZM12.333 13.1668H10.9997C10.9863 13.1668 10.9663 13.1668 10.953 13.1602C10.853 13.1535 10.7663 13.1202 10.693 13.0535C10.573 12.9668 10.4997 12.8268 10.4997 12.6668C10.4997 12.3935 10.7263 12.1668 10.9997 12.1668H12.333C12.6063 12.1668 12.833 12.3935 12.833 12.6668C12.833 12.9402 12.6063 13.1668 12.333 13.1668Z"
+                                        fill="#FC4D32" />
+                                    <path
+                                        d="M14.3262 4.12683V4.66683C14.3262 5.0335 14.0262 5.3335 13.6595 5.3335H9.90618C8.19952 5.3335 7.33285 6.20683 7.33285 7.92016V14.0002C7.33285 14.3668 7.03285 14.6668 6.66618 14.6668H5.36618C5.09952 14.6668 4.88618 14.4535 4.88618 14.1935C4.88618 13.9268 5.09952 13.7202 5.36618 13.7202H6.66618V11.1668H4.33285C2.85285 11.0935 1.67285 9.8735 1.67285 8.3735V4.12683C1.67285 2.58683 2.92618 1.3335 4.47285 1.3335H11.5329C13.0729 1.3335 14.3262 2.58683 14.3262 4.12683Z"
+                                        fill="#FC4D32" />
+                                </svg>
+                                <span class="ms-1">Ẩn/Hiện chương trình</span>
+                            </strong>
+                            <div class="input-grop">
+                                <!-- <b-form-checkbox switch checked="checked" size="lg"></b-form-checkbox> -->
+                                <v-switch inset color="success" v-model="bat_khoa_hoc"></v-switch>
+                            </div>
+                        </div>
+
                         <div class="mt-3 mb-6">
                             <div class="mb-2">
                                 <strong class="service-title">
@@ -112,14 +131,40 @@
                                         d="M10.793 1.3335H5.20634C2.77967 1.3335 1.33301 2.78016 1.33301 5.20683V10.7868C1.33301 13.2202 2.77967 14.6668 5.20634 14.6668H10.7863C13.213 14.6668 14.6597 13.2202 14.6597 10.7935V5.20683C14.6663 2.78016 13.2197 1.3335 10.793 1.3335ZM8.88634 11.3335H7.10634C6.83301 11.3335 6.60634 11.1068 6.60634 10.8335C6.60634 10.5602 6.83301 10.3335 7.10634 10.3335H8.88634C9.15967 10.3335 9.38634 10.5602 9.38634 10.8335C9.38634 11.1068 9.16634 11.3335 8.88634 11.3335ZM10.6663 8.50016H5.33301C5.05967 8.50016 4.83301 8.2735 4.83301 8.00016C4.83301 7.72683 5.05967 7.50016 5.33301 7.50016H10.6663C10.9397 7.50016 11.1663 7.72683 11.1663 8.00016C11.1663 8.2735 10.9397 8.50016 10.6663 8.50016ZM11.9997 5.66683H3.99967C3.72634 5.66683 3.49967 5.44016 3.49967 5.16683C3.49967 4.8935 3.72634 4.66683 3.99967 4.66683H11.9997C12.273 4.66683 12.4997 4.8935 12.4997 5.16683C12.4997 5.44016 12.273 5.66683 11.9997 5.66683Z"
                                         fill="#4EAEEA" />
                                 </svg>
-                                <span class="service-title">Danh sách giáo viên</span>
+                                <span class="service-title">Cấp độ</span>
                             </span>
 
                         </div>
                         <div>
-                            <b-form-select v-model="dich_vu_id" :options="dich_vu" aria-placeholder="Chọn"></b-form-select>
+                            <b-form-select v-model="cap_do_id" :options="cap_do" aria-placeholder="Chọn"></b-form-select>
                         </div>
 
+                        <hr class="support-hr" />
+
+                        <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
+                            <span>
+                                <svg width="15" height="14" viewBox="0 0 15 14" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M5.35528 0C3.52505 0 2.03711 1.491 2.03711 3.325C2.03711 5.124 3.44122 6.58 5.27145 6.643C5.32733 6.636 5.38322 6.636 5.42513 6.643C5.43911 6.643 5.44609 6.643 5.46006 6.643C5.46705 6.643 5.46705 6.643 5.47403 6.643C7.26235 6.58 8.66646 5.124 8.67345 3.325C8.67345 1.491 7.18551 0 5.35528 0Z"
+                                        fill="#00C092" />
+                                    <path
+                                        d="M8.90407 8.50482C6.95508 7.20282 3.77662 7.20282 1.81367 8.50482C0.926493 9.09982 0.4375 9.90482 0.4375 10.7658C0.4375 11.6268 0.926493 12.4248 1.80668 13.0128C2.78467 13.6708 4.07002 13.9998 5.35537 13.9998C6.64073 13.9998 7.92608 13.6708 8.90407 13.0128C9.78426 12.4178 10.2732 11.6198 10.2732 10.7518C10.2663 9.89082 9.78426 9.09282 8.90407 8.50482Z"
+                                        fill="#00C092" />
+                                    <path
+                                        d="M13.0328 3.73787C13.1446 5.09587 12.1806 6.28587 10.8463 6.44687C10.8394 6.44687 10.8394 6.44687 10.8324 6.44687H10.8114C10.7695 6.44687 10.7276 6.44687 10.6927 6.46087C10.015 6.49587 9.39333 6.27887 8.92529 5.87987C9.64481 5.23587 10.057 4.26987 9.97314 3.21987C9.92424 2.65287 9.72864 2.13487 9.43524 1.69387C9.7007 1.56087 10.0081 1.47687 10.3224 1.44887C11.6916 1.32987 12.9141 2.35187 13.0328 3.73787Z"
+                                        fill="#00C092" />
+                                    <path
+                                        d="M14.4298 10.2129C14.3739 10.8919 13.9408 11.4799 13.2143 11.8789C12.5157 12.2639 11.6356 12.4459 10.7624 12.4249C11.2653 11.9699 11.5587 11.4029 11.6146 10.8009C11.6845 9.93289 11.2723 9.09989 10.448 8.43489C9.97996 8.06389 9.43509 7.76989 8.84131 7.55289C10.3851 7.10489 12.3271 7.40589 13.5217 8.37189C14.1643 8.88989 14.4927 9.54089 14.4298 10.2129Z"
+                                        fill="#00C092" />
+                                </svg>
+                                <span class="service-title">Phân loại</span>
+                            </span>
+
+                        </div>
+                        <div>
+                            <b-form-select v-model="type_id" :options="type" aria-placeholder="Chọn"></b-form-select>
+                        </div>
 
                         <hr class="support-hr" />
 
@@ -159,15 +204,18 @@ export default {
     data() {
         return {
             title: {
-                name: 'Thêm khóa học',
+                name: 'Thêm Chương trình đào tạo',
                 previous: '/admin/lsm/teacher-training/' + this.id
             },
             bat_chuong_trinh: false,
             tieu_de: null,
-            dich_vu: [],
-            dich_vu_id: 0,
             image: null,
             file: null,
+            cap_do: [],
+            cap_do_id: 0,
+            type: [],
+            type_id: 0,
+            bat_khoa_hoc: true,
         };
     },
     validate({ params }) {
@@ -195,39 +243,48 @@ export default {
             }
         },
         async load_role() {
-            await api.get('dao-tao/danh-sach-giao-vien?page=1&limit=1000&sort=1&tuKhoa=&hoc_phan_id=3', {
+            await api.get(`dao-tao/danh-sach-cap-do`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                this.dich_vu = res?.data?.data.map(item => {
+                this.cap_do = res?.data?.data.map(item => {
                     return {
                         value: item.id,
-                        text: item.id + ' - '+ (item.hoten ?? 'Chưa cập nhật')
+                        text: item.name
                     };
                 })
-                this.dich_vu_id = this.dich_vu[0].value
+                this.cap_do_id = this.cap_do[0]?.value
+            })
+
+            await api.get(`dao-tao/danh-sach-phan-loai-hoc-phan`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.type = res?.data?.data.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+                this.type_id = this.type[0]?.value
             })
         },
         async send_data(event) {
             const formData = new FormData()
-            formData.append('bat_chuong_trinh', this.bat_chuong_trinh ? 1 : 0)
+            formData.append('bat_khoa_hoc', this.bat_khoa_hoc == true ? 1 : 0)
             formData.append('tieu_de', this.tieu_de)
-            formData.append('dich_vu_id', this.dich_vu_id)
+            formData.append('cap_do_id', this.cap_do_id)
+            formData.append('type_id', this.type_id)
+            formData.append('id', this.id)
             formData.append('image', this.file)
 
-            formData.forEach((value, key) => {
-                console.log(`${key}: ${value}`);
-            });
-
-            // return;
-
-            await api.post('chuong-trinh-hoc/tao-moi', formData, {
+            await api.post('dao-tao/tao-moi-hoc-phan', formData, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
-                    this.$router.push('/admin/lsm/students');
+                    this.$router.push('/admin/lsm/teacher-training/' + this.id);
                 }
             })
         },
@@ -318,4 +375,5 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-}</style>
+}
+</style>

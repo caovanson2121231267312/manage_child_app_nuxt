@@ -21,7 +21,7 @@
                         </strong>
                         <div class="input-grop">
                             <!-- <b-form-checkbox switch checked="checked" size="lg"></b-form-checkbox> -->
-                            <v-switch inset color="success" v-model="switch1"></v-switch>
+                            <v-switch inset color="success" v-model="bat_khoa_hoc"></v-switch>
                         </div>
                     </div>
                     <div class="mt-3">
@@ -37,7 +37,7 @@
                             <span class="ms-1">Tên chương trình </span>
                         </strong>
                         <div class="input-grop">
-                            <b-form-input placeholder="Bảo mẫu cơ bản 0 - 6 tuổi"></b-form-input>
+                            <b-form-input v-model="tieu_de" placeholder="Bảo mẫu cơ bản 0 - 6 tuổi"></b-form-input>
                         </div>
                     </div>
                     <div class="mt-3">
@@ -50,7 +50,7 @@
                             <span class="ms-1">Cấp độ</span>
                         </strong>
                         <div class="input-grop">
-                            <b-form-select v-model="selected" :options="options"></b-form-select>
+                            <b-form-select v-model="cap_do_id" :options="cap_do"></b-form-select>
                         </div>
                     </div>
 
@@ -73,7 +73,7 @@
                             <span class="ms-1">Phân loại</span>
                         </strong>
                         <div class="input-grop">
-                            <b-form-select v-model="selected1" :options="options1"></b-form-select>
+                            <b-form-select v-model="type_id" :options="type"></b-form-select>
                         </div>
                     </div>
                     <div class="mt-3 mb-5">
@@ -99,10 +99,11 @@
                         <div class="input-grop">
                             <div class="box-x d-flex justify-content-between align-items-center p-2">
                                 <div class="box-img">
-                                    <img src="@/static/images/teacher-training/Rectangle4052.png" alt="">
+                                    <input type="file" hidden @change="handleFileChange" id="img" />
+                                    <img v-if="image" :src="image" alt="">
                                 </div>
                                 <div class="action">
-                                    <div class="mb-2">
+                                    <div class="mb-2 cp"  @click="delete_img()">
                                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -121,7 +122,7 @@
                                             </defs>
                                         </svg>
                                     </div>
-                                    <div>
+                                    <label for="img">
                                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -131,13 +132,13 @@
                                                 d="M15 15V18.9375C15 19.4898 15.4477 19.9375 16 19.9375C16.5523 19.9375 17 19.4898 17 18.9375V15H23C24.1046 15 25 15.8954 25 17V22C25 23.1046 24.1046 24 23 24H9C7.89543 24 7 23.1046 7 22V17C7 15.8954 7.89543 15 9 15H15Z"
                                                 fill="#979797" />
                                         </svg>
-                                    </div>
+                                    </label>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="my-7">
+                    <div class="my-7" @click="send_data()">
                         <button-component>
                             Lưu thay đổi
                         </button-component>
@@ -150,6 +151,10 @@
 </template>
 
 <script>
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
+
 export default {
     layout: 'admin',
     data() {
@@ -158,38 +163,113 @@ export default {
                 name: 'Chương trình đào tạo',
                 previous: '/admin/teacher-training/' + (this.id ?? 0)
             },
-            panel: [0],
-            selected: 0,
-            options: [
-                { value: 0, text: 'Chương trình cơ bản' },
-                { value: 1, text: 'Chương trình nâng cao' },
-            ],
+            data: [],
+            cap_do: [],
+            cap_do_id: 0,
+            type: [],
+            type_id: 0,
             selected1: 0,
-            options1: [
-                { value: 0, text: 'Tất cả User giáo viên' },
-                { value: 1, text: 'Tất cả tài khoản User giáo viên đã kích hoạt' },
-                { value: 2, text: 'User giáo viên cụ thể' },
-                { value: 3, text: 'Phân loại theo dịch vụ' },
-            ],
-            switch1: true
+            tieu_de: null,
+            bat_khoa_hoc: true,
+            image: null,
+            file: null,
         };
     },
     validate({ params }) {
-        return /^[0-9]{0,2}$/.test(params.id)
+        return /^\d+$/.test(params.id);
     },
     computed: {
         id() {
             return this.$route.params.id
         },
+        course_id() {
+            return this.$route.params.course_id
+        },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
     },
     methods: {
-        togglePassword() {
-            this.showPassword = !this.showPassword;
+        delete_img() {
+            this.image = null;
+            this.file = null;
         },
+        handleFileChange(event) {
+            const img = event.target.files[0];
+            this.file = img;
+            if (img) {
+                this.image = URL.createObjectURL(img);
+            }
+        },
+        async load_data() {
+            await api.get(`dao-tao/danh-sach-cap-do`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.cap_do = res?.data?.data.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+            })
+
+            await api.get(`dao-tao/danh-sach-phan-loai-hoc-phan`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.type = res?.data?.data.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+            })
+
+            await api.get(`dao-tao/chi-tiet-hoc-phan?hoc_phan_id=` + this.course_id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.teachers = res?.data?.data
+                this.cap_do_id = res?.data?.data?.cap_do_id
+                this.type_id = res?.data?.data?.type_id
+                this.tieu_de = res?.data?.data?.tieu_de
+                this.image = res?.data?.data?.image
+                this.bat_khoa_hoc = res?.data?.data?.bat_khoa_hoc == 1 ? true : false
+            })
+
+
+        },
+        isChecked(id) {
+            console.log(this.teacher, id, this.teacher.includes(id))
+            return this.teacher.includes(id);
+        },
+        async send_data() {
+            const formData = new FormData()
+            formData.append('hoc_phan_id', this.course_id)
+            formData.append('tieu_de', this.tieu_de)
+            formData.append('bat_khoa_hoc', this.bat_khoa_hoc == true ? 1 : 0)
+            formData.append('type_id', this.type_id)
+            formData.append('cap_do_id', this.cap_do_id)
+            formData.append('image', this.file)
+
+            await api.post('dao-tao/sua-hoc-phan', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    // this.load_data();
+                    this.$router.push('/admin/lsm/teacher-training/' + this.id + '/detail/' + this.course_id)
+                }
+            })
+        }
     },
     mounted() {
-        this.title.previous = '/admin/lsm/teacher-training/' + (this.id ?? 0) + '/detail'
+        this.title.previous = '/admin/lsm/teacher-training/' + this.id + '/detail/' + this.course_id
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
 }
 </script>

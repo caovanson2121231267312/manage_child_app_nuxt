@@ -6,7 +6,7 @@
             <div class="w-100">
 
                 <b-row>
-                    <b-col cols="12" sm="7">
+                    <b-col cols="12" sm="12">
                         <div class="mb-7 ">
                             <div class="d-flex align-items-center flex-wrap">
                                 <nuxt-link to="/admin/lsm/teacher-training">
@@ -67,8 +67,8 @@
                         </div>
                     </v-col>
 
-                    <v-col v-for="n in 12" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
-                        <card-teacher-training :status="generateRandomNumber()"></card-teacher-training>
+                    <v-col v-for="(item, n) in data" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
+                        <card-teacher-training :data="item" :status="item?.trang_thai?.name"></card-teacher-training>
                     </v-col>
                 </v-row>
 
@@ -82,6 +82,9 @@
 <script>
 import ButtonAdd from '~/components/button/ButtonAdd.vue';
 import TitleHeader from '~/components/title/TitleHeader.vue';
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 // import { defineComponent } from '@vue/composition-api'
 
 export default {
@@ -99,26 +102,48 @@ export default {
                 'success'
             ],
             date: new Date().toISOString().substr(0, 7),
+            formattedDate: null,
             menu: false,
             modal: false,
+            data: [],
         };
     },
     computed: {
-        // id() {
-        //     return $route.params.id
-        // }
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
     },
     methods: {
-        changeLink() {
-            console.log(this)
+        async load_data() {
+            await api.get(`dao-tao/danh-sach-ket-qua-dao-tao?page=1&limit=100&sort=1&tuKhoa=Bài 1&thang=` + this.formattedDate, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.data = res?.data?.data
+            })
         },
         generateRandomNumber() {
             return this.status[Math.floor(Math.random() * 3)];
         }
     },
     mounted() {
+        const date1 = new Date(this.date);
+        const formattedDate = date1.toLocaleString('en-US', { month: 'numeric', year: 'numeric' });
+        this.formattedDate = formattedDate;
+
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data();
     },
+    watch: {
+        date() {
+            const date1 = new Date(this.date);
+            const formattedDate = date1.toLocaleString('en-US', { month: 'numeric', year: 'numeric' });
+            this.formattedDate = formattedDate;
+            console.log(this.formattedDate)
+            this.load_data()
+        }
+    }
 }
 </script>
 
