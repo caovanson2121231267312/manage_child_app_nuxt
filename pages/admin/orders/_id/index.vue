@@ -368,7 +368,7 @@
                     </div>
 
                     <div class="mt-4">
-                        <b-button class="w-100 text-danger rounded-pill" variant="danger">
+                        <b-button class="w-100 text-light rounded-pill" variant="danger">
                             <span class="mdi mdi-close-circle-outline"></span>
                             <span>Đơn đã hủy</span>
                         </b-button>
@@ -390,7 +390,7 @@
                     </div>
 
                     <div class="mt-4">
-                        <b-button class="w-100 text-success rounded-pill" variant="outline-success">
+                        <b-button class="w-100 text-light rounded-pill" variant="success">
                             <span class="mdi mdi-check-circle"></span>
                             <span>Đơn đã hoàn thành</span>
                         </b-button>
@@ -412,7 +412,7 @@
                     </div>
 
                     <div class="mt-4">
-                        <b-button class="w-100 text-primary rounded-pill" variant="outline-primary">
+                        <b-button class="w-100 text-light rounded-pill" variant="primary">
                             <span class="mdi mdi-check-circle"></span>
                             <span>Đơn hoàn</span>
                         </b-button>

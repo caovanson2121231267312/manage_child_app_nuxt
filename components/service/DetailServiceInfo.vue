@@ -107,6 +107,22 @@
             </div>
 
         </div>
+
+        <!--  -->
+            <div class="mt-6">
+                <nuxt-link v-if="data?.trang_thai == 'Đang dạy'" class="btn btn-primary text-light w-100 rounded-pill" :to="'/admin/orders/' + data?.id + '/lesson'">
+                    Xem tiến độ khóa học
+                </nuxt-link>
+                <nuxt-link v-if="data?.trang_thai == 'Đã hủy'" class="btn btn-danger text-light w-100 rounded-pill" :to="'/admin/orders/' + data?.id + '/lesson'">
+                    Xem tiến độ khóa học
+                </nuxt-link>
+                <nuxt-link v-if="data?.trang_thai == 'Đã hoàn thành'" class="btn btn-success text-light w-100 rounded-pill" :to="'/admin/orders/' + data?.id + '/lesson'">
+                    Xem tiến độ khóa học
+                </nuxt-link>
+                <nuxt-link v-if="data?.trang_thai == 'Đơn hoàn'" class="btn btn-info text-light w-100 rounded-pill" :to="'/admin/orders/' + data?.id + '/lesson'">
+                    Xem tiến độ khóa học
+                </nuxt-link>
+            </div>
         <!--  -->
 
         <div class="mt-6">
@@ -248,7 +264,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <b-button class="w-100 text- rounded-pill" variant="outline-primary">
+                                    <b-button @click="change_page(data?.noi_dung_khao_sat ?? '')" class="w-100 text- rounded-pill" variant="outline-primary">
                                         Nội dung khảo sát
                                         <span class="ms-2 mdi mdi-chevron-right"></span>
                                     </b-button>
@@ -786,6 +802,9 @@ export default {
                     this.load_data()
                 }
             })
+        },
+        change_page(content = null) {
+            window.open(content, '_blank');
         }
     },
     mounted() {

@@ -17,7 +17,7 @@
                         <div>
                             <b-row>
                                 <b-col v-for="(item, n) in data" :key="n" cols="4" sm="3">
-                                    <nuxt-link :to="'/admin/lsm/teacher-training/' + item?.id"
+                                    <nuxt-link :to="'/admin/lsm/students/' + item?.id"
                                         class="card-service wow animate__animated animate__flipInY " v-b-tooltip.hover
                                         title="Bảo mẫu Pro">
                                         <div class="card-service-body">
@@ -26,7 +26,7 @@
 
                                             </div>
                                             <div class="service-title">
-                                                {{ item?.tieu_de }}
+                                                {{ item?.ten_dich_vu }}
                                             </div>
                                         </div>
                                     </nuxt-link>
@@ -128,7 +128,7 @@ export default {
             this.$router.push('/admin/lsm/students/create')
         },
         async load_data() {
-            await api.get(`chuong-trinh-hoc/danh-sach?page=1&limit=30&sort=1`, {
+            await api.get(`chuong-trinh-hoc/danh-sach-chuong-trinh?page=1&limit=100&tuKhoa=&sort=1`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

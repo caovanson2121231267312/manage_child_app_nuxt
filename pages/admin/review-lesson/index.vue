@@ -24,7 +24,7 @@
 
         <div class="">
             <v-row>
-                <v-col v-for="n in 4" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
+                <v-col v-for="(item, n) in data" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
                     <div class="w-card w-bg-success hover-card wow animate__animated animate__zoomIn"
                         style="min-width: 353px">
                         <div class="w-card-title w-bg-success d-flex justify-content-between align-items-center">
@@ -44,16 +44,18 @@
 
                                 <div>
                                     <div class="w-text-p-card">
-                                        Mã đơn: <span>0123456789</span>
+                                        Mã đơn: <span>{{ item?.ma_don_hang }}</span>
                                     </div>
                                     <div class="w-text-p-card">
-                                        04/08/2023 • 08:30
+                                        {{ item?.created }}
                                     </div>
                                 </div>
                             </div>
 
                             <div>
-                                <span class="w-blade-card-success">Đã hoàn thành</span>
+                                <span class="w-blade-card-success">
+                                    {{ item?.trang_thai?.name }}
+                                </span>
                             </div>
                         </div>
                         <div class="w-card-body">
@@ -68,14 +70,14 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center">
                                         <div class="me-2 layout-user">
-                                            <img src="@/static/images/users/Ellipse50.png" alt="">
+                                            <img :src="item?.giaoVien?.anh_nguoi_dung" alt="">
                                         </div>
                                         <div>
                                             <h3 class="user-name">
-                                                Nguyễn Thị Anh
+                                                {{ item?.giaoVien?.hoten }}
                                             </h3>
                                             <p class="w-p p-0 m-0">
-                                                Phụ huynh
+                                                {{ item?.giaoVien?.trinh_do }}
                                             </p>
                                         </div>
                                     </div>
@@ -130,7 +132,7 @@
                                                     </td>
                                                     <td>
                                                         <span class="w-p-service-i">
-                                                            5/10
+                                                            {{ item?.buoi }}/{{ item?.tong_buoi }}
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -156,7 +158,7 @@
                                                     </td>
                                                     <td>
                                                         <span class="w-p-service-i">
-                                                            Chương trình giáo dục sớm
+                                                            {{ item?.dichVu }}
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -180,7 +182,7 @@
                                                     </td>
                                                     <td>
                                                         <span class="w-p-service-i">
-                                                            09/08/2023 • Ca sáng (7:00 - 11:00)
+                                                            {{ item?.chonCa }}
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -193,7 +195,7 @@
                             <div class="w-w-10"></div>
                             <div class="">
                                 <div class="w-card-footer">
-                                    <nuxt-link class="btn btn-view position-relative" to="/admin/review-lesson/12">
+                                    <nuxt-link class="btn btn-view position-relative" :to="'/admin/review-lesson/' + item?.id">
                                         Xem đánh giá
 
                                         <span class="icon-right mdi mdi-chevron-right"></span>
@@ -213,6 +215,9 @@
 
 <script>
 import CardItem from '../../../components/card/CardItem.vue';
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -222,11 +227,29 @@ export default {
                 name: 'Đánh giá buổi học',
                 previous: '/admin/dashboard'
             },
+            data: null,
         };
     },
-    computed: {},
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_data() {
+            await api.get(`danh-gia-buoi-hoc/danh-sach?page=1&limit=1000&tuKhoa=Anh Thư1&sort=1`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data
+            })
+        },
+    },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
     components: { CardItem }
 }
@@ -328,4 +351,5 @@ export default {
         height: 219px;
         position: relative;
     }
-}</style>
+}
+</style>

@@ -209,7 +209,7 @@ export default {
             }
         },
         async load_role() {
-            await api.get('chuong-trinh-hoc/danh-sach-dich-vu?page=1&limit=1000&tuKhoa=&sort=1', {
+            await api.get('chuong-trinh-hoc/danh-sach-chuong-trinh?page=1&limit=&tuKhoa=&sort=1', {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
