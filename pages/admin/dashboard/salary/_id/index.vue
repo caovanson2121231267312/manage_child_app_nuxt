@@ -1,0 +1,196 @@
+<template>
+    <div class="content-mp">
+        <v-row>
+            <v-col class="mt-0 pt-0" xs="12" sm="12" md="8" lg="8" xl="8">
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <title-header>Tổng lương theo tháng</title-header>
+
+                    <div class="d-inline-block">
+                        <div>
+                            <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field v-model="date" label="" class="month-picker" prepend-icon="mdi-calendar"
+                                        readonly v-bind="attrs" v-on="on"></v-text-field>
+                                </template>
+                                <v-date-picker v-model="date" type="month" scrollable>
+                                    <v-spacer></v-spacer>
+                                    <v-btn text color="primary" @click="modal = false">
+                                        Cancel
+                                    </v-btn>
+                                    <v-btn text color="primary" @click="$refs.dialog.save(date)">
+                                        OK
+                                    </v-btn>
+                                </v-date-picker>
+                            </v-dialog>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <v-card>
+                        <v-card-text>
+                            <div>
+                                <div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="box-img me-3">
+                                            <img :src="data?.anh_nguoi_dung" />
+                                        </div>
+                                        <div>
+                                            <div class="blade blade-id"># {{ data?.id }}</div>
+                                            <div class="user-name">
+                                                {{ data?.hoten ?? 'Chưa cập nhật tên' }}
+                                            </div>
+                                            <div class="">
+                                                <span class="text-muted">
+                                                    {{ data?.dien_thoai ?? 'Chưa cập' }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <table class="table table-light">
+                                        <tr>
+                                            <td>
+                                                <span>Tổng lương</span>
+                                            </td>
+                                            <td>
+                                                <span>{{ formatCurrency(data?.tongLuong) }}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span>Phụ cấp</span>
+                                            </td>
+                                            <td>
+                                                <span>{{ formatCurrency(data?.phuCap) }}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span>Ăn trưa</span>
+                                            </td>
+                                            <td>
+                                                <span>{{ formatCurrency(data?.anTrua) }}</span>
+                                            </td>
+                                        </tr>
+                                        <!-- <tr>
+                                            <td>
+                                                <span>Gửi xe</span>
+                                            </td>
+                                            <td>
+                                                <span>{{ formatCurrency(data?.dien_thoai) }}</span>
+                                            </td>
+                                        </tr> -->
+                                    </table>
+                                </div>
+                            </div>
+                        </v-card-text>
+                    </v-card>
+                </div>
+
+
+                <div>
+                    <v-card>
+                        <v-card-text>
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </v-card-text>
+                    </v-card>
+                </div>
+            </v-col>
+        </v-row>
+
+    </div>
+</template>
+
+<script>
+// import { defineComponent } from '@vue/composition-api'
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
+
+export default {
+    layout: 'admin',
+    data() {
+        return {
+            title: {
+                name: 'Chi tiết lương nhân sự',
+                previous: '/admin/dashboard/salary'
+            },
+            data: null,
+            date: new Date().toISOString().substr(0, 7),
+            month: 1,
+            menu: false,
+            modal: false,
+        };
+    },
+    validate({ params }) {
+        return /^\d+$/.test(params.id);
+    },
+    computed: {
+        id() {
+            return this.$route.params.id
+        },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_data() {
+            await api.get('chi-luong/chi-tiet?thang=11/2023&page=1&limit=&sort=&tuKhoa=&id=' + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data
+                this.data = user
+            })
+        },
+        async send_data(event) {
+            event.preventDefault();
+            console.log(123)
+            const formData = new FormData(document.getElementById('form'))
+            await api.post('admin-api/cap-nhat-quan-tri-vien', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.load_data()
+                }
+            })
+        },
+    },
+    mounted() {
+        // this.title.previous =
+        this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
+    },
+}
+</script>
+
+
+<style lang="scss" scoped>
+.blade-id {
+    display: initial;
+}
+
+.box-img {
+    width: 55px;
+    height: 55px;
+    overflow: hidden;
+    border-radius: 50%;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+</style>

@@ -27,7 +27,7 @@ import Vue from 'vue'
 Vue.mixin({
 	methods: {
 	    formatCurrency(value) {
-            if (!value && value !== 0) return ''; // Tránh xử lý giá trị null hoặc undefined
+            if (!value && value !== 0) return 0; // Tránh xử lý giá trị null hoặc undefined
 
             const formatter = new Intl.NumberFormat('vi-VN', {
               style: 'currency',

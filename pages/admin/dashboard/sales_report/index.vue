@@ -33,6 +33,41 @@
                     </div>
                 </div>
 
+                <div class="mt-6">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead class="bg-primary">
+                            <th>
+                                <tr>
+                                    <span class="text-light">Ngày đóng</span>
+                                </tr>
+                            </th>
+                            <th>
+                                <tr>
+                                    <span class="text-light">Tên Phụ huynh</span>
+                                </tr>
+                            </th>
+                            <th>
+                                <tr>
+                                    <span class="text-light">Số điện thoại</span>
+                                </tr>
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item,n) in data" v-bind:key="n">
+                                <td>
+                                    <span></span>
+                                </td>
+                                <td>
+                                    <span></span>
+                                </td>
+                                <td>
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
 
             </b-col>
         </b-row>
@@ -44,6 +79,7 @@
 </template>
 
 <script>
+import api from '@/store/axios'
 import Swal from 'sweetalert2'
 import toastr from 'toastr';
 import SalesReport from '~/components/Report/SalesReport.vue';
@@ -64,13 +100,30 @@ export default {
             options: [
                 { value: 0, text: 'Tất cả' },
                 { value: 1, text: 'Giáo viên' },
-            ]
+            ],
+            data: null,
         }
     },
     computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_data() {
+            await api.get(`bao-cao/danh-sach-user?dien_thoai=&dia_chi=&dich_vu_id=&denNgay=&tuNgay=&page=1&limit=10&sort`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data
+            })
+        },
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title)
+        this.load_data()
     }
 }
 </script>

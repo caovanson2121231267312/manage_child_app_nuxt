@@ -173,91 +173,9 @@
                 <div class="col-12 col-md-12 col-lg-6 mb-2 mt-5 wow animate__animated animate__zoomIn">
                     <div class="d-flex justify-content-between align-center mb-3">
                         <div class="h3-title">Báo cáo chi lương</div>
-                        <nuxt-link class="watch-more" to="/">Xem thêm</nuxt-link>
+                        <nuxt-link class="watch-more" to="/admin/dashboard/salary">Xem thêm</nuxt-link>
                     </div>
-                    <b-card style="min-width: 245px;" class="mb-2 hover-card">
-                        <div class="d-flex justify-content-between align-center">
-                            <div class="w-100 ">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <label class="chart-title">Báo cáo lương nhân sự</label>
-                                    <div>
-                                        <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent
-                                            width="290px">
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field v-model="date" label="" class="month-picker"
-                                                    prepend-icon="mdi-calendar" readonly v-bind="attrs"
-                                                    v-on="on"></v-text-field>
-                                            </template>
-                                            <v-date-picker v-model="date" type="month" scrollable>
-                                                <v-spacer></v-spacer>
-                                                <v-btn text color="primary" @click="modal = false">
-                                                    Cancel
-                                                </v-btn>
-                                                <v-btn text color="primary" @click="$refs.dialog.save(date)">
-                                                    OK
-                                                </v-btn>
-                                            </v-date-picker>
-                                        </v-dialog>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <b-form-select v-model="selected" :options="options"></b-form-select>
-                                </div>
-
-                                <div class="w-100">
-                                    <table class="table table-hover table-salary">
-                                        <thead>
-                                            <tr>
-                                                <td>
-                                                    <div class="span">Tên GV</div>
-                                                </td>
-                                                <td>
-                                                    <div class="span">Tổng lương</div>
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="n in 4" v-bind:key="n">
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="box-img me-2">
-                                                            <img src="@/static/images/users/user1.png" />
-                                                        </div>
-                                                        <div>
-                                                            <div class="blade blade-id">#230</div>
-                                                            <div class="user-name">Nguyễn Hoàng Anh Thư</div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="salary">15,000,000</div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="w-100 mt-3">
-                                    <button-add>
-                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M5.60841 16.4166C6.29175 15.6833 7.33342 15.7416 7.93342 16.5416L8.77508 17.6666C9.45008 18.5583 10.5417 18.5583 11.2167 17.6666L12.0584 16.5416C12.6584 15.7416 13.7001 15.6833 14.3834 16.4166C15.8667 18 17.0751 17.475 17.0751 15.2583V5.86663C17.0834 2.50829 16.3001 1.66663 13.1501 1.66663H6.85008C3.70008 1.66663 2.91675 2.50829 2.91675 5.86663V15.25C2.91675 17.475 4.13341 17.9916 5.60841 16.4166Z"
-                                                stroke="#4EAEEA" stroke-width="1.5" stroke-linecap="round"
-                                                stroke-linejoin="round" />
-                                            <path d="M6.66675 5.83337H13.3334" stroke="#4EAEEA" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M7.5 9.16663H12.5" stroke="#4EAEEA" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                        Tạo phiếu lương
-                                    </button-add>
-                                </div>
-
-                            </div>
-                        </div>
-                    </b-card>
+                    <SalaryReport></SalaryReport>
                 </div>
 
                 <div class="col-12 col-md-12 col-lg-6 mb-2 mt-5 wow animate__animated animate__zoomIn">
@@ -377,130 +295,8 @@
                         <div class="h3-title">Báo cáo tăng trưởng User</div>
                         <nuxt-link class="watch-more" to="/">Xem thêm</nuxt-link>
                     </div>
-                    <b-card style="min-width: 245px;" class="mb-2 hover-card">
-                        <div class="d-flex justify-content-between align-center">
-                            <div class="w-100 ">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <label class="chart-title">Tổng quan tình trạng hoạt động của User</label>
-                                    <div>
-                                        <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent
-                                            width="290px">
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field v-model="date" label="" class="month-picker"
-                                                    prepend-icon="mdi-calendar" readonly v-bind="attrs"
-                                                    v-on="on"></v-text-field>
-                                            </template>
-                                            <v-date-picker v-model="date" type="month" scrollable>
-                                                <v-spacer></v-spacer>
-                                                <v-btn text color="primary" @click="modal = false">
-                                                    Cancel
-                                                </v-btn>
-                                                <v-btn text color="primary" @click="$refs.dialog.save(date)">
-                                                    OK
-                                                </v-btn>
-                                            </v-date-picker>
-                                        </v-dialog>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="card-order">
-                                            <div class="span-title">SL User Phụ huynh</div>
-                                            <div class="mt-3">
-                                                <div class="text">86%</div>
-                                                <div class="text-center">
-                                                    <svg width="126" height="32" viewBox="0 0 126 32" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path opacity="0.1" fill-rule="evenodd" clip-rule="evenodd"
-                                                            d="M1.10571 21.6641C1.10571 21.6641 5.97398 20.9348 11.5089 22.6869C22.0361 26.0192 22.6366 19.9169 26.5402 16.9745C30.1115 14.2826 33.0692 15.925 37.0456 19.2171C39.9784 21.6451 44.2526 25.7208 48.6789 25.0647C52.7251 24.4649 55.5935 19.6847 61.2019 18.469C65.6469 17.5055 69.2592 20.1525 74.3776 19.2171C81.3212 17.9481 84.4228 10.4777 89.3854 10.4777C95.5103 10.4777 99.8226 4.15942 105.395 4.15942C110.934 4.15942 111.686 7.87471 117.745 10.4777C122.377 12.4677 124.606 10.4777 124.606 10.4777V31.8018H1.10571V21.6641Z"
-                                                            fill="url(#paint0_linear_40_2260)" />
-                                                        <path
-                                                            d="M1.10571 18.3521C1.10571 18.3521 5.97398 17.6333 11.5089 19.36C22.0361 22.6441 22.6366 16.6301 26.5402 13.7303C30.1115 11.0773 33.0692 12.696 37.0456 15.9404C39.9784 18.3333 44.2526 22.3501 48.6789 21.7034C52.7251 21.1123 55.5935 16.4013 61.2019 15.2032C65.6469 14.2536 69.2592 16.8623 74.3776 15.9404C81.3212 14.6899 84.4228 7.32754 89.3854 7.32754C95.5103 7.32754 99.8226 1.08569 105.395 1.08569C110.934 1.08569 111.228 4.76225 117.287 7.32754C121.919 9.28872 124.606 7.32754 124.606 7.32754"
-                                                            stroke="#FC4D32" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round" />
-                                                        <defs>
-                                                            <linearGradient id="paint0_linear_40_2260" x1="23.4254"
-                                                                y1="18.1853" x2="23.4254" y2="31.8018"
-                                                                gradientUnits="userSpaceOnUse">
-                                                                <stop stop-color="#FC4D32" />
-                                                                <stop offset="1" stop-color="white" stop-opacity="0.01" />
-                                                            </linearGradient>
-                                                        </defs>
-                                                    </svg>
-                                                    <svg width="126" height="32" viewBox="0 0 126 32" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path opacity="0.1" fill-rule="evenodd" clip-rule="evenodd"
-                                                            d="M1 21.5784C1 21.5784 5.86827 20.8491 11.4032 22.6012C21.9303 25.9335 22.5309 19.8312 26.4344 16.8888C30.0058 14.1969 32.9635 15.8393 36.9399 19.1314C39.8727 21.5594 44.1469 25.6351 48.5732 24.979C52.6194 24.3792 55.4877 19.599 61.0961 18.3833C65.5411 17.4198 69.1535 20.0668 74.2719 19.1314C81.2155 17.8624 84.3171 10.392 89.2797 10.392C95.4046 10.392 99.7169 4.07373 105.289 4.07373C110.828 4.07373 111.58 7.78902 117.639 10.392C122.271 12.382 124.5 10.392 124.5 10.392V31.7161H1V21.5784Z"
-                                                            fill="url(#paint0_linear_40_2276)" />
-                                                        <path
-                                                            d="M1 18.2664C1 18.2664 5.86827 17.5476 11.4032 19.2743C21.9303 22.5584 22.5309 16.5444 26.4344 13.6447C30.0058 10.9917 32.9635 12.6103 36.9399 15.8548C39.8727 18.2476 44.1469 22.2644 48.5732 21.6177C52.6194 21.0266 55.4877 16.3156 61.0961 15.1175C65.5411 14.1679 69.1535 16.7766 74.2719 15.8548C81.2155 14.6042 84.3171 7.24185 89.2797 7.24185C95.4046 7.24185 99.7169 1 105.289 1C110.828 1 111.122 4.67655 117.182 7.24185C121.814 9.20303 124.5 7.24185 124.5 7.24185"
-                                                            stroke="#0056B1" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round" />
-                                                        <defs>
-                                                            <linearGradient id="paint0_linear_40_2276" x1="23.3197"
-                                                                y1="18.0996" x2="23.3197" y2="31.7161"
-                                                                gradientUnits="userSpaceOnUse">
-                                                                <stop stop-color="#0056B1" />
-                                                                <stop offset="1" stop-color="white" stop-opacity="0.01" />
-                                                            </linearGradient>
-                                                        </defs>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <div class="card-order">
-                                            <div class="span-title">SL User Giáo viên</div>
-                                            <div class="mt-3">
-                                                <div class="text">34%</div>
-                                                <div class="text-center">
-                                                    <svg width="126" height="32" viewBox="0 0 126 32" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path opacity="0.1" fill-rule="evenodd" clip-rule="evenodd"
-                                                            d="M1.10571 21.6641C1.10571 21.6641 5.97398 20.9348 11.5089 22.6869C22.0361 26.0192 22.6366 19.9169 26.5402 16.9745C30.1115 14.2826 33.0692 15.925 37.0456 19.2171C39.9784 21.6451 44.2526 25.7208 48.6789 25.0647C52.7251 24.4649 55.5935 19.6847 61.2019 18.469C65.6469 17.5055 69.2592 20.1525 74.3776 19.2171C81.3212 17.9481 84.4228 10.4777 89.3854 10.4777C95.5103 10.4777 99.8226 4.15942 105.395 4.15942C110.934 4.15942 111.686 7.87471 117.745 10.4777C122.377 12.4677 124.606 10.4777 124.606 10.4777V31.8018H1.10571V21.6641Z"
-                                                            fill="url(#paint0_linear_40_2260)" />
-                                                        <path
-                                                            d="M1.10571 18.3521C1.10571 18.3521 5.97398 17.6333 11.5089 19.36C22.0361 22.6441 22.6366 16.6301 26.5402 13.7303C30.1115 11.0773 33.0692 12.696 37.0456 15.9404C39.9784 18.3333 44.2526 22.3501 48.6789 21.7034C52.7251 21.1123 55.5935 16.4013 61.2019 15.2032C65.6469 14.2536 69.2592 16.8623 74.3776 15.9404C81.3212 14.6899 84.4228 7.32754 89.3854 7.32754C95.5103 7.32754 99.8226 1.08569 105.395 1.08569C110.934 1.08569 111.228 4.76225 117.287 7.32754C121.919 9.28872 124.606 7.32754 124.606 7.32754"
-                                                            stroke="#FC4D32" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round" />
-                                                        <defs>
-                                                            <linearGradient id="paint0_linear_40_2260" x1="23.4254"
-                                                                y1="18.1853" x2="23.4254" y2="31.8018"
-                                                                gradientUnits="userSpaceOnUse">
-                                                                <stop stop-color="#FC4D32" />
-                                                                <stop offset="1" stop-color="white" stop-opacity="0.01" />
-                                                            </linearGradient>
-                                                        </defs>
-                                                    </svg>
-                                                    <svg width="126" height="32" viewBox="0 0 126 32" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path opacity="0.1" fill-rule="evenodd" clip-rule="evenodd"
-                                                            d="M1 21.5784C1 21.5784 5.86827 20.8491 11.4032 22.6012C21.9303 25.9335 22.5309 19.8312 26.4344 16.8888C30.0058 14.1969 32.9635 15.8393 36.9399 19.1314C39.8727 21.5594 44.1469 25.6351 48.5732 24.979C52.6194 24.3792 55.4877 19.599 61.0961 18.3833C65.5411 17.4198 69.1535 20.0668 74.2719 19.1314C81.2155 17.8624 84.3171 10.392 89.2797 10.392C95.4046 10.392 99.7169 4.07373 105.289 4.07373C110.828 4.07373 111.58 7.78902 117.639 10.392C122.271 12.382 124.5 10.392 124.5 10.392V31.7161H1V21.5784Z"
-                                                            fill="url(#paint0_linear_40_2276)" />
-                                                        <path
-                                                            d="M1 18.2664C1 18.2664 5.86827 17.5476 11.4032 19.2743C21.9303 22.5584 22.5309 16.5444 26.4344 13.6447C30.0058 10.9917 32.9635 12.6103 36.9399 15.8548C39.8727 18.2476 44.1469 22.2644 48.5732 21.6177C52.6194 21.0266 55.4877 16.3156 61.0961 15.1175C65.5411 14.1679 69.1535 16.7766 74.2719 15.8548C81.2155 14.6042 84.3171 7.24185 89.2797 7.24185C95.4046 7.24185 99.7169 1 105.289 1C110.828 1 111.122 4.67655 117.182 7.24185C121.814 9.20303 124.5 7.24185 124.5 7.24185"
-                                                            stroke="#0056B1" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round" />
-                                                        <defs>
-                                                            <linearGradient id="paint0_linear_40_2276" x1="23.3197"
-                                                                y1="18.0996" x2="23.3197" y2="31.7161"
-                                                                gradientUnits="userSpaceOnUse">
-                                                                <stop stop-color="#0056B1" />
-                                                                <stop offset="1" stop-color="white" stop-opacity="0.01" />
-                                                            </linearGradient>
-                                                        </defs>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </b-card>
+                    <user-report></user-report>
                 </div>
 
                 <div class="col-12 col-md-12 col-lg-6 mb-2 mt-5 wow animate__animated animate__zoomIn">
@@ -643,10 +439,12 @@ import Swal from 'sweetalert2'
 import toastr from 'toastr';
 import SalesReport from '~/components/Report/SalesReport.vue';
 import CustomerReport from '~/components/Report/CustomerReport.vue'
+import SalaryReport from '~/components/Report/SalaryReport.vue'
+import UserReport from '~/components/Report/UserReport.vue'
 
 export default {
     layout: 'admin',
-    components: { BarChart, ButtonAdd, SalesReport, CustomerReport },
+    components: { BarChart, ButtonAdd, SalesReport, CustomerReport, SalaryReport, UserReport },
     data() {
         return {
             title: {
