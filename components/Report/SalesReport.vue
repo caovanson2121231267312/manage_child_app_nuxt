@@ -9,11 +9,23 @@
 </template>
 
 <script>
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 import BarChart from '../Chart/BarChart.vue'
+
 export default {
     name: 'SalesReport',
     components: {
         BarChart
+    },
+    data() {
+        return {
+            data: null,
+            date: new Date().toISOString().substr(0, 7),
+            menu: false,
+            modal: false,
+        }
     },
 }
 </script>

@@ -30,6 +30,10 @@
 </template>
 
 <script>
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
+
 export default {
     data() {
         return {
@@ -37,43 +41,80 @@ export default {
             date: new Date().toISOString().substr(0, 7),
             menu: false,
             modal: false,
+            data: null,
         }
     },
     components: {},
     computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        getRandomColor() {
+            // Implement logic to generate a random color
+            return `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+        },
+        async load_data() {
+            await api.get('bao-cao/tong-quan-doanh-thu?type=0', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data
+                const datax = res?.data?.data
+
+                console.log(datax[0].list)
+
+                const transformedData = {
+                    labels: datax[0].list.map(x => (x.created)),
+                    datasets: datax.map(category => ({
+                        label: category.name,
+                        data: category.list.map(item => item.tong_tien),
+                        fill: false,
+                        borderColor: this.getRandomColor(),
+                    })),
+                };
+
+                console.log(transformedData)
+
+                const ctx = document.getElementById('myChart');
+
+                const data = {
+                    labels: [1, 2, 3, 4, 5, 6, 7],
+                    datasets: [{
+                        label: 'Bảo mẫu Pro',
+                        data: [65, 99, 80, 181, 56, 55, 40],
+                        fill: false,
+                        borderColor: 'rgb(75, 192, 192)',
+                    }, {
+                        // type: 'line',
+                        label: 'Gia sư Pro',
+                        data: [165, 259, 30, 41, 36, 155, 240],
+                        borderColor: 'rgb(255, 99, 132)',
+                        fill: false,
+                        // backgroundColor: 'rgba(255, 99, 132, 0.2)'
+                    }, {
+                        // type: 'line',
+                        label: 'Giáo dục sớm',
+                        data: [85, 159, 36, 71, 236, 255, 140],
+                        fill: false,
+                        borderColor: 'rgb(54, 162, 235)'
+                    }]
+                };
+
+                const config = {
+                    type: 'line',
+                    data: transformedData,
+                };
+
+                new Chart(ctx, config);
+            })
+        },
     },
     mounted() {
-        const ctx = document.getElementById('myChart');
-
-        const data = {
-            labels: [1, 2, 3, 4, 5, 6, 7],
-            datasets: [{
-                label: 'Bảo mẫu Pro',
-                data: [65, 99, 80, 181, 56, 55, 40],
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-            }, {
-                // type: 'line',
-                label: 'Gia sư Pro',
-                data: [165, 259, 30, 41, 36, 155, 240],
-                borderColor: 'rgb(255, 99, 132)',
-                fill: false,
-                // backgroundColor: 'rgba(255, 99, 132, 0.2)'
-            }, {
-                // type: 'line',
-                label: 'Giáo dục sớm',
-                data: [85, 159, 36, 71, 236, 255, 140],
-                fill: false,
-                borderColor: 'rgb(54, 162, 235)'
-            }]
-        };
-
-        const config = {
-            type: 'line',
-            data: data,
-        };
-
-        new Chart(ctx, config);
+        this.load_data()
     }
 }
 </script>
