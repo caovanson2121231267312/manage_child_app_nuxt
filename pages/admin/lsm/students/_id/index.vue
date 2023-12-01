@@ -21,7 +21,7 @@
                                     fill="#0056B1" />
                             </svg>
                         </span>
-                        {{ data?.tieu_de ?? 'Loading...' }}
+                        {{ data_service?.dichVu?.ten_dich_vu ?? 'Loading...' }}
                     </title-header>
 
 
@@ -168,11 +168,13 @@ export default {
             coBan: [],
             nangCao: [],
             data: null,
+            data_service: null,
             file: null,
             image: null,
             bat_chuong_trinh: true,
             tieu_de: null,
             file: null,
+
         };
     },
     setup() {
@@ -242,11 +244,18 @@ export default {
             this.$router.push('/admin/lsm/teacher-training/' + this.id + '/create_course')
         },
         async load_data() {
-            await api.get(`chuong-trinh-hoc/danh-sach?page=1&limit=&sort=0&dich_vu_id=` + this.id, {
+            await api.get(`chuong-trinh-hoc/danh-sach?page=1&limit=&sort=1&dich_vu_id=` + this.id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 this.data = res?.data?.data
+            })
+
+            await api.get(`dich-vu/chi-tiet?id=` + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.data_service = res?.data?.data
             })
         },
         async send_data(event) {

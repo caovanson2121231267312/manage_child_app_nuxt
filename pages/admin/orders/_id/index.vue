@@ -534,6 +534,9 @@ export default {
             phu_phi_li_do: null,
             phu_phi_tien: null,
             xac_nhan_thanh_toan: false,
+            per_page: 0,
+            current_page: 1,
+            total: 0,
         };
     },
     components: {

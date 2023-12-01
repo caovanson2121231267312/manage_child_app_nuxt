@@ -74,6 +74,12 @@
                     </table>
                 </div>
 
+                <div class="d-flex justify-content-center mt-4">
+                    <b-pagination v-model="current_page" :total-rows="total" :per-page="per_page" first-text="First"
+                        prev-text="Prev" next-text="Next" last-text="Last"></b-pagination>
+
+                </div>
+
 
             </b-col>
         </b-row>
@@ -92,7 +98,7 @@ import SalesReport from '~/components/Report/SalesReport.vue';
 
 export default {
     layout: 'admin',
-    components: {SalesReport},
+    components: { SalesReport },
     data() {
         return {
             title: {
@@ -108,6 +114,9 @@ export default {
                 { value: 1, text: 'Giáo viên' },
             ],
             data: null,
+            per_page: 0,
+            current_page: 1,
+            total: 0,
         }
     },
     computed: {
@@ -118,19 +127,27 @@ export default {
     },
     methods: {
         async load_data() {
-            await api.get('chi-luong/danh-sach?tuKhoa=&dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&page=1&limit=15&sort=1&thang=', {
+            await api.get(`chi-luong/danh-sach?tuKhoa=&dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&page=${this.current_page}&limit=8&sort=1&thang=`, {
                 // await api.get('chi-luong/danh-sach?tuKhoa=&dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&page=1&limit=&sort=1&thang=' + (this.month ?? ''), {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 console.log(res)
                 this.data = res?.data?.data
+                this.per_page = res?.data?.per_page ?? 0
+                this.current_page = res?.data?.current_page ?? 0
+                this.total = res?.data?.total
             })
         },
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title)
         this.load_data()
+    },
+    watch: {
+        current_page() {
+            this.load_data()
+        }
     }
 }
 </script>
