@@ -137,6 +137,7 @@ export default {
             month: 1,
             menu: false,
             modal: false,
+            month: 1,
             selected: 0,
             options: [
                 { value: 0, text: 'Tất cả' },
@@ -152,7 +153,7 @@ export default {
     },
     methods: {
         async load_data() {
-            await api.get('bao-cao/tong-quan-user?thang=11/2023', {
+            await api.get('bao-cao/tong-quan-user?thang=' + (this.month ?? ''), {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -167,14 +168,14 @@ export default {
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title)
-        this.month = this.date.split("-")[1];
+        this.month = this.date.split("-")[1] + '/' + this.date.split("-")[0];
         this.load_data()
     },
     watch: {
         date() {
             console.log(this.date)
             const dateArray = this.date.split("-");
-            this.month = dateArray[1];
+            this.month = dateArray[1] + '/' + dateArray[0];
             this.load_data();
         }
     }

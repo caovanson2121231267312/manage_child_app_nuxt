@@ -117,14 +117,15 @@ export default {
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title)
-        this.month = this.date.split("-")[1];
+        this.month = this.date.split("-")[1] + '/' + this.date.split("-")[0];
         this.load_data()
     },
     watch: {
         date() {
             console.log(this.date)
             const dateArray = this.date.split("-");
-            this.month = dateArray[1];
+            console.log(dateArray)
+            this.month = dateArray[1] + '/' + dateArray[0];
             this.load_data();
         }
     }

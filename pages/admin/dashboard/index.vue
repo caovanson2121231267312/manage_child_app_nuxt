@@ -20,7 +20,7 @@
                         <div class="d-flex justify-content-between align-center">
                             <div>
                                 <div class="alanysis-title mb-1">Tổng doanh thu</div>
-                                <h3 class="wh3-text">{{ formatCurrency(data?.tong_tien) }}</h3>
+                                <h3 class="wh3-text">{{ formatCurrency(data?.tongDoanhThu?.tong) }}</h3>
                                 <div>
                                     <span class="">
                                         <svg width="26" height="18" viewBox="0 0 26 18" fill="none"
@@ -31,7 +31,7 @@
                                                 fill="#0056B1" />
                                         </svg>
                                     </span>
-                                    <span>+14%</span>
+                                    <span>+{{ data?.tongDoanhThu?.tang_truong }}%</span>
                                 </div>
                             </div>
                             <div class="position-relative">
@@ -42,7 +42,7 @@
                                         d="M54.4454 4.64392C60.9128 6.5573 66.7914 10.0749 71.5346 14.8698C76.2778 19.6646 79.7315 25.5809 81.5747 32.0687C83.418 38.5564 83.5908 45.4049 82.0772 51.9773C80.5635 58.5498 77.4126 64.6328 72.9173 69.6607C68.422 74.6887 62.7284 78.4984 56.3657 80.7356C50.0031 82.9727 43.178 83.5647 36.5252 82.4565C29.8724 81.3483 23.6078 78.5759 18.3139 74.3971C13.02 70.2182 8.86874 64.7686 6.24603 58.5549"
                                         stroke="#0056B1" stroke-width="6" stroke-linecap="round" />
                                 </svg>
-                                <span class="rate">+74 %</span>
+                                <span class="rate">+{{ data?.tongDoanhThu?.thuc_te }} %</span>
                             </div>
                         </div>
                     </b-card>
@@ -53,7 +53,7 @@
                         <div class="d-flex justify-content-between align-center">
                             <div>
                                 <div class="alanysis-title mb-1">Lợi nhuận thực tế</div>
-                                <h3 class="wh3-text">{{ formatCurrency(data?.tong_tien_thuc_te) }}</h3>
+                                <h3 class="wh3-text">{{ formatCurrency(data?.loiNhuan?.tong) }}</h3>
                                 <div>
                                     <span class="">
                                         <svg width="26" height="18" viewBox="0 0 26 18" fill="none"
@@ -64,7 +64,7 @@
                                                 fill="#FC4D32" />
                                         </svg>
                                     </span>
-                                    <span>+14%</span>
+                                    <span>+{{ data?.loiNhuan?.tang_truong }}%</span>
                                 </div>
                             </div>
                             <div class="position-relative">
@@ -75,7 +75,7 @@
                                         d="M54.4454 4.64392C60.9128 6.5573 66.7914 10.0749 71.5346 14.8698C76.2777 19.6646 79.7315 25.5809 81.5747 32.0687C83.4179 38.5564 83.5908 45.4049 82.0771 51.9773C80.5635 58.5498 77.4126 64.6328 72.9173 69.6607C68.422 74.6887 62.7283 78.4984 56.3657 80.7356C50.0031 82.9727 43.178 83.5647 36.5252 82.4565C29.8724 81.3483 23.6078 78.5759 18.3139 74.3971C13.02 70.2182 8.86873 64.7686 6.24602 58.5549"
                                         stroke="#FC4D32" stroke-width="6" stroke-linecap="round" />
                                 </svg>
-                                <span class="rate">+74 %</span>
+                                <span class="rate">+{{ data?.loiNhuan?.thuc_te }} %</span>
                             </div>
                         </div>
                     </b-card>
@@ -86,7 +86,7 @@
                         <div class="d-flex justify-content-between align-center">
                             <div>
                                 <div class="alanysis-title mb-1">Số đơn</div>
-                                <h3 class="wh3-text">{{ data?.so_don }}</h3>
+                                <h3 class="wh3-text">{{ data?.soDon?.tong }}</h3>
                                 <div>
                                     <span class="">
                                         <svg width="26" height="18" viewBox="0 0 26 18" fill="none"
@@ -97,7 +97,7 @@
                                                 fill="#FFB761" />
                                         </svg>
                                     </span>
-                                    <span>+14%</span>
+                                    <span>+{{ data?.soDon?.tang_truong }}%</span>
                                 </div>
                             </div>
                             <div class="position-relative">
@@ -108,7 +108,7 @@
                                         d="M54.4454 4.64392C60.9128 6.5573 66.7914 10.0749 71.5346 14.8698C76.2778 19.6646 79.7315 25.5809 81.5747 32.0687C83.418 38.5564 83.5908 45.4049 82.0772 51.9773C80.5635 58.5498 77.4126 64.6328 72.9173 69.6607C68.422 74.6887 62.7284 78.4984 56.3657 80.7356C50.0031 82.9727 43.178 83.5647 36.5252 82.4565C29.8724 81.3483 23.6078 78.5759 18.3139 74.3971C13.02 70.2182 8.86874 64.7686 6.24603 58.5549"
                                         stroke="#FFB761" stroke-width="6" stroke-linecap="round" />
                                 </svg>
-                                <span class="rate">+74 %</span>
+                                <span class="rate">+{{ data?.soDon?.thuc_te }} %</span>
                             </div>
                         </div>
                     </b-card>
@@ -119,7 +119,7 @@
                         <div class="d-flex justify-content-between align-center">
                             <div>
                                 <div class="alanysis-title mb-1">Số khách hàng</div>
-                                <h3 class="wh3-text">{{ data?.so_khach }}</h3>
+                                <h3 class="wh3-text">{{ data?.soKhachHang?.tong }}</h3>
                                 <div>
                                     <span class="">
                                         <svg width="26" height="18" viewBox="0 0 26 18" fill="none"
@@ -130,7 +130,7 @@
                                                 fill="#4EAEEA" />
                                         </svg>
                                     </span>
-                                    <span>+14%</span>
+                                    <span>+{{ data?.soKhachHang?.tang_truong }}%</span>
                                 </div>
                             </div>
                             <div class="position-relative">
@@ -141,7 +141,7 @@
                                         d="M54.4454 4.64392C60.9128 6.5573 66.7914 10.0749 71.5346 14.8698C76.2778 19.6646 79.7315 25.5809 81.5747 32.0687C83.418 38.5564 83.5908 45.4049 82.0772 51.9773C80.5635 58.5498 77.4126 64.6328 72.9173 69.6607C68.422 74.6887 62.7284 78.4984 56.3657 80.7356C50.0031 82.9727 43.178 83.5647 36.5252 82.4565C29.8724 81.3483 23.6078 78.5759 18.3139 74.3971C13.02 70.2182 8.86874 64.7686 6.24603 58.5549"
                                         stroke="#4EAEEA" stroke-width="6" stroke-linecap="round" />
                                 </svg>
-                                <span class="rate">+74 %</span>
+                                <span class="rate">+{{ data?.soKhachHang?.thuc_te }} %</span>
                             </div>
                         </div>
                     </b-card>
@@ -181,113 +181,9 @@
                 <div class="col-12 col-md-12 col-lg-6 mb-2 mt-5 wow animate__animated animate__zoomIn">
                     <div class="d-flex justify-content-between align-center mb-3">
                         <div class="h3-title">Báo cáo tình trạng đơn dịch vụ</div>
-                        <nuxt-link class="watch-more" to="/">Xem thêm</nuxt-link>
+                        <nuxt-link class="watch-more" to="/admin/orders">Xem thêm</nuxt-link>
                     </div>
-                    <b-card style="min-width: 245px;" class="mb-2 hover-card">
-                        <div class="d-flex justify-content-between align-center">
-                            <div class="w-100 ">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <label class="chart-title">Tổng quan tình trạng đơn</label>
-                                    <div>
-                                        <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent
-                                            width="290px">
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field v-model="date" label="" class="month-picker"
-                                                    prepend-icon="mdi-calendar" readonly v-bind="attrs"
-                                                    v-on="on"></v-text-field>
-                                            </template>
-                                            <v-date-picker v-model="date" type="month" scrollable>
-                                                <v-spacer></v-spacer>
-                                                <v-btn text color="primary" @click="modal = false">
-                                                    Cancel
-                                                </v-btn>
-                                                <v-btn text color="primary" @click="$refs.dialog.save(date)">
-                                                    OK
-                                                </v-btn>
-                                            </v-date-picker>
-                                        </v-dialog>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="card-order">
-                                            <div class="span-title">Số ca chạy theo dự kiến </div>
-                                            <div class="mt-2 d-flex justify-content-between align-items-center">
-                                                <div class="text text-c-danger">100</div>
-                                                <div class="text-rate">
-                                                    <svg width="26" height="18" viewBox="0 0 26 18" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <circle cx="9.28687" cy="9" r="9" fill="#FC4D32"
-                                                            fill-opacity="0.1" />
-                                                        <path
-                                                            d="M13.2296 6.85537C13.1723 6.71488 13.0577 6.59917 12.9185 6.54132C12.853 6.51653 12.7793 6.5 12.7056 6.5H11.183C10.8637 6.5 10.61 6.7562 10.61 7.07851C10.61 7.40083 10.8637 7.65703 11.183 7.65703H11.3304L9.60306 9.40083L8.76806 8.14463C8.66983 8.00413 8.52248 7.90496 8.35056 7.88843C8.17047 7.8719 8.01493 7.92975 7.89214 8.05372L5.45264 10.5165C5.23161 10.7397 5.23161 11.1033 5.45264 11.3347C5.56724 11.4504 5.70641 11.5 5.85376 11.5C6.00111 11.5 6.14847 11.4421 6.25489 11.3347L8.20321 9.36777L9.03821 10.624C9.13644 10.7645 9.2838 10.8636 9.45571 10.8802C9.6358 10.8967 9.79134 10.8388 9.91414 10.7149L12.1408 8.46694V8.6157C12.1408 8.93802 12.3946 9.19421 12.7138 9.19421C13.0331 9.19421 13.2869 8.93802 13.2869 8.6157V7.07025C13.2705 6.99587 13.2623 6.92149 13.2296 6.85537Z"
-                                                            fill="#FC4D32" />
-                                                    </svg>
-                                                    + 14%
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="card-order">
-                                            <div class="span-title">Số ca chưa "vào ca" theo dự kiến </div>
-                                            <div class="mt-2 d-flex justify-content-between align-items-center">
-                                                <div class="text text-c-warning">100</div>
-                                                <div class="text-rate">
-                                                    <svg width="27" height="18" viewBox="0 0 27 18" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <circle cx="9.75" cy="9" r="9" fill="#FFB761" fill-opacity="0.2" />
-                                                        <path
-                                                            d="M13.6927 6.85537C13.6354 6.71488 13.5208 6.59917 13.3816 6.54132C13.3161 6.51653 13.2425 6.5 13.1688 6.5H11.6461C11.3269 6.5 11.0731 6.7562 11.0731 7.07851C11.0731 7.40083 11.3269 7.65703 11.6461 7.65703H11.7935L10.0662 9.40083L9.2312 8.14463C9.13296 8.00413 8.98561 7.90496 8.8137 7.88843C8.6336 7.8719 8.47806 7.92975 8.35527 8.05372L5.91577 10.5165C5.69474 10.7397 5.69474 11.1033 5.91577 11.3347C6.03038 11.4504 6.16954 11.5 6.3169 11.5C6.46425 11.5 6.6116 11.4421 6.71802 11.3347L8.66635 9.36777L9.50134 10.624C9.59958 10.7645 9.74693 10.8636 9.91884 10.8802C10.0989 10.8967 10.2545 10.8388 10.3773 10.7149L12.6039 8.46694V8.6157C12.6039 8.93802 12.8577 9.19421 13.177 9.19421C13.4962 9.19421 13.75 8.93802 13.75 8.6157V7.07025C13.7336 6.99587 13.7254 6.92149 13.6927 6.85537Z"
-                                                            fill="#FFB761" />
-                                                    </svg>
-                                                    + 14%
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="card-order">
-                                            <div class="span-title">Số ca đang chạy (đã ấn "vào ca")</div>
-                                            <div class="mt-2 d-flex justify-content-between align-items-center">
-                                                <div class="text text-c-primary">10</div>
-                                                <div class="text-rate">
-                                                    <svg width="26" height="18" viewBox="0 0 26 18" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <circle cx="9.28687" cy="9" r="9" fill="#0056B1"
-                                                            fill-opacity="0.15" />
-                                                        <path
-                                                            d="M13.2296 6.85537C13.1723 6.71488 13.0577 6.59917 12.9185 6.54132C12.853 6.51653 12.7793 6.5 12.7056 6.5H11.183C10.8637 6.5 10.61 6.7562 10.61 7.07851C10.61 7.40083 10.8637 7.65703 11.183 7.65703H11.3304L9.60306 9.40083L8.76806 8.14463C8.66983 8.00413 8.52248 7.90496 8.35056 7.88843C8.17047 7.8719 8.01493 7.92975 7.89214 8.05372L5.45264 10.5165C5.23161 10.7397 5.23161 11.1033 5.45264 11.3347C5.56724 11.4504 5.70641 11.5 5.85376 11.5C6.00111 11.5 6.14847 11.4421 6.25489 11.3347L8.20321 9.36777L9.03821 10.624C9.13644 10.7645 9.2838 10.8636 9.45571 10.8802C9.6358 10.8967 9.79134 10.8388 9.91414 10.7149L12.1408 8.46694V8.6157C12.1408 8.93802 12.3946 9.19421 12.7138 9.19421C13.0331 9.19421 13.2869 8.93802 13.2869 8.6157V7.07025C13.2705 6.99587 13.2623 6.92149 13.2296 6.85537Z"
-                                                            fill="#0056B1" />
-                                                    </svg>
-                                                    + 14%
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="card-order">
-                                            <div class="span-title">Số ca hoàn thành (đã ấn "hoàn thành")</div>
-                                            <div class="mt-2 d-flex justify-content-between align-items-center">
-                                                <div class="text text-c-success">300</div>
-                                                <div class="text-rate">
-                                                    <svg width="27" height="18" viewBox="0 0 27 18" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <circle cx="9.75" cy="9" r="9" fill="#00C092" fill-opacity="0.2" />
-                                                        <path
-                                                            d="M13.6927 6.85537C13.6354 6.71488 13.5208 6.59917 13.3816 6.54132C13.3161 6.51653 13.2425 6.5 13.1688 6.5H11.6461C11.3269 6.5 11.0731 6.7562 11.0731 7.07851C11.0731 7.40083 11.3269 7.65703 11.6461 7.65703H11.7935L10.0662 9.40083L9.2312 8.14463C9.13296 8.00413 8.98561 7.90496 8.8137 7.88843C8.6336 7.8719 8.47806 7.92975 8.35527 8.05372L5.91577 10.5165C5.69474 10.7397 5.69474 11.1033 5.91577 11.3347C6.03038 11.4504 6.16954 11.5 6.3169 11.5C6.46425 11.5 6.6116 11.4421 6.71802 11.3347L8.66635 9.36777L9.50134 10.624C9.59958 10.7645 9.74693 10.8636 9.91884 10.8802C10.0989 10.8967 10.2545 10.8388 10.3773 10.7149L12.6039 8.46694V8.6157C12.6039 8.93802 12.8577 9.19421 13.177 9.19421C13.4962 9.19421 13.75 8.93802 13.75 8.6157V7.07025C13.7336 6.99587 13.7254 6.92149 13.6927 6.85537Z"
-                                                            fill="#00C092" />
-                                                    </svg>
-                                                    + 14%
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </b-card>
+                    <OrderReport></OrderReport>
                 </div>
 
                 <div class="col-12 col-md-12 col-lg-6 mb-2 mt-5 wow animate__animated animate__zoomIn">
@@ -441,10 +337,11 @@ import SalesReport from '~/components/Report/SalesReport.vue';
 import CustomerReport from '~/components/Report/CustomerReport.vue'
 import SalaryReport from '~/components/Report/SalaryReport.vue'
 import UserReport from '~/components/Report/UserReport.vue'
+import OrderReport from '~/components/Report/OrderReport.vue'
 
 export default {
     layout: 'admin',
-    components: { BarChart, ButtonAdd, SalesReport, CustomerReport, SalaryReport, UserReport },
+    components: { BarChart, ButtonAdd, SalesReport, CustomerReport, SalaryReport, UserReport, OrderReport },
     data() {
         return {
             title: {
@@ -475,7 +372,7 @@ export default {
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 console.log(res)
-                this.data = res?.data?.data?.[0]
+                this.data = res?.data?.data
             })
         },
         async updateFilter(filter) {
@@ -717,7 +614,7 @@ export default {
         color: #2D2D2D;
         text-align: center;
         font-family: SVN-Gilroy;
-        font-size: 19px;
+        font-size: 16px;
         font-style: normal;
         font-weight: 700;
         line-height: normal;
