@@ -40,7 +40,7 @@ export default {
         return {
             title: {
                 name: 'Lịch sử khóa học',
-                previous: '/admin/users/teachers/' + this.id ?? 0
+                previous: '/admin/users/teachers/' + (this.id ?? 0)
             },
             value: '',
             arrange: 1,
@@ -71,7 +71,7 @@ export default {
         }
     },
     mounted() {
-        this.title.previous = '/admin/teachers/' + this.id ?? 0
+        this.title.previous = '/admin/users/teachers/' + (this.id ?? 0)
         this.$store.dispatch('title/set_title', this.title);
     },
 }

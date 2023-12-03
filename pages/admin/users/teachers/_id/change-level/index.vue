@@ -6,100 +6,20 @@
                     <!-- <h3>Tùy chỉnh</h3> -->
                     <div class="w-100">
                         <div>
-                            <b-card  class="teacher-nav">
-                                <label class="block w-100 teachers cs m-0 p-0" for="check1">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="">
-                                            <span class="me-2 layout-img">
-                                                <img width="30" src="@/static/images/icons/l1.png" alt="">
-                                            </span>
-                                            <span>
-                                                Sinh viên
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <div class="web-icon center">
-                                                <input type="checkbox" id="check1" class="input-check">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-                            </b-card>
-
-                            <b-card  class="teacher-nav">
-                                <label class="block w-100 teachers cs m-0 p-0" for="check2">
+                            <b-card v-for="(item,n) in data" v-bind:key="n" class="teacher-nav">
+                                <label class="block w-100 teachers cs m-0 p-0" :for="'check-' + item?.id">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2 layout-img">
                                                 <img width="30" src="@/static/images/icons/l2.png" alt="">
                                             </span>
                                             <span>
-                                                Nhân viên
+                                                {{ item?.name }}
                                             </span>
                                         </div>
                                         <div>
                                             <div class="web-icon center">
-                                                <input type="checkbox" id="check2" class="input-check">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-                            </b-card>
-
-                            <b-card  class="teacher-nav">
-                                <label class="block w-100 teachers cs m-0 p-0" for="check3">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="">
-                                            <span class="me-2 layout-img">
-                                                <img width="30" src="@/static/images/icons/l3.png" alt="">
-                                            </span>
-                                            <span>
-                                                Giáo viên
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <div class="web-icon center">
-                                                <input type="checkbox" id="check3" class="input-check">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-                            </b-card>
-
-                            <b-card  class="teacher-nav">
-                                <label class="block w-100 teachers cs m-0 p-0" for="check4">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="">
-                                            <span class="me-2 layout-img">
-                                                <img width="30" src="@/static/images/icons/l4.png" alt="">
-                                            </span>
-                                            <span>
-                                                Giáo viên chuyên
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <div class="web-icon center">
-                                                <input type="checkbox" id="check4" class="input-check">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-                            </b-card>
-
-                            <b-card  class="teacher-nav">
-                                <label class="block w-100 teachers cs m-0 p-0" for="check5">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="">
-                                            <span class="me-2 layout-img">
-                                                <img width="30" src="@/static/images/icons/l5.png" alt="">
-                                            </span>
-                                            <span>
-                                                Chuyên gia
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <div class="web-icon center">
-                                                <input type="checkbox" id="check5" class="input-check">
+                                                <input type="checkbox" :checked="isDichVuChecked(item?.id)" @change="send_data(item?.id)" :id="'check-' + item?.id" class="input-check">
                                             </div>
                                         </div>
                                     </div>
@@ -135,10 +55,9 @@ export default {
                 name: 'Thay đổi trình độ',
                 previous: '/admin/users/teachers/' + this.id
             },
-            currentPassword: "",
-            newPassword: "",
-            confirmNewPassword: "",
-            showPassword: false,
+            data: null,
+            user: null,
+            selected: [0],
         };
     },
     validate({ params }) {
@@ -146,18 +65,55 @@ export default {
     },
     computed: {
         id() {
-            console.log(this.$route.params.id)
-            return this.$route.params.id
-        }
+            return this.$route.params.id;
+        },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key;
+        },
     },
     methods: {
         togglePassword() {
             this.showPassword = !this.showPassword;
         },
+        async load_data() {
+            await api.get('giao-vien/chi-tiet?id=' + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token,
+            }).then((res) => {
+                this.user = res?.data?.data?.user;
+                this.selected[0] = this.data?.trinh_do_name
+            });
+
+            await api.get('giao-vien/get-trinh-do', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token,
+            }).then((res) => {
+                this.data = res?.data?.data;
+            });
+        },
+        isDichVuChecked(dichVuId) {
+            return this.selected.includes(dichVuId);
+        },
+        async send_data(id_trinh_do) {
+            const formData = new FormData()
+            formData.append('trinh_do', id_trinh_do)
+            formData.append('id', this.id)
+
+            await api.post('giao-vien/cap-nhat-trinh-do', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$router.push('/admin/users/teachers/' + this.id);
+                }
+            })
+        },
     },
     mounted() {
         this.title.previous = '/admin/users/teachers/' + this.id
-
+        this.load_data()
         this.$store.dispatch('title/set_title', this.title);
     },
 }

@@ -23,7 +23,7 @@
                                         </span>
                                     </div>
                                     <div>
-                                        <nuxt-link :to="'/admin/users/teachers/' +data?.id+ '/edit'" v-b-tooltip.hover
+                                        <nuxt-link :to="'/admin/users/teachers/' + data?.id + '/edit'" v-b-tooltip.hover
                                             title="Sửa thông tin">
                                             <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -71,7 +71,7 @@
                                                 d="M5.19385 5.22911C5.19385 5.8381 5.41085 5.9571 5.76784 6.0831L6.47484 6.3281V4.32611H6.01984C5.56485 4.32611 5.19385 4.73211 5.19385 5.22911Z"
                                                 fill="#FFA02F" />
                                         </svg>
-                                        <span class="span-text">{{ data?.vi_dien_tu }} đ</span>
+                                        <span class="span-text">{{ formatCurrency(data?.vi_dien_tu) }} đ</span>
                                     </span>
                                 </div>
                             </div>
@@ -211,7 +211,8 @@
                         <div>
 
                             <b-card style="min-width: 245px;" class="teacher-nav">
-                                <nuxt-link class="block w-100 teachers " :to="'/admin/users/teachers/'+ data?.id +'/change-service'">
+                                <nuxt-link class="block w-100 teachers "
+                                    :to="'/admin/users/teachers/' + data?.id + '/change-service'">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2">
@@ -243,7 +244,8 @@
                             </b-card>
 
                             <b-card style="min-width: 245px;" class="teacher-nav">
-                                <nuxt-link class="block w-100 teachers " :to="'/admin/users/teachers/'+ data?.id +'/change-level'">
+                                <nuxt-link class="block w-100 teachers "
+                                    :to="'/admin/users/teachers/' + data?.id + '/change-level'">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2">
@@ -273,7 +275,8 @@
                             </b-card>
 
                             <b-card style="min-width: 245px;" class="teacher-nav">
-                                <nuxt-link class="block w-100 teachers " :to="'/admin/users/teachers/'+ data?.id +'/training-results'">
+                                <nuxt-link class="block w-100 teachers "
+                                    :to="'/admin/users/teachers/' + data?.id + '/training-results'">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2">
@@ -306,7 +309,8 @@
                             </b-card>
 
                             <b-card style="min-width: 245px;" class="teacher-nav">
-                                <nuxt-link class="block w-100 teachers " :to="'/admin/users/teachers/'+ data?.id +'/course-history'">
+                                <nuxt-link class="block w-100 teachers "
+                                    :to="'/admin/users/teachers/' + data?.id + '/course-history'">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2">
@@ -333,7 +337,8 @@
                             </b-card>
 
                             <b-card style="min-width: 245px;" class="teacher-nav">
-                                <nuxt-link class="block w-100 teachers " :to="'/admin/users/teachers/'+ data?.id +'/recharge'">
+                                <nuxt-link class="block w-100 teachers "
+                                    :to="'/admin/users/teachers/' + data?.id + '/recharge'">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
                                             <span class="me-2">
@@ -369,7 +374,8 @@
                                 </nuxt-link>
                             </b-card>
 
-                            <b-card style="min-width: 245px;" class="teacher-nav">
+                            <b-card @click="khoa()" v-if="data?.khoa_tai_khoan == 0" style="min-width: 245px;"
+                                class="teacher-nav">
                                 <nuxt-link class="block w-100 teachers " to="#">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
@@ -399,7 +405,7 @@
                                 </nuxt-link>
                             </b-card>
 
-                            <b-card style="min-width: 245px;" class="teacher-nav">
+                            <b-card @click="mo()" v-else style="min-width: 245px;" class="teacher-nav">
                                 <nuxt-link class="block w-100 teachers " to="#">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="">
@@ -483,6 +489,66 @@ export default {
                 // this.selected = user?.vai_tro
             })
         },
+        async khoa() {
+            const formData = new FormData();
+            formData.append('id', this.id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Khoá tài khoản này!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có khoá nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('giao-vien/khoa-tai-khoan', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            toastr.success(res?.data?.message);
+                            this.load_data()
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
+        },
+        async mo() {
+            const formData = new FormData();
+            formData.append('id', this.id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Kích hoạt tài khoản này!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có mở nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('giao-vien/kich-hoat-tai-khoan', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            toastr.success(res?.data?.message);
+                            this.load_data()
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
+        },
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
@@ -539,5 +605,4 @@ tr {
         font-weight: 400;
         line-height: normal;
     }
-}
-</style>
+}</style>

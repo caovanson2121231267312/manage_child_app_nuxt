@@ -4,10 +4,12 @@
             <v-col class="mt-0 pt-0" xs="12" sm="12" md="6" lg="6" xl="6">
                 <div class="edit-teacher">
                     <div class="box-img">
-                        <img src="@/static/images/teacher/Rectangle4006.png" alt="" />
+                        <img :src="data?.anh_nguoi_dung" alt="" />
                     </div>
                     <div class="my-5">
-                        <b class="teacher-name">Nguyễn Hoàng Anh Thư</b>
+                        <b class="teacher-name">
+                            {{ data?.hoten ?? 'Chưa cập nhật tên' }}
+                        </b>
                     </div>
 
                     <div class="d-flex w-100 justify-content-between">
@@ -93,7 +95,7 @@
                 </div>
 
                 <div class="mt-8">
-                    <button-save>Lưu thay đổi</button-save>
+                    <button-component>Lưu thay đổi</button-component>
                 </div>
             </v-col>
 
@@ -103,6 +105,9 @@
 
 <script>
 // import { defineComponent } from '@vue/composition-api'
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -112,15 +117,25 @@ export default {
                 name: 'Chỉnh sửa thông tin',
                 previous: '/admin/users/teachers/' + this.id
             },
+            chungNhan: null,
+            data: null,
         };
+    },
+    validate({ params }) {
+        return /^\d+$/.test(params.id);
     },
     validate({ params }) {
         return /^\d+$/.test(params.id);
     },
     computed: {
         id() {
+            console.log(this.$route.params.id)
             return this.$route.params.id
-        }
+        },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key;
+        },
     },
     methods: {
         async load_data() {

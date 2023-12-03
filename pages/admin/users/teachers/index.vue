@@ -34,7 +34,7 @@
                                         </span>
                                     </div>
                                     <h3 class="name">
-                                        {{ item?.hoten }}
+                                        {{ item?.hoten ?? 'Chưa cập nhật tên' }}
                                     </h3>
                                     <p class="w-p p-0 m-0 position">
                                         {{ item?.trinh_do }}
@@ -110,7 +110,7 @@ export default {
             })
         },
         async load_data() {
-            await api.get(`giao-vien/danh-sach?tuKhoa=&trinh_do=${this.selectedFilter}&page=${this.current_page}&limit=12&sort=1`, {
+            await api.get(`giao-vien/danh-sach?tuKhoa=&trinh_do=${this.selectedFilter}&page=${this.current_page}&limit=15&sort=1`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

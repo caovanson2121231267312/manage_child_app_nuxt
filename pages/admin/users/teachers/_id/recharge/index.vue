@@ -89,7 +89,7 @@
                             </svg>
                             Số tiền cần nạp (Đơn vị đồng)
                         </p>
-                        <input class="form-control input-text" placeholder="Nhập số tiền" />
+                        <input v-model="so_tien" type="number" class="form-control input-text" placeholder="Nhập số tiền" />
                     </div>
 
                     <div class="input">
@@ -101,12 +101,55 @@
                             </svg>
                             Số tiền cần nạp (Đơn vị đồng)
                         </p>
-                        <textarea class="form-control textarea" placeholder="Nhập ghi chú"></textarea>
+                        <textarea v-model="ghi_chu" class="form-control textarea" placeholder="Nhập ghi chú"></textarea>
                     </div>
 
                     <div class="d-flex w-100">
-                        <button class="btn btn-min">Trừ tiền</button>
-                        <button class="btn btn-plus">Nạp tiền</button>
+                        <button class="btn btn-min"  v-b-modal.my-modal-tru>Trừ tiền</button>
+                        <b-modal id="my-modal-tru" ref="my-modal-tru" hide-footer centered title="Trừ tiền">
+                            <template #default="{ hide }">
+                                <form id="form" >
+
+                                    <div class="">
+                                        <div>
+                                            <b-form-group>
+                                                <label>Loại trừ tiền:</label>
+                                                <b-form-select v-model="tru_tien_id" :options="tru_tien" aria-placeholder="Chọn"></b-form-select>
+                                            </b-form-group>
+                                        </div>
+
+                                    </div>
+                                    <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                        <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                        <button class=" btn-delete ms-1" type="button" @click="tru()">Xác nhận</button>
+                                    </div>
+                                </form>
+
+                            </template>
+                        </b-modal>
+
+                        <button class="btn btn-plus"  v-b-modal.my-modal-nap>Nạp tiền</button>
+                        <b-modal id="my-modal-nap" ref="my-modal-nap" hide-footer centered title="Nạp tiền">
+                            <template #default="{ hide }">
+                                <form id="form" >
+
+                                    <div class="">
+                                        <div>
+                                            <b-form-group>
+                                                <label>Loại nạp:</label>
+                                                <b-form-select v-model="nap_tien_id" :options="nap_tien" aria-placeholder="Chọn"></b-form-select>
+                                            </b-form-group>
+                                        </div>
+
+                                    </div>
+                                    <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                        <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                        <button class=" btn-delete ms-1" type="button" @click="nap()">Xác nhận</button>
+                                    </div>
+                                </form>
+
+                            </template>
+                        </b-modal>
                     </div>
                 </div>
 
@@ -117,6 +160,9 @@
 
 <script>
 // import { defineComponent } from '@vue/composition-api'
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -126,6 +172,12 @@ export default {
                 name: 'Nạp/ Trừ tiền',
                 previous: '/admin/users/teachers/' + this.id ?? 0
             },
+            tru_tien_id: null,
+            tru_tien: null,
+            nap_tien_id: null,
+            nap_tien: null,
+            so_tien: null,
+            ghi_chu: null,
         };
     },
     validate({ params }) {
@@ -135,103 +187,172 @@ export default {
         id() {
             console.log(this.$route.params.id)
             return this.$route.params.id
-        }
+        },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key;
+        },
     },
     methods: {
-        togglePassword() {
-            this.showPassword = !this.showPassword;
+        async load_role() {
+            await api.get('giao-vien/loai-giao-dich-tru-tien', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.tru_tien = res?.data?.data.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+                this.tru_tien_id = this.tru_tien[0].value
+            })
+
+            await api.get('giao-vien/loai-giao-dich-nap-tien', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.nap_tien = res?.data?.data.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+                this.nap_tien_id = this.nap_tien[0].value
+            })
         },
+        async nap(event) {
+            const formData = new FormData()
+            formData.append('id', this.id)
+            formData.append('so_tien', this.so_tien)
+            formData.append('ghi_chu', this.ghi_chu)
+            formData.append('type_id', this.nap_tien_id)
+
+            await api.post('giao-vien/nap-tien', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-nap'].hide()
+                    this.$router.push('/admin/users/teachers/' + this.id ?? 0);
+                }
+            })
+        },
+        async tru(event) {
+            const formData = new FormData()
+            formData.append('id', this.id)
+            formData.append('so_tien', this.so_tien)
+            formData.append('ghi_chu', this.ghi_chu)
+            formData.append('type_id', this.nap_tien_id)
+
+            await api.post('giao-vien/rut-tien', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-tru'].hide()
+                    this.$router.push('/admin/users/teachers/' + this.id ?? 0);
+                }
+            })
+        }
     },
     mounted() {
         this.title.previous = '/admin/users/teachers/' + this.id ?? 0
         this.$store.dispatch('title/set_title', this.title);
+        this.load_role()
     },
 }
 </script>
 
 <style lang="scss" scoped>
-
 .web-b {
-        color: #2d2d2d;
+    color: #2d2d2d;
+    font-family: SVN-Gilroy;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    span {
+        color: #0056b1;
         font-family: SVN-Gilroy;
         font-size: 18px;
         font-style: normal;
         font-weight: 500;
         line-height: normal;
-        span {
-            color: #0056b1;
-            font-family: SVN-Gilroy;
-            font-size: 18px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
-        }
     }
+}
 
-    .input-text {
-        border-radius: 10px;
-        border: 1px solid #e5e5e5;
-        background: #fff;
-        color: rgba(45, 45, 45, 0.6);
-        font-family: SVN-Gilroy;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        padding: 16px 18px;
-        width: 100%;
-    }
-    .textarea {
-        border-radius: 10px;
-        border: 1px solid #e5e5e5;
-        background: #fff;
-        width: 100%;
-        height: 94px;
-        padding: 16px 18px;
-        flex-shrink: 0;
-    }
-    .btn-min {
-        border-radius: 50px;
-        background: #fc4d32;
-        display: flex;
-        // width: 173px;
-        height: 48px;
-        padding: 10px;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        flex: 1;
-        flex-shrink: 0;
-        color: #fff;
-        text-align: center;
-        font-family: SVN-Gilroy;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 120%;
-        margin-right: 5px;
-    }
-    .btn-plus {
-        flex: 1;
-        border-radius: 50px;
-        background: #00c092;
-        display: flex;
-        // width: 173px;
-        height: 48px;
-        padding: 10px;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        flex-shrink: 0;
-        color: #fff;
-        text-align: center;
-        font-family: SVN-Gilroy;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 120%;
-        margin-left: 5px;
-    }
+.input-text {
+    border-radius: 10px;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    color: rgba(45, 45, 45, 0.6);
+    font-family: SVN-Gilroy;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding: 16px 18px;
+    width: 100%;
+}
+
+.textarea {
+    border-radius: 10px;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    width: 100%;
+    height: 94px;
+    padding: 16px 18px;
+    flex-shrink: 0;
+}
+
+.btn-min {
+    border-radius: 50px;
+    background: #fc4d32;
+    display: flex;
+    // width: 173px;
+    height: 48px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    flex-shrink: 0;
+    color: #fff;
+    text-align: center;
+    font-family: SVN-Gilroy;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%;
+    margin-right: 5px;
+}
+
+.btn-plus {
+    flex: 1;
+    border-radius: 50px;
+    background: #00c092;
+    display: flex;
+    // width: 173px;
+    height: 48px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    color: #fff;
+    text-align: center;
+    font-family: SVN-Gilroy;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%;
+    margin-left: 5px;
+}
+
 .card-vip-content {
     position: relative;
     z-index: 10;

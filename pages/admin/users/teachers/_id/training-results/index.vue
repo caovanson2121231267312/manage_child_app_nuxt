@@ -24,8 +24,8 @@
         </div>
 
         <v-row>
-            <v-col v-for="n in 12" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
-                <card-teacher-training :status="generateRandomNumber()"></card-teacher-training>
+            <v-col v-for="(item,n) in data" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
+                <card-teacher-training-users :teacher="id" :data="item" :status="item?.trang_thai?.name"></card-teacher-training-users>
             </v-col>
         </v-row>
     </div>
@@ -44,15 +44,11 @@ export default {
                 name: 'Kết quả đào tạo',
                 previous: '/admin/users/teachers/' + this.id ?? 0
             },
-            status: [
-                'pending',
-                'faild',
-                'success'
-            ],
-            currentPassword: "",
-            newPassword: "",
-            confirmNewPassword: "",
-            showPassword: false,
+            date: new Date().toISOString().substr(0, 7),
+            formattedDate: null,
+            menu: false,
+            modal: false,
+            data: [],
         };
     },
     validate({ params }) {
@@ -62,20 +58,42 @@ export default {
         id() {
             console.log(this.$route.params.id)
             return this.$route.params.id
+        },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
         }
     },
     methods: {
-        togglePassword() {
-            this.showPassword = !this.showPassword;
+        async load_data() {
+            await api.get(`giao-vien/danh-sach-ket-qua-dao-tao?page=1&limit=&sort=1&giao_vien_id=${this.id}&tuKhoa=`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.data = res?.data?.data
+            })
         },
         generateRandomNumber() {
             return this.status[Math.floor(Math.random() * 3)];
         }
     },
     mounted() {
+        const date1 = new Date(this.date);
+        const formattedDate = date1.toLocaleString('en-US', { month: 'numeric', year: 'numeric' });
+        this.formattedDate = formattedDate;
         this.title.previous = '/admin/users/teachers/' + (this.id ?? 0)
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
+    watch: {
+        date() {
+            const date1 = new Date(this.date);
+            const formattedDate = date1.toLocaleString('en-US', { month: 'numeric', year: 'numeric' });
+            this.formattedDate = formattedDate;
+            console.log(this.formattedDate)
+            this.load_data()
+        }
+    }
 }
 </script>
 
