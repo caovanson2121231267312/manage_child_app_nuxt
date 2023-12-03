@@ -30,9 +30,9 @@
                     </div>
                 </div>
 
-                <div class="mt-8">
+                <!-- <div class="mt-8">
                     <button-component>Lưu thay đổi</button-component>
-                </div>
+                </div> -->
 
             </v-col>
         </v-row>
@@ -82,7 +82,7 @@ export default {
                 Authorization: 'Bearer ' + this.token,
             }).then((res) => {
                 this.user = res?.data?.data?.user;
-                this.selected[0] = this.data?.trinh_do_name
+                this.selected[0] = res?.data?.data?.user?.trinh_do
             });
 
             await api.get('giao-vien/get-trinh-do', {

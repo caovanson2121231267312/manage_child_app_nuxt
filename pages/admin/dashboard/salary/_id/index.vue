@@ -89,20 +89,94 @@
                     </v-card>
                 </div>
 
+                <div class="w-100 mt-5" @click="change_page()">
+                    <button-add>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M5.60841 16.4166C6.29175 15.6833 7.33342 15.7416 7.93342 16.5416L8.77508 17.6666C9.45008 18.5583 10.5417 18.5583 11.2167 17.6666L12.0584 16.5416C12.6584 15.7416 13.7001 15.6833 14.3834 16.4166C15.8667 18 17.0751 17.475 17.0751 15.2583V5.86663C17.0834 2.50829 16.3001 1.66663 13.1501 1.66663H6.85008C3.70008 1.66663 2.91675 2.50829 2.91675 5.86663V15.25C2.91675 17.475 4.13341 17.9916 5.60841 16.4166Z"
+                                stroke="#4EAEEA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M6.66675 5.83337H13.3334" stroke="#4EAEEA" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M7.5 9.16663H12.5" stroke="#4EAEEA" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Tạo phiếu lương
+                    </button-add>
+                </div>
 
-                <div>
-                    <v-card>
+                <div class="mt-6">
+                    <title-header>Báo cáo lương theo ngày</title-header>
+                </div>
+
+                <div class="mt-4">
+                    <v-card class="mt-3" v-for="(item, n) in data?.luong" v-bind:key="n">
+                        <div class="card-header">
+                            <div class="d-flex">
+                                <div class="me-5">
+                                    <b class="me-1">Mã đơn:</b>
+                                    <span>{{ item?.ma_don_hang }}</span>
+                                </div>
+                                <div>
+                                    <b class="me-1">Ngày:</b>
+                                    <span class="text-primary">{{ item?.created }}</span>
+                                </div>
+                            </div>
+                        </div>
                         <v-card-text>
                             <div>
-                                <table>
-                                    <tr>
-                                        <td></td>
-                                    </tr>
+                                <table class="table table-borderless">
+                                    <thead></thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span class="me-2">
+                                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="5" cy="5" r="5" fill="#00C092" />
+                                                    </svg>
+                                                </span>
+                                                <b>Lương</b>
+                                            </td>
+                                            <td>{{ formatCurrency(item?.tong_tien) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="me-2">
+                                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="5" cy="5" r="5" fill="#FC4D32" />
+                                                    </svg>
+
+                                                </span>
+                                                <b>Phụ cấp/ngày</b>
+                                            </td>
+                                            <td>{{ formatCurrency(item?.phuCap) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="me-2">
+                                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="5" cy="5" r="5" fill="#4EAEEA" />
+                                                    </svg>
+
+                                                </span>
+                                                <b>Tổng lương theo ngày</b>
+                                            </td>
+                                            <td><b class="text-primary">
+                                                    {{ formatCurrency(item?.thanh_tien) }}
+                                                </b></td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </v-card-text>
                     </v-card>
                 </div>
+
+
+
+
             </v-col>
         </v-row>
 
@@ -143,6 +217,9 @@ export default {
         }
     },
     methods: {
+        change_page() {
+            this.$router.push('/admin/dashboard/salary/' + this.id + '/create');
+        },
         async load_data() {
             await api.get('chi-luong/chi-tiet?thang=11/2023&page=1&limit=&sort=&tuKhoa=&id=' + this.id, {
                 'Content-Type': 'multipart/form-data',

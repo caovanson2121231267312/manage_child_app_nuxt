@@ -2,7 +2,7 @@
     <div class="w-100 ">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <label class="chart-title">Tổng quan doanh thu</label>
-            <div>
+            <!-- <div>
                 <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field v-model="date" label="" class="month-picker" prepend-icon="mdi-calendar" readonly
@@ -18,12 +18,12 @@
                         </v-btn>
                     </v-date-picker>
                 </v-dialog>
-            </div>
+            </div> -->
         </div>
 
         <!-- <client-only> -->
-        <div class="w-100">
-            <canvas class="w-100 h-100" id="myChart"></canvas>
+        <div class="w-100 mt-4">
+            <canvas class="w-100 h-100 min-height" id="myChart"></canvas>
         </div>
         <!-- </client-only> -->
     </div>
@@ -122,6 +122,10 @@ export default {
 <style lang="scss" scoped>
 .month-picker {
     width: 94px;
+}
+
+.min-height {
+    min-height: 200px;
 }
 
 .chart-title {

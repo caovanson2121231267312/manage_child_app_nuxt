@@ -55,36 +55,36 @@
 
 
                 <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Thêm chương trình mới">
-                <!-- <template #modal-header="{ close }">
+                    <!-- <template #modal-header="{ close }">
                             <h5>Thông báo</h5>
                         </template> -->
-                <template #default="{ hide }">
-                    <form id="form" @submit="send_data">
+                    <template #default="{ hide }">
+                        <form id="form" @submit="send_data">
 
-                        <div class="my-4 pb-3">
-                            <div>
-                                <b-form-group>
-                                    <label>Ảnh:</label>
-                                    <b-form-file name="image" accept="image/*" v-model="file" ref="file-input"
-                                        id="file-large"></b-form-file>
-                                </b-form-group>
+                            <div class="my-4 pb-3">
+                                <div>
+                                    <b-form-group>
+                                        <label>Ảnh:</label>
+                                        <b-form-file name="image" accept="image/*" v-model="file" ref="file-input"
+                                            id="file-large"></b-form-file>
+                                    </b-form-group>
+                                </div>
+                                <div>
+                                    <b-form-group>
+                                        <label>Tên chương trình:</label>
+                                        <b-form-input name="tieu_de" v-model="name" placeholder="Nhập tên"></b-form-input>
+                                    </b-form-group>
+                                </div>
+
                             </div>
-                            <div>
-                                <b-form-group>
-                                    <label>Tên chương trình:</label>
-                                    <b-form-input name="tieu_de" v-model="name" placeholder="Nhập tên"></b-form-input>
-                                </b-form-group>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button class=" btn-delete ms-1" type="submit">Thêm</button>
                             </div>
+                        </form>
 
-                        </div>
-                        <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
-                            <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                            <button class=" btn-delete ms-1" type="submit">Thêm</button>
-                        </div>
-                    </form>
-
-                </template>
-            </b-modal>
+                    </template>
+                </b-modal>
 
             </div>
         </div>

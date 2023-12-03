@@ -31,7 +31,6 @@ export default {
         },
     },
     mounted() {
-        this.$store.dispatch('title/set_title', this.title);
 
         const editor = SUNEDITOR.create((document.getElementById(this.id_key) || this.id_key), {
             toolbarContainer: '#toolbar_container',

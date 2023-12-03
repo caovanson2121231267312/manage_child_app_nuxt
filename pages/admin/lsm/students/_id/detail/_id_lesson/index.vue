@@ -11,7 +11,7 @@
                                 fill="white" />
                         </svg>
                         <span class="span-h">
-                            {{ data?.dichVu ?? 'Loading...' }}
+                            Gán giáo cụ
                         </span>
                     </div>
 
@@ -37,168 +37,88 @@
                     <img v-else class="img-w" src="@/static/images/teacher-training/Rectangle4052.png" alt="">
                 </div>
 
-                <!--  -->
-                <!-- <div>
-                    <div class="mt-5">
-                        <title-header>Danh sách bài học</title-header>
+                <div class="mt-4">
+                    <div class="mb-2">
+                        <span class="span-h">
+                            Danh sách gói học
+                        </span>
                     </div>
-
-                    <div>
-                        <div v-for="(item, n) in lesson" v-bind:key="n"
-                            class="d-flex justify-content-between align-items-center card-lsm hover-card mt-4  wow animate__animated animate__zoomIn cp"
-                            @click="lesson_show(item?.id)">
-                            <div class="">
-                                <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <ellipse cx="12.2059" cy="12" rx="12.1029" ry="12" fill="#4EAEEA" />
-                                    <path
-                                        d="M10.7753 4.99796L6.3596 7.67751C4.94393 8.5366 4.94393 10.4593 6.3596 11.3184L10.7753 13.998C11.5675 14.4821 12.8731 14.4821 13.6653 13.998L18.059 11.3184C19.4674 10.4593 19.4674 8.54342 18.059 7.68433L13.6653 5.00478C12.8731 4.51387 11.5675 4.51387 10.7753 4.99796Z"
-                                        stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path
-                                        d="M7.53321 12.1909L7.52588 15.3886C7.52588 16.2546 8.24472 17.1818 9.12492 17.4546L11.4648 18.1773C11.8682 18.3 12.5357 18.3 12.9465 18.1773L15.2864 17.4546C16.1666 17.1818 16.8854 16.2546 16.8854 15.3886V12.225"
-                                        stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M19.1011 13.5001V9.40918" stroke="white" stroke-width="1.3"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <span class="lesson mt-2"> {{ item?.tieu_de }}</span>
+                    <div v-for="(item, n) in packages" v-bind:key="n">
+                        <b-card class="p-0 cp mb-3" v-b-toggle="'collapse-' + item?.id" variant="info">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>
+                                    {{ item?.name }}
+                                </span>
+                                <span class="mdi mdi-chevron-right"></span>
                             </div>
-                            <div>
-                                <svg width="6" height="10" viewBox="0 0 6 10" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L5 5L1 1" stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                </svg>
+                        </b-card>
+                        <b-collapse :id="'collapse-' + item?.id" class="mt-2 mb-3 ms-3">
+                            <b-card v-for="(i, j) in item?.baiHoc" v-bind:key="j" class="p-0 cp mb-3 bg-info text-light ">
+                                <nuxt-link :to="'/admin/lsm/students/' + id + '/detail/' + id_lesson + '/' + i?.id" class="d-flex justify-content-between align-items-center text-light">
+                                    <span>
+                                        {{ i?.tieu_de }}
+                                    </span>
+                                    <span class="mdi mdi-chevron-right"></span>
+                                </nuxt-link>
+                            </b-card>
+                            <div class="mb-5" @click="add_lesson(item?.id)">
+                                <button-add>
+                                    <span class="mdi mdi-plus"></span> Thêm bài học
+                                </button-add>
                             </div>
-                        </div>
-                    </div>
-
-                    <b-modal id="my-modal-show" ref="my-modal-show" hide-footer centered :title="data_lesson?.tieu_de">
-                        <template #default="{ hide }">
-                            <div>
-
-                                <div class="my-2">
-                                    <div>
-                                        <div>
-                                            <strong>
-                                                <span>Danh sách câu hỏi</span>
-                                            </strong>
-                                        </div>
-                                        <div class="my-3 w-100 " v-for="(item, n) in data_lesson?.cauHoi" v-bind:key="n">
-                                            <v-card>
-                                                <v-card-text>
-                                                    <div class="mt-0">
-                                                        <div>
-                                                            <strong>
-                                                                <b>
-                                                                    {{ item?.tieu_de }}
-                                                                </b>
-                                                            </strong>
-                                                        </div>
-                                                        <div class="mt-3">
-                                                            <p>
-                                                                <b>Giới thiệu bài học</b>
-                                                            </p>
-                                                            <p>
-                                                                {{ item?.gioi_thieu }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="mt-3">
-                                                            <p>
-                                                                <b>Video bài học</b>
-                                                            </p>
-                                                            <a :href="item?.link" target="_blank">
-                                                                {{ item?.link }}
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </v-card-text>
-                                            </v-card>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div>
-                                            <strong>
-                                                <span>Bài Test</span>
-                                            </strong>
-                                        </div>
-                                        <div class="my-3 w-100" v-for="(item, n) in data_lesson?.baiTest" v-bind:key="n">
-                                            <v-card>
-                                                <v-card-text>
-                                                    <div class="mt-0">
-                                                        <a :href="item?.link" target="_blank">
-                                                            {{ item?.link }}
-                                                        </a>
-                                                    </div>
-                                                </v-card-text>
-                                            </v-card>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
-                                    <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                                    <button class=" btn-delete ms-1" @click="delete_leson(data_lesson?.id)">Xóa bài</button>
-                                </div>
-                            </div>
-
-                        </template>
-                    </b-modal>
-
-                    <div class="my-7">
-                        <nuxt-link class="d-block"
-                            :to="'/admin/lsm/teacher-training/' + id + '/detail/' + id_lesson + '/create'">
-                            <button-add>
-                                <span class="mdi mdi-plus"></span> Thêm bài học
-                            </button-add>
-                        </nuxt-link>
+                        </b-collapse>
                     </div>
                 </div>
 
-                <hr />
+                <div class="mt-3">
+                    <button-add v-b-modal.my-modal>
+                        <span class="mdi mdi-plus"></span> Thêm gói học
+                    </button-add>
+                </div>
 
-                <div>
-                    <div class="mt-5">
-                        <title-header>Danh sách giáo viên được gán</title-header>
-                    </div>
-
-                    <div class="card-teacher">
-                        <div class="card-item mt-3  wow animate__animated animate__pulse" v-for="(item, n) in teachers"
-                            v-bind:key="n">
-                            <div class="d-flex">
-                                <div class="box-img me-2">
-                                    <img :src="item?.anh_nguoi_dung" alt="">
-                                </div>
+                <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Thêm gói học">
+                    <template #default="{ hide }">
+                        <form id="form" @submit="send_data">
+                            <div class="">
                                 <div>
-                                    <div class="user-id mb-2">
-                                        <span class="blade-id"># {{ item?.id }}</span>
-                                    </div>
-                                    <div class="user-name">
-                                        {{ item?.hoten ?? 'Chưa cập nhật tên' }}
-                                    </div>
+                                    <b-form-group>
+                                        <label>Nhập tên gói học:</label>
+                                        <b-form-input name="goi_hoc" v-model="goi_hoc"
+                                            placeholder="Nhập tên"></b-form-input>
+                                    </b-form-group>
                                 </div>
-                            </div>
-                            <div>
-                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="13" cy="13" r="12.5" fill="#0056B1" fill-opacity="0.15" stroke="#0056B1" />
-                                    <path
-                                        d="M16.2134 6.27344H9.78671C8.37338 6.27344 7.21338 7.43344 7.21338 8.84677V18.2401C7.21338 19.4401 8.07338 19.9468 9.12671 19.3668L12.38 17.5601C12.7267 17.3668 13.2867 17.3668 13.6267 17.5601L16.88 19.3668C17.9334 19.9534 18.7934 19.4468 18.7934 18.2401V8.84677C18.7867 7.43344 17.6334 6.27344 16.2134 6.27344ZM15.4134 11.0201L12.7467 13.6868C12.6467 13.7868 12.52 13.8334 12.3934 13.8334C12.2667 13.8334 12.14 13.7868 12.04 13.6868L11.04 12.6868C10.8467 12.4934 10.8467 12.1734 11.04 11.9801C11.2334 11.7868 11.5534 11.7868 11.7467 11.9801L12.3934 12.6268L14.7067 10.3134C14.9 10.1201 15.22 10.1201 15.4134 10.3134C15.6067 10.5068 15.6067 10.8268 15.4134 11.0201Z"
-                                        fill="#0056B1" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="my-7">
-                        <nuxt-link :to="'/admin/lsm/teacher-training/' + id + '/detail/' + id_lesson + '/teachers'">
-                            <button-add>
-                                <span class="mdi mdi-plus"></span> Gán giáo viên
-                            </button-add>
-                        </nuxt-link>
-                    </div>
-                </div> -->
-                <!--  -->
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button class=" btn-delete ms-1" type="submit">Thêm</button>
+                            </div>
+                        </form>
+
+                    </template>
+                </b-modal>
+
+                <b-modal id="my-modal-lesson" ref="my-modal-lesson" hide-footer centered title="Thêm bài học">
+                    <template #default="{ hide }">
+                        <form id="form" @submit="send_data_lesson">
+                            <div class="">
+                                <div>
+                                    <b-form-group>
+                                        <label>Nhập mã bài học:</label>
+                                        <b-form-input name="goi_hoc" v-model="tieu_de"
+                                            placeholder="Nhập tên"></b-form-input>
+                                    </b-form-group>
+                                </div>
+
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button class=" btn-delete ms-1" type="submit">Thêm</button>
+                            </div>
+                        </form>
+
+                    </template>
+                </b-modal>
             </v-col>
         </v-row>
 
@@ -225,6 +145,10 @@ export default {
             teachers: null,
             lesson: null,
             data_lesson: null,
+            goi_hoc: null,
+            packages: null,
+            nhom_id: 0,
+            tieu_de: null,
         };
     },
     validate({ params }) {
@@ -243,38 +167,52 @@ export default {
         }
     },
     methods: {
-        async delete_leson(id_delete) {
-            const formData = new FormData();
-            formData.append('bai_hoc_id', id_delete)
+        add_lesson(item) {
+            this.nhom_id = item
+            this.$refs['my-modal-lesson'].show()
+        },
+        async send_data(event) {
+            event.preventDefault();
+            if(!this.goi_hoc) {
+                toastr.warning("vui lòng nhập đủ thông tin");
+                return
+            }
+            const formData = new FormData()
+            formData.append('goi_hoc', this.goi_hoc)
+            formData.append('id', this.id_lesson)
 
-            Swal.fire({
-                title: 'Bạn có chắc chắn?',
-                text: `Xoá bài học đã chọn!`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Có xoá nó!',
-                cancelButtonText: 'Huỷ'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    await api.post('dao-tao/delete-bai-hoc', formData, {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: 'Bearer ' + this.token
-                    }).then(res => {
-                        if (res?.status == 200) {
-                            Swal.fire(
-                                'Deleted!',
-                                res?.data?.message,
-                                'success'
-                            )
-                            this.$refs['my-modal-show'].hide()
-                            this.load_data()
-                        } else {
-                            toastr.error(res?.data?.message);
-                        }
-                    })
+            await api.post('chuong-trinh-hoc/them-goi-hoc', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal'].hide()
+                    this.goi_hoc = null
+                    this.load_data();
+                }
+            })
+        },
+        async send_data_lesson(event) {
+            event.preventDefault();
+            if(!this.tieu_de) {
+                toastr.warning("vui lòng nhập đủ thông tin");
+                return
+            }
+            const formData = new FormData()
+            formData.append('tieu_de', this.tieu_de)
+            formData.append('id', this.id_lesson)
+            formData.append('nhom_id', this.nhom_id)
 
+            await api.post('chuong-trinh-hoc/them-bai-hoc', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-lesson'].hide()
+                    this.tieu_de = null
+                    this.load_data();
                 }
             })
         },
@@ -298,11 +236,11 @@ export default {
                 this.$store.dispatch('title/set_title', this.title);
             })
 
-            await api.get(`dao-tao/danh-sach-bai-hoc?page=1&limit=1000&sort=1&tuKhoa=&hoc_phan_id=` + this.id_lesson, {
+            await api.get(`chuong-trinh-hoc/danh-sach-goi-hoc?page=1&limit=1000&sort=0&id=` + this.id_lesson, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                this.lesson = res?.data?.data
+                this.packages = res?.data?.data
             })
 
         },
@@ -310,13 +248,15 @@ export default {
     mounted() {
         this.load_data()
 
-
-
     },
 }
 </script>
 
 <style lang="scss" scoped>
+.card-body {
+    padding: 8px 15px !important;
+}
+
 .blade-id {
     color: #FC4D32;
     font-family: SVN-Gilroy;
