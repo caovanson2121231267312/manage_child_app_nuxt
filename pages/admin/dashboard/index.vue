@@ -164,7 +164,8 @@
                 <div class="col-12 col-md-12 col-lg-6 mb-2 wow animate__animated animate__zoomIn">
                     <div class="d-flex justify-content-between align-center mb-3">
                         <div class="h3-title">Báo cáo khách hàng</div>
-                        <nuxt-link class="watch-more" to="/admin/dashboard/customer_reports">Xem thêm</nuxt-link>
+                        <!-- <nuxt-link class="watch-more" to="/admin/dashboard/customer_reports">Xem thêm</nuxt-link> -->
+                        <nuxt-link class="watch-more" to="/">Xem thêm</nuxt-link>
                     </div>
 
                     <customer-report></customer-report>
