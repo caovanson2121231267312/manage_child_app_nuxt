@@ -43,7 +43,7 @@
                                             stroke="#2D2D2D" stroke-width="1.5" stroke-miterlimit="10"
                                             stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
-                                    <div class="text text-c-primary ms-2">200</div>
+                                    <div class="text text-c-primary ms-2">{{ data?.dang_muon }}</div>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                                             stroke-linejoin="round" />
                                     </svg>
 
-                                    <div class="text text-c-success ms-2">800</div>
+                                    <div class="text text-c-success ms-2">{{ data?.so_luong_ton }}</div>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                                             stroke-linejoin="round" />
                                     </svg>
 
-                                    <div class="text text-c-warning ms-2">40</div>
+                                    <div class="text text-c-warning ms-2">{{ data?.da_tra }}</div>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                                             stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round"
                                             stroke-linejoin="round" />
                                     </svg>
-                                    <div class="text text-c-danger ms-2">70</div>
+                                    <div class="text text-c-danger ms-2">{{ data?.so_luong_hong }}</div>
                                 </div>
                             </div>
                         </div>
@@ -108,19 +108,60 @@
 </template>
 
 <script>
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
+
 export default {
     data() {
         return {
+            data: null,
             date: new Date().toISOString().substr(0, 7),
+            month: 1,
             menu: false,
             modal: false,
         }
     },
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_data() {
+            await api.get('giao-cu/bao-cao?thang=' + (this.month ?? ''), {
+                // await api.get('bao-cao/tong-quan-khach-hang?thang=', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data
+            })
+        },
+        async updateFilter(filter) {
+            this.selectedFilter = await filter ?? '';
+            await this.load_data()
+        }
+    },
+    mounted() {
+        this.$store.dispatch('title/set_title', this.title)
+        this.month = this.date.split("-")[1] + '/' + this.date.split("-")[0];
+        this.load_data()
+    },
+    watch: {
+        date() {
+            console.log(this.date)
+            const dateArray = this.date.split("-");
+            console.log(dateArray)
+            this.month = dateArray[1] + '/' + dateArray[0];
+            this.load_data();
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
-
 .card-materials {
     border-radius: 10px;
     border: 1px solid #F2F2F2;
@@ -154,6 +195,7 @@ export default {
         line-height: normal;
     }
 }
+
 .text-span {
     color: rgba(45, 45, 45, 0.80);
     font-family: SVN-Gilroy;
@@ -162,6 +204,7 @@ export default {
     font-weight: 400;
     line-height: normal;
 }
+
 .text-c-primary {
     color: #0056B1 !important;
 }
