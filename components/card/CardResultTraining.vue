@@ -115,14 +115,50 @@
 </template>
 
 <script>
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
+
 export default {
     data() {
         return {
             date: new Date().toISOString().substr(0, 7),
             menu: false,
             modal: false,
+            month: 1,
         }
     },
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_data() {
+            await api.get('dao-tao/bao-cao-dao-tao', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data
+            })
+        },
+
+    },
+    mounted() {
+        this.month = this.date.split("-")[1] + '/' + this.date.split("-")[0];
+        this.load_data()
+    },
+    watch: {
+        date() {
+            console.log(this.date)
+            const dateArray = this.date.split("-");
+            console.log(dateArray)
+            this.month = dateArray[1] + '/' + dateArray[0];
+            this.load_data();
+        }
+    }
 }
 </script>
 

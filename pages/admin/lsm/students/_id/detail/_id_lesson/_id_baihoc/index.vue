@@ -49,13 +49,12 @@
                     <div class="input-grop">
                         <div class="box-x d-flex justify-content-between p-2">
                             <div class="box-img">
-                                <input type="file" hidden @change="handleFileChange" id="img" />
-                                <img v-if="image" :src="image" alt="">
-                                <img v-else src="@/static/images/teacher-training/Rectangle4052.png" alt="">
-                                <input id="images" type="file" class="d-none" />
+                                <div></div>
+                                <img src="@/static/images/teacher-training/Rectangle4052.png" alt="">
                             </div>
                             <div class="action">
-                                <label for="img" class="btn-service-upload d-block" v-b-tooltip.hover title="Gán giáo cụ">
+                                <label v-b-modal.my-modal-g class="btn-service-upload d-block" v-b-tooltip.hover
+                                    title="Gán giáo cụ">
                                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -65,7 +64,7 @@
                                             stroke-linejoin="round" />
                                     </svg>
                                 </label>
-                                <div @click="delete_img()" class="mb-3 btn-service-delete" v-b-tooltip.hover
+                                <div @click="delete_g()" class="mb-3 btn-service-delete" v-b-tooltip.hover
                                     title="Xoá giáo cụ">
                                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -89,6 +88,29 @@
                         </div>
                     </div>
                 </div>
+
+                <b-modal id="my-modal-g" ref="my-modal-g" hide-footer centered title="Gán giáo cụ">
+                    <template #default="{ hide }">
+                        <form @submit="send_data_g">
+
+                            <div class="my-4 pb-3">
+                                <div>
+                                    <b-form-group>
+                                        <label>Mã giáo cụ:</label>
+                                        <b-form-select v-model="giao_cu_id" :options="giao_cu"
+                                            aria-placeholder="Chọn"></b-form-select>
+                                    </b-form-group>
+                                </div>
+
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button class=" btn-delete ms-1" type="submit">Xác nhận</button>
+                            </div>
+                        </form>
+
+                    </template>
+                </b-modal>
 
                 <hr class="support-hr" />
 
@@ -195,6 +217,8 @@ export default {
             file: null,
             noi_dung: null,
             buoi: 0,
+            giao_cu: null,
+            giao_cu_id: null,
         };
     },
     validate({ params }) {
@@ -231,6 +255,23 @@ export default {
             console.log('Value changed in child component:', newValue);
             this.noi_dung = newValue
         },
+        async send_data_g(event) {
+            event.preventDefault();
+            const formData = new FormData()
+            formData.append('giao_cu_id', this.giao_cu_id)
+            formData.append('bai_hoc_id', this.id_baihoc)
+
+            await api.post('chuong-trinh-hoc/gan-giao-cu', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-g'].hide()
+                    this.load_data();
+                }
+            })
+        },
         async send_data(event) {
             event.preventDefault();
             if (!this.noi_dung) {
@@ -252,6 +293,37 @@ export default {
                     this.noi_dung = null
                     this.buoi = 0
                     this.load_data();
+                }
+            })
+        },
+        async delete_g() {
+            const formData = new FormData();
+            formData.append('bai_hoc_id', this.id_baihoc)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá giáo cụ đã gán!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có xoá nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('chuong-trinh-hoc/xoa-giao-cu', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            toastr.success(res?.data?.message);
+                            this.load_data();
+                            // this.$router.push('/admin/lsm/students/' + this.id + '/detail/' + this.id_lesson);
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
                 }
             })
         },
@@ -286,6 +358,19 @@ export default {
             })
         },
         async load_data() {
+            await api.get('giao-cu/danh-sach-giao-cu', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.giao_cu = res?.data?.data.map(item => {
+                    return {
+                        value: item?.id,
+                        text: item?.code ?? (item?.id + ' - Chưa cập nhật')
+                    };
+                })
+                this.giao_cu_id = this.giao_cu[0].value
+            })
+
             await api.get(`chuong-trinh-hoc/chi-tiet-bai-hoc?bai_hoc_id=` + this.id_baihoc, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token

@@ -490,6 +490,13 @@
                         </div>
                         <div>
                             <b-form-group>
+                                <label>Loại phí:</label>
+                                <b-form-select v-model="nap_tien_id" :options="nap_tien"
+                                    aria-placeholder="Chọn"></b-form-select>
+                            </b-form-group>
+                        </div>
+                        <div>
+                            <b-form-group>
                                 <label>Nhập ghi chú:</label>
                                 <b-form-textarea id="textarea" v-model="phu_phi_li_do" placeholder="Nhập ghi chú..."
                                     rows="3" max-rows="6"></b-form-textarea>
@@ -537,6 +544,8 @@ export default {
             per_page: 0,
             current_page: 1,
             total: 0,
+            nap_tien: null,
+            nap_tien_id: null,
         };
     },
     components: {
@@ -615,12 +624,26 @@ export default {
                 console.log(res)
                 this.data = res?.data?.data
             })
+
+            await api.get(`giao-vien/loai-giao-dich-nap-tien`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.nap_tien = res?.data?.data.map(item => {
+                    return {
+                        value: item?.id,
+                        text: item?.name ?? (item?.id + ' - Chưa cập nhật')
+                    };
+                })
+                this.nap_tien_id = this.nap_tien[0].value
+            })
         },
         async add_phu_phi() {
             const formData = new FormData()
             formData.append('id', this.id)
             formData.append('tong_tien', this.phu_phi_tien)
             formData.append('ghi_chu', this.phu_phi_li_do)
+            formData.append('type_id', this.nap_tien_id)
 
             await api.post('don-dich-vu/them-phu-phi', formData, {
                 'Content-Type': 'multipart/form-data',

@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="mt-7">
-                        <nuxt-link :to="'/admin/materials/' + this.id + '/histories'" >
+                        <nuxt-link :to="'/admin/materials/' + this.id + '/histories'">
                             <button-component addClass="red">
                                 <svg class="me-2" width="18" height="18" viewBox="0 0 18 18" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -71,6 +71,26 @@
                                 </svg>
 
                                 Lịch sử bàn giao
+                            </button-component>
+                        </nuxt-link>
+                    </div>
+
+                    <div class="mt-7">
+                        <nuxt-link :to="'/admin/materials/' + this.id + '/create'">
+                            <button-component addClass="primary">
+                                <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.5 9C11.5711 9 13.25 7.32107 13.25 5.25C13.25 3.17893 11.5711 1.5 9.5 1.5C7.42893 1.5 5.75 3.17893 5.75 5.25C5.75 7.32107 7.42893 9 9.5 9Z"
+                                        fill="white" />
+                                    <path opacity="0.4"
+                                        d="M9.50014 10.875C5.74264 10.875 2.68262 13.395 2.68262 16.5C2.68262 16.71 2.84762 16.875 3.05762 16.875H15.9427C16.1527 16.875 16.3177 16.71 16.3177 16.5C16.3177 13.395 13.2576 10.875 9.50014 10.875Z"
+                                        fill="white" />
+                                    <path
+                                        d="M16.5723 11.055C15.8973 10.38 15.3648 10.5975 14.9073 11.055L12.2523 13.71C12.1473 13.815 12.0498 14.01 12.0273 14.1525L11.8848 15.165C11.8323 15.5325 12.0873 15.7875 12.4548 15.735L13.4673 15.5925C13.6098 15.57 13.8123 15.4725 13.9098 15.3675L16.5648 12.7125C17.0298 12.2625 17.2473 11.73 16.5723 11.055Z"
+                                        fill="white" />
+                                </svg>
+                                Tạo bàn giao
                             </button-component>
                         </nuxt-link>
                     </div>
@@ -191,5 +211,4 @@ export default {
         background: transparent;
         border: 1px solid #E5E5E5
     }
-}
-</style>
+}</style>
