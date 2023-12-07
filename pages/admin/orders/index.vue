@@ -110,14 +110,18 @@
             <!-- </b-card> -->
         </div>
 
-        <div class="d-flex justify-content-between align-items-center mt-3 mb-5">
-            <div class="d-flex">
-                <div v-if="items">
-                    <v-select :items="items" v-model="item" item-text="text" item-value="value" persistent-hint
+        <div class="d-flex justify-content-between align-items-center flex-wrap mt-3 mb-5">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="me-3" v-if="items">
+                    <v-select class="w-50" :items="items" v-model="item" item-text="text" item-value="value" persistent-hint
                         return-object single-line label="dịch vụ"></v-select>
                 </div>
+                <div class="me-3" v-if="dich_vu">
+                    <v-select class="w-50" :items="dich_vu" v-model="dich_vu_id" item-text="text" item-value="value"
+                        persistent-hint return-object single-line label="Dịch vụ"></v-select>
+                </div>
                 <div>
-                    <div class="ms-3">
+                    <div class="me-3">
                         <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field v-model="date" label="" class="month-picker" prepend-icon="mdi-calendar"
@@ -135,9 +139,13 @@
                         </v-dialog>
                     </div>
                 </div>
+                <!-- <div>
+                    <b-form-input class="mb-2" v-model.lazy="tuKhoa" placeholder="Tìm kiếm đơn hàng"></b-form-input>
+                </div> -->
             </div>
-            <div class="search">
-                <b-form-input v-model.lazy="giaoVien" placeholder="Tìm giáo viên"></b-form-input>
+            <div class="search d-flex">
+                <b-form-input class="mb-2" v-model.lazy="tuKhoa" placeholder="Tìm kiếm đơn hàng"></b-form-input>
+                <b-form-input class="mb-2" v-model.lazy="giaoVien" placeholder="Tìm giáo viên"></b-form-input>
             </div>
         </div>
 
@@ -186,9 +194,12 @@ export default {
             data: null,
             keyword: null,
             giaoVien: '',
+            tuKhoa: '',
             timeOut: null,
             timer: 700,
             items: [],
+            dich_vu: [],
+            dich_vu_id: '',
             trang_thai: '',
             item: 0,
             selected: 'A',
@@ -226,12 +237,6 @@ export default {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                // this.items = res?.data?.data.map(item => {
-                //     return {
-                //         value: item.id,
-                //         text: item.name
-                //     };
-                // })
                 this.items.unshift({
                     value: '',
                     text: 'Tất cả trạng thái'
@@ -243,9 +248,32 @@ export default {
 
                 this.item = this.items[0].value
             })
+
+            await api.get('dich-vu/danh-sach?page=1&limit=1000&sort=1&tuKhoa=', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.dich_vu.unshift({
+                    value: '',
+                    text: 'Tất cả dịch vụ'
+                });
+                this.dich_vu.push(...res?.data?.data.map(item => ({
+                    value: item.id,
+                    text: item.ten_dich_vu
+                })));
+
+                this.dich_vu_id = this.dich_vu[0].value
+
+                // this.dich_vu = res?.data?.data.map(item => {
+                //     return {
+                //         value: item.id,
+                //         text: item.ten_dich_vu ?? '...'
+                //     };
+                // })
+            })
         },
         async load_data() {
-            await api.get(`don-dich-vu/danh-sach?tuKhoa=&giaoVien=${this.giaoVien}&dich_vu_id=&thang=${this.month}&trang_thai=${this?.item?.text == 'Tất cả trạng thái' ? '' : (this?.item?.text ?? '')}&sort=1&limit=9&page=${this.current_page}`, {
+            await api.get(`don-dich-vu/danh-sach?tuKhoa=${this.tuKhoa}&giaoVien=${this.giaoVien}&dich_vu_id=${this.dich_vu_id?.text == 'Tất cả dịch vụ' ? '' : (this?.dich_vu_id?.value ?? '')}&thang=${this.month}&trang_thai=${this?.item?.text == 'Tất cả trạng thái' ? '' : (this?.item?.text ?? '')}&sort=1&limit=9&page=${this.current_page}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -299,6 +327,10 @@ export default {
             console.log(this.item)
             this.load_data()
         },
+        dich_vu_id() {
+            console.log(this.item)
+            this.load_data()
+        },
         giaoVien() {
             clearTimeout(this.timeOut);
 
@@ -314,6 +346,15 @@ export default {
             this.month = dateArray[1] + '/' + dateArray[0];
             this.load_data();
         },
+        tuKhoa() {
+            clearTimeout(this.timeOut);
+
+            this.timeOut = setTimeout(() => {
+                // this.$emit("click");
+                this.load_data()
+
+            }, this.timer);
+        },
         current_page() {
             this.load_data()
         }
@@ -323,6 +364,10 @@ export default {
 
 
 <style scoped lang="scss">
+.w-50 {
+    width: 170px !important;
+}
+
 .text-c-danger {
     color: #FA4D32;
 }

@@ -50,7 +50,7 @@
                         <div class="box-x d-flex justify-content-between p-2">
                             <div class="box-img">
                                 <div></div>
-                                <img src="@/static/images/teacher-training/Rectangle4052.png" alt="">
+                                <img v-if="data?.giaoCu" :src="data?.giaoCu?.image" alt="">
                             </div>
                             <div class="action">
                                 <label v-b-modal.my-modal-g class="btn-service-upload d-block" v-b-tooltip.hover

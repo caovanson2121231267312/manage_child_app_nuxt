@@ -4,11 +4,22 @@
             <title-header>Tổng quan</title-header>
 
             <div class="d-inline-block">
-                <div>
-                    <select class="w-form-selected ">
-                        <option>Mới nhất</option>
-                        <option>Cũ nhất</option>
-                    </select>
+                <div class="me-5">
+                    <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-text-field v-model="date" label="" class="month-picker" prepend-icon="mdi-calendar" readonly
+                                v-bind="attrs" v-on="on"></v-text-field>
+                        </template>
+                        <v-date-picker v-model="date" type="month" scrollable>
+                            <v-spacer></v-spacer>
+                            <v-btn text color="primary" @click="modal = false">
+                                Cancel
+                            </v-btn>
+                            <v-btn text color="primary" @click="$refs.dialog.save(date)">
+                                OK
+                            </v-btn>
+                        </v-date-picker>
+                    </v-dialog>
                 </div>
             </div>
         </div>
@@ -259,7 +270,7 @@ export default {
     },
     methods: {
         async load_data() {
-            await api.get('bao-cao/tong-quan', {
+            await api.get('bao-cao/tong-quan?thang=' + (this.month ?? ''), {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -273,8 +284,18 @@ export default {
         }
     },
     mounted() {
+        this.month = this.date.split("-")[1] + '/' + this.date.split("-")[0];
+
         this.$store.dispatch('title/set_title', this.title)
         this.load_data()
+    },
+    watch: {
+        date() {
+            console.log(this.date)
+            const dateArray = this.date.split("-");
+            this.month = dateArray[1] + '/' + dateArray[0];
+            this.load_data();
+        }
     }
 }
 </script>

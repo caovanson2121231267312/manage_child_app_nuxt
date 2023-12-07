@@ -208,7 +208,7 @@
                                                     stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>
                                         </v-list-item-icon>
-                                        <v-list-item-title>LSM</v-list-item-title>
+                                        <v-list-item-title>LMS</v-list-item-title>
                                     </template>
 
                                     <v-list-item-group>
@@ -444,8 +444,17 @@
             </v-toolbar-title>
             <v-spacer />
             <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
-            <div class="d-flex">
-                <div class="ms-1">
+            <div class="d-flex align-items-center">
+                <div class="me-2">
+                    <b-form-input class="search1" v-model="text"
+                        placeholder="Tìm ca dạy, giáo viên, phụ huynh"></b-form-input>
+                </div>
+                <div class="search2">
+                    <v-btn icon large x-large to="/admin/orders">
+                        <span class="mdi mdi-magnify fs-ison"></span>
+                    </v-btn>
+                </div>
+                <div class="">
                     <v-btn icon large x-large to="/admin/my/notification">
                         <img class="v-btn" src="@/static/images/icons/bell.svg">
                     </v-btn>
@@ -461,6 +470,8 @@
                     </div>
                 </div>
             </div>
+
+
 
             <!-- <v-btn icon @click.stop="rightDrawer = !rightDrawer">
                 <v-icon>mdi-menu</v-icon>
@@ -511,6 +522,7 @@ export default {
                 ['Update', 'mdi-update'],
                 ['Delete', 'mdi-delete'],
             ],
+            text: null,
             clipped: false,
             drawer: false,
             fixed: false,

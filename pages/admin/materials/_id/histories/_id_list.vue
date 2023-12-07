@@ -26,11 +26,11 @@
                             <div class="d-flex align-items-center card-body-p-16 mb-4">
                                 <div class="d-flex align-items-center ">
                                     <div class="me-2 layout-user-complain">
-                                        <img src="@/static/images/users/Ellipse50.png" alt="">
+                                        <img :src="data?.giaoVien?.anh_nguoi_dung" alt="">
                                     </div>
                                     <div>
                                         <h3 class="user-name">
-                                            Nguyễn Thị Anh
+                                            {{ data?.giaoVien?.hoten }}
                                         </h3>
                                         <p class="w-p p-0 m-0">
                                             Giáo viên
@@ -61,7 +61,7 @@
                                             </td>
                                             <td>
                                                 <div class="w-100 p-text">
-                                                    0123 456 789
+                                                    {{ data?.giaoVien?.dien_thoai }}
                                                 </div>
                                             </td>
                                         </tr>
@@ -84,7 +84,7 @@
                                             </td>
                                             <td>
                                                 <div class="w-100 p-text">
-                                                    08/08/2023
+                                                    {{ data?.ngay_nhan }}
                                                 </div>
                                             </td>
                                         </tr>
@@ -107,7 +107,7 @@
                                             </td>
                                             <td>
                                                 <div class="w-100 p-text">
-                                                    MS023-0001
+                                                    {{ data?.codeGiaoCu ?? 'Chưa cập nhật' }}
                                                 </div>
                                             </td>
                                         </tr>
@@ -130,7 +130,7 @@
                                             </td>
                                             <td>
                                                 <div class="w-100 p-text">
-                                                    08/12/2023
+                                                    {{ data?.ngay_tra ?? 'Chưa cập nhật' }}
                                                 </div>
                                             </td>
                                         </tr>
@@ -153,7 +153,7 @@
                                             </td>
                                             <td>
                                                 <div class="w-100 p-text">
-                                                    Đã nhận giáo cụ
+                                                    {{ data?.ghi_chu ?? 'Chưa cập nhật' }}
                                                 </div>
                                             </td>
                                         </tr>
@@ -203,7 +203,8 @@
                                     class="m-0 p-0 d-block w-100 d-flex justify-content-between align-items-center">
                                     <span>Xác nhận hoàn trả giáo cụ</span>
                                     <span class="center">
-                                        <input id="check1" type="checkbox" class="input-check" />
+                                        <input id="check1" @change="send_xacNhanBanGiao" v-model="xacNhanHoanTra"
+                                            type="checkbox" class="input-check" />
                                     </span>
                                 </label>
                             </div>
@@ -219,7 +220,7 @@
                                     class="m-0 p-0 d-block w-100 d-flex justify-content-between align-items-center">
                                     <span>Xác nhận bàn giao giáo cụ</span>
                                     <span class="center">
-                                        <input id="check" type="checkbox" class="input-check" />
+                                        <input id="check" v-model="xacNhanBanGiao" type="checkbox" class="input-check" />
                                     </span>
                                 </label>
                             </div>
@@ -229,7 +230,8 @@
 
                 <div class="mb-5">
                     <div class="title-complain mb-2 d-flex align-items-center">
-                        <svg class="me-2" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="me-2" width="12" height="12" viewBox="0 0 12 12" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M8.4 0H3.6C1.2 0 0 1.2 0 3.6V11.4C0 11.73 0.27 12 0.6 12H8.4C10.8 12 12 10.8 12 8.4V3.6C12 1.2 10.8 0 8.4 0ZM5.466 8.796C5.316 8.946 5.04 9.084 4.836 9.114L3.588 9.288C3.54 9.294 3.492 9.3 3.45 9.3C3.24 9.3 3.048 9.228 2.91 9.09C2.742 8.922 2.67 8.676 2.712 8.412L2.886 7.164C2.916 6.96 3.054 6.678 3.204 6.534L5.466 4.272C5.502 4.38 5.55 4.488 5.604 4.608C5.658 4.716 5.712 4.824 5.772 4.926C5.82 5.01 5.874 5.094 5.922 5.154C5.982 5.244 6.042 5.322 6.084 5.364C6.108 5.4 6.132 5.424 6.138 5.436C6.27 5.586 6.408 5.73 6.54 5.838C6.576 5.874 6.6 5.892 6.606 5.898C6.684 5.958 6.756 6.024 6.828 6.066C6.906 6.126 6.99 6.18 7.074 6.228C7.176 6.288 7.284 6.348 7.398 6.402C7.512 6.456 7.62 6.498 7.728 6.534L5.466 8.796ZM8.73 5.538L8.262 6.006C8.232 6.036 8.19 6.054 8.148 6.054C8.136 6.054 8.112 6.054 8.1 6.048C7.068 5.754 6.246 4.932 5.952 3.9C5.934 3.846 5.952 3.786 5.994 3.744L6.468 3.27C7.242 2.496 7.974 2.514 8.73 3.27C9.114 3.654 9.306 4.026 9.3 4.41C9.3 4.788 9.114 5.154 8.73 5.538Z"
                                 fill="#4EAEEA" />
@@ -238,13 +240,13 @@
                     </div>
 
                     <div>
-                        <textarea class="form-control text-input" placeholder="Nhập ghi chú">
+                        <textarea v-model="ghi_chu" class="form-control text-input" placeholder="Nhập ghi chú">
 
                         </textarea>
                     </div>
                 </div>
 
-                <div class="mt-7">
+                <div class="mt-7" @click="send_data()">
                     <button-component>Lưu</button-component>
                 </div>
             </v-col>
@@ -255,6 +257,10 @@
 </template>
 
 <script>
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
+
 export default {
     layout: 'admin',
     data() {
@@ -263,25 +269,85 @@ export default {
                 name: 'Lịch sử dùng giáo cụ',
                 previous: '/admin/complain'
             },
+            data: null,
+            xacNhanBanGiao: false,
+            xacNhanHoanTra: false,
+            ghi_chu: null,
+            currentDate: new Date(),
         };
-    },
-    validate({ params }) {
-        return /^[0-9]{0,2}$/.test(params.id)
     },
     computed: {
         id() {
             return this.$route.params.id
         },
+        id_list() {
+            return this.$route.params.id_list
+        },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
     },
     methods: {
-        togglePassword() {
-            this.showPassword = !this.showPassword;
+        async load_data() {
+            await api.get('giao-cu/chi-tiet-ban-giao?id=' + this.id_list, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data
+                this.data = user
+                this.xacNhanBanGiao = user?.xacNhanBanGiao
+                this.xacNhanHoanTra = user?.xacNhanHoanTra
+            })
         },
+        send_xacNhanBanGiao() {
+            const formData = new FormData()
+            formData.append('id', this.id_list)
+            formData.append('ghi_chu', this.ghi_chu)
+
+            api.post('giao-cu/xac-nhan-hoan-tra', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$router.push('/admin/materials/' + this.id + '/histories');
+                }
+            })
+            this.load_data()
+        },
+        async send_data(event) {
+            const day = this.currentDate.getDate().toString().padStart(2, '0');
+            const month = (this.currentDate.getMonth() + 1).toString().padStart(2, '0');
+            const year = this.currentDate.getFullYear();
+
+            const formData = new FormData()
+            formData.append('id', this.id_list)
+            formData.append('ngay_tra', `${day}/${month}/${year}`)
+            formData.append('ghi_chu', this.ghi_chu)
+
+            await api.post('giao-cu/giao-vien-hoan-tra', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$router.push('/admin/materials/' + this.id + '/histories');
+                }
+            })
+            this.load_data()
+        }
     },
     mounted() {
+        this.load_data()
         this.title.previous = '/admin/materials/' + this.id + '/histories'
         this.$store.dispatch('title/set_title', this.title);
     },
+    watch: {
+        xacNhanBanGiao() {
+
+        }
+    }
 }
 </script>
 
@@ -329,6 +395,19 @@ export default {
 tr {
     td {
         padding-bottom: 10px;
+    }
+}
+
+.layout-user-complain {
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    border-radius: 50%;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 }
 

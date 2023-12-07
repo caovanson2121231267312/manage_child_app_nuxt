@@ -197,18 +197,19 @@ export default {
         async send_data(event) {
             event.preventDefault();
             const formData = new FormData()
-            formData.append('code', this.code)
-            formData.append('so_luong_tong', this.so_luong_tong)
-            formData.append('so_luong_ton', this.so_luong_ton)
+            formData.append('giao_vien_id', this.giao_vien_id)
+            formData.append('giao_cu_id', this.id)
+            formData.append('so_luong', this.so_luong)
             formData.append('ghi_chu', this.ghi_chu)
-            formData.append('image', this.file)
-            await api.post('giao-cu/tao-moi', formData, {
+            formData.append('ngay_nhan', this.ngay_nhan)
+
+            await api.post('giao-cu/tao-moi-ban-giao', formData, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
-                    this.$router.push('/admin/materials');
+                    this.$router.push('/admin/materials/detail/' + this.id);
                 }
             })
         }

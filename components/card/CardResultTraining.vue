@@ -29,7 +29,7 @@
                             <div class="span-title">Số giáo viên đang đào tạo</div>
                             <div class="mt-3">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <div class="text text-c-danger ms-2">200</div>
+                                    <div class="text text-c-danger ms-2">{{ data?.dangHoc ?? 0 }}</div>
                                     <div>
                                         <svg width="26" height="18" viewBox="0 0 26 18" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -50,7 +50,7 @@
                             <div class="span-title">Số giáo viên nhận thành tích ĐẠT</div>
                             <div class="mt-3">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <div class="text text-c-warning ms-2">220</div>
+                                    <div class="text text-c-warning ms-2">{{ data?.dat ?? 0 }}</div>
                                     <div>
                                         <svg width="27" height="18" viewBox="0 0 27 18" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -71,7 +71,7 @@
                             <div class="span-title">Số giáo viên phải thi lại</div>
                             <div class="mt-3">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <div class="text text-c-primary ms-2">10</div>
+                                    <div class="text text-c-primary ms-2">{{ data?.hocLai ?? 0 }}</div>
                                     <div>
                                         <svg width="26" height="18" viewBox="0 0 26 18" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -92,7 +92,7 @@
                             <div class="span-title">Số giáo viên hoàn thành đào tạo</div>
                             <div class="mt-3">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <div class="text text-c-success ms-2">200</div>
+                                    <div class="text text-c-success ms-2">{{ data?.hoanThanh ?? 0 }}</div>
                                     <div>
                                         <svg width="27" height="18" viewBox="0 0 27 18" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -126,6 +126,7 @@ export default {
             menu: false,
             modal: false,
             month: 1,
+            data: null,
         }
     },
     computed: {
@@ -136,7 +137,7 @@ export default {
     },
     methods: {
         async load_data() {
-            await api.get('dao-tao/bao-cao-dao-tao', {
+            await api.get('dao-tao/bao-cao-ket-qua-dao-tao?thang=' + this.month, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -260,4 +261,5 @@ export default {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-}</style>
+}
+</style>

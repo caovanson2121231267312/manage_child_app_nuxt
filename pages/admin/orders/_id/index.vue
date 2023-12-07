@@ -24,7 +24,7 @@
                         <v-divider class="m-0 p-0"></v-divider>
 
                         <v-card-text>
-                            <table class="table table-borderless">
+                            <!-- <table class="table table-borderless">
                                 <tr v-for="(item, n) in data?.phuPhi" v-bind:key="n">
                                     <td>
                                         <span>
@@ -43,7 +43,7 @@
                                         </span>
                                     </td>
                                 </tr>
-                            </table>
+                            </table> -->
                             <b-button class="w-100 text-primary rounded-pill" variant="outline-primary"
                                 v-b-modal.my-modal-them-phu-phi>
                                 <span class="mdi mdi-plus-circle-outline"></span>
@@ -485,7 +485,7 @@
                             <b-form-group>
                                 <label>Nhập số tiền:</label>
                                 <b-form-input v-model="phu_phi_tien" type="number"
-                                    placeholder="Số lượng buổi hoàn"></b-form-input>
+                                    placeholder="Nhập số tiền"></b-form-input>
                             </b-form-group>
                         </div>
                         <div>

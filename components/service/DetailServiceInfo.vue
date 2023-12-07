@@ -109,20 +109,24 @@
         </div>
 
         <!--  -->
-            <div class="mt-6">
-                <nuxt-link v-if="data?.trang_thai == 'Đang dạy'" class="btn btn-primary text-light w-100 rounded-pill" :to="'/admin/orders/' + data?.id + '/lesson'">
-                    Xem tiến độ khóa học
-                </nuxt-link>
-                <nuxt-link v-if="data?.trang_thai == 'Đã hủy'" class="btn btn-danger text-light w-100 rounded-pill" :to="'/admin/orders/' + data?.id + '/lesson'">
-                    Xem tiến độ khóa học
-                </nuxt-link>
-                <nuxt-link v-if="data?.trang_thai == 'Đã hoàn thành'" class="btn btn-success text-light w-100 rounded-pill" :to="'/admin/orders/' + data?.id + '/lesson'">
-                    Xem tiến độ khóa học
-                </nuxt-link>
-                <nuxt-link v-if="data?.trang_thai == 'Đơn hoàn'" class="btn btn-info text-light w-100 rounded-pill" :to="'/admin/orders/' + data?.id + '/lesson'">
-                    Xem tiến độ khóa học
-                </nuxt-link>
-            </div>
+        <div class="mt-6">
+            <nuxt-link v-if="data?.trang_thai == 'Đang dạy'" class="btn btn-primary text-light w-100 rounded-pill"
+                :to="'/admin/orders/' + data?.id + '/lesson'">
+                Xem tiến độ khóa học
+            </nuxt-link>
+            <nuxt-link v-if="data?.trang_thai == 'Đã hủy'" class="btn btn-danger text-light w-100 rounded-pill"
+                :to="'/admin/orders/' + data?.id + '/lesson'">
+                Xem tiến độ khóa học
+            </nuxt-link>
+            <nuxt-link v-if="data?.trang_thai == 'Đã hoàn thành'" class="btn btn-success text-light w-100 rounded-pill"
+                :to="'/admin/orders/' + data?.id + '/lesson'">
+                Xem tiến độ khóa học
+            </nuxt-link>
+            <nuxt-link v-if="data?.trang_thai == 'Đơn hoàn'" class="btn btn-info text-light w-100 rounded-pill"
+                :to="'/admin/orders/' + data?.id + '/lesson'">
+                Xem tiến độ khóa học
+            </nuxt-link>
+        </div>
         <!--  -->
 
         <div class="mt-6">
@@ -264,7 +268,8 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <b-button @click="change_page(data?.noi_dung_khao_sat ?? '')" class="w-100 text- rounded-pill" variant="outline-primary">
+                                    <b-button @click="change_page(data?.noi_dung_khao_sat ?? '')"
+                                        class="w-100 text- rounded-pill" variant="outline-primary">
                                         Nội dung khảo sát
                                         <span class="ms-2 mdi mdi-chevron-right"></span>
                                     </b-button>
@@ -701,6 +706,24 @@
                                     </span>
                                 </td>
                             </tr>
+                            <tr v-for="(item, n) in data?.phuPhi" v-bind:key="n">
+                                <td>
+                                    <span>
+                                        <svg width="14" height="13" viewBox="0 0 14 13" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                        </svg>
+                                    </span>
+                                    <span class="ms-1 span-text">
+                                        {{ item?.tieu_de }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-danger fw-bold span-2 cp" v-b-popover.hover.right="item?.ghi_chu"
+                                        :title="item?.tieu_de">
+                                        <b>{{ formatCurrency(item?.tong_tien) }}</b>
+                                    </span>
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </v-card-text>
@@ -912,5 +935,4 @@ table {
 
 .sm-i {
     font-size: 8px;
-}
-</style>
+}</style>

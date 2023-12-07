@@ -21,7 +21,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <title-header>Báo cáo kết quả đào tạo</title-header>
 
-                            <div class="btn btn-excel">
+                            <div class="btn btn-excel"  @click="export_excel()">
                                 <svg width="15" height="14" viewBox="0 0 15 14" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -123,8 +123,26 @@ export default {
                 this.data = res?.data?.data
             })
         },
-        generateRandomNumber() {
-            return this.status[Math.floor(Math.random() * 3)];
+        async export_excel() {
+            Swal.fire({
+                title: "Đang xử lý yêu cầu!",
+                html: "Vui lòng chờ...",
+                timerProgressBar: true,
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log("I was closed by the timer");
+                }
+            });
+
+            await api.get('dao-tao/export-excel-ket-qua-dao-tao?tuKhoa=&thang=' + (this.month ?? ''), {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                Swal.close()
+                toastr.success('Tải xuống thành công');
+                window.open(res?.data?.data);
+            })
         }
     },
     mounted() {

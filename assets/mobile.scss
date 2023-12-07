@@ -14,6 +14,10 @@
     .ps-close-bar {
         display: none;
     }
+
+    .search2 {
+        display: none;
+    }
 }
 
 @media (max-width: 750px) {
@@ -52,6 +56,13 @@
 @media (max-width: 600px) {
     .nav-bar .v-navigation-drawer {
         width: 100% !important;
+    }
+
+    .search1 {
+        display: none !important;
+    }
+    .search2 {
+        display: block !important;
     }
     // .img-avatar {
     //     width: auto !important;

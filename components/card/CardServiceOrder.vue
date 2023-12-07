@@ -119,7 +119,7 @@
                             </div>
                             <div>
                                 <h3 class="user-name">
-                                    {{ data?.phuHuynh?.hoten }}
+                                    {{ data?.phuHuynh?.hoten ?? 'Chưa cập nhật tên' }}
                                 </h3>
                                 <p class="w-p p-0 m-0">
                                     {{ data?.phuHuynh?.vai_tro }}
@@ -266,7 +266,7 @@
                                 </div>
                                 <div>
                                     <h3 class="user-name">
-                                        {{ data?.giaoVien?.ho_ten }}
+                                        {{ data?.giaoVien?.ho_ten ?? 'Chưa cập nhật tên'}}
                                     </h3>
                                     <p class="w-p p-0 m-0">
                                         {{ data?.giaoVien?.trinh_do ?? 'Chưa cập nhật' }}
