@@ -24,7 +24,7 @@
                 </div>
 
                 <div>
-                    <b-form-select v-model="selected" :options="options"></b-form-select>
+                    <b-form-select v-model="item" :options="items"></b-form-select>
                 </div>
 
                 <div class="w-100">
@@ -106,10 +106,8 @@ export default {
             month: 1,
             menu: false,
             modal: false,
-            selected: 0,
-            options: [
-                { value: 0, text: 'Tất cả' },
-                { value: 1, text: 'Giáo viên' },
+            item: 0,
+            items: [
             ]
         }
     },
@@ -120,8 +118,25 @@ export default {
         }
     },
     methods: {
+        async load_role() {
+            await api.get('admin-api/get-nhom-giao-vien', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.items.unshift({
+                    value: '',
+                    text: 'Tất cả trạng thái'
+                });
+                this.items.push(...res?.data?.data.map(item => ({
+                    value: item.id,
+                    text: item.name
+                })));
+
+                this.item = this.items[0].value
+            })
+        },
         async load_data() {
-            await api.get('chi-luong/danh-sach?tuKhoa=&dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&thang=&page=1&limit=4&sort=', {
+            await api.get(`chi-luong/danh-sach?tuKhoa=&dien_thoai=&leader_kd_id=${this?.item}&dia_chi=&dich_vu_id=&thang=&page=1&limit=4&sort=`, {
                 // await api.get('chi-luong/danh-sach?tuKhoa=&dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&page=1&limit=&sort=1&thang=' + (this.month ?? ''), {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
@@ -139,12 +154,17 @@ export default {
         this.$store.dispatch('title/set_title', this.title)
         this.month = this.date.split("-")[1];
         this.load_data()
+        this.load_role()
     },
     watch: {
         date() {
             console.log(this.date)
             const dateArray = this.date.split("-");
             this.month = dateArray[1];
+            this.load_data();
+        },
+        item () {
+            console.log(this.item)
             this.load_data();
         }
     }
