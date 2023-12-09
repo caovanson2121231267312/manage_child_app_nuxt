@@ -2073,3 +2073,78 @@ ul {
     font-size: 31px;
     color: black;
 }
+
+.btn-doi {
+    border-radius: 46px;
+    background: #fc4d32;
+    color: #fff !important;
+
+    text-align: center;
+    font-family: SVN-Gilroy;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.btn-dieu-lai {
+    border-radius: 46px;
+    background: #0056b1;
+    color: #fff !important;
+
+    text-align: center;
+    font-family: SVN-Gilroy;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.text-star {
+    border: 1px solid #ffc107;
+    padding: 2px 15px;
+    border-radius: 16px;
+}
+
+.btn-cancel-order {
+    background: #e4002b;
+}
+
+.btn-hoan {
+    background: #fc4d32;
+}
+
+.btn-chuong {
+    background: #ffa02f;
+}
+
+.btn-deactive {
+    background: #e5e5e5;
+    color: #898989;
+    text-align: center;
+    font-family: SVN-Gilroy;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.btn-canceled {
+    border: 1.3px solid #e4002b;
+
+    background: #f5f5f5;
+    color: #e4002b;
+}
+.btn-canceled span {
+    color: #e4002b;
+}
+
+.btn-hoaned {
+    border: 1.3px solid #4EAEEA;
+    color: #4EAEEA;
+    background: #F5F5F5;
+}
+
+.btn-hoaned span{
+    color: #4EAEEA;
+}

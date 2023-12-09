@@ -152,7 +152,7 @@
                                                     </linearGradient>
                                                 </defs>
                                             </svg>
-                                            <strong class="title-box text-start w-100">{{ item?.tieu_de }}</strong>
+                                            <strong class="title-box text-start w-100">{{ item?.tieu_de ?? 'Chưa cập nhật tên' }}</strong>
                                         </div>
                                     </nuxt-link>
                                 </div>
@@ -234,7 +234,7 @@
                                                 </defs>
                                             </svg>
                                             <strong class="title-box text-start w-100">
-                                                {{ item?.tieu_de }}
+                                                {{ item?.tieu_de ?? 'Chưa cập nhật tên' }}
                                             </strong>
                                         </div>
                                     </nuxt-link>

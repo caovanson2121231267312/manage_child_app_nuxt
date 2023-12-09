@@ -201,7 +201,7 @@
                 <div class="col-12 col-md-12 col-lg-6 mb-2 mt-5 wow animate__animated animate__zoomIn">
                     <div class="d-flex justify-content-between align-center mb-3">
                         <div class="h3-title">Báo cáo tăng trưởng User</div>
-                        <nuxt-link class="watch-more" to="/">Xem thêm</nuxt-link>
+                        <nuxt-link class="watch-more" to="/admin/dashboard/user_report">Xem thêm</nuxt-link>
                     </div>
 
                     <user-report></user-report>
@@ -210,7 +210,7 @@
                 <div class="col-12 col-md-12 col-lg-6 mb-2 mt-5 wow animate__animated animate__zoomIn">
                     <div class="d-flex justify-content-between align-center mb-3">
                         <div class="h3-title">Báo cáo giáo cụ</div>
-                        <nuxt-link class="watch-more" to="/">Xem thêm</nuxt-link>
+                        <nuxt-link class="watch-more" to="/admin/materials">Xem thêm</nuxt-link>
                     </div>
 
                     <CardMaterials></CardMaterials>
@@ -219,7 +219,7 @@
                 <div class="col-12 col-md-12 col-lg-6 mb-2 mt-5 wow animate__animated animate__zoomIn">
                     <div class="d-flex justify-content-between align-center mb-3">
                         <div class="h3-title">Báo cáo đào tạo</div>
-                        <nuxt-link class="watch-more" to="/">Xem thêm</nuxt-link>
+                        <nuxt-link class="watch-more" to="/admin/lsm/result-training">Xem thêm</nuxt-link>
                     </div>
                     <div>
                         <card-result-training></card-result-training>

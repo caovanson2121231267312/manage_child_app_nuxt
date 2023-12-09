@@ -23,15 +23,30 @@
                     </div>
                 </div>
 
+                <div class="d-flex align-item mb-2">
+                    <div class="me-3">
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="5" cy="5" r="5" fill="#0056B1" />
+                        </svg>
+                        <span>Đang hoạt động</span>
+                    </div>
+                    <div>
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="5" cy="5" r="5" fill="#FC4D32" />
+                        </svg>
+                        <span>Dừng hoạt động</span>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-6">
                         <div class="card-order">
                             <div class="span-title">SL User Phụ huynh</div>
                             <div class="mt-3">
-                                <div class="text">{{ data?.phuHuynh?.dang_hoat_dong }}</div>
+                                <div class="text">{{ (data?.phuHuynh?.dang_hoat_dong * 100) / data?.phuHuynh?.tong }} %</div>
                                 <div class="text-center">
                                     <svg width="126" height="32" viewBox="0 0 126 32" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                        xmlns="http://www.w3.org/2000/svg"  v-b-tooltip.hover :title="data?.phuHuynh?.dung_hoat_dong">
                                         <path opacity="0.1" fill-rule="evenodd" clip-rule="evenodd"
                                             d="M1.10571 21.6641C1.10571 21.6641 5.97398 20.9348 11.5089 22.6869C22.0361 26.0192 22.6366 19.9169 26.5402 16.9745C30.1115 14.2826 33.0692 15.925 37.0456 19.2171C39.9784 21.6451 44.2526 25.7208 48.6789 25.0647C52.7251 24.4649 55.5935 19.6847 61.2019 18.469C65.6469 17.5055 69.2592 20.1525 74.3776 19.2171C81.3212 17.9481 84.4228 10.4777 89.3854 10.4777C95.5103 10.4777 99.8226 4.15942 105.395 4.15942C110.934 4.15942 111.686 7.87471 117.745 10.4777C122.377 12.4677 124.606 10.4777 124.606 10.4777V31.8018H1.10571V21.6641Z"
                                             fill="url(#paint0_linear_40_2260)" />
@@ -48,7 +63,7 @@
                                         </defs>
                                     </svg>
                                     <svg width="126" height="32" viewBox="0 0 126 32" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                        xmlns="http://www.w3.org/2000/svg" v-b-tooltip.hover :title="data?.phuHuynh?.dang_hoat_dong">
                                         <path opacity="0.1" fill-rule="evenodd" clip-rule="evenodd"
                                             d="M1 21.5784C1 21.5784 5.86827 20.8491 11.4032 22.6012C21.9303 25.9335 22.5309 19.8312 26.4344 16.8888C30.0058 14.1969 32.9635 15.8393 36.9399 19.1314C39.8727 21.5594 44.1469 25.6351 48.5732 24.979C52.6194 24.3792 55.4877 19.599 61.0961 18.3833C65.5411 17.4198 69.1535 20.0668 74.2719 19.1314C81.2155 17.8624 84.3171 10.392 89.2797 10.392C95.4046 10.392 99.7169 4.07373 105.289 4.07373C110.828 4.07373 111.58 7.78902 117.639 10.392C122.271 12.382 124.5 10.392 124.5 10.392V31.7161H1V21.5784Z"
                                             fill="url(#paint0_linear_40_2276)" />
@@ -73,10 +88,10 @@
                         <div class="card-order">
                             <div class="span-title">SL User Giáo viên</div>
                             <div class="mt-3">
-                                <div class="text">{{ data?.giaoVien?.dang_hoat_dong }}</div>
+                                <div class="text">{{ (data?.giaoVien?.dang_hoat_dong * 100) / data?.giaoVien?.tong }} %</div>
                                 <div class="text-center">
                                     <svg width="126" height="32" viewBox="0 0 126 32" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                        xmlns="http://www.w3.org/2000/svg" v-b-tooltip.hover :title="data?.giaoVien?.dung_hoat_dong">
                                         <path opacity="0.1" fill-rule="evenodd" clip-rule="evenodd"
                                             d="M1.10571 21.6641C1.10571 21.6641 5.97398 20.9348 11.5089 22.6869C22.0361 26.0192 22.6366 19.9169 26.5402 16.9745C30.1115 14.2826 33.0692 15.925 37.0456 19.2171C39.9784 21.6451 44.2526 25.7208 48.6789 25.0647C52.7251 24.4649 55.5935 19.6847 61.2019 18.469C65.6469 17.5055 69.2592 20.1525 74.3776 19.2171C81.3212 17.9481 84.4228 10.4777 89.3854 10.4777C95.5103 10.4777 99.8226 4.15942 105.395 4.15942C110.934 4.15942 111.686 7.87471 117.745 10.4777C122.377 12.4677 124.606 10.4777 124.606 10.4777V31.8018H1.10571V21.6641Z"
                                             fill="url(#paint0_linear_40_2260)" />
@@ -93,7 +108,7 @@
                                         </defs>
                                     </svg>
                                     <svg width="126" height="32" viewBox="0 0 126 32" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                        xmlns="http://www.w3.org/2000/svg" v-b-tooltip.hover :title="data?.giaoVien?.dang_hoat_dong">
                                         <path opacity="0.1" fill-rule="evenodd" clip-rule="evenodd"
                                             d="M1 21.5784C1 21.5784 5.86827 20.8491 11.4032 22.6012C21.9303 25.9335 22.5309 19.8312 26.4344 16.8888C30.0058 14.1969 32.9635 15.8393 36.9399 19.1314C39.8727 21.5594 44.1469 25.6351 48.5732 24.979C52.6194 24.3792 55.4877 19.599 61.0961 18.3833C65.5411 17.4198 69.1535 20.0668 74.2719 19.1314C81.2155 17.8624 84.3171 10.392 89.2797 10.392C95.4046 10.392 99.7169 4.07373 105.289 4.07373C110.828 4.07373 111.58 7.78902 117.639 10.392C122.271 12.382 124.5 10.392 124.5 10.392V31.7161H1V21.5784Z"
                                             fill="url(#paint0_linear_40_2276)" />
@@ -183,7 +198,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .text-c-danger {
     color: #FA4D32;
 }

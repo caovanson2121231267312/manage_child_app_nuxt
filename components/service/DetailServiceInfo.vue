@@ -281,9 +281,41 @@
                                 Gán nội dung khảo sát
                             </h6>
 
-                            <div>
+                            <div class="position-relative">
                                 <b-form-input @change="khao_sat()" v-model="noi_dung_khao_sat"
                                     placeholder="Nhập đường dẫn"></b-form-input>
+                                <span class="show_s">
+                                    <v-menu offset-y open-on-hover transition="scale-transition">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <div v-bind="attrs" v-on="on">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="4" height="18"
+                                                    viewBox="0 0 4 18" fill="none">
+                                                    <path
+                                                        d="M2 10C2.55228 10 3 9.55228 3 9C3 8.44772 2.55228 8 2 8C1.44772 8 1 8.44772 1 9C1 9.55228 1.44772 10 2 10Z"
+                                                        stroke="#979797" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path
+                                                        d="M2 3C2.55228 3 3 2.55228 3 2C3 1.44772 2.55228 1 2 1C1.44772 1 1 1.44772 1 2C1 2.55228 1.44772 3 2 3Z"
+                                                        stroke="#979797" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path
+                                                        d="M2 17C2.55228 17 3 16.5523 3 16C3 15.4477 2.55228 15 2 15C1.44772 15 1 15.4477 1 16C1 16.5523 1.44772 17 2 17Z"
+                                                        stroke="#979797" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </div>
+                                        </template>
+                                        <v-list>
+                                            <v-list-item>
+                                                <v-list-item-title @click="show_edit(item?.id)">Sửa khảo sát
+                                                </v-list-item-title>
+                                            </v-list-item>
+                                            <v-list-item>
+                                                <v-list-item-title @click="delete_khaosat(item?.id)">Xóa</v-list-item-title>
+                                            </v-list-item>
+                                        </v-list>
+                                    </v-menu>
+                                </span>
                                 <i class="sm-i">{{ data?.noi_dung_khao_sat }}</i>
                             </div>
                         </div>
@@ -718,10 +750,15 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="text-danger fw-bold span-2 cp" v-b-popover.hover.right="item?.ghi_chu"
-                                        :title="item?.tieu_de">
-                                        <b>{{ formatCurrency(item?.tong_tien) }}</b>
-                                    </span>
+                                    <div class="d-flex justify-content-between align-items-center w-100">
+                                        <span class="text-danger fw-bold span-2 cp" v-b-popover.hover.right="item?.ghi_chu"
+                                            :title="item?.tieu_de">
+                                            <b>{{ formatCurrency(item?.tong_tien) }}</b>
+                                        </span>
+                                        <span class="cp text-danger">
+                                            <span @click="delete_phuPhi(item?.id)" class="mdi mdi-trash-can-outline"></span>
+                                        </span>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
@@ -755,6 +792,29 @@
             </v-card>
         </div>
         <!--  -->
+
+
+        <b-modal id="my-modal-edit" ref="my-modal-edit" hide-footer centered title="Sửa khảo sát">
+            <template #default="{ hide }">
+                <div>
+
+                    <div class="my-4 pb-3">
+                        <div>
+                            <b-form-group>
+                                <label>Gán nội dung khảo sát:</label>
+                                <b-form-input name="link" v-model="link_edit" placeholder="Nhập đường dẫn"></b-form-input>
+                            </b-form-group>
+                        </div>
+
+                    </div>
+                    <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                        <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                        <button class=" btn-delete ms-1" @click="edit_confirm()">Xác nhận</button>
+                    </div>
+                </div>
+
+            </template>
+        </b-modal>
     </div>
 </template>
 
@@ -768,6 +828,8 @@ export default {
     data() {
         return {
             noi_dung_khao_sat: null,
+            link_edit: null,
+            edit_id: null,
         };
     },
     props: {
@@ -807,6 +869,48 @@ export default {
         }
     },
     methods: {
+        show_edit(id) {
+            this.edit_id = id
+            this.$refs['my-modal-edit'].show()
+        },
+        async delete_khaosat() {
+            const formData = new FormData()
+            formData.append('id', this.data?.id)
+            formData.append('noi_dung_khao_sat', this.link_edit ?? ' ')
+
+            await api.post('don-dich-vu/cap-nhat-noi-dung-khao-sat', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-edit'].hide()
+                    window.location.reload();
+                    this.load_data()
+                }
+            })
+        },
+        async edit_confirm() {
+            if (!this.link_edit) {
+                toastr.error('Bạn cần nhập đường dẫn khảo sát');
+                return
+            }
+            const formData = new FormData()
+            formData.append('id', this.data?.id)
+            formData.append('noi_dung_khao_sat', this.link_edit ?? '')
+
+            await api.post('don-dich-vu/cap-nhat-noi-dung-khao-sat', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-edit'].hide()
+                    window.location.reload();
+                    this.load_data()
+                }
+            })
+        },
         async khao_sat() {
             if (!this.noi_dung_khao_sat) {
                 toastr.error('Bạn cần nhập đường dẫn khảo sát');
@@ -828,9 +932,47 @@ export default {
         },
         change_page(content = null) {
             window.open(content, '_blank');
-        }
+        },
+        async delete_phuPhi(id) {
+            const formData = new FormData();
+            formData.append('phu_phi_id', id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá phụ phí đã chọn!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có xoá nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('don-dich-vu/xoa-phu-phi', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Deleted!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            // window.location.reload();
+                            this.load_data()
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
+
+        },
     },
     mounted() {
+        this.link_edit = this.data?.noi_dung_khao_sat
         this.noi_dung_khao_sat = this.data?.noi_dung_khao_sat
     }
 }
@@ -842,6 +984,14 @@ table {
     padding: 0 !important;
 }
 
+.show_s {
+    position: absolute;
+    cursor: pointer;
+    right: 10px;
+    top: 7px;
+    width: 20px;
+    text-align: center;
+}
 
 .blade-card {
     display: flex;
@@ -935,4 +1085,5 @@ table {
 
 .sm-i {
     font-size: 8px;
-}</style>
+}
+</style>

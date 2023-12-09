@@ -449,11 +449,11 @@
                     <b-form-input class="search1" v-model="text"
                         placeholder="Tìm ca dạy, giáo viên, phụ huynh"></b-form-input>
                 </div>
-                <div class="search2">
+                <!-- <div class="search2">
                     <v-btn icon large x-large to="/admin/orders">
                         <span class="mdi mdi-magnify fs-ison"></span>
                     </v-btn>
-                </div>
+                </div> -->
                 <div class="">
                     <v-btn icon large x-large to="/admin/my/notification">
                         <img class="v-btn" src="@/static/images/icons/bell.svg">
@@ -471,6 +471,9 @@
                 </div>
             </div>
 
+            <!-- <div class="w-100">
+                <b-form-input class="w-100" v-model.lazy="tuKhoa" placeholder="Tìm kiếm đơn hàng"></b-form-input>
+            </div> -->
 
 
             <!-- <v-btn icon @click.stop="rightDrawer = !rightDrawer">
@@ -568,6 +571,8 @@ export default {
                 },
             ],
             activeItem: null,
+            timeOut: null,
+            timer: 700,
         }
     },
     methods: {

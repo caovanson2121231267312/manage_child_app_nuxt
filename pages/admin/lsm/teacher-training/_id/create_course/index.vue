@@ -112,7 +112,7 @@
                                         fill="#FFB761" />
                                 </svg>
 
-                                <span class="service-title">Tiêu đề</span>
+                                <span class="service-title">Tên chương trình</span>
                             </span>
 
                         </div>
@@ -270,6 +270,10 @@ export default {
             })
         },
         async send_data(event) {
+            if(this.tieu_de == '' || this.tieu_de == null) {
+                toastr.error('Vui lòng nhập đủ thông tin');
+                return
+            }
             const formData = new FormData()
             formData.append('bat_khoa_hoc', this.bat_khoa_hoc == true ? 1 : 0)
             formData.append('tieu_de', this.tieu_de)

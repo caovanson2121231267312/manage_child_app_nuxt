@@ -34,7 +34,7 @@
 
             <v-row class="mt-5">
 
-                <v-col class="mt-0 pt-0" xs="12" sm="12" md="12" lg="7" xl="7">
+                <v-col class="mt-0 pt-0" xs="12" sm="12" md="12" lg="8" xl="8">
                     <table class="table table-hover table-striped">
                         <thead class="thead-light">
                             <tr>
@@ -42,41 +42,29 @@
                                     <span>Phân quyền</span>
                                 </th>
 
-                                <th>
-                                    <span class="admin center " style="color: #FC4D32;">Admin</span>
+                                <th v-for="(item, n) in data?.vai_tro" v-bind:key="n">
+                                    <span class="admin center " style="color: #00C092;">{{ item?.name }}</span>
                                 </th>
 
-                                <th>
+                                <!-- <th>
                                     <span class="leader center " style="color: #00C092;">Leader KD</span>
                                 </th>
 
                                 <th>
                                     <span class="leaderdt center " style="color: #0056B1;">Leader ĐT</span>
-                                </th>
+                                </th> -->
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="n in 12" v-bind:key="n" class="">
+                            <tr v-for="(item, n) in data?.chuc_nang" v-bind:key="n" class="">
                                 <td>
                                     <div>
-                                        <div class="role-title mb-2">QL đơn dịch vụ</div>
-                                        <div class="role-span">Quyền Gán GV cho đơn</div>
+                                        <div class="role-title mb-2">{{ item?.name }}</div>
+                                        <div class="role-span">{{ item?.ghi_chu }}</div>
                                     </div>
                                 </td>
-                                <td>
-                                    <div class="checkbox-group">
-                                        <b-form-checkbox size="lg"></b-form-checkbox>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="checkbox-group">
-                                        <b-form-checkbox size="lg"></b-form-checkbox>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="checkbox-group">
-                                        <b-form-checkbox size="lg"></b-form-checkbox>
-                                    </div>
+                                <td v-for="(i, n) in data?.vai_tro" v-bind:key="n">
+                                    <b-form-checkbox @change="set_quyen(i?.id, item?.id)" :checked="isChecked(i?.id, item?.id)" v-if="i?.id" size="lg"></b-form-checkbox>
                                 </td>
                             </tr>
                         </tbody>
@@ -88,6 +76,9 @@
 </template>
 
 <script>
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -97,6 +88,7 @@ export default {
                 name: 'Danh sách Quản trị viên',
                 previous: '/admin/users/admins'
             },
+            data: null,
             items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
             selected: 'A',
             options: [
@@ -104,11 +96,70 @@ export default {
                 { item: 'B', name: 'Option B' },
                 { item: 'D', name: 'Option C', notEnabled: true },
                 { item: { d: 1 }, name: 'Option D' }
-            ]
+            ],
+            phanQuyen: [],
         };
     },
-    computed: {},
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        isChecked(vai_tro_id, chuc_nang_id) {
+            // console.log('vai_tro_id', vai_tro_id)
+            // console.log('chuc_nang_id', chuc_nang_id)
+            for(var i=0; i < this.phanQuyen.length; i++) {
+                // console.log(this.phanQuyen[i])
+                if(this.phanQuyen[i].vai_tro_id == vai_tro_id && this.phanQuyen[i].chuc_nang_id == chuc_nang_id) {
+                    // console.log('hello')
+                    return true;
+                }
+            }
+            return false;
+        },
+        async set_quyen(vai_tro_id, chuc_nang_id) {
+            console.log(vai_tro_id, chuc_nang_id)
+            const formData = new FormData()
+
+            let check = 1;
+            formData.append('vai_tro_id', vai_tro_id)
+            formData.append('chuc_nang_id', chuc_nang_id)
+
+            for(var i=0; i < this.phanQuyen.length; i++) {
+                if(this.phanQuyen[i].vai_tro_id == vai_tro_id && this.phanQuyen[i].chuc_nang_id == chuc_nang_id) {
+                    check = 0;
+                }
+            }
+
+            formData.append('checked', check ?? 0)
+
+            await api.post('admin-api/sua-phan-quyen', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.load_data();
+                }
+            })
+
+            // this.load_data();
+        },
+        async load_data() {
+            await api.get(`admin-api/phan-quyen`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data
+                this.phanQuyen = res?.data?.data?.phanQuyen
+            })
+        },
+    },
     mounted() {
+        this.load_data();
         this.$store.dispatch('title/set_title', this.title);
     },
     components: {}

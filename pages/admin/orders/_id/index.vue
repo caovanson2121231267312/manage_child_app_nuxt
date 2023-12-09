@@ -68,7 +68,7 @@
                         <v-divider class="m-0 p-0"></v-divider>
 
                         <v-card-text>
-                            <table class="table table-borderless">
+                            <!-- <table class="table table-borderless">
                                 <tr v-for="(item, n) in data?.phuPhi" v-bind:key="n">
                                     <td>
                                         <span>
@@ -87,7 +87,7 @@
                                         </span>
                                     </td>
                                 </tr>
-                            </table>
+                            </table> -->
                             <b-button class="w-100 text-secondary rounded-pill" variant="outline-secondary">
                                 <span class="mdi mdi-plus-circle-outline"></span>
                                 <span>
@@ -198,11 +198,11 @@
                                             </h6>
                                             <div>
                                                 <span class="me-5">
-                                                    {{ data?.giaoVien?.trinh_do }}
+                                                    Giáo viên
                                                 </span>
-                                                <span class="text-warning">
+                                                <span class="text-warning text-star blade-start">
                                                     <span class="mdi mdi-star me-1"></span>
-                                                    {{ data?.giaoVien?.danh_gia }}
+                                                    <span class="text-dark">{{ data?.giaoVien?.danh_gia }}</span>
                                                 </span>
                                             </div>
                                         </div>
@@ -235,15 +235,23 @@
                             </v-card-text>
                             <v-divider class="m-0 p-0"></v-divider>
                             <v-card-text>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <b-button class="w-100 text- rounded-pill" variant="outline-danger"
+                                <div v-if="data?.trang_thai == 'Đang dạy'" class="d-flex align-items-center justify-content-between">
+                                    <div class="w-100 btn btn-doi text- rounded-pill" variant="outline-danger"
                                         v-b-modal.my-modal-teacher>
                                         Đổi giáo viên
-                                    </b-button>
-                                    <b-button class="w-100 text- rounded-pill ms-4" variant="outline-primary"
+                                    </div>
+                                    <div class="w-100 btn btn-dieu-lai rounded-pill ms-4" variant="outline-primary"
                                         v-b-modal.my-modal-teacher>
                                         Điều lại
-                                    </b-button>
+                                    </div>
+                                </div>
+                                <div v-else class="d-flex align-items-center justify-content-between">
+                                    <div class="w-100 btn btn-deactive rounded-pill">
+                                        Đổi giáo viên
+                                    </div>
+                                    <div class="w-100 btn btn-deactive rounded-pill ms-4" >
+                                        Điều lại
+                                    </div>
                                 </div>
                             </v-card-text>
                         </v-card>
@@ -253,7 +261,10 @@
 
                 <b-modal id="my-modal-teacher" ref="my-modal-teacher" hide-footer centered title="Điều giáo viên">
                     <template #default="{ hide }">
-                        <form>
+                        <div>
+                            <span>Có <b class="text-primary">{{ teachers?.length ?? 0 }}</b> giáo viên nhận lịch</span>
+                        </div>
+                        <div>
 
                             <div class="my-2">
                                 <div v-for="(item, n) in teachers" v-bind:key="n">
@@ -295,13 +306,18 @@
                                     </div>
                                 </div>
 
+                                <div class="mt-5">
+                                    <b-form-input class="w-100" v-model.lazy="tuKhoa"
+                                        placeholder="Gán giáo viên cụ thể"></b-form-input>
+                                </div>
+
                             </div>
                             <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
                                 <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
                                 <button type="button" class=" btn-delete ms-1" @click="add_teacher()">Điều giáo
                                     viên</button>
                             </div>
-                        </form>
+                        </div>
 
                     </template>
                 </b-modal>
@@ -312,15 +328,17 @@
                 <div class="mt-6"
                     v-if="data?.trang_thai == 'Chưa có GV' || data?.trang_thai == 'Đang khảo sát' || data?.trang_thai == 'Đang dạy'">
                     <div class="d-flex">
-                        <b-button class="w-100 text-light rounded-pill" variant="danger" v-b-modal.my-modal-cancel>
+                        <div class="w-100 text-light rounded-pill btn btn-cancel-order" variant="danger"
+                            v-b-modal.my-modal-cancel>
                             Hủy đơn
-                        </b-button>
-                        <b-button class="w-100 text-light rounded-pill mx-4" variant="info" v-b-modal.my-modal-rollback>
+                        </div>
+                        <div class="w-100 text-light rounded-pill mx-4 btn btn-hoan" variant="info"
+                            v-b-modal.my-modal-rollback>
                             Hoàn tiền
-                        </b-button>
-                        <b-button class="w-100 text-light rounded-pill" variant="warning">
+                        </div>
+                        <div class="w-100 text-light rounded-pill btn btn-chuong" variant="warning">
                             Chương trình
-                        </b-button>
+                        </div>
                     </div>
 
                     <div class="mt-4" v-if="data?.trang_thai == 'Chưa có GV'">
@@ -355,23 +373,30 @@
 
                 <!-- // đơn đã huỷ -->
                 <div class="mt-6" v-if="data?.trang_thai == 'Đã huỷ' || data?.trang_thai == 'Đã hủy'">
+                    <div class="mb-3">
+                        <div>
+                            <b>Lý do hủy</b>
+                        </div>
+                        <b-form-textarea id="textarea" :value="data?.ghi_chu" placeholder="Lý do hủy" rows="3"
+                            max-rows="6"></b-form-textarea>
+                    </div>
                     <div class="d-flex">
-                        <b-button disabled class="w-100 text-light rounded-pill" variant="danger">
+                        <div disabled class="w-100 rounded-pill btn btn-deactive" variant="danger">
                             Hủy đơn
-                        </b-button>
-                        <b-button disabled class="w-100 text-light rounded-pill mx-4" variant="info">
+                        </div>
+                        <div disabled class="w-100 rounded-pill mx-4 btn btn-deactive" variant="info">
                             Hoàn tiền
-                        </b-button>
-                        <b-button disabled class="w-100 text-light rounded-pill" variant="warning">
+                        </div>
+                        <div disabled class="w-100 rounded-pill btn btn-deactive" variant="warning">
                             Chương trình
-                        </b-button>
+                        </div>
                     </div>
 
                     <div class="mt-4">
-                        <b-button class="w-100 text-light rounded-pill" variant="danger">
+                        <div class="w-100 text-light rounded-pill btn btn-canceled" variant="danger">
                             <span class="mdi mdi-close-circle-outline"></span>
                             <span>Đơn đã hủy</span>
-                        </b-button>
+                        </div>
                     </div>
                 </div>
 
@@ -400,19 +425,19 @@
                 <!-- // Đơn hoàn -->
                 <div class="mt-6" v-if="data?.trang_thai == 'Đơn hoàn'">
                     <div class="d-flex">
-                        <b-button disabled class="w-100 text-light rounded-pill" variant="danger">
+                        <div disabled class="w-100 rounded-pill btn btn-deactive" variant="danger">
                             Hủy đơn
-                        </b-button>
-                        <b-button disabled class="w-100 text-light rounded-pill mx-4" variant="info">
+                        </div>
+                        <div disabled class="w-100 rounded-pill mx-4 btn btn-deactive" variant="info">
                             Hoàn tiền
-                        </b-button>
-                        <b-button disabled class="w-100 text-light rounded-pill" variant="warning">
+                        </div>
+                        <div disabled class="w-100 rounded-pill btn btn-deactive" variant="warning">
                             Chương trình
-                        </b-button>
+                        </div>
                     </div>
 
                     <div class="mt-4">
-                        <b-button class="w-100 text-light rounded-pill" variant="primary">
+                        <b-button class="w-100 text-light rounded-pill btn btn-hoaned" variant="primary">
                             <span class="mdi mdi-check-circle"></span>
                             <span>Đơn hoàn</span>
                         </b-button>
@@ -454,20 +479,21 @@
                         <div>
                             <b-form-group>
                                 <label>Số lượng buổi hoàn:</label>
-                                <b-form-input v-model="text" type="number" placeholder="Số lượng buổi hoàn"></b-form-input>
+                                <b-form-input v-model="so_buoi_hoan" type="number"
+                                    placeholder="Số lượng buổi hoàn"></b-form-input>
                             </b-form-group>
                         </div>
                         <div>
                             <b-form-group>
                                 <label>Số tiền:</label>
-                                <b-form-input v-model="text" type="number" placeholder="Số tiền"></b-form-input>
+                                <b-form-input v-model="so_tien_hoan" type="number" placeholder="Số tiền"></b-form-input>
                             </b-form-group>
                         </div>
 
                     </div>
                     <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
                         <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                        <button type="button" class=" btn-delete ms-1">Đồng ý</button>
+                        <button type="button" class=" btn-delete ms-1" @click="confirm_hoan()">Đồng ý</button>
                     </div>
                 </form>
 
@@ -546,6 +572,11 @@ export default {
             total: 0,
             nap_tien: null,
             nap_tien_id: null,
+            so_buoi_hoan: 0,
+            so_tien_hoan: 0,
+            tuKhoa: null,
+            timeOut: null,
+            timer: 400,
         };
     },
     components: {
@@ -574,6 +605,25 @@ export default {
                 this.teacher_id = id
             }
             console.log(this.teacher_id)
+        },
+        async confirm_hoan() {
+            const formData = new FormData()
+            formData.append('id', this.id)
+            formData.append('so_buoi_hoan', this.so_buoi_hoan)
+            formData.append('so_tien_hoan', this.so_tien_hoan)
+
+            await api.post('don-dich-vu/hoan-don', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-rollback'].hide()
+                    this.so_buoi_hoan = 0
+                    this.so_tien_hoan = 0
+                    this.load_data();
+                }
+            })
         },
         async add_teacher() {
             if (!this.teacher_id) {
@@ -609,7 +659,7 @@ export default {
                 })
             })
 
-            await api.get('don-dich-vu/danh-sach-giao-vien?tuKhoa=&page=1&limit=100&id=' + this.id, {
+            await api.get(`don-dich-vu/danh-sach-giao-vien?tuKhoa=${this.tuKhoa ?? ''}&page=1&limit=100&id=` + this.id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -720,6 +770,18 @@ export default {
         this.load_data()
         this.load_kd()
     },
+    watch: {
+        tuKhoa() {
+            clearTimeout(this.timeOut);
+            console.log(this.tuKhoa)
+
+            this.timeOut = setTimeout(() => {
+                this.load_kd()
+                // this.load_kd()
+
+            }, this.timer);
+        },
+    }
 }
 </script>
 
