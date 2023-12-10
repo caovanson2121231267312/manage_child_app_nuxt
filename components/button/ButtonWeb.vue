@@ -26,7 +26,8 @@ export default {
 }
 
 .button {
-    padding: 9px 27px;
+    // padding: 9px 27px;
+    padding: 12px 32px;
     border-radius: 46px;
     background: #E5E5E5;
     color: #2D2D2D;
