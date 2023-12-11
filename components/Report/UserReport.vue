@@ -431,4 +431,11 @@ export default {
         width: 55px;
     }
 }
+
+@media (max-width: 600px) {
+    .text-center {
+        overflow: hidden;
+    }
+
+}
 </style>

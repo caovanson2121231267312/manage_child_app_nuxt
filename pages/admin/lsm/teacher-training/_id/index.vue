@@ -387,16 +387,44 @@ export default {
 
         const swiper = new Swiper('#sw1', {
             modules: [Pagination],
-            slidesPerView: 2,
+            // slidesPerView: 2,
             spaceBetween: 25,
             freeMode: true,
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 25,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 25,
+                },
+                1024: {
+                    slidesPerView: 2,
+                    spaceBetween: 25,
+                },
+            },
         });
 
         const swiper1 = new Swiper('#sw2', {
             modules: [Pagination],
-            slidesPerView: 2,
+            // slidesPerView: 2,
             spaceBetween: 25,
             freeMode: true,
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 25,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 25,
+                },
+                1024: {
+                    slidesPerView: 2,
+                    spaceBetween: 25,
+                },
+            },
         });
     },
 }

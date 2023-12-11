@@ -8,7 +8,7 @@
                 <b-row>
                     <b-col cols="12" sm="12">
                         <div class="mb-7 ">
-                            <div class="d-flex align-items-center flex-wrap">
+                            <div class="d-flex align-items-center">
                                 <nuxt-link to="/admin/lsm/teacher-training">
                                     <button-filter>Quản lý chương trình</button-filter>
                                 </nuxt-link>
@@ -210,7 +210,7 @@ export default {
     display: block;
     margin: 10px 0 0px 0;
     height: 100%;
-    max-height: 116px;
+    max-height: 149px;
 
     .card-service-body {
         display: flex;

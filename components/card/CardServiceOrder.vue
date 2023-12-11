@@ -158,7 +158,7 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <div class="align-top" style="width: 82px">
+                                            <div class="align-top" style="width: 95px">
                                                 <span class="me-1">
                                                     <svg width="12" height="13" viewBox="0 0 12 13" fill="none"
                                                         xmlns="http://www.w3.org/2000/svg">

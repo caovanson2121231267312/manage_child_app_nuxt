@@ -611,6 +611,7 @@ export default {
                 this.hop_dong_dich_vu = user?.hop_dong_dich_vu
                 this.ten_dich_vu = user?.ten_dich_vu
                 this.do_tuoi_id = user?.do_tuoi_id
+                this.link = user?.link
                 const ql = res?.data?.data?.quyenLoi.map(function(item,index){
                     return {
                         id: item.index,

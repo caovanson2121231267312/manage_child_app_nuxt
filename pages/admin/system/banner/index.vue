@@ -221,7 +221,7 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Có xoá nó!',
+                confirmButtonText: 'Chắc chắn/Chấp nhận!',
                 cancelButtonText: 'Huỷ'
             }).then(async (result) => {
                 if (result.isConfirmed) {
@@ -232,7 +232,7 @@ export default {
                         if (res?.status == 200) {
                             // toastr.success(res?.data?.message);
                             Swal.fire(
-                                'Deleted!',
+                                'Đã xoá!',
                                 res?.data?.message,
                                 'success'
                             )

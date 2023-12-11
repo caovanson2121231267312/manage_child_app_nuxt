@@ -181,7 +181,7 @@ export default {
     display: block;
     margin: 10px 0 0px 0;
     height: 100%;
-    max-height: 116px;
+    max-height: 153px;
 
     .card-service-body {
         display: flex;

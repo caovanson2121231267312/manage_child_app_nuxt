@@ -326,6 +326,17 @@ export default {
     background: #00C092 !important;
 }
 
+@media (max-width: 600px) {
+    .card-order {
+        .text {
+            font-size: 13px !important;
+        }
+        .text-rate {
+            font-size: 12px;
+        }
+    }
+
+}
 
 .order-service-title {
     color: #2D2D2D;
