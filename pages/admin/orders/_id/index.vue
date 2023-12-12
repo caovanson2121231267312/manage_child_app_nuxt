@@ -98,6 +98,42 @@
                     </v-card>
                 </div>
 
+                <!-- Chương trình: Bảo mẫu Pro -->
+
+                <div v-if="data?.trang_thai != 'Chưa có GV'">
+                    <div class="mt-6">
+                        <div>
+                            <h5>
+                                Chương trình: <span class="text-primary">{{ data?.dichVu }}</span>
+                            </h5>
+                        </div>
+                        <v-card>
+                            <v-card-text>
+                                <div>
+                                    <b-form-group label="Gán khóa học" class="mb-0">
+                                        <b-form-select></b-form-select>
+                                    </b-form-group>
+                                </div>
+                                <div class="mt-2">
+                                    <b-form-group label="Gán gói học" class="mb-0">
+                                        <b-form-select></b-form-select>
+                                    </b-form-group>
+                                </div>
+                                <div class="mt-2">
+                                    <b-form-group label="Gán bài học" class="mb-0">
+                                        <b-form-select></b-form-select>
+                                    </b-form-group>
+                                </div>
+                                <div class="mt-4">
+                                    <span class="blade-primary">
+                                        GD001 <span class="mdi mdi-window-close ms-2 cp"></span>
+                                    </span>
+                                </div>
+                            </v-card-text>
+                        </v-card>
+                    </div>
+                </div>
+
 
                 <!-- Thông tin quản lý  -->
                 <div v-if="data?.trang_thai == 'Đang khảo sát'">
@@ -235,7 +271,8 @@
                             </v-card-text>
                             <v-divider class="m-0 p-0"></v-divider>
                             <v-card-text>
-                                <div v-if="data?.trang_thai == 'Đang dạy'" class="d-flex align-items-center justify-content-between">
+                                <div v-if="data?.trang_thai == 'Đang dạy'"
+                                    class="d-flex align-items-center justify-content-between">
                                     <div class="w-100 btn btn-doi text- rounded-pill" variant="outline-danger"
                                         v-b-modal.my-modal-teacher>
                                         Đổi giáo viên
@@ -249,7 +286,7 @@
                                     <div class="w-100 btn btn-deactive rounded-pill">
                                         Đổi giáo viên
                                     </div>
-                                    <div class="w-100 btn btn-deactive rounded-pill ms-4" >
+                                    <div class="w-100 btn btn-deactive rounded-pill ms-4">
                                         Điều lại
                                     </div>
                                 </div>
@@ -786,6 +823,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.blade-primary {
+    border-radius: 46px;
+    border: 1px solid #0056B1;
+    background: rgba(0, 86, 177, 0.10);
+    padding: 8px 20px;
+    color: #0056B1;
+    text-align: center;
+    font-family: SVN-Gilroy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
 table {
     margin: 0 !important;
     padding: 0 !important;

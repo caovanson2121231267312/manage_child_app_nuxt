@@ -4,8 +4,10 @@
         <v-row>
             <v-col xs="12" sm="12" md="12" lg="7" xl="7">
                 <div class="card">
-                    <div class="card-header bg-primary text-light text-center">
-                        <b>Buổi {{ data?.buoi ?? 1 }} / {{ data?.tong_buoi }}</b>
+                    <div class="card-header text-light d-flex justify-content-between align-items-center">
+                        <span class="mdi mdi-chevron-left fs-5" @click="prev()"></span>
+                        <strong>Buổi {{ data?.buoi ?? 1 }} / {{ data?.tong_buoi }}</strong>
+                        <span class="mdi mdi-chevron-right fs-5" @click="next()"></span>
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
@@ -29,7 +31,7 @@
                                     <strong class="text-dark">
                                         Nội dung hoạt động buổi {{ data?.buoi ?? 1 }}
                                     </strong>
-                                    <p>...</p>
+                                    <p class="text-secondary">{{ data?.ke_hoach_day ?? 'Chưa cập nhật nội dung ...' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -37,10 +39,15 @@
                         <div class="mt-2">
                             <div>
                                 <div>
-                                    <strong class="text-dark">
-                                        Nhận xét buổi học
-                                    </strong>
-                                    <p>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <strong class="text-dark">
+                                            Nhận xét buổi học
+                                        </strong>
+                                        <a class="btn-detail" :href="data?.nhan_xet_buoi_hoc" target="_blank">
+                                            Xem chi tiết <span class="mdi mdi-arrow-right-thin ms-2"></span>
+                                        </a>
+                                    </div>
+                                    <p class="text-secondary">
                                         {{ data?.nhan_xet_buoi_hoc ?? 'Chưa cập nhật' }}
                                     </p>
                                 </div>
@@ -126,6 +133,7 @@ export default {
             phu_phi_li_do: null,
             phu_phi_tien: null,
             xac_nhan_thanh_toan: false,
+            buoi: 1,
         };
     },
     components: {
@@ -145,125 +153,51 @@ export default {
         },
     },
     methods: {
-        clearFiles() {
-            this.$refs['file-input'].reset()
-        },
-        set_teacher(id) {
-            if (this.teacher_id == id) {
-                this.teacher_id = null
-            } else {
-                this.teacher_id = id
-            }
-            console.log(this.teacher_id)
-        },
-        async add_teacher() {
-            if (!this.teacher_id) {
-                toastr.error('Chọn giáo viên để tiếp tục');
-                return
-            }
-            const formData = new FormData()
-            formData.append('id', this.id)
-            formData.append('giao_vien_id', this.teacher_id)
-
-            await api.post('don-dich-vu/dieu-giao-vien', formData, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                if (res?.status == 200) {
-                    toastr.success(res?.data?.message);
-                    this.$refs['my-modal-teacher'].hide()
-                    this.teacher_id = null
-                    this.load_data();
-                }
-            })
-        },
-        async load_kd() {
-            await api.get('don-dich-vu/leader-kinh-doanh', {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                this.kds = res?.data?.data.map(item => {
-                    return {
-                        value: item.id,
-                        text: item.hoten
-                    };
-                })
-            })
-
-            await api.get('don-dich-vu/danh-sach-giao-vien?tuKhoa=&page=1&limit=100&id=' + this.id, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                this.teachers = res?.data?.data
-            })
-        },
         async load_data() {
-            await api.get(`don-dich-vu/tien-do-khoa-hoc?id=${this.id}&buoi=1`, {
+            await api.get(`don-dich-vu/tien-do-khoa-hoc?id=${this.id}&buoi=${this.buoi}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 console.log(res)
                 this.data = res?.data?.tienDo
+                this.buoi = res?.data?.tienDo?.buoi
                 this.giaoVien = res?.data?.giaoVien
             })
         },
-        async add_phu_phi() {
-            const formData = new FormData()
-            formData.append('id', this.id)
-            formData.append('tong_tien', this.phu_phi_tien)
-            formData.append('ghi_chu', this.phu_phi_li_do)
-
-            await api.post('don-dich-vu/them-phu-phi', formData, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                if (res?.status == 200) {
-                    toastr.success(res?.data?.message);
-                    this.$refs['my-modal-them-phu-phi'].hide()
-                    this.phu_phi_tien = null
-                    this.phu_phi_li_do = null
-                    this.load_data();
-                }
-            })
-        },
-        async duyet_don() {
-            const formData = new FormData()
-            formData.append('id', this.id)
-            formData.append('leader_kd_id', this.kds_id)
-            // formData.append('noi_dung_khao_sat', this.noi_dung_khao_sat)
-            formData.append('xac_nhan_thanh_toan', this.xac_nhan_thanh_toan ? 1 : 0)
-
-            await api.post('don-dich-vu/duyet-don', formData, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                if (res?.status == 200) {
-                    toastr.success(res?.data?.message);
-                    this.$refs['my-modal'].hide()
-                    this.kds_id = null
-                    this.load_data();
-                }
-            })
-        },
-        async huy_don() {
-            if (this.li_do_huy == '' || this.li_do_huy == null) {
-                toastr.error('Vui lòng nhập lý do huỷ đơn');
-                return
+        async prev() {
+            this.buoi = this.buoi - 1
+            if (this.buoi <= 0) {
+                this.buoi = this.buoi + 1
+                toastr.error('Số buổi không hợp lệ');
+                return;
             }
-            const formData = new FormData()
-            formData.append('id', this.id)
-            formData.append('li_do_huy', this.li_do_huy)
 
-            await api.post('don-dich-vu/huy-don', formData, {
+            await api.get(`don-dich-vu/tien-do-khoa-hoc?id=${this.id}&buoi=${this.buoi}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                if (res?.status == 200) {
-                    toastr.success(res?.data?.message);
-                    this.$refs['my-modal-cancel'].hide()
-                    this.li_do_huy = null
-                    this.load_data();
-                }
+                console.log(res)
+                this.data = res?.data?.tienDo
+                this.buoi = res?.data?.tienDo?.buoi
+                this.giaoVien = res?.data?.giaoVien
+            })
+        },
+        async next() {
+            this.buoi = this.buoi + 1
+            if (this.buoi > this.data?.tong_buoi) {
+                this.buoi = this.buoi - 1
+                toastr.error('Số buổi không hợp lệ');
+                return;
+            }
+
+            await api.get(`don-dich-vu/tien-do-khoa-hoc?id=${this.id}&buoi=${this.buoi}`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.tienDo
+                this.buoi = res?.data?.tienDo?.buoi
+                this.giaoVien = res?.data?.giaoVien
             })
         },
         async send_data(event) {
@@ -287,7 +221,6 @@ export default {
         this.title.previous = '/admin/orders/' + this.id
         this.$store.dispatch('title/set_title', this.title);
         this.load_data()
-        this.load_kd()
 
         const swiper = new Swiper('#sw1', {
             modules: [Pagination],
@@ -300,6 +233,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card-header {
+    border-radius: 0px 0px 20px 20px;
+    background: #0056B1;
+}
+
+.mdi {
+    font-weight: 700;
+}
+
+.btn-detail {
+    border-radius: 33px;
+    background: #0056B1;
+    padding: 2px 13px;
+    color: #FFF;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+
+    .mdi {
+        font-size: 20px;
+        color: #FFF !important;
+    }
+}
+
+.fs-5 {
+    font-size: 25px;
+    cursor: pointer;
+}
+
 table {
     margin: 0 !important;
     padding: 0 !important;
@@ -336,4 +298,5 @@ button {
     border: 1px solid #4EAEEA;
 
     background: #E7F6FF;
-}</style>
+}
+</style>
