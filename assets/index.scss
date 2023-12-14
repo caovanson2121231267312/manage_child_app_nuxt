@@ -2152,3 +2152,38 @@ ul {
 header {
     z-index: 1000 !important;
 }
+
+.v-toolbar__content {
+    flex-wrap: wrap;
+}
+
+.v-toolbar__title {
+    max-width: 50%;
+}
+
+.search2 {
+    display: none;
+}
+
+.list_search {
+    position: absolute;
+}
+
+.btn:focus, .btn.focus {
+    outline: 0;
+    box-shadow: none !important;
+}
+
+
+.admin-main .btn-group {
+    position: absolute !important;
+}
+
+.admin-main .dropdown-menu {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.fs-user {
+    font-size: 13px;
+}

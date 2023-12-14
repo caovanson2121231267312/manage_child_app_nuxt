@@ -54,6 +54,16 @@
 }
 
 @media (max-width: 600px) {
+    header {
+        height: 120px !important;
+        // border-radius: 0px 0px 20px 20px !important;
+    }
+    .content-mp {
+        padding: 57px 10px 28px 10px !important;
+    }
+    .v-toolbar__content {
+        height: 120px !important;
+    }
     .nav-bar .v-navigation-drawer {
         width: 100% !important;
     }

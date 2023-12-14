@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app class="admin-main">
         <div class="nav-bar">
             <v-navigation-drawer floating width="340" v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed
                 app>
@@ -445,15 +445,26 @@
             <v-spacer />
             <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
             <div class="d-flex align-items-center">
-                <div class="me-2">
-                    <b-form-input class="search1" v-model="text"
+                <div class="me-2 position-relative">
+                    <b-form-input class="search1" v-model="tuKhoa"
                         placeholder="Tìm ca dạy, giáo viên, phụ huynh"></b-form-input>
+                    <b-dropdown ref="dropdown" size="lg" variant="link"
+                        toggle-class="text-decoration-none position-absolute" no-caret>
+                        <template #button-content>
+
+                        </template>
+                        <b-dropdown-item v-for="(item, n) in searchs" v-bind:key="n" href="#">
+                            <div class="d-flex">
+                                <b-avatar button variant="primary" :src="item?.image"
+                                    class="align-baseline me-2"></b-avatar>
+                                <div>
+                                    <span class="d-block fs-user">{{ item?.hoten ?? 'Chưa cập nhật' }}</span>
+                                    <b-badge variant="info">{{ item?.id }}</b-badge>
+                                </div>
+                            </div>
+                        </b-dropdown-item>
+                    </b-dropdown>
                 </div>
-                <!-- <div class="search2">
-                    <v-btn icon large x-large to="/admin/orders">
-                        <span class="mdi mdi-magnify fs-ison"></span>
-                    </v-btn>
-                </div> -->
                 <div class="">
                     <v-btn icon large x-large to="/admin/my/notification">
                         <img class="v-btn" src="@/static/images/icons/bell.svg">
@@ -471,9 +482,10 @@
                 </div>
             </div>
 
-            <!-- <div class="w-100">
-                <b-form-input class="w-100" v-model.lazy="tuKhoa" placeholder="Tìm kiếm đơn hàng"></b-form-input>
-            </div> -->
+            <div class="w-100 search2">
+                <b-form-input class="w-100" v-model.lazy="tuKhoa"
+                    placeholder="Tìm ca dạy, giáo viên, phụ huynh"></b-form-input>
+            </div>
 
 
             <!-- <v-btn icon @click.stop="rightDrawer = !rightDrawer">
@@ -485,16 +497,7 @@
                 <Nuxt />
             </v-container>
         </v-main>
-        <!-- <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-            <v-list>
-                <v-list-item @click.native="right = !right">
-                    <v-list-item-action>
-                        <v-icon light> mdi-repeat </v-icon>
-                    </v-list-item-action>
-                    <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-                </v-list-item>
-            </v-list>
-        </v-navigation-drawer> -->
+
         <v-footer :absolute="!fixed" app>
             <span>&copy; {{ new Date().getFullYear() }}</span>
         </v-footer>
@@ -573,6 +576,8 @@ export default {
             activeItem: null,
             timeOut: null,
             timer: 700,
+            searchs: null,
+            tuKhoa: '',
         }
     },
     methods: {
@@ -593,28 +598,11 @@ export default {
             return this.$route.path.startsWith(targetRoute);
         },
         async logout() {
-            console.log('log 1')
             try {
-                // const data = await api.get('admin-api/logout', {
-                //     'Content-Type': 'application/json',
-                //     // 'Authorization': 'Bearer ' + this.token
-                // })
-
-                // console.log(data)
                 await localStorage.removeItem('user');
                 await localStorage.removeItem('timeLogin');
                 toastr.error('Đăng xuất tài khoản thành công')
                 await this.$router.push('/login');
-                // if (await data?.status == 200) {
-                // await this.$bvToast.toast(data?.data?.message, {
-                //     title: `Thông báo`,
-                //     variant: 'success',
-                //     solid: true
-                // })
-                // localStorage.removeItem('user');
-                // localStorage.removeItem('timeLogin');
-                // this.$router.push('/login');
-                // }
                 console.log('log')
 
             } catch (error) {
@@ -622,6 +610,19 @@ export default {
                     toastr.error(error?.response?.data?.message)
                 }
             }
+        },
+        async search_data() {
+            await api.get('bao-cao/tim-kiem?tuKhoa=' + this.tuKhoa, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.searchs = res?.data?.data
+                this.showDropdown()
+            })
+        },
+        showDropdown() {
+            this.$refs.dropdown.show()
         }
     },
     mounted() {
@@ -642,6 +643,17 @@ export default {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             return storedUser.auth_key
         }
+    },
+    watch: {
+        tuKhoa() {
+            if (this.tuKhoa == '') {
+                return
+            }
+            clearTimeout(this.timeOut);
+            this.timeOut = setTimeout(() => {
+                this.search_data()
+            }, this.timer);
+        },
     },
     head() {
         return {
@@ -675,6 +687,12 @@ export default {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+}
+
+.btn:focus,
+.btn.focus {
+    outline: 0;
+    box-shadow: none !important;
 }
 
 .menu-bar .icon-bar {
