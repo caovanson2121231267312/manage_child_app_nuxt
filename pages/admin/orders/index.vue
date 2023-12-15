@@ -196,7 +196,7 @@ import toastr from 'toastr';
 import CardServiceOrder from '~/components/card/CardServiceOrder.vue';
 
 export default {
-    layout: 'admin',
+    layout: 'admin_order',
     data() {
         return {
             title: {
@@ -208,7 +208,6 @@ export default {
             menu: false,
             modal: false,
             data: null,
-            keyword: null,
             giaoVien: '',
             tuKhoa: '',
             timeOut: null,
@@ -242,6 +241,10 @@ export default {
         };
     },
     computed: {
+        keyword() {
+            console.log(this.$store.getters[`order/keyword`])
+            return this.$store.getters[`order/keyword`]
+        },
         token() {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             return storedUser.auth_key
@@ -373,6 +376,9 @@ export default {
         },
         current_page() {
             this.load_data()
+        },
+        keyword() {
+            this.tuKhoa = this.keyword
         }
     }
 }

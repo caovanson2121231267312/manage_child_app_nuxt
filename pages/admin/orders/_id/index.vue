@@ -111,7 +111,7 @@
                             <v-card-text>
                                 <div>
                                     <b-form-group label="Gán khóa học" class="mb-0">
-                                        <b-form-select></b-form-select>
+                                        <b-form-select v-model="dich_vu_id" :options="dich_vu"></b-form-select>
                                     </b-form-group>
                                 </div>
                                 <div class="mt-2">
@@ -614,6 +614,8 @@ export default {
             tuKhoa: null,
             timeOut: null,
             timer: 400,
+            dich_vu_id: 0,
+            dich_vu: null,
         };
     },
     components: {
@@ -704,6 +706,19 @@ export default {
             })
         },
         async load_data() {
+            await api.get(`dich-vu/danh-sach?page=1&limit=1000&sort=1&tuKhoa=`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.dich_vu = res?.data?.data.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.ten_dich_vu
+                    };
+                })
+            })
+
             await api.get(`don-dich-vu/chi-tiet?id=` + this.id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token

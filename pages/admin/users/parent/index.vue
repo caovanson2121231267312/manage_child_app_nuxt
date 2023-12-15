@@ -33,6 +33,12 @@
                         </nuxt-link>
                     </b-card>
                 </v-col>
+
+                <div class="d-flex justify-content-center mt-4 w-100">
+                    <b-pagination v-model="current_page" :total-rows="total" :per-page="per_page" first-text="First"
+                        prev-text="Prev" next-text="Next" last-text="Last"></b-pagination>
+
+                </div>
             </v-row>
         </div>
     </div>
@@ -44,7 +50,7 @@ import Swal from 'sweetalert2'
 import toastr from 'toastr';
 
 export default {
-    layout: 'admin',
+    layout: 'admin_parent',
     data() {
         return {
             title: {
@@ -53,22 +59,32 @@ export default {
             },
             data: null,
             selectedFilter: '',
+            per_page: 0,
+            current_page: 1,
+            total: 0,
+            tuKhoa: '',
         };
     },
     computed: {
         token() {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             return storedUser.auth_key
-        }
+        },
+        keyword() {
+            return this.$store.getters[`parent/keyword`]
+        },
     },
     methods: {
         async load_data() {
-            await api.get(`phu-huynh/danh-sach?tuKhoa=&page=1&limit=20&sort=1`, {
+            await api.get(`phu-huynh/danh-sach?tuKhoa=${this.tuKhoa}&page=${this.current_page}&limit=15&sort=1`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 console.log(res)
                 this.data = res?.data?.data
+                this.per_page = res?.data?.per_page ?? 0
+                this.current_page = res?.data?.current_page ?? 0
+                this.total = res?.data?.total
             })
         },
         async updateFilter(filter) {
@@ -80,7 +96,23 @@ export default {
         this.$store.dispatch('title/set_title', this.title);
         this.load_data()
     },
-    components: {}
+    components: {},
+    watch: {
+        current_page() {
+            this.load_data()
+        },
+        keyword() {
+            this.tuKhoa = this.keyword
+        },
+        tuKhoa() {
+            clearTimeout(this.timeOut);
+
+            this.timeOut = setTimeout(() => {
+                this.load_data()
+
+            }, this.timer);
+        },
+    }
 }
 </script>
 

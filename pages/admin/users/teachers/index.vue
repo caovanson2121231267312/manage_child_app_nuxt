@@ -78,7 +78,7 @@ import Swal from 'sweetalert2'
 import toastr from 'toastr';
 
 export default {
-    layout: 'admin',
+    layout: 'admin_teachers',
     data() {
         return {
             title: {
@@ -91,13 +91,17 @@ export default {
             per_page: 0,
             current_page: 1,
             total: 0,
+            tuKhoa: '',
         };
     },
     computed: {
         token() {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             return storedUser.auth_key
-        }
+        },
+        keyword() {
+            return this.$store.getters[`teachers/keyword`]
+        },
     },
     methods: {
         async load_role() {
@@ -110,7 +114,7 @@ export default {
             })
         },
         async load_data() {
-            await api.get(`giao-vien/danh-sach?tuKhoa=&trinh_do=${this.selectedFilter}&page=${this.current_page}&limit=15&sort=1`, {
+            await api.get(`giao-vien/danh-sach?tuKhoa=${this.tuKhoa}&trinh_do=${this.selectedFilter}&page=${this.current_page}&limit=15&sort=1`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -171,7 +175,18 @@ export default {
     watch: {
         current_page() {
             this.load_data()
-        }
+        },
+        keyword() {
+            this.tuKhoa = this.keyword
+        },
+        tuKhoa() {
+            clearTimeout(this.timeOut);
+
+            this.timeOut = setTimeout(() => {
+                this.load_data()
+
+            }, this.timer);
+        },
     }
 }
 </script>

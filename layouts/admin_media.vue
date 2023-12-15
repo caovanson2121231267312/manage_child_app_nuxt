@@ -162,7 +162,7 @@
                                     </div>
                                 </v-list-item>
 
-                                <v-list-item class="li-bar" to="/admin/orders">
+                                <v-list-item class="li-bar" to="/admin/parents">
                                     <v-list-item-icon class="icon-bar" default>
                                         <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -447,7 +447,7 @@
             <div class="d-flex align-items-center">
                 <div class="me-2 position-relative">
                     <b-form-input class="search1" v-model="tuKhoa1"
-                        placeholder="Tìm ca dạy, giáo viên, phụ huynh"></b-form-input>
+                        placeholder="Tìm kiếm video"></b-form-input>
                     <b-dropdown ref="dropdown1" size="lg" variant="link"
                         toggle-class="text-decoration-none position-absolute" no-caret>
                         <template #button-content>
@@ -484,7 +484,7 @@
 
             <div class="w-100 search2">
                 <b-form-input class="w-100" v-model.lazy="tuKhoa2"
-                    placeholder="Tìm ca dạy, giáo viên, phụ huynh"></b-form-input>
+                    placeholder="Tìm kiếm video"></b-form-input>
                 <b-dropdown ref="dropdown2" size="lg" variant="link" toggle-class="text-decoration-none position-absolute"
                     no-caret>
                     <template #button-content>
@@ -627,32 +627,6 @@ export default {
                 }
             }
         },
-        async search_data() {
-            let tuKhoa = '';
-            if (window.innerWidth > 600) {
-                tuKhoa == this.tuKhoa1
-            } else {
-                tuKhoa == this.tuKhoa2
-            }
-            await api.get('bao-cao/tim-kiem?tuKhoa=' + tuKhoa, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                console.log(res)
-                this.searchs = res?.data?.data
-                if (window.innerWidth > 600) {
-                    this.showDropdown1()
-                } else {
-                    this.showDropdown2()
-                }
-            })
-        },
-        showDropdown1() {
-            this.$refs.dropdown1.show()
-        },
-        showDropdown2() {
-            this.$refs.dropdown2.show()
-        }
     },
     mounted() {
         if (window.innerWidth > 800) {
@@ -680,7 +654,7 @@ export default {
             }
             clearTimeout(this.timeOut);
             this.timeOut = setTimeout(() => {
-                this.search_data()
+                this.$store.dispatch('media/set_keyword', this.tuKhoa1);
             }, this.timer);
         },
         tuKhoa2() {
@@ -689,7 +663,7 @@ export default {
             }
             clearTimeout(this.timeOut);
             this.timeOut = setTimeout(() => {
-                this.search_data()
+                this.$store.dispatch('media/set_keyword', this.tuKhoa2);
             }, this.timer);
         },
     },
@@ -717,7 +691,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .title-bar {
     color: #2D2D2D;
     font-family: SVN-Gilroy;

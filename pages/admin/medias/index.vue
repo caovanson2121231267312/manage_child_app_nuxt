@@ -126,6 +126,12 @@
                         </div>
                     </div>
                 </b-col>
+
+                <div class="d-flex justify-content-center mt-4 w-100">
+                    <b-pagination v-model="current_page" :total-rows="total" :per-page="per_page" first-text="First"
+                        prev-text="Prev" next-text="Next" last-text="Last"></b-pagination>
+
+                </div>
             </b-row>
 
         </div>
@@ -141,7 +147,7 @@ import Swal from 'sweetalert2'
 import toastr from 'toastr';
 
 export default {
-    layout: 'admin',
+    layout: 'admin_media',
     data() {
         return {
             title: {
@@ -152,13 +158,20 @@ export default {
             data: null,
             roles: null,
             selectedFilter: '',
+            per_page: 0,
+            current_page: 1,
+            total: 0,
+            tuKhoa: '',
         };
     },
     computed: {
         token() {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             return storedUser.auth_key
-        }
+        },
+        keyword() {
+            return this.$store.getters[`media/keyword`]
+        },
     },
     methods: {
         async load_type() {
@@ -171,12 +184,15 @@ export default {
             })
         },
         async load_data() {
-            await api.get(`tin-tuc/danh-sach?tuKhoa=&type=${this.selectedFilter}&page=1&limit=35&sort=1`, {
+            await api.get(`tin-tuc/danh-sach?tuKhoa=${this.tuKhoa}&page=${this.current_page}&type=${this.selectedFilter}&limit=15&sort=1`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 console.log(res)
                 this.data = res?.data?.data?.tinTuc
+                this.per_page = res?.data?.per_page ?? 0
+                this.current_page = res?.data?.current_page ?? 0
+                this.total = res?.data?.total
             })
         },
         async delete_item(user_id, name) {
@@ -225,7 +241,23 @@ export default {
         this.load_type()
         this.load_data()
     },
-    components: { CardItem, ButtonAdd }
+    components: { CardItem, ButtonAdd },
+    watch: {
+        current_page() {
+            this.load_data()
+        },
+        keyword() {
+            this.tuKhoa = this.keyword
+        },
+        tuKhoa() {
+            clearTimeout(this.timeOut);
+
+            this.timeOut = setTimeout(() => {
+                this.load_data()
+
+            }, this.timer);
+        },
+    }
 }
 </script>
 
