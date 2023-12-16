@@ -2149,6 +2149,24 @@ ul {
     color: #4EAEEA;
 }
 
+.btn-complete {
+    border-radius: 46px;
+    border: 1.3px solid #00C092;
+    background: #F5F5F5;
+}
+
+.btn-complete span{
+    color: #00C092;
+    text-align: center;
+    leading-trim: both;
+    text-edge: cap;
+    font-family: SVN-Gilroy;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
 header {
     z-index: 1000 !important;
 }

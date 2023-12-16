@@ -24,26 +24,6 @@
                         <v-divider class="m-0 p-0"></v-divider>
 
                         <v-card-text>
-                            <!-- <table class="table table-borderless">
-                                <tr v-for="(item, n) in data?.phuPhi" v-bind:key="n">
-                                    <td>
-                                        <span>
-                                            <svg width="14" height="13" viewBox="0 0 14 13" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                            </svg>
-                                        </span>
-                                        <span class="ms-1 span-text">
-                                            {{ item?.tieu_de }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="text-danger fw-bold span-2 cp" v-b-popover.hover.right="item?.ghi_chu"
-                                            :title="item?.tieu_de">
-                                            <b>{{ formatCurrency(item?.tong_tien) }}</b>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </table> -->
                             <b-button class="w-100 text-primary rounded-pill" variant="outline-primary"
                                 v-b-modal.my-modal-them-phu-phi>
                                 <span class="mdi mdi-plus-circle-outline"></span>
@@ -68,26 +48,6 @@
                         <v-divider class="m-0 p-0"></v-divider>
 
                         <v-card-text>
-                            <!-- <table class="table table-borderless">
-                                <tr v-for="(item, n) in data?.phuPhi" v-bind:key="n">
-                                    <td>
-                                        <span>
-                                            <svg width="14" height="13" viewBox="0 0 14 13" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                            </svg>
-                                        </span>
-                                        <span class="ms-1 span-text">
-                                            {{ item?.tieu_de }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="text-danger fw-bold span-2 cp" v-b-popover.hover.right="item?.ghi_chu"
-                                            :title="item?.tieu_de">
-                                            <b>{{ formatCurrency(item?.tong_tien) }}</b>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </table> -->
                             <b-button class="w-100 text-secondary rounded-pill" variant="outline-secondary">
                                 <span class="mdi mdi-plus-circle-outline"></span>
                                 <span>
@@ -111,17 +71,17 @@
                             <v-card-text>
                                 <div>
                                     <b-form-group label="Gán khóa học" class="mb-0">
-                                        <b-form-select v-model="dich_vu_id" :options="dich_vu"></b-form-select>
+                                        <b-form-select v-model="chuong_trinh_id" :options="chuong_trinh"></b-form-select>
                                     </b-form-group>
                                 </div>
                                 <div class="mt-2">
                                     <b-form-group label="Gán gói học" class="mb-0">
-                                        <b-form-select></b-form-select>
+                                        <b-form-select v-model="goi_hoc_id" :options="goi_hoc"></b-form-select>
                                     </b-form-group>
                                 </div>
                                 <div class="mt-2">
                                     <b-form-group label="Gán bài học" class="mb-0">
-                                        <b-form-select></b-form-select>
+                                        <b-form-select v-model="bai_hoc_id" :options="bai_hoc"></b-form-select>
                                     </b-form-group>
                                 </div>
                                 <div class="mt-4">
@@ -452,10 +412,10 @@
                     </div>
 
                     <div class="mt-4">
-                        <b-button class="w-100 text-light rounded-pill" variant="success">
+                        <div class="w-100 text-light btn btn-complete rounded-pill" variant="success">
                             <span class="mdi mdi-check-circle"></span>
                             <span>Đơn đã hoàn thành</span>
-                        </b-button>
+                        </div>
                     </div>
                 </div>
 
@@ -614,8 +574,13 @@ export default {
             tuKhoa: null,
             timeOut: null,
             timer: 400,
-            dich_vu_id: 0,
-            dich_vu: null,
+            chuong_trinh_id: null,
+            chuong_trinh: [],
+            goi_hoc_id: null,
+            goi_hoc: [],
+            bai_hoc_id: null,
+            bai_hoc: [],
+            array_bai_hoc: [],
         };
     },
     components: {
@@ -723,8 +688,25 @@ export default {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                console.log(res)
                 this.data = res?.data?.data
+                const chuong_trinh_hoc_id = res?.data?.data?.chuong_trinh_hoc_id
+                this.chuong_trinh_id = chuong_trinh_hoc_id
+
+                api.get(`don-dich-vu/danh-sach-chuong-trinh-hoc?id=` + res?.data?.data?.id, {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: 'Bearer ' + this.token
+                }).then(res => {
+                    this.chuong_trinh = res?.data?.data.map(item => {
+                        return {
+                            value: item.id,
+                            text: item.tieu_de ?? item.id,
+                        };
+                    })
+                    if (this.chuong_trinh_id == null) {
+                        this.chuong_trinh_id = this.chuong_trinh[0].value
+                    }
+
+                })
             })
 
             await api.get(`giao-vien/loai-giao-dich-nap-tien`, {
@@ -833,6 +815,66 @@ export default {
 
             }, this.timer);
         },
+        async chuong_trinh_id() {
+            await api.get(`don-dich-vu/danh-sach-goi-hoc?page=1&limit=1000&chuong_trinh_hoc_id=` + this.chuong_trinh_id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.goi_hoc = res?.data?.data.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name ?? item.id,
+                        baiHoc: item.baiHoc ?? [],
+                    };
+                })
+                if (this.goi_hoc_id == null && this.goi_hoc.length > 0) {
+                    this.goi_hoc_id = this.goi_hoc[0].value
+                }
+            })
+        },
+        goi_hoc_id() {
+            let bai_hoc = this.bai_hoc
+            bai_hoc = []
+            bai_hoc.unshift({
+                value: 0,
+                text: 'Chọn bài học'
+            });
+            // if(this.goi_hoc?.baiHoc?.length)
+            var result = this.goi_hoc.find(x => {
+                console.log(x)
+                return x.value === this.goi_hoc_id
+            })
+            bai_hoc.push(...result?.baiHoc?.map(item => ({
+                value: item.id,
+                text: item.tieu_de ?? item.id,
+            })));
+            this.bai_hoc = bai_hoc
+            this.bai_hoc_id = this.bai_hoc[0]?.value
+        },
+        async bai_hoc_id () {
+            if(this.bai_hoc_id == 0 || this.bai_hoc_id == null) {
+                return
+            }
+            this.array_bai_hoc.push(this.bai_hoc_id)
+
+            const formData = new FormData()
+            formData.append('id', this.id)
+            formData.append('chuong_trinh_hoc_id', this.chuong_trinh_id)
+
+            for(var i = 0; i < this.array_bai_hoc.length; i++) {
+                formData.append(`baiHocs[${i}]`, this.array_bai_hoc[i])
+            }
+
+            await api.post('don-dich-vu/them-chuong-trinh-hoc', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.load_data();
+                }
+            })
+        }
     }
 }
 </script>
