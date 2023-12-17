@@ -114,7 +114,7 @@
                                         fill="#4EAEEA" />
                                 </svg>
 
-                                <span class="service-title">Tên dịch vụ</span>
+                                <span class="service-title">Tên dịch vụ <span class="text-danger">*</span></span>
                             </span>
 
                         </div>
@@ -123,7 +123,7 @@
                                 class="form-control form-benefits" />
                         </div>
 
-                        <hr class="support-hr" />
+                        <!-- <hr class="support-hr" />
 
                         <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
                             <span>
@@ -140,7 +140,7 @@
                         </div>
                         <div>
                             <input type="text" v-model="link" placeholder="Nhập link" class="form-control form-benefits" />
-                        </div>
+                        </div> -->
 
                         <hr class="support-hr" />
 
@@ -152,7 +152,7 @@
                                         d="M2.75 4.71429C3.57734 4.71429 4.25 4.0096 4.25 3.14286C4.25 2.27612 3.57734 1.57143 2.75 1.57143C1.92266 1.57143 1.25 2.27612 1.25 3.14286C1.25 4.0096 1.92266 4.71429 2.75 4.71429ZM13.25 4.71429C14.0773 4.71429 14.75 4.0096 14.75 3.14286C14.75 2.27612 14.0773 1.57143 13.25 1.57143C12.4227 1.57143 11.75 2.27612 11.75 3.14286C11.75 4.0096 12.4227 4.71429 13.25 4.71429ZM14 5.5H12.5C12.0875 5.5 11.7148 5.67433 11.443 5.9567C12.3875 6.49933 13.0578 7.47902 13.2031 8.64286H14.75C15.1648 8.64286 15.5 8.29174 15.5 7.85714V7.07143C15.5 6.20469 14.8273 5.5 14 5.5ZM8 5.5C9.45078 5.5 10.625 4.26987 10.625 2.75C10.625 1.23013 9.45078 0 8 0C6.54922 0 5.375 1.23013 5.375 2.75C5.375 4.26987 6.54922 5.5 8 5.5ZM9.8 6.28571H9.60547C9.11797 6.53125 8.57656 6.67857 8 6.67857C7.42344 6.67857 6.88438 6.53125 6.39453 6.28571H6.2C4.70937 6.28571 3.5 7.55268 3.5 9.11429V9.82143C3.5 10.4721 4.00391 11 4.625 11H11.375C11.9961 11 12.5 10.4721 12.5 9.82143V9.11429C12.5 7.55268 11.2906 6.28571 9.8 6.28571ZM4.55703 5.9567C4.28516 5.67433 3.9125 5.5 3.5 5.5H2C1.17266 5.5 0.5 6.20469 0.5 7.07143V7.85714C0.5 8.29174 0.835156 8.64286 1.25 8.64286H2.79453C2.94219 7.47902 3.6125 6.49933 4.55703 5.9567Z"
                                         fill="#00C092" />
                                 </svg>
-                                <span class="service-title">Độ tuổi</span>
+                                <span class="service-title">Độ tuổi <span class="text-danger">*</span></span>
                             </span>
 
                         </div>
@@ -167,7 +167,7 @@
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <title-header>
-                                            Quyền lợi
+                                            Quyền lợi <span class="text-danger">*</span>
                                         </title-header>
                                         <button-add :addClass="'btn-add-more-law'" v-b-modal.my-modal>
                                             <span class="mdi mdi-plus"></span>
@@ -296,7 +296,7 @@
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <title-header>
-                                            Giá trị
+                                            Giá trị <span class="text-danger">*</span>
                                         </title-header>
                                     </div>
                                 </div>
@@ -314,7 +314,7 @@
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <title-header>
-                                            Cam kết
+                                            Cam kết <span class="text-danger">*</span>
                                         </title-header>
                                     </div>
                                 </div>
@@ -332,14 +332,18 @@
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <title-header>
-                                            Hợp đồng dịch vụ
+                                            Hợp đồng dịch vụ <span class="text-danger">*</span>
                                         </title-header>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="">
-                                <input type="text" v-model="hop_dong_dich_vu" placeholder="Nhập đường dẫn"
+                            <div>
+                                <textarea v-model="hop_dong_dich_vu" id="hop_dong_dich_vu"></textarea>
+                            </div>
+
+                            <div class="mt-3">
+                                <input type="text" v-model="link" placeholder="Nhập đường dẫn"
                                     class="form-control form-benefits" />
                             </div>
                         </div>
@@ -388,6 +392,7 @@ export default {
             khoa_dich_vu: false,
             suneditorInstance: null,
             image: null,
+            suneditorcam_hop_dong_dich_vu: null,
             hop_dong_dich_vu: null,
             ten_dich_vu: null,
             // ten_dich_vu: null,
@@ -486,6 +491,10 @@ export default {
             })
         },
         async send_data(event) {
+            if(this.hop_dong_dich_vu == '' || this.hop_dong_dich_vu == null) {
+                toastr.error("vui lòng nhập đủ thông tin");
+                return
+            }
             // event.preventDefault();
             const formData = new FormData()
             formData.append('khoa_dich_vu', this.khoa_dich_vu ? 1 : 0)
@@ -576,6 +585,33 @@ export default {
         this.suneditorcam_ketInstance.onChange = async (contents, core) => {
             this.cam_ket = contents;
             await console.log(this.cam_ket)
+        };
+
+        const editor2 = SUNEDITOR.create((document.getElementById('hop_dong_dich_vu') || 'hop_dong_dich_vu'), {
+            toolbarContainer: '#toolbar_container',
+            showPathLabel: false,
+            charCounter: true,
+            width: 'auto',
+            height: 'auto',
+            minHeight: '100px',
+            maxHeight: '250px',
+            plugins: plugins,
+            buttonList: [
+                ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
+                ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+                ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
+            ],
+            callBackSave: function (contents, isChanged) {
+                this.hop_dong_dich_vu = contents
+                console.log(contents);
+            },
+        });
+        this.suneditorcam_ketInstance = editor2;
+
+        this.suneditorcam_ketInstance.onChange = async (contents, core) => {
+            this.hop_dong_dich_vu = contents;
+            await console.log(this.hop_dong_dich_vu)
         };
 
     },

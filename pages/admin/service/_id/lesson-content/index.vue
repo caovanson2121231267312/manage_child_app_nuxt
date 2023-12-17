@@ -64,13 +64,13 @@
                                 </div>
                                 <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
                                     <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                                    <button class=" btn-delete ms-1" @click="send_data()">Tạo</button>
+                                    <button class=" btn-delete ms-1" @click="send_data()">Xác nhận tạo</button>
                                 </div>
                             </template>
                         </b-modal>
                     </div>
                     <div class="my-5">
-                        <button-component>Lưu thay đổi</button-component>
+                        <!-- <button-component>Lưu thay đổi</button-component> -->
                     </div>
                 </b-col>
             </b-row>
@@ -103,6 +103,7 @@ export default {
             khung_gio: 1,
             khung_gios: [],
             selected1: 1,
+            selected: 1,
         };
     },
     validate({ params }) {
@@ -135,20 +136,20 @@ export default {
 
             })
 
-            await api.get('dich-vu/get-khung-thoi-gian?type=10', {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
+            // await api.get('dich-vu/get-khung-thoi-gian?type=10', {
+            //     'Content-Type': 'multipart/form-data',
+            //     Authorization: 'Bearer ' + this.token
+            // }).then(res => {
 
-                this.khung_gios = res?.data?.data?.map(item => {
-                    return {
-                        value: item.id,
-                        text: item.name
-                    };
-                })
-                this.khung_gio = this.khung_gios[0].value
+            //     this.khung_gios = res?.data?.data?.map(item => {
+            //         return {
+            //             value: item.id,
+            //             text: item.name
+            //         };
+            //     })
+            //     this.khung_gio = this.khung_gios[0].value
 
-            })
+            // })
         },
         async load_data() {
             await api.get(`dich-vu/danh-sach-khung-gio?type=${this.selectedFilter ?? ''}&page=1&limit=100&sort=1&dich_vu_id=` + this.id, {
@@ -188,7 +189,7 @@ export default {
         },
         async updateFilter(filter) {
             this.selectedFilter = await filter ?? '';
-            await this.load_data()
+            // await this.load_data()
         }
     },
     mounted() {
@@ -198,6 +199,28 @@ export default {
         this.title.previous = '/admin/service/' + this.id + '/edit'
         this.$store.dispatch('title/set_title', this.title);
     },
+    watch: {
+        selectedFilter () {
+            this.load_data()
+        },
+        async selected () {
+            console.log(this.selected)
+            await api.get('dich-vu/get-khung-thoi-gian?type=' + this.selected, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+
+                this.khung_gios = res?.data?.data?.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+                this.khung_gio = this.khung_gios[0].value
+
+            })
+        }
+    }
 }
 </script>
 

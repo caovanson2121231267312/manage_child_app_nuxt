@@ -13,7 +13,7 @@
                         v-if="data?.trang_thai == 'Chưa có GV' || data?.trang_thai == 'Đang khảo sát' || data?.trang_thai == 'Đang dạy'">
                         <v-card-text>
                             <div>
-                                <b-form-checkbox v-model="xac_nhan_thanh_toan" size="lg">
+                                <b-form-checkbox v-on:change="xac_nhan_thanh_toan_method" v-model="xac_nhan_thanh_toan" size="lg">
                                     <span class="text-dark">
                                         Xác nhận thanh toán
                                     </span>
@@ -85,8 +85,8 @@
                                     </b-form-group>
                                 </div>
                                 <div class="mt-4">
-                                    <span class="blade-primary">
-                                        GD001 <span class="mdi mdi-window-close ms-2 cp"></span>
+                                    <span v-for="(item, n) in data?.ke_hoach_day" v-bind:key="n" class="blade-primary">
+                                        {{ item?.goiHoc[0]?.tieu_de }} <span class="mdi mdi-window-close ms-2 cp"></span>
                                     </span>
                                 </div>
                             </v-card-text>
@@ -689,6 +689,7 @@ export default {
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 this.data = res?.data?.data
+                this.xac_nhan_thanh_toan = res?.data?.data?.trang_thai_thanh_toan == 'Đã thanh toán' ? true : false
                 const chuong_trinh_hoc_id = res?.data?.data?.chuong_trinh_hoc_id
                 this.chuong_trinh_id = chuong_trinh_hoc_id
 
@@ -747,7 +748,7 @@ export default {
             formData.append('id', this.id)
             formData.append('leader_kd_id', this.kds_id)
             // formData.append('noi_dung_khao_sat', this.noi_dung_khao_sat)
-            formData.append('xac_nhan_thanh_toan', this.xac_nhan_thanh_toan ? 1 : 0)
+            // formData.append('xac_nhan_thanh_toan', this.xac_nhan_thanh_toan ? 1 : 0)
 
             await api.post('don-dich-vu/duyet-don', formData, {
                 'Content-Type': 'multipart/form-data',
@@ -757,6 +758,7 @@ export default {
                     toastr.success(res?.data?.message);
                     this.$refs['my-modal'].hide()
                     this.kds_id = null
+                    window.location.reload();
                     this.load_data();
                 }
             })
@@ -795,6 +797,37 @@ export default {
                     this.clearFiles();
                     this.name = null
                     this.load_data();
+                }
+            })
+        },
+        xac_nhan_thanh_toan_method () {
+            const formData = new FormData();
+            formData.append('id', this.id)
+            formData.append('xac_nhan_thanh_toan', this.xac_nhan_thanh_toan == true ? 1 : 0)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xác nhận thanh toán đơn này!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Chắc chắn/Chấp nhận!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('don-dich-vu/xac-nhan-thanh-toan', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            toastr.success(res?.data?.message);
+                            // this.$router.push('/admin/service');
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
                 }
             })
         },

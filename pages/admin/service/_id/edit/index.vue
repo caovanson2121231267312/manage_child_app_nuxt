@@ -65,7 +65,8 @@
                                         <input id="images" type="file" class="d-none" />
                                     </div>
                                     <div class="action">
-                                        <div @click="delete_img()" class="mb-3 btn-service-delete" v-b-tooltip.hover title="Xoá ảnh">
+                                        <div @click="delete_img()" class="mb-3 btn-service-delete" v-b-tooltip.hover
+                                            title="Xoá ảnh">
                                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -85,7 +86,8 @@
                                                 </defs>
                                             </svg>
                                         </div>
-                                        <label for="img" class="btn-service-upload d-block" v-b-tooltip.hover title="Tải ảnh lên">
+                                        <label for="img" class="btn-service-upload d-block" v-b-tooltip.hover
+                                            title="Tải ảnh lên">
                                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -126,7 +128,7 @@
 
                         <hr class="support-hr" />
 
-                        <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
+                        <!-- <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
                             <span>
                                 <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -141,7 +143,7 @@
                         </div>
                         <div>
                             <input type="text" v-model="link" placeholder="Nhập link" class="form-control form-benefits" />
-                        </div>
+                        </div> -->
 
                         <hr class="support-hr" />
 
@@ -340,8 +342,13 @@
                                 </div>
                             </div>
 
-                            <div class="">
-                                <input type="text" v-model="hop_dong_dich_vu" placeholder="Nhập đường dẫn" class="form-control form-benefits" />
+                            <div>
+                                <textarea v-model="hop_dong_dich_vu" id="hop_dong_dich_vu"></textarea>
+                            </div>
+
+                            <div class="mt-3">
+                                <input type="text" v-model="link" placeholder="Nhập đường dẫn"
+                                    class="form-control form-benefits" />
                             </div>
                         </div>
 
@@ -352,7 +359,8 @@
                             <div class="w-100">
                                 <div>
                                     <b-card style="min-width: 245px;" class="teacher-nav">
-                                        <nuxt-link class="block w-100 teachers " :to="'/admin/service/' + this.id + '/lesson-price'">
+                                        <nuxt-link class="block w-100 teachers "
+                                            :to="'/admin/service/' + this.id + '/lesson-price'">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <div class="">
                                                     <span class="me-2">
@@ -388,7 +396,8 @@
                                     </b-card>
 
                                     <b-card style="min-width: 245px;" class="teacher-nav">
-                                        <nuxt-link class="block w-100 teachers " :to="'/admin/service/' + this.id + '/lesson-content'">
+                                        <nuxt-link class="block w-100 teachers "
+                                            :to="'/admin/service/' + this.id + '/lesson-content'">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <div class="">
                                                     <span class="me-2">
@@ -417,24 +426,32 @@
                                         </nuxt-link>
                                     </b-card>
 
-                                    <!-- <b-card style="min-width: 245px;" class="teacher-nav">
-                                        <nuxt-link class="block w-100 teachers " to="/admin/service/3/sale">
+                                    <b-card style="min-width: 245px;" class="teacher-nav cp">
+                                        <div class="block w-100 teachers " @click="delete_item()">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <div class="">
                                                     <span class="me-2">
-                                                        <svg width="30" height="31" viewBox="0 0 30 31" fill="none"
+                                                        <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
-                                                            <circle cx="15" cy="15.5" r="15" fill="#00C092"
-                                                                fill-opacity="0.2" />
-                                                            <path
-                                                                d="M24.5299 14.8783L23.0095 13.356C22.7494 13.0956 22.5394 12.5849 22.5394 12.2243V10.0611C22.5394 9.17977 21.8192 8.45869 20.939 8.45869H18.7884C18.4283 8.45869 17.9182 8.24837 17.6581 7.98798L16.1378 6.4657C15.5176 5.84477 14.4974 5.84477 13.8772 6.4657L12.3368 7.98798C12.0868 8.24837 11.5766 8.45869 11.2065 8.45869H9.05601C8.17579 8.45869 7.45561 9.17977 7.45561 10.0611V12.2143C7.45561 12.5749 7.24556 13.0856 6.98549 13.346L5.46512 14.8683C4.84496 15.4892 4.84496 16.5108 5.46512 17.1317L6.98549 18.654C7.24556 18.9144 7.45561 19.4251 7.45561 19.7857V21.9389C7.45561 22.8202 8.17579 23.5413 9.05601 23.5413H11.2065C11.5666 23.5413 12.0768 23.7516 12.3368 24.012L13.8572 25.5343C14.4774 26.1552 15.4976 26.1552 16.1178 25.5343L17.6381 24.012C17.8982 23.7516 18.4083 23.5413 18.7684 23.5413H20.919C21.7992 23.5413 22.5194 22.8202 22.5194 21.9389V19.7857C22.5194 19.4251 22.7294 18.9144 22.9895 18.654L24.5098 17.1317C25.16 16.5208 25.16 15.4992 24.5299 14.8783ZM10.9965 13.0055C10.9965 12.4547 11.4466 12.004 11.9967 12.004C12.5469 12.004 12.997 12.4547 12.997 13.0055C12.997 13.5563 12.5569 14.007 11.9967 14.007C11.4466 14.007 10.9965 13.5563 10.9965 13.0055ZM12.5269 19.5453C12.3768 19.6955 12.1868 19.7656 11.9967 19.7656C11.8067 19.7656 11.6166 19.6955 11.4666 19.5453C11.1765 19.2549 11.1765 18.7742 11.4666 18.4837L17.4681 12.4747C17.7582 12.1843 18.2383 12.1843 18.5284 12.4747C18.8184 12.7651 18.8184 13.2459 18.5284 13.5363L12.5269 19.5453ZM17.9982 20.016C17.4381 20.016 16.988 19.5653 16.988 19.0145C16.988 18.4637 17.4381 18.013 17.9882 18.013C18.5384 18.013 18.9885 18.4637 18.9885 19.0145C18.9885 19.5653 18.5484 20.016 17.9982 20.016Z"
-                                                                fill="#00C092" />
+                                                            <circle cx="16.8335" cy="16" r="16" fill="#F2F2F2" />
+                                                            <g clip-path="url(#clip0_683_10960)">
+                                                                <path
+                                                                    d="M16.8979 11.1534C19.0306 11.1534 21.1663 11.1594 23.2991 11.1475C23.6311 11.1475 23.7567 11.1802 23.7118 11.5789C23.4606 13.849 23.1974 16.1222 23.0448 18.4013C22.9581 19.6896 22.8534 20.9719 22.7487 22.2572C22.6889 22.9951 22.626 23.4801 22.4944 24.2061C22.3239 25.1344 21.941 26.0002 20.589 25.9883C18.1153 25.9913 15.6416 25.9645 13.1708 26.0002C12.1538 26.0151 11.3492 25.8038 11.1129 24.2061C10.8466 22.412 10.2783 14.1019 10.2783 14.1019L10.051 11.7157C10.051 11.7157 9.98816 11.1534 10.5415 11.1534C12.6623 11.1534 14.7801 11.1534 16.9009 11.1534H16.8979ZM17.4124 18.55C17.4124 17.2736 17.4124 15.9972 17.4124 14.7208C17.4124 14.2983 17.197 14.0305 16.862 14.0216C16.4881 14.0127 16.2189 14.3072 16.2189 14.7387C16.2189 17.2766 16.2189 19.8145 16.2219 22.3554C16.2219 22.8047 16.4701 23.1052 16.8321 23.1171C17.1701 23.129 17.4064 22.8107 17.4064 22.3376C17.4064 21.0761 17.4064 19.8115 17.4064 18.55H17.4124ZM20.2989 18.5411C20.2989 17.2498 20.2989 15.9556 20.2989 14.6643C20.2989 14.4977 20.3198 14.331 20.1493 14.212C19.9579 14.0781 19.7784 13.9591 19.5301 14.0692C19.2131 14.209 19.1173 14.453 19.1203 14.7803C19.1293 17.2944 19.1293 19.8115 19.1353 22.3257C19.1353 22.8017 19.3656 23.1082 19.7156 23.1112C20.0656 23.1171 20.3049 22.8017 20.3049 22.3376C20.3049 21.0731 20.3049 19.8086 20.3049 18.5441L20.2989 18.5411ZM14.5258 18.5708C14.5258 17.2528 14.5258 15.9347 14.5258 14.6167C14.5258 14.218 14.3553 14.0305 13.9934 14.0246C13.6793 14.0186 13.4251 14.2686 13.4251 14.6167C13.4221 17.2379 13.4221 19.8621 13.4251 22.4834C13.4251 22.8583 13.7003 23.1409 14.0173 23.1082C14.3852 23.0695 14.5378 22.8702 14.5318 22.4863C14.5139 21.1832 14.5258 19.877 14.5258 18.5738V18.5708Z"
+                                                                    fill="#979797" />
+                                                                <path
+                                                                    d="M16.8111 10.0553C14.5796 10.0553 12.3482 10.0553 10.1137 10.0553C9.42277 10.0553 8.8335 9.51382 8.8335 8.88008C8.8335 8.29097 9.41977 7.72864 10.0898 7.72269C11.4179 7.71079 12.746 7.70781 14.0741 7.72864C14.442 7.73459 14.5557 7.63938 14.5377 7.26152C14.5048 6.59802 15.1121 6.01486 15.7911 6.00891C16.4701 6.00296 17.1491 6.04462 17.8251 5.99999C18.537 5.95238 19.1771 6.6129 19.1203 7.23771C19.0844 7.63641 19.2459 7.73162 19.6228 7.72566C20.909 7.70781 22.1952 7.74947 23.4785 7.71674C24.3429 7.69591 25.1416 8.35048 24.7168 9.40076C24.5643 9.7816 24.1455 10.0494 23.5951 10.0494C21.4325 10.0494 19.2728 10.0494 17.1102 10.0494C17.0115 10.0494 16.9128 10.0494 16.8141 10.0494L16.8111 10.0553Z"
+                                                                    fill="#979797" />
+                                                            </g>
+                                                            <defs>
+                                                                <clipPath id="clip0_683_10960">
+                                                                    <rect width="16" height="20" fill="white"
+                                                                        transform="translate(8.8335 6)" />
+                                                                </clipPath>
+                                                            </defs>
                                                         </svg>
-
-
                                                     </span>
                                                     <span>
-                                                        Cài đặt khuyến mãi
+                                                        Xoá dịch vụ
                                                     </span>
                                                 </div>
                                                 <div>
@@ -443,9 +460,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </nuxt-link>
-                                    </b-card> -->
-
+                                        </div>
+                                    </b-card>
                                 </div>
                             </div>
                         </div>
@@ -492,6 +508,7 @@ export default {
             khoa_dich_vu: false,
             suneditorInstance: null,
             image: null,
+            suneditorcam_hop_dong_dich_vu: null,
             hop_dong_dich_vu: null,
             ten_dich_vu: null,
             // ten_dich_vu: null,
@@ -607,12 +624,13 @@ export default {
                 this.suneditorcam_ketInstance.setContents(this.cam_ket);
                 this.gia_tri = user?.gia_tri
                 this.suneditorInstance.setContents(this.gia_tri);
+                this.suneditorcam_ketInstance.setContents(this.hop_dong_dich_vu);
                 this.image = user?.image
                 this.hop_dong_dich_vu = user?.hop_dong_dich_vu
                 this.ten_dich_vu = user?.ten_dich_vu
                 this.do_tuoi_id = user?.do_tuoi_id
                 this.link = user?.link
-                const ql = res?.data?.data?.quyenLoi.map(function(item,index){
+                const ql = res?.data?.data?.quyenLoi.map(function (item, index) {
                     return {
                         id: item.index,
                         name_benefit: item.name,
@@ -621,10 +639,39 @@ export default {
                 })
                 this.todos = ql
 
-
                 this.title.name = this.ten_dich_vu ?? 'Chi tiết dịch vụ'
                 this.$store.dispatch('title/set_title', this.title);
 
+            })
+        },
+        async delete_item() {
+            const formData = new FormData();
+            formData.append('id', this.id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá dịch vụ đã chọn!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Chắc chắn/Chấp nhận!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('dich-vu/xoa-dich-vu', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            toastr.success(res?.data?.message);
+                            this.$router.push('/admin/service');
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
             })
         },
         async send_data(event) {
@@ -721,6 +768,33 @@ export default {
             await console.log(this.cam_ket)
         };
 
+        const editor2 = SUNEDITOR.create((document.getElementById('hop_dong_dich_vu') || 'hop_dong_dich_vu'), {
+            toolbarContainer: '#toolbar_container',
+            showPathLabel: false,
+            charCounter: true,
+            width: 'auto',
+            height: 'auto',
+            minHeight: '100px',
+            maxHeight: '250px',
+            plugins: plugins,
+            buttonList: [
+                ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
+                ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+                ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
+            ],
+            callBackSave: function (contents, isChanged) {
+                this.hop_dong_dich_vu = contents
+                console.log(contents);
+            },
+        });
+        this.suneditorcam_ketInstance = editor2;
+
+        this.suneditorcam_ketInstance.onChange = async (contents, core) => {
+            this.hop_dong_dich_vu = contents;
+            await console.log(this.hop_dong_dich_vu)
+        };
+
     },
 }
 </script>
@@ -802,5 +876,4 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-}
-</style>
+}</style>

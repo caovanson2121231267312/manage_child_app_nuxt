@@ -200,18 +200,6 @@ export default {
                 }
 
                 this.todos = res?.data?.data?.giaBuoiHoc
-                // .map(function(item,index){
-                //     return {
-                //         id: item.index,
-                //         name_benefit: item.so_buoi,
-                //         link_benefit: item.tong_tien,
-                //         link_benefit: item.khuyen_mai,
-                //     }
-                // })
-
-
-                // this.title.name = this.ten_dich_vu ?? 'Chi tiết dịch vụ'
-                // this.$store.dispatch('title/set_title', this.title);
 
             })
         },
@@ -278,7 +266,7 @@ export default {
         async updateFilter(filter) {
             this.selectedFilter = await filter ?? '';
             console.log(this.selectedFilter)
-            await this.load_data()
+            // await this.load_data()
         }
     },
     mounted() {
@@ -286,6 +274,11 @@ export default {
         this.title.previous = '/admin/service/' + this.id + '/edit'
         this.$store.dispatch('title/set_title', this.title);
     },
+    watch: {
+        selectedFilter () {
+            this.load_data()
+        }
+    }
 }
 </script>
 

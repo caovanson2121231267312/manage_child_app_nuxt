@@ -12,7 +12,7 @@
                 </div>
             </div>
 
-            <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Thông banner mới">
+            <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Thêm banner mới">
                 <!-- <template #modal-header="{ close }">
                             <h5>Thông báo</h5>
                         </template> -->
@@ -38,6 +38,35 @@
                         <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
                             <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
                             <button class=" btn-delete ms-1" type="submit">Thêm</button>
+                        </div>
+                    </form>
+
+                </template>
+            </b-modal>
+
+            <b-modal id="my-modal-edit" ref="my-modal-edit" hide-footer centered title="Sửa banner">
+                <template #default="{ hide }">
+                    <form >
+
+                        <div class="my-4 pb-3">
+                            <div>
+                                <b-form-group>
+                                    <label>Ảnh banner:</label>
+                                    <b-form-file name="image" accept="image/*" v-model="edit_file" ref="file-input"
+                                        id="file-large"></b-form-file>
+                                </b-form-group>
+                            </div>
+                            <div>
+                                <b-form-group>
+                                    <label>Link:</label>
+                                    <b-form-input name="link" v-model="edit_link" placeholder="Nhập đường dẫn"></b-form-input>
+                                </b-form-group>
+                            </div>
+
+                        </div>
+                        <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                            <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                            <button type="button"  class=" btn-delete ms-1" @click="submit_edit()">Sửa</button>
                         </div>
                     </form>
 
@@ -95,7 +124,7 @@
                                         </svg>
                                     </div>
 
-                                    <div class="btn-banner-save" v-b-tooltip.hover title="Tải ảnh lên">
+                                    <div class="btn-banner-save" @click="edit_item(item?.id, item?.link)" v-b-tooltip.hover title="Sửa banner">
                                         <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="16.5" cy="16" r="16" fill="#F2F2F2" />
@@ -112,10 +141,10 @@
                         </div>
 
                         <div class="input-title mt-3 mb-1">
-                            Gán liên kết
+                            Liên kết
                         </div>
                         <div class="position-relative">
-                            <input placeholder="Nhập đường dẫn" :value="item?.link" class="form-control banner-input"
+                            <input placeholder="Nhập đường dẫn" disabled :value="item?.link" class="form-control banner-input"
                                 type="text" />
                             <div class="copy-link" @click="copyText(item?.link)">
                                 <svg  v-b-tooltip.hover title="Copy link" width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -163,6 +192,9 @@ export default {
             data: null,
             file: null,
             link: null,
+            edit_link: null,
+            edit_file: null,
+            edit_id: null,
         };
     },
     computed: {
@@ -184,6 +216,32 @@ export default {
             document.body.removeChild(textArea);
             toastr.success('Đã sao chép nội dung');
             // alert("Đã sao chép nội dung: " + textToCopy);
+        },
+        edit_item (id, link) {
+            this.edit_link = link
+            this.edit_id = id
+            this.$refs['my-modal-edit'].show()
+        },
+        async submit_edit () {
+            const formData = new FormData()
+            formData.append('banner_id', this.edit_id)
+            formData.append('image', this.edit_file)
+            formData.append('link', this.edit_link)
+
+            await api.post('he-thong/sua-banner', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-edit'].hide()
+                    this.clearFiles();
+                    this.edit_link = null
+                    this.edit_id = null
+                    this.edit_file = null
+                    this.load_data();
+                }
+            })
         },
         async load_data() {
             await api.get('he-thong/danh-sach?page=1&limit=40&sort=1&tuKhoa=', {
