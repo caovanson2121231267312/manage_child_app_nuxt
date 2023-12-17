@@ -234,7 +234,7 @@
                                 <div v-if="data?.trang_thai == 'Đang dạy'"
                                     class="d-flex align-items-center justify-content-between">
                                     <div class="w-100 btn btn-doi text- rounded-pill" variant="outline-danger"
-                                        v-b-modal.my-modal-teacher>
+                                        v-b-modal.my-modal-teacher-doi>
                                         Đổi giáo viên
                                     </div>
                                     <div class="w-100 btn btn-dieu-lai rounded-pill ms-4" variant="outline-primary"
@@ -313,6 +313,63 @@
                                 <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
                                 <button type="button" class=" btn-delete ms-1" @click="add_teacher()">Điều giáo
                                     viên</button>
+                            </div>
+                        </div>
+
+                    </template>
+                </b-modal>
+
+                <b-modal id="my-modal-teacher-doi" ref="my-modal-teacher-doi" hide-footer centered title="Đổi giáo viên">
+                    <template #default="{ hide }">
+                        <div>
+                            <span>Có <b class="text-primary">{{ teacherss?.length ?? 0 }}</b> giáo viên nhận lịch</span>
+                        </div>
+                        <div>
+
+                            <div class="my-2">
+                                <div v-for="(item, n) in teacherss" v-bind:key="n">
+                                    <div :class="'card-teacher ' + (teacher_ids == item?.id ? ' active' : '')">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-3 layout-user">
+                                                    <img :src="item?.anh_nguoi_dung" alt="">
+                                                </div>
+                                                <div class="ps-2" style="margin-left: 5px;">
+                                                    <div>
+                                                        <b-badge pill variant="danger">
+                                                            # {{ item?.id }}
+                                                        </b-badge>
+                                                        <b-badge pill variant="success">
+                                                            Đang trống ca
+                                                        </b-badge>
+                                                    </div>
+                                                    <strong>
+                                                        <span class="user-name">
+                                                            {{ item?.hoten }}
+                                                        </span>
+                                                    </strong>
+                                                    <p class="w-p p-0 m-0">
+                                                        {{ item?.trinh_do }}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="">
+                                                <b-button @click="set_teachers(item?.id)" size="sm"
+                                                    style="min-width: 130px;padding: 0.325rem 0.75rem !important;"
+                                                    :class="'w-100 rounded-pill ' + (teacher_id == item?.id ? 'text-light' : 'text-primary')"
+                                                    :variant="teacher_ids == item?.id ? 'primary' : 'outline-primary'">
+                                                    Chọn
+                                                </b-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button type="button" class=" btn-delete ms-1" @click="add_teachers()">Xác nhận đổi</button>
                             </div>
                         </div>
 
@@ -560,6 +617,8 @@ export default {
             kds_id: null,
             teachers: null,
             teacher_id: null,
+            teacherss: null,
+            teacher_ids: null,
             li_do_huy: null,
             phu_phi_li_do: null,
             phu_phi_tien: null,
@@ -610,6 +669,14 @@ export default {
             }
             console.log(this.teacher_id)
         },
+        set_teachers(id) {
+            if (this.teacher_ids == id) {
+                this.teacher_ids = null
+            } else {
+                this.teacher_ids = id
+            }
+            console.log(this.teacher_ids)
+        },
         async confirm_hoan() {
             const formData = new FormData()
             formData.append('id', this.id)
@@ -650,6 +717,27 @@ export default {
                 }
             })
         },
+        async add_teachers() {
+            if (!this.teacher_ids) {
+                toastr.error('Chọn giáo viên để tiếp tục');
+                return
+            }
+            const formData = new FormData()
+            formData.append('id', this.id)
+            formData.append('giao_vien_id', this.teacher_ids)
+
+            await api.post('don-dich-vu/dieu-giao-vien', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-teacher-doi'].hide()
+                    this.teacher_id = null
+                    this.load_data();
+                }
+            })
+        },
         async load_kd() {
             await api.get('don-dich-vu/leader-kinh-doanh', {
                 'Content-Type': 'multipart/form-data',
@@ -668,6 +756,13 @@ export default {
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 this.teachers = res?.data?.data
+            })
+
+            await api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.teacherss = res?.data?.data
             })
         },
         async load_data() {

@@ -2233,3 +2233,16 @@ header {
     width: 100%;
     justify-content: space-around;
 }
+
+.create .d-in .custom-control {
+    display: inline !important;
+    margin-right: 31px !important;
+    
+}
+
+@media (max-width: 600px) {
+    .create .d-in .custom-control {
+        display: inline !important;
+        margin-right: 10px !important;
+    }
+}

@@ -1,8 +1,8 @@
 <template>
-    <div class="content-mp">
+    <div class="content-mp create">
 
         <v-row>
-            <v-col xs="12" sm="12" md="12" lg="7" xl="7">
+            <v-col xs="12" sm="12" md="12" lg="8" xl="8">
                 <v-card>
                     <v-card-text>
                         <div>
@@ -19,7 +19,7 @@
 
                         <div class="mt-2">
                             <v-autocomplete v-model="phu_huynh_id" :disabled="isUpdating" :items="phu_huynh" filled chips
-                                color="blue-grey lighten-2" label="" item-text="name" item-value="name">
+                                color="blue-grey lighten-2" label="" item-text="name" item-value="group">
                                 <template v-slot:selection="data">
                                     <div class="d-flex">
                                         <v-avatar left>
@@ -81,7 +81,7 @@
                     </v-card-text>
                 </v-card>
 
-                <!--  -->
+                <!-- dia diem -->
                 <v-card class="mt-5">
                     <v-card-text>
                         <div>
@@ -99,7 +99,7 @@
                     </v-card-text>
                 </v-card>
 
-                <!--  -->
+                <!-- thoi gian -->
                 <v-card class="mt-5">
                     <v-card-text>
                         <div class="d-flex justify-content-between align-items-center">
@@ -144,8 +144,29 @@
                     </v-card-text>
                 </v-card>
 
-                <!--  -->
+                <!-- chon ca -->
                 <v-card class="mt-5">
+                    <v-card-text>
+                        <div>
+                            <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M8.92188 0C4.51387 0 0.921875 3.592 0.921875 8C0.921875 12.408 4.51387 16 8.92188 16C13.3299 16 16.9219 12.408 16.9219 8C16.9219 3.592 13.3299 0 8.92188 0ZM12.4019 10.856C12.2899 11.048 12.0899 11.152 11.8819 11.152C11.7779 11.152 11.6739 11.128 11.5779 11.064L9.09788 9.584C8.48188 9.216 8.02588 8.408 8.02588 7.696V4.416C8.02588 4.088 8.29788 3.816 8.62587 3.816C8.95388 3.816 9.22587 4.088 9.22587 4.416V7.696C9.22587 7.984 9.46587 8.408 9.71387 8.552L12.1939 10.032C12.4819 10.2 12.5779 10.568 12.4019 10.856Z"
+                                    fill="#00C092" />
+                            </svg>
+                            <span>Chọn ca</span>
+                        </div>
+                        <div class="mt-2 d-in">
+                            <b-form-group class="" v-slot="{ ariaDescribedby }">
+                                <b-form-radio v-for="(item, i) in chon_ca" v-bind:key="i" v-model="chon_ca_id"
+                                    :aria-describedby="ariaDescribedby" name="chon_ca" :value="item?.id">{{
+                                        item?.name }}</b-form-radio>
+                            </b-form-group>
+                        </div>
+                    </v-card-text>
+                </v-card>
+
+                <!-- chon giao vien -->
+                <v-card class="mt-5 d-in">
                     <v-card-text>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -160,18 +181,82 @@
                                 </svg>
                                 <span>Chọn giáo viên</span>
                             </div>
-                            <div>
-
+                            <div v-if="teacher_id != ''">
+                                <span>
+                                    Đã chọn {{ teacher?.id }}
+                                </span>
                             </div>
                         </div>
-                        <div class="mt-2">
-
+                        <div class="mt-4">
+                            <button class="btn-gan" v-b-modal.my-modal-teacher>Gán giáo viên</button>
                         </div>
                     </v-card-text>
                 </v-card>
 
-                <!--  -->
-                <v-card class="mt-5">
+                <b-modal id="my-modal-teacher" ref="my-modal-teacher" hide-footer centered title="Điều giáo viên">
+                    <template #default="{ hide }">
+                        <div>
+                            <span>Có <b class="text-primary">{{ teachers?.length ?? 0 }}</b> giáo viên nhận lịch</span>
+                        </div>
+                        <div>
+
+                            <div class="my-2">
+                                <div v-for="(item, n) in teachers" v-bind:key="n">
+                                    <div :class="'card-teacher ' + (teacher_id == item?.id ? ' active' : '')">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-3 layout-user">
+                                                    <img :src="item?.anh_nguoi_dung" alt="">
+                                                </div>
+                                                <div class="ps-2" style="margin-left: 5px;">
+                                                    <div>
+                                                        <b-badge pill variant="danger">
+                                                            # {{ item?.id }}
+                                                        </b-badge>
+                                                        <b-badge pill variant="success">
+                                                            Đang trống ca
+                                                        </b-badge>
+                                                    </div>
+                                                    <strong>
+                                                        <span class="user-name">
+                                                            {{ item?.hoten }}
+                                                        </span>
+                                                    </strong>
+                                                    <p class="w-p p-0 m-0">
+                                                        {{ item?.trinh_do }}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="">
+                                                <b-button @click="set_teacher(item?.id)" size="sm"
+                                                    style="min-width: 130px;padding: 0.325rem 0.75rem !important;"
+                                                    :class="'w-100 rounded-pill ' + (teacher_id == item?.id ? 'text-light' : 'text-primary')"
+                                                    :variant="teacher_id == item?.id ? 'primary' : 'outline-primary'">
+                                                    Chọn
+                                                </b-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="mt-5">
+                                    <b-form-input class="w-100" v-model.lazy="tuKhoa"
+                                        placeholder="Gán giáo viên cụ thể"></b-form-input>
+                                </div> -->
+
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button type="button" class=" btn-delete ms-1" @click="hide()">Xác nhận</button>
+                            </div>
+                        </div>
+
+                    </template>
+                </b-modal>
+
+                <!-- so luong be -->
+                <v-card class="mt-5 d-in">
                     <v-card-text>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -199,13 +284,13 @@
                         <div class="mt-2">
                             <b-form-group class="d-flex align-items-center me-3" v-slot="{ ariaDescribedby }">
                                 <b-form-radio v-for="i in 5" v-bind:key="i" v-model="so_luong_be"
-                                    :aria-describedby="ariaDescribedby" name="some-radios" :value="i">{{ i }}</b-form-radio>
+                                    :aria-describedby="ariaDescribedby" name="so_luong_be" :value="i">{{ i }}</b-form-radio>
                             </b-form-group>
                         </div>
                     </v-card-text>
                 </v-card>
 
-                <!--  -->
+                <!-- an trua -->
                 <v-card class="mt-5">
                     <v-card-text>
                         <div class="d-flex justify-content-between align-items-center">
@@ -237,16 +322,17 @@
                         </div>
                         <div class="mt-2">
                             <b-form-group class="" v-slot="{ ariaDescribedby }">
-                                <b-form-radio v-for="i in 5" v-bind:key="i" v-model="an_trua_id"
-                                    :aria-describedby="ariaDescribedby" name="some-radios" :value="i">{{ i }}</b-form-radio>
+                                <b-form-radio v-for="(item, i) in an_trua" v-bind:key="i" v-model="an_trua_id"
+                                    :aria-describedby="ariaDescribedby" name="an_trua" :value="item?.id">{{
+                                        item?.tieu_De }}</b-form-radio>
                             </b-form-group>
                         </div>
                     </v-card-text>
                 </v-card>
 
 
-                <!--  -->
-                <v-card class="mt-5">
+                <!-- them gio -->
+                <v-card class="mt-5 ">
                     <v-card-text>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -264,17 +350,19 @@
                         </div>
                         <div class="mt-2">
                             <b-form-group class="" v-slot="{ ariaDescribedby }">
-                                <b-form-radio v-for="i in 5" v-bind:key="i" v-model="an_trua_id"
-                                    :aria-describedby="ariaDescribedby" name="some-radios" :value="i">{{ i }}</b-form-radio>
+                                <b-form-radio v-for="(item, i) in them_gio" v-bind:key="i" v-model="them_gio_id"
+                                    :aria-describedby="ariaDescribedby" name="them_gio" :value="item?.id">{{
+                                        item?.tieu_De }}</b-form-radio>
                             </b-form-group>
                         </div>
                     </v-card-text>
                 </v-card>
 
-                <!--  -->
+
+                <!-- chon buoi -->
 
                 <div class="mt-5">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
                         <div>
                             <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -292,33 +380,61 @@
                         </div>
                     </div>
 
-                    <v-card v-for="(item, n) in 5" v-bind:key="n" class="mt-5">
-                        <v-card-text>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
+                    <div v-if="buoi_hoc?.length > 0">
+                        <v-card v-for="(item, n) in buoi_hoc" v-bind:key="n"
+                            :class="'mt-5' + (item?.id == goi_hoc_phi_id ? ' card-active' : '')">
+                            <v-card-text :class="(item?.id == goi_hoc_phi_id ? ' card-active' : '')">
+                                <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M11.4415 1.33337H6.40155C3.88155 1.33337 3.25488 2.00671 3.25488 4.69337V12.2C3.25488 13.9734 4.22822 14.3934 5.40822 13.1267L5.41488 13.12C5.96155 12.54 6.79488 12.5867 7.26822 13.22L7.94155 14.12C8.48155 14.8334 9.35488 14.8334 9.89488 14.12L10.5682 13.22C11.0482 12.58 11.8815 12.5334 12.4282 13.12C13.6149 14.3867 14.5815 13.9667 14.5815 12.1934V4.69337C14.5882 2.00671 13.9615 1.33337 11.4415 1.33337ZM10.8149 6.66004L10.4815 7.00004H10.4749L8.45488 9.02004C8.36822 9.10671 8.18822 9.20004 8.06155 9.21337L7.16155 9.34671C6.83488 9.39337 6.60822 9.16004 6.65488 8.84004L6.78155 7.93337C6.80155 7.80671 6.88822 7.63337 6.97488 7.54004L9.00155 5.52004L9.33488 5.18004C9.55488 4.96004 9.80155 4.80004 10.0682 4.80004C10.2949 4.80004 10.5415 4.90671 10.8149 5.18004C11.4149 5.78004 11.2215 6.25337 10.8149 6.66004Z"
-                                                fill="#2D2D2D" />
-                                        </svg>
-                                        <span>1 Buổi</span>
+                                        <div>
+                                            <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M11.4415 1.33337H6.40155C3.88155 1.33337 3.25488 2.00671 3.25488 4.69337V12.2C3.25488 13.9734 4.22822 14.3934 5.40822 13.1267L5.41488 13.12C5.96155 12.54 6.79488 12.5867 7.26822 13.22L7.94155 14.12C8.48155 14.8334 9.35488 14.8334 9.89488 14.12L10.5682 13.22C11.0482 12.58 11.8815 12.5334 12.4282 13.12C13.6149 14.3867 14.5815 13.9667 14.5815 12.1934V4.69337C14.5882 2.00671 13.9615 1.33337 11.4415 1.33337ZM10.8149 6.66004L10.4815 7.00004H10.4749L8.45488 9.02004C8.36822 9.10671 8.18822 9.20004 8.06155 9.21337L7.16155 9.34671C6.83488 9.39337 6.60822 9.16004 6.65488 8.84004L6.78155 7.93337C6.80155 7.80671 6.88822 7.63337 6.97488 7.54004L9.00155 5.52004L9.33488 5.18004C9.55488 4.96004 9.80155 4.80004 10.0682 4.80004C10.2949 4.80004 10.5415 4.90671 10.8149 5.18004C11.4149 5.78004 11.2215 6.25337 10.8149 6.66004Z"
+                                                    fill="#2D2D2D" />
+                                            </svg>
+                                            <span>{{ item?.so_buoi }} Buổi</span>
+                                        </div>
+                                        <div class="text-primary">
+                                            <b>{{ formatCurrency(item?.thanh_tien) }}</b>
+                                        </div>
                                     </div>
-                                    <div class="text-primary">
-                                        <b>350,000 đ</b>
+                                    <div>
+                                        <button @click="setBuoi(item?.id)"
+                                            class="text-light rounded-pill btn btn-chon">Chọn</button>
+                                        <!-- <b-button variant="outline-primary">Button</b-button> -->
                                     </div>
                                 </div>
-                                <div>
-                                    <button class="text-light rounded-pill btn btn-chon">Chọn</button>
-                                    <!-- <b-button variant="outline-primary">Button</b-button> -->
-                                </div>
-                            </div>
-                        </v-card-text>
-                    </v-card>
+                            </v-card-text>
+                        </v-card>
+                    </div>
+
+                    <b-alert v-else show variant="warning">Dịch vụ chưa có buổi học nào</b-alert>
                 </div>
 
+                <!-- hoc phi -->
+                <hr />
+                <div>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Học phí</td>
+                                <td><b>{{ formatCurrency(form?.hocPhi) }}</b></td>
+                            </tr>
+                            <tr>
+                                <td>Phụ cấp</td>
+                                <td><b>{{ formatCurrency(form?.phuCap) }}</b></td>
+                            </tr>
+                            <tr>
+                                <td>Tổng</td>
+                                <td><b class="text-primary">{{ formatCurrency(form?.tongTien) }}</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
                 <!--  -->
+                <!-- ghi chu -->
                 <v-card class="mt-5">
                     <v-card-text>
                         <div>
@@ -406,8 +522,21 @@ export default {
             month: 1,
             menu: false,
             modal: false,
+            form: null,
             so_luong_be: 1,
-            an_trua_id: 1,
+            buoi_hoc: [],
+            buoi_hoc_id: 1,
+            an_trua_id: '',
+            an_trua: [],
+            goi_hoc_phi: [],
+            goi_hoc_phi_id: '',
+            them_gio: [],
+            them_gio_id: '',
+            chon_ca: [],
+            chon_ca_id: '',
+            teachers: [],
+            teacher: '',
+            teacher_id: '',
         };
     },
     components: {
@@ -420,6 +549,15 @@ export default {
         }
     },
     methods: {
+        set_teacher(id) {
+            if (this.teacher_id == id) {
+                this.teacher_id = ''
+            } else {
+                this.teacher_id = id
+                this.teacher = this.teachers?.filter(x => x.id !== id);
+            }
+            console.log(this.teacher_id)
+        },
         activeDay(id) {
             if (this.selectedDays.includes(id)) {
                 return id;
@@ -458,7 +596,45 @@ export default {
                 }
             })
         },
+        async load_form() {
+            let url = `don-dich-vu/load-form-tao-don?so_luong_tre=${this.so_luong_be}`;
+            if (this.an_trua_id != '') {
+                url += `&an_trua_id=${this.an_trua_id}`;
+            }
+            if (this.them_gio_id != '') {
+                url += `&them_gio_id=${this.them_gio_id}`;
+            }
+            if (this.goi_hoc_phi_id != '') {
+                url += `&goi_hoc_phi_id=${this.goi_hoc_phi_id}`;
+            }
+            await api.get(url, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.form = res?.data?.data
+                this.an_trua = res?.data?.data?.anTrua ?? []
+                // this.an_trua_id = this.an_trua[0]?.value
+
+                this.them_gio = res?.data?.data?.themGio ?? []
+                console.log(this.them_gio, res?.data?.data)
+                // this.them_gio_id = res?.data?.data?.themGio[0]?.id
+            })
+        },
         async load_data() {
+            await api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.teachers = res?.data?.data
+            })
+
+            await api.get(`dich-vu/get-ca`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.chon_ca = res?.data?.data
+            })
+
             await api.get('dich-vu/danh-sach?page=1&limit=1000&sort=1&tuKhoa=', {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
@@ -483,22 +659,45 @@ export default {
                         avatar: item?.anh_nguoi_dung,
                     };
                 })
-                this.phu_huynh_id = this.phu_huynh[0].name
+                this.phu_huynh_id = this.phu_huynh[0].group
             })
         },
-        async send_data(event) {
-            event.preventDefault();
-            const formData = new FormData(document.getElementById('form'))
-            await api.post('dao-tao/tao-moi', formData, {
+        async send_data() {
+            const formData = new FormData()
+            formData.append('phu_huynh_id', this.phu_huynh_id)
+            formData.append('dich_vu_id', this.dich_vu_id)
+            formData.append('dia_chi', this.dia_chi)
+
+            let dateArray = this.date.split("-");
+            let year = dateArray[0];
+            let month = dateArray[1];
+            let currentDate = new Date();
+            let day = currentDate.getDate();
+            let formattedDate = `${day}/${month}/${year}`;
+
+            formData.append('thoi_gian_bat_dau', formattedDate)
+            formData.append('thu', this.selectedDays.join(', '))
+            formData.append('chon_ca_id', this.chon_ca_id)
+            formData.append('so_luong_be', this.so_luong_be)
+            formData.append('goi_hoc_phi_id', this.goi_hoc_phi_id)
+
+            formData.append('ghi_chu', this.ghi_chu)
+            formData.append('hoc_phi', this.goi_hoc_phi_id)
+            formData.append('phu_cap', this.goi_hoc_phi_id)
+            formData.append('tong_tien', this.goi_hoc_phi_id)
+            formData.append('giao_vien_id', this.teacher_id)
+            formData.append('an_trua_id', this.an_trua_id)
+            formData.append('them_gio_id', this.them_gio_id)
+            formData.append('giao_vien_id', this.teacher_id)
+            formData.append('leader_kd_id', '')
+
+            await api.post('don-dich-vu/tao-don', formData, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
-                    this.$refs['my-modal'].hide()
-                    this.clearFiles();
-                    this.name = null
-                    this.load_data();
+                    this.$router.push('/admin/orders');
                 }
             })
         },
@@ -506,10 +705,14 @@ export default {
             const index = this.friends.indexOf(item.name)
             if (index >= 0) this.friends.splice(index, 1)
         },
+        setBuoi(id) {
+            this.goi_hoc_phi_id = id
+        }
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
         this.month = this.date.split("-")[1] + '/' + this.date.split("-")[0];
+        this.load_form()
         this.load_data()
     },
     watch: {
@@ -524,6 +727,28 @@ export default {
             console.log(dateArray)
             this.month = dateArray[1] + '/' + dateArray[0];
             this.load_data();
+        },
+        async dich_vu_id() {
+            await api.get(`don-dich-vu/danh-sach-gia-buoi-hoc?id=${this.dich_vu_id}&page=1&limit=1000&sort=1`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.buoi_hoc = res?.data?.data
+            })
+        },
+        goi_hoc_phi_id() {
+            this.load_form()
+        },
+        an_trua_id() {
+            this.load_form()
+        }
+        ,
+        so_luong_tre() {
+            this.load_form()
+        }
+        ,
+        them_gio_id() {
+            this.load_form()
         }
     },
 }
@@ -532,9 +757,20 @@ export default {
 <style lang="scss" scoped>
 .btn-chon {
     border-radius: 46px;
+    opacity: 0.5;
     background: #0056B1;
     padding: 8px 37px;
 }
+
+.card-active {
+    .btn-chon {
+        border-radius: 46px;
+        opacity: 1 !important;
+        background: #0056B1;
+        padding: 8px 37px;
+    }
+}
+
 
 .blade-id {
     border-radius: 17px;
@@ -561,5 +797,40 @@ span {
     margin-left: 5px;
     font-weight: 700;
     line-height: normal;
+}
+
+.btn-gan {
+    cursor: pointer;
+    border-radius: 46px;
+    background: #E6EFF8;
+    display: flex;
+    width: 100%;
+    padding: 12px 32px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    color: #0056B1;
+    text-align: center;
+    font-family: SVN-Gilroy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.card-teacher {
+    border-radius: 10px;
+    background: #FFF;
+    border: 1px solid #c9c8c8;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.card-teacher.active {
+    border-radius: 10px;
+    border: 1px solid #4EAEEA;
+
+    background: #E7F6FF;
 }
 </style>

@@ -1,10 +1,15 @@
 <template>
     <div class="content-mp">
         <v-row>
-            <v-col class="mt-0 pt-0" xs="12" sm="12" md="6" lg="6" xl="6" style="min-width: 373px;">
+            <v-col cols="12" md="7">
+                <b-form-input v-model.lazy="tuKhoa" placeholder="Tìm giáo viên"></b-form-input>
+            </v-col>
+
+            <v-col class="mt-0 pt-0" xs="12" sm="12" md="7" lg="7" xl="7" style="min-width: 373px;">
                 <div>
                     <div class="card-teacher cp">
-                        <div class="card-item mt-3" v-for="(item, n) in teachers" v-bind:key="n" @click="add_teacher(item?.id)">
+                        <div class="card-item mt-3" v-for="(item, n) in teachers" v-bind:key="n"
+                            @click="add_teacher(item?.id)">
                             <div class="d-flex">
                                 <div class="box-img me-2">
                                     <img :src="item?.anh_nguoi_dung" alt="">
@@ -13,7 +18,7 @@
                                     <div class="user-id mb-2">
                                         <span class="blade-id"># {{ item?.id }}</span>
                                     </div>
-                                    <div class="user-name">
+                                    <div :class="isChecked(item?.id) == true ? ' user-name' : ' text-secondary text-dark'">
                                         {{ item?.hoten ?? 'Chưa cập nhật tên' }}
                                     </div>
                                 </div>
@@ -103,6 +108,9 @@ export default {
             data: [],
             teachers: [],
             teacher: [],
+            tuKhoa: '',
+            timeOut: null,
+            timer: 700,
         };
     },
     validate({ params }) {
@@ -122,7 +130,7 @@ export default {
     },
     methods: {
         async load_data() {
-            await api.get(`dao-tao/danh-sach-giao-vien-da-gan?page=1&limit=1000&sort=1&tuKhoa=&hoc_phan_id=` + this.course_id, {
+            await api.get(`dao-tao/danh-sach-giao-vien-da-gan?page=1&limit=1000&sort=1&tuKhoa=${this.tuKhoa}&hoc_phan_id=` + this.course_id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -133,7 +141,7 @@ export default {
                 console.log(this.teacher)
             })
 
-            await api.get(`dao-tao/danh-sach-giao-vien?page=1&limit=1000&sort=1&tuKhoa=&hoc_phan_id=` + this.course_id, {
+            await api.get(`dao-tao/danh-sach-giao-vien?page=1&limit=1000&sort=1&tuKhoa=${this.tuKhoa}&hoc_phan_id=` + this.course_id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -165,6 +173,17 @@ export default {
         this.$store.dispatch('title/set_title', this.title);
         this.load_data()
     },
+    watch: {
+        tuKhoa() {
+            clearTimeout(this.timeOut);
+
+            this.timeOut = setTimeout(() => {
+                // this.$emit("click");
+                this.load_data()
+
+            }, this.timer);
+        },
+    }
 }
 </script>
 
@@ -287,4 +306,5 @@ table {
     padding: 12px 32px;
     justify-content: center;
     align-items: center;
-}</style>
+}
+</style>

@@ -169,13 +169,25 @@
                                                 <span>Bài Test</span>
                                             </strong>
                                         </div>
-                                        <div class="my-3 w-100"
+                                        <!-- <div class="my-3 w-100"
                                             v-for="(item, n) in data_lesson?.baiTest" v-bind:key="n">
                                             <v-card>
                                                 <v-card-text>
                                                     <div class="mt-0">
                                                         <a :href="item?.link" target="_blank">
                                                             {{ item?.link }}
+                                                        </a>
+                                                    </div>
+                                                </v-card-text>
+                                            </v-card>
+                                        </div> -->
+                                        <div class="my-3 w-100"
+                                            >
+                                            <v-card>
+                                                <v-card-text>
+                                                    <div class="mt-0">
+                                                        <a :href="data_lesson?.baiTest?.link" target="_blank">
+                                                            {{ data_lesson?.baiTest?.link }}
                                                         </a>
                                                     </div>
                                                 </v-card-text>
@@ -332,6 +344,7 @@ export default {
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 this.data_lesson = res?.data?.data
+                console.log(this.data_lesson)
                 this.$refs['my-modal-show'].show()
             })
         },

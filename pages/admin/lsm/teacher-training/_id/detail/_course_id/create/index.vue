@@ -283,6 +283,10 @@ export default {
             })
         },
         async send_data() {
+            if(this.tieu_de == null || this.tieu_de == '') {
+                toastr.error('Vui lòng nhập đủ thông tin');
+                return
+            }
             const formData = new FormData()
             formData.append('tieu_de', this.tieu_de)
             formData.append('hoc_phan_id', this.course_id)

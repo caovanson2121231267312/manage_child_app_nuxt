@@ -20,7 +20,7 @@
                                     </svg>
                                     <div class="ms-2">
                                         <span class="span-title">Mã đơn:</span>
-                                        <span class="span-content">0123456789</span>
+                                        <span class="span-content">{{ data?.ma_don_hang }}</span>
                                     </div>
                                 </div>
 
@@ -36,10 +36,10 @@
                             <div class="">
                                 <div class="d-flex align-items-center">
                                     <div class="box-img me-2">
-                                        <img src="@/static/images/teacher/Ellipse49.png" alt="">
+                                        <img :src="data?.giaoVien?.anh_nguoi_dung" alt="">
                                     </div>
                                     <div class="">
-                                        <div class="user-name mb-2">Nguyễn Hoàng Anh Thư</div>
+                                        <div class="user-name mb-2">{{ data?.giaoVien?.hoten ?? 'Chưa cập nhật' }}</div>
                                         <div class="user-position">Giáo viên</div>
                                     </div>
                                 </div>
@@ -58,7 +58,7 @@
                                             d="M12.9452 3.13048L8.48815 0.373553C7.68454 -0.124518 6.36007 -0.124518 5.55646 0.373553L1.07706 3.13048C-0.359021 4.00737 -0.359021 5.99263 1.07706 6.87653L2.2676 7.6061L5.55646 9.62645C6.36007 10.1245 7.68454 10.1245 8.48815 9.62645L11.7547 7.6061L12.7741 6.97474V9.12136C12.7741 9.40898 13.0271 9.64749 13.3321 9.64749C13.6372 9.64749 13.8902 9.40898 13.8902 9.12136V5.66994C14.1878 4.76499 13.8828 3.71273 12.9452 3.13048Z"
                                             fill="#0056B1" />
                                     </svg>
-                                    <span class="chapter ms-2">Buổi 1</span>
+                                    <span class="chapter ms-2">Buổi {{ data?.tienDo?.buoi }}</span>
                                 </div>
                                 <div class="d-flex align-items-center ms-4">
                                     <svg width="12" height="14" viewBox="0 0 12 14" fill="none"
@@ -70,11 +70,12 @@
                                             d="M11.3333 6H0.666667C0.3 6 0 6.29605 0 6.65789V10.7105C0 12.6842 1 14 3.33333 14H8.66667C11 14 12 12.6842 12 10.7105V6.65789C12 6.29605 11.7 6 11.3333 6ZM4.14 11.5066C4.10667 11.5329 4.07333 11.5658 4.04 11.5855C4 11.6118 3.96 11.6316 3.92 11.6447C3.88 11.6645 3.84 11.6776 3.8 11.6842C3.75333 11.6908 3.71333 11.6974 3.66667 11.6974C3.58 11.6974 3.49333 11.6776 3.41333 11.6447C3.32667 11.6118 3.26 11.5658 3.19333 11.5066C3.07333 11.3816 3 11.2105 3 11.0395C3 10.8684 3.07333 10.6974 3.19333 10.5724C3.26 10.5132 3.32667 10.4671 3.41333 10.4342C3.53333 10.3816 3.66667 10.3684 3.8 10.3947C3.84 10.4013 3.88 10.4145 3.92 10.4342C3.96 10.4474 4 10.4671 4.04 10.4934C4.07333 10.5197 4.10667 10.5461 4.14 10.5724C4.26 10.6974 4.33333 10.8684 4.33333 11.0395C4.33333 11.2105 4.26 11.3816 4.14 11.5066ZM4.14 9.20395C4.01333 9.32237 3.84 9.39474 3.66667 9.39474C3.49333 9.39474 3.32 9.32237 3.19333 9.20395C3.07333 9.07895 3 8.90789 3 8.73684C3 8.56579 3.07333 8.39474 3.19333 8.26974C3.38 8.08553 3.67333 8.02632 3.92 8.13158C4.00667 8.16447 4.08 8.21053 4.14 8.26974C4.26 8.39474 4.33333 8.56579 4.33333 8.73684C4.33333 8.90789 4.26 9.07895 4.14 9.20395ZM6.47333 11.5066C6.34667 11.625 6.17333 11.6974 6 11.6974C5.82667 11.6974 5.65333 11.625 5.52667 11.5066C5.40667 11.3816 5.33333 11.2105 5.33333 11.0395C5.33333 10.8684 5.40667 10.6974 5.52667 10.5724C5.77333 10.3289 6.22667 10.3289 6.47333 10.5724C6.59333 10.6974 6.66667 10.8684 6.66667 11.0395C6.66667 11.2105 6.59333 11.3816 6.47333 11.5066ZM6.47333 9.20395C6.44 9.23026 6.40667 9.25658 6.37333 9.28289C6.33333 9.30921 6.29333 9.32895 6.25333 9.34211C6.21333 9.36184 6.17333 9.375 6.13333 9.38158C6.08667 9.38816 6.04667 9.39474 6 9.39474C5.82667 9.39474 5.65333 9.32237 5.52667 9.20395C5.40667 9.07895 5.33333 8.90789 5.33333 8.73684C5.33333 8.56579 5.40667 8.39474 5.52667 8.26974C5.58667 8.21053 5.66 8.16447 5.74667 8.13158C5.99333 8.02632 6.28667 8.08553 6.47333 8.26974C6.59333 8.39474 6.66667 8.56579 6.66667 8.73684C6.66667 8.90789 6.59333 9.07895 6.47333 9.20395ZM8.80667 11.5066C8.68 11.625 8.50667 11.6974 8.33333 11.6974C8.16 11.6974 7.98667 11.625 7.86 11.5066C7.74 11.3816 7.66667 11.2105 7.66667 11.0395C7.66667 10.8684 7.74 10.6974 7.86 10.5724C8.10667 10.3289 8.56 10.3289 8.80667 10.5724C8.92667 10.6974 9 10.8684 9 11.0395C9 11.2105 8.92667 11.3816 8.80667 11.5066ZM8.80667 9.20395C8.77333 9.23026 8.74 9.25658 8.70667 9.28289C8.66667 9.30921 8.62667 9.32895 8.58667 9.34211C8.54667 9.36184 8.50667 9.375 8.46667 9.38158C8.42 9.38816 8.37333 9.39474 8.33333 9.39474C8.16 9.39474 7.98667 9.32237 7.86 9.20395C7.74 9.07895 7.66667 8.90789 7.66667 8.73684C7.66667 8.56579 7.74 8.39474 7.86 8.26974C7.92667 8.21053 7.99333 8.16447 8.08 8.13158C8.2 8.07895 8.33333 8.06579 8.46667 8.09211C8.50667 8.09868 8.54667 8.11184 8.58667 8.13158C8.62667 8.14474 8.66667 8.16447 8.70667 8.19079C8.74 8.21711 8.77333 8.24342 8.80667 8.26974C8.92667 8.39474 9 8.56579 9 8.73684C9 8.90789 8.92667 9.07895 8.80667 9.20395Z"
                                             fill="#0056B1" />
                                     </svg>
-                                    <span class="time ms-2">09/08/2023 • 18:00 - 20:00</span>
+                                    <span class="time ms-2">{{ data?.tienDo?.thoi_gian }}</span>
                                 </div>
                             </div>
                         </div>
                         <hr class="m-0" />
+
                         <div class="card-review-body">
                             <div class="">
                                 <div class="d-flex align-items-center">
@@ -90,14 +91,13 @@
                                     <span class="chapter ms-2">Nhận xét buổi học hôm nay</span>
                                 </div>
                                 <div class="content my-3">
-                                    Con tiếp thu tốt, chăm ngoan và có tinh thần tự giác. Cần làm 2 bài tập ở giáo trình
-                                    trang số 12 và 13.
+                                    {{ data?.tienDo?.nhan_xet_buoi_hoc ?? 'Chưa cập nhật' }}
                                 </div>
                                 <div>
                                     <div class="title-h">Hình ảnh/ Video</div>
 
                                     <div class="w-100 mt-2">
-                                        <img class="w-100" src="@/static/images/review/Rectangle4046.png" />
+                                        <img height="200" :src="data?.tienDo?.image" />
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +114,8 @@
                                 </div>
 
                                 <div>
-                                    <span class="ms-2">
+                                    <span class="pt-2">{{ data?.tienDo?.danh_gia ?? '0' }}</span>
+                                    <span class="">
                                         <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -122,15 +123,15 @@
                                                 fill="#FFB761" />
                                         </svg>
                                     </span>
-                                    <span class="ms-2">
+                                    <!-- <span class="ms-2">
                                         <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M8.67949 1.17777C9.0774 0.606607 9.9226 0.606608 10.3205 1.17778L12.9317 4.92588C13.067 5.12017 13.2669 5.26012 13.4958 5.32083L17.9704 6.50777C18.6771 6.69522 18.9503 7.55286 18.4822 8.11451L15.6399 11.5255C15.4803 11.717 15.398 11.9613 15.4091 12.2103L15.6055 16.6064C15.6371 17.3154 14.9408 17.8308 14.272 17.5935L9.83444 16.0187C9.61809 15.9419 9.38191 15.9419 9.16556 16.0187L4.72797 17.5935C4.05918 17.8308 3.36287 17.3154 3.39454 16.6064L3.59091 12.2103C3.60204 11.9613 3.51974 11.717 3.36014 11.5255L0.517765 8.11451C0.049739 7.55286 0.322944 6.69522 1.0296 6.50777L5.50419 5.32083C5.73306 5.26012 5.93296 5.12017 6.06831 4.92588L8.67949 1.17777Z"
                                                 fill="#FFB761" />
                                         </svg>
-                                    </span>
-                                    <span class="ms-2">
+                                    </span> -->
+                                    <!-- <span class="ms-2">
                                         <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -153,7 +154,7 @@
                                                 d="M8.67949 1.17777C9.0774 0.606607 9.9226 0.606608 10.3205 1.17778L12.9317 4.92588C13.067 5.12017 13.2669 5.26012 13.4958 5.32083L17.9704 6.50777C18.6771 6.69522 18.9503 7.55286 18.4822 8.11451L15.6399 11.5255C15.4803 11.717 15.398 11.9613 15.4091 12.2103L15.6055 16.6064C15.6371 17.3154 14.9408 17.8308 14.272 17.5935L9.83444 16.0187C9.61809 15.9419 9.38191 15.9419 9.16556 16.0187L4.72797 17.5935C4.05918 17.8308 3.36287 17.3154 3.39454 16.6064L3.59091 12.2103C3.60204 11.9613 3.51974 11.717 3.36014 11.5255L0.517765 8.11451C0.049739 7.55286 0.322944 6.69522 1.0296 6.50777L5.50419 5.32083C5.73306 5.26012 5.93296 5.12017 6.06831 4.92588L8.67949 1.17777Z"
                                                 fill="#E5E5E5" />
                                         </svg>
-                                    </span>
+                                    </span> -->
                                 </div>
                             </div>
                         </div>
@@ -163,74 +164,72 @@
                         <title-header>Form đánh giá</title-header>
                     </div>
 
-                    <div class="card-review-primary">
-                        <div class="d-flex">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M16.82 1.91016H7.18001C5.06001 1.91016 3.32001 3.65016 3.32001 5.77016V19.8602C3.32001 21.6602 4.61001 22.4202 6.19001 21.5502L11.07 18.8402C11.59 18.5502 12.43 18.5502 12.94 18.8402L17.82 21.5502C19.4 22.4302 20.69 21.6702 20.69 19.8602V5.77016C20.68 3.65016 18.95 1.91016 16.82 1.91016ZM15.62 9.03016L11.62 13.0302C11.47 13.1802 11.28 13.2502 11.09 13.2502C10.9 13.2502 10.71 13.1802 10.56 13.0302L9.06001 11.5302C8.77001 11.2402 8.77001 10.7602 9.06001 10.4702C9.35001 10.1802 9.83001 10.1802 10.12 10.4702L11.09 11.4402L14.56 7.97016C14.85 7.68016 15.33 7.68016 15.62 7.97016C15.91 8.26016 15.91 8.74016 15.62 9.03016Z"
-                                    fill="#0056B1" />
-                            </svg>
-                            <span class="span-priamry ms-2">
-                                Đánh giá mức độ phù hợp của hoạt động với trẻ
-                            </span>
-                        </div>
-                    </div>
-
-                    <div v-for="n in 3" v-bind:key="n" class="card-review mt-5">
-                        <div class="card-review-body">
-                            <div class="">
-                                <div class="d-flex align-items-center">
-                                    <span class="chapter">{{ n }}. Toán học: Bé chơi xếp trồng<span
-                                            class="text-danger">*</span></span>
-                                </div>
+                    <div v-for="(item, n) in data?.formDanhGia" v-bind:key="n">
+                        <div class="card-review-primary mb-4 mt-4">
+                            <div class="d-flex">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M16.82 1.91016H7.18001C5.06001 1.91016 3.32001 3.65016 3.32001 5.77016V19.8602C3.32001 21.6602 4.61001 22.4202 6.19001 21.5502L11.07 18.8402C11.59 18.5502 12.43 18.5502 12.94 18.8402L17.82 21.5502C19.4 22.4302 20.69 21.6702 20.69 19.8602V5.77016C20.68 3.65016 18.95 1.91016 16.82 1.91016ZM15.62 9.03016L11.62 13.0302C11.47 13.1802 11.28 13.2502 11.09 13.2502C10.9 13.2502 10.71 13.1802 10.56 13.0302L9.06001 11.5302C8.77001 11.2402 8.77001 10.7602 9.06001 10.4702C9.35001 10.1802 9.83001 10.1802 10.12 10.4702L11.09 11.4402L14.56 7.97016C14.85 7.68016 15.33 7.68016 15.62 7.97016C15.91 8.26016 15.91 8.74016 15.62 9.03016Z"
+                                        fill="#0056B1" />
+                                </svg>
+                                <span class="span-priamry ms-2">
+                                    {{ item?.danhMuc }}
+                                </span>
                             </div>
                         </div>
-                        <hr class="m-0" />
-                        <div class="card-review-body">
-                            <div class="">
-                                <div class="d-flex">
-                                    <!-- <b-form-radio name="radio-size">Default</b-form-radio> -->
-                                    <b-form-radio class="me-4" name="radio-size" size="lg">
-                                        <span class="answer">Khó</span>
-                                    </b-form-radio>
-                                    <b-form-radio class="me-4" name="radio-size" checked size="lg">
-                                        <span class="answer">Phù hợp</span>
-                                    </b-form-radio>
-                                    <b-form-radio class="me-4" name="radio-size" size="lg">
-                                        <span class="answer">
-                                            Hoàn thành dễ
-                                        </span>
-                                    </b-form-radio>
+                        <div v-for="(i, j) in item?.data" v-bind:key="j" class="card-review mt-5">
+                            <div class="card-review-body">
+                                <div class="">
+                                    <div class="d-flex align-items-center">
+                                        <span class="chapter">{{ i?.tieu_de }}<span class="text-danger">*</span></span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <div class="title-h mt-4 mb-1">
-                                        Nhận xét
+                            </div>
+                            <hr class="m-0" />
+
+                            <div class="card-review-body">
+                                <div class="">
+                                    <div class="mb-3" v-for="(h, k) in i?.cac_buoi" v-bind:key="k">
+                                        <div class="chapter">
+                                            {{ h.tieu_de }}
+                                        </div>
+                                        <div class="d-flex">
+                                            <b-form-radio v-for="(x, y) in h?.muc_do" v-bind:key="y" class="me-4"
+                                            :name="'radio-size' + k" size="lg">
+                                            <span class="answer">{{ x }}</span>
+                                        </b-form-radio>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="d-flex">
+                                        <b-form-radio v-for="(h, k) in i?.goi_y" v-bind:key="k" class="me-4"
+                                            :name="'radio-size' + k" size="lg">
+                                            <span class="answer">{{ h }}</span>
+                                        </b-form-radio>
+                                    </div> -->
+                                    <div class="">
+                                        <b-form-radio v-for="(h, k) in i?.muc_do" v-bind:key="k" class="me-4"
+                                            :name="'radio-size' + k" size="lg">
+                                            <span class="answer">{{ h }}</span>
+                                        </b-form-radio>
                                     </div>
                                     <div>
-                                        <b-form-input placeholder="Bé rất thích thú khi tham gia"></b-form-input>
+                                        <div class="title-h mt-4 mb-1">
+                                            Nhận xét
+                                        </div>
+                                        <div>
+                                            <b-form-input :value="i?.noi_dung_nhan_xet"
+                                                :placeholder="i?.noi_dung_nhan_xet ?? ''"></b-form-input>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
-
                         </div>
                     </div>
 
-                    <hr class="my-5" />
 
-                    <div class="card-review-primary mt-3">
-                        <div class="d-flex">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M16.82 1.91016H7.18001C5.06001 1.91016 3.32001 3.65016 3.32001 5.77016V19.8602C3.32001 21.6602 4.61001 22.4202 6.19001 21.5502L11.07 18.8402C11.59 18.5502 12.43 18.5502 12.94 18.8402L17.82 21.5502C19.4 22.4302 20.69 21.6702 20.69 19.8602V5.77016C20.68 3.65016 18.95 1.91016 16.82 1.91016ZM15.62 9.03016L11.62 13.0302C11.47 13.1802 11.28 13.2502 11.09 13.2502C10.9 13.2502 10.71 13.1802 10.56 13.0302L9.06001 11.5302C8.77001 11.2402 8.77001 10.7602 9.06001 10.4702C9.35001 10.1802 9.83001 10.1802 10.12 10.4702L11.09 11.4402L14.56 7.97016C14.85 7.68016 15.33 7.68016 15.62 7.97016C15.91 8.26016 15.91 8.74016 15.62 9.03016Z"
-                                    fill="#0056B1" />
-                            </svg>
-                            <span class="span-priamry ms-2">
-                                Chăm sóc trẻ
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="card-review mt-5">
+                    <!-- <div class="card-review mt-5">
                         <div class="card-review-body">
                             <div class="">
                                 <div class="d-flex align-items-center">
@@ -246,7 +245,6 @@
                                         Sáng
                                     </div>
                                     <div class="d-flex">
-                                        <!-- <b-form-radio name="radio-size">Default</b-form-radio> -->
                                         <b-form-radio class="me-4" name="radio-size" size="lg">
                                             <span class="answer">Bỏ bữa</span>
                                         </b-form-radio>
@@ -265,7 +263,6 @@
                                         Trưa
                                     </div>
                                     <div class="d-flex">
-                                        <!-- <b-form-radio name="radio-size">Default</b-form-radio> -->
                                         <b-form-radio class="me-4" name="radio-size" size="lg">
                                             <span class="answer">Bỏ bữa</span>
                                         </b-form-radio>
@@ -284,7 +281,6 @@
                                         Chiều
                                     </div>
                                     <div class="d-flex">
-                                        <!-- <b-form-radio name="radio-size">Default</b-form-radio> -->
                                         <b-form-radio class="me-4" name="radio-size" size="lg">
                                             <span class="answer">Bỏ bữa</span>
                                         </b-form-radio>
@@ -310,9 +306,9 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="card-review mt-5">
+                    <!-- <div class="card-review mt-5">
                         <div class="card-review-body">
                             <div class="">
                                 <div class="d-flex align-items-center">
@@ -325,7 +321,6 @@
                             <div class="">
                                 <div class="mb-3">
                                     <div class="d-flex">
-                                        <!-- <b-form-radio name="radio-size">Default</b-form-radio> -->
                                         <b-form-checkbox class="me-4" name="radio-size" size="lg">
                                             <span class="answer">Khá</span>
                                         </b-form-checkbox>
@@ -337,9 +332,9 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="card-review mt-5">
+                    <!-- <div class="card-review mt-5">
                         <div class="card-review-body">
                             <div class="">
                                 <div class="d-flex align-items-center">
@@ -353,7 +348,6 @@
                                 <div class="mb-3">
                                     <div class="mb-3">
                                         <div class="d-flex">
-                                            <!-- <b-form-radio name="radio-size">Default</b-form-radio> -->
                                             <b-form-radio class="me-4" name="radio-size" size="lg">
                                                 <span class="answer">Gặp vấn đề</span>
                                             </b-form-radio>
@@ -375,9 +369,9 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="card-review mt-5">
+                    <!-- <div class="card-review mt-5">
                         <div class="card-review-body">
                             <div class="">
                                 <div class="d-flex align-items-center">
@@ -401,9 +395,9 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="card-review mt-5">
+                    <!-- <div class="card-review mt-5">
                         <div class="card-review-body">
                             <div class="">
                                 <div class="d-flex align-items-center">
@@ -427,7 +421,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> -->
 
                     <hr class="my-8" />
 
@@ -439,7 +433,7 @@
                         <div class="card-review mt-5">
                             <div class="card-review-body">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center">
+                                    <!-- <div class="d-flex align-items-center">
                                         <div class="box-img me-2">
                                             <img src="@/static/images/teacher/Ellipse49.png" alt="">
                                         </div>
@@ -447,9 +441,9 @@
                                             <div class="user-name mb-2">Nguyễn Thị Anh</div>
                                             <div class="user-position">Phụ huynh</div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
-                                    <div class="d-flex">
+                                    <!-- <div class="d-flex">
                                         <div class="cp me-2" v-b-tooltip.hover title="Gọi điện">
                                             <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -471,7 +465,7 @@
                                                     fill="#0056B1" />
                                             </svg>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <hr class="m-0" />
@@ -479,7 +473,7 @@
                                 <div class="">
                                     <div class="mb-3">
                                         <div class="content">
-                                            Buổi học hôm nay rất thú vị, cô giáo rất tận tình và chuyên nghiệp.
+                                            {{ data?.tienDo?.phu_huynh_nhan_xet ?? 'Chưa cập nhật' }}
                                         </div>
                                     </div>
                                 </div>
@@ -501,6 +495,9 @@
 </template>
 
 <script>
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 import TitleHeader from '~/components/title/TitleHeader.vue';
 export default {
     components: { TitleHeader },
@@ -511,19 +508,36 @@ export default {
                 name: 'Chi tiết đánh giá',
                 previous: '/admin/review-lesson'
             },
+            data: null,
         };
     },
     validate({ params }) {
-        return /^[0-9]{0,2}$/.test(params.id)
+        return /^\d+$/.test(params.id);
     },
     computed: {
         id() {
+            console.log(this.$route.params.id)
             return this.$route.params.id
         },
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
     },
     methods: {
+        async load_data() {
+            await api.get('danh-gia-buoi-hoc/chi-tiet-nhan-xet?ca_day_id=' + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data
+                this.data = user
+                console.log(this.data)
+            })
+        },
     },
     mounted() {
+        this.load_data()
         this.$store.dispatch('title/set_title', this.title);
     },
 }
