@@ -28,6 +28,14 @@
 
 
                 <div>
+                    <div class="my-4 d-flex flex-wrap">
+                        <button class="btn-excel" @click="export_excel()">
+                            Xuất Excel
+                        </button>
+                        <button class="btn-pdf ms-3"  @click="export_pdf()">
+                            In phiếu
+                        </button>
+                    </div>
                     <div class="card">
                         <div class="card-header bg-primary text-light text-center">
                             <b>PHIẾU LƯƠNG</b>
@@ -73,7 +81,7 @@
                                         <b>1. Thông tin tính lương</b>
                                     </td>
                                 </tr>
-                                <tr v-for="(item,n) in data?.donDichVu" v-bind:key="n">
+                                <tr v-for="(item, n) in data?.donDichVu" v-bind:key="n">
                                     <td>
                                         <div>Mã đơn dịch vụ</div>
                                         <div class="text-primary">{{ item?.ma_don_hang }}</div>
@@ -114,7 +122,7 @@
                                         <b>{{ formatCurrency(data?.tongPhuPhi) }}</b>
                                     </td>
                                 </tr>
-                                <tr v-for="(item,n) in data?.phuPhiKhac" v-bind:key="n">
+                                <tr v-for="(item, n) in data?.phuPhiKhac" v-bind:key="n">
                                     <td colspan="2">
                                         <span>{{ item?.name }}</span>
                                     </td>
@@ -131,7 +139,7 @@
                                         <b>{{ formatCurrency(data?.tongGiamTru) }}</b>
                                     </td>
                                 </tr>
-                                <tr v-for="(item,n) in data?.giamTru" v-bind:key="n">
+                                <tr v-for="(item, n) in data?.giamTru" v-bind:key="n">
                                     <td colspan="2">
                                         <span>{{ item?.name }}</span>
                                     </td>
@@ -217,6 +225,68 @@ export default {
                 }
             })
         },
+        async export_excel() {
+            Swal.fire({
+                title: "Đang xử lý yêu cầu!",
+                html: "Vui lòng chờ...",
+                timerProgressBar: true,
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log("I was closed by the timer");
+                }
+            });
+
+            let currentDate = new Date();
+
+            // Lấy thông tin về ngày, tháng, năm
+            let day = currentDate.getDate(); // Lấy ngày
+            let month = currentDate.getMonth() + 1; // Lấy tháng (lưu ý rằng tháng bắt đầu từ 0, nên cần cộng thêm 1)
+            let year = currentDate.getFullYear(); // Lấy năm
+
+            // Hiển thị ngày hiện tại
+            console.log(`${month}/${year}`);
+
+            await api.get(`chi-luong/export-phieu-luong?id=${this.id}&thang=${month}/${year}`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                Swal.close()
+                toastr.success('Tải xuống thành công');
+                window.open(res?.data?.data);
+            })
+        },
+        async export_pdf() {
+            Swal.fire({
+                title: "Đang xử lý yêu cầu!",
+                html: "Vui lòng chờ...",
+                timerProgressBar: true,
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log("I was closed by the timer");
+                }
+            });
+
+            let currentDate = new Date();
+
+            // Lấy thông tin về ngày, tháng, năm
+            let day = currentDate.getDate(); // Lấy ngày
+            let month = currentDate.getMonth() + 1; // Lấy tháng (lưu ý rằng tháng bắt đầu từ 0, nên cần cộng thêm 1)
+            let year = currentDate.getFullYear(); // Lấy năm
+
+            // Hiển thị ngày hiện tại
+            console.log(`${month}/${year}`);
+
+            await api.get(`/chi-luong/pdf-phieu-luong?id=${this.id}&thang=${month}/${year}`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                Swal.close()
+                toastr.success('Tải xuống thành công');
+                window.open(res?.data?.data);
+            })
+        }
     },
     mounted() {
         this.title.previous = '/admin/dashboard/salary/' + this.id
@@ -228,6 +298,40 @@ export default {
 
 
 <style lang="scss" scoped>
+.btn-excel {
+    border-radius: 46px;
+    background: #00C092;
+    display: flex;
+    padding: 12px 32px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    color: #FFF;
+    font-family: SVN-Gilroy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.btn-pdf {
+    border-radius: 46px;
+    background: #0056B1;
+    display: flex;
+    padding: 12px 32px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    color: #FFF;
+    font-family: SVN-Gilroy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
 .blade-id {
     display: initial;
 }

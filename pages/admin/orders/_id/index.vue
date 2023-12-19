@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="mt-4">
                                     <span v-for="(item, n) in data?.ke_hoach_day" v-bind:key="n" class="blade-primary">
-                                        {{ item?.goiHoc[0]?.tieu_de }} <span class="mdi mdi-window-close ms-2 cp"></span>
+                                        {{ item?.goiHoc[0]?.tieu_de }} <span @click="delete_bh(item?.id)" class="mdi mdi-window-close ms-2 cp"></span>
                                     </span>
                                 </div>
                             </v-card-text>
@@ -892,6 +892,41 @@ export default {
                     this.clearFiles();
                     this.name = null
                     this.load_data();
+                }
+            })
+        },
+        async delete_bh(id) {
+            const formData = new FormData();
+            formData.append('id', id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá lựa chọn này!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Chắc chắn/Chấp nhận!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('don-dich-vu/xoa-chuong-trinh-hoc', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Đã xoá!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            this.load_data()
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
                 }
             })
         },

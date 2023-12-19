@@ -32,6 +32,22 @@
                 </div>
 
                 <div class="mt-6">
+                    <div class="d-flex filter-warp">
+                        <div class="w-100 m-1" style="min-width: 200px;">
+                            <b-form-input v-model.lazy="tuKhoa" placeholder="Tìm theo số điện thoại"></b-form-input>
+                        </div>
+                        <div class="w-100 m-1">
+                            <b-form-select v-model="dich_vu_id" :options="dich_vu" aria-placeholder="Chọn"></b-form-select>
+                        </div>
+                        <div class="w-100 m-1">
+                            <b-form-select v-model="leader_kd_id" :options="leader_kd"
+                                aria-placeholder="Chọn"></b-form-select>
+                        </div>
+                        <div class="w-100 m-1">
+                            <b-form-select v-model="thang_id" :options="thang" aria-placeholder="Chọn"></b-form-select>
+                        </div>
+                    </div>
+
                     <table class="table table-bordered table-hover table-striped">
                         <thead class="bg-primary">
                             <th>
@@ -122,6 +138,28 @@ export default {
             per_page: 0,
             current_page: 1,
             total: 0,
+            dich_vu_id: '',
+            dich_vu: [],
+            leader_kd_id: '',
+            leader_kd: [],
+            tuKhoa: '',
+            thang: [
+                { value: 1, text: 'Tháng 01' },
+                { value: 2, text: 'Tháng 02' },
+                { value: 3, text: 'Tháng 03' },
+                { value: 4, text: 'Tháng 04' },
+                { value: 5, text: 'Tháng 05' },
+                { value: 6, text: 'Tháng 06' },
+                { value: 7, text: 'Tháng 07' },
+                { value: 8, text: 'Tháng 08' },
+                { value: 9, text: 'Tháng 09' },
+                { value: 10, text: 'Tháng 10' },
+                { value: 11, text: 'Tháng 11' },
+                { value: 12, text: 'Tháng 12' },
+            ],
+            thang_id: '',
+            timeOut: null,
+            timer: 700,
         }
     },
     computed: {
@@ -131,8 +169,41 @@ export default {
         }
     },
     methods: {
+        async load_type() {
+            await api.get('dich-vu/danh-sach?page=1&limit=1000&sort=1&tuKhoa=', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.dich_vu.unshift({
+                    value: '',
+                    text: 'Tất cả dịch vụ'
+                });
+                this.dich_vu.push(...res?.data?.data.map(item => ({
+                    value: item.id,
+                    text: item.ten_dich_vu
+                })));
+
+                this.dich_vu_id = this.dich_vu[0].value
+            })
+
+            await api.get('admin-api/danh-sach-leaderkd', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.leader_kd.unshift({
+                    value: '',
+                    text: 'Tìm theo leader'
+                });
+                this.leader_kd.push(...res?.data?.data.map(item => ({
+                    value: item.id,
+                    text: item.hoten ?? ('chưa cập nhập tên - ' + item.id)
+                })));
+
+                this.leader_kd_id = this.leader_kd[0].value
+            })
+        },
         async load_data() {
-            await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&thang=${this.month}&page=${this.current_page}&limit=10&sort=`, {
+            await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=${this.current_page}&limit=10&sort=`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -167,6 +238,9 @@ export default {
     mounted() {
         this.$store.dispatch('title/set_title', this.title)
         this.month = this.date.split("-")[1] + '/' + this.date.split("-")[0];
+        this.load_type();
+        let currentDate = new Date();
+        this.thang_id = currentDate.getMonth() + 1;
         this.load_data()
     },
     watch: {
@@ -179,6 +253,24 @@ export default {
             console.log(dateArray)
             this.month = dateArray[1] + '/' + dateArray[0];
             this.load_data();
+        },
+        tuKhoa() {
+            clearTimeout(this.timeOut);
+
+            this.timeOut = setTimeout(() => {
+                // this.$emit("click");
+                this.load_data()
+
+            }, this.timer);
+        },
+        thang_id() {
+            this.load_data()
+        },
+        dich_vu_id() {
+            this.load_data()
+        },
+        leader_kd_id() {
+            this.load_data()
         }
     }
 }

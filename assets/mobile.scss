@@ -54,6 +54,9 @@
 }
 
 @media (max-width: 600px) {
+    .filter-warp {
+        flex-wrap: wrap;
+    }
     header {
         height: 120px !important;
         // border-radius: 0px 0px 20px 20px !important;

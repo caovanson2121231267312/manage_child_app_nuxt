@@ -650,7 +650,7 @@ export default {
         showDropdown1() {
             this.$refs.dropdown1.show()
         },
-        showDropdown2() {
+        showDropdown2() {ya
             this.$refs.dropdown2.show()
         }
     },
