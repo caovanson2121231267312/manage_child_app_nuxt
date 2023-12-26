@@ -119,7 +119,7 @@
                             </div>
                             <div>
                                 <h3 class="user-name">
-                                    {{ data?.phuHuynh?.hoten ?? 'Chưa cập nhật tên' }}
+                                    {{ data?.phuHuynh?.hoten ?? (data?.phuHuynh?.ho_ten ?? 'Chưa cập nhật tên') }}
                                 </h3>
                                 <p class="w-p p-0 m-0">
                                     {{ data?.phuHuynh?.vai_tro }}

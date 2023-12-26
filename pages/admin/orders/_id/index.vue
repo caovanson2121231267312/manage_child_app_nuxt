@@ -751,7 +751,7 @@ export default {
                 })
             })
 
-            await api.get(`don-dich-vu/danh-sach-giao-vien?tuKhoa=${this.tuKhoa ?? ''}&page=1&limit=100&id=` + this.id, {
+            await api.get(`don-dich-vu/danh-sach-giao-vien?tuKhoa=${this.tuKhoa ?? ''}&page=1&limit=1000&id=` + this.id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

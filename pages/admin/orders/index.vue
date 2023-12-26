@@ -370,6 +370,7 @@ export default {
 
             this.timeOut = setTimeout(() => {
                 // this.$emit("click");
+                this.current_page = 1
                 this.load_data()
 
             }, this.timer);
@@ -378,6 +379,7 @@ export default {
             this.load_data()
         },
         keyword() {
+            this.current_page = 1
             this.tuKhoa = this.keyword
         }
     }
