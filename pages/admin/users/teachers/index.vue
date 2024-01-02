@@ -37,7 +37,7 @@
                                         {{ item?.hoten ?? 'Chưa cập nhật tên' }}
                                     </h3>
                                     <p class="w-p p-0 m-0 position">
-                                        {{ item?.trinh_do }}
+                                        {{ item?.trinh_do ? item?.trinh_do : 'chưa cập nhật trình độ' }}
                                     </p>
                                 </div>
                             </div>
