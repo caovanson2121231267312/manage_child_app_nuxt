@@ -15,20 +15,31 @@
                     </div>
                     <div v-for="(item, n) in data" v-bind:key="n">
                         <div class="">
-                            <div>
-                                <span class="me-1">
-                                    <svg width="13" height="12" viewBox="0 0 13 12" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M6.5 0C3.194 0 0.5 2.694 0.5 6C0.5 9.306 3.194 12 6.5 12C9.806 12 12.5 9.306 12.5 6C12.5 2.694 9.806 0 6.5 0ZM9.11 8.142C9.026 8.286 8.876 8.364 8.72 8.364C8.642 8.364 8.564 8.346 8.492 8.298L6.632 7.188C6.17 6.912 5.828 6.306 5.828 5.772V3.312C5.828 3.066 6.032 2.862 6.278 2.862C6.524 2.862 6.728 3.066 6.728 3.312V5.772C6.728 5.988 6.908 6.306 7.094 6.414L8.954 7.524C9.17 7.65 9.242 7.926 9.11 8.142Z"
-                                            fill="#FC4D32" />
-                                    </svg>
-                                </span>
-                                <span class="span-title">Thời lượng: </span>
-                                <b class="span-title">{{ item?.khung_gio }}</b>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="me-1">
+                                        <svg width="13" height="12" viewBox="0 0 13 12" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M6.5 0C3.194 0 0.5 2.694 0.5 6C0.5 9.306 3.194 12 6.5 12C9.806 12 12.5 9.306 12.5 6C12.5 2.694 9.806 0 6.5 0ZM9.11 8.142C9.026 8.286 8.876 8.364 8.72 8.364C8.642 8.364 8.564 8.346 8.492 8.298L6.632 7.188C6.17 6.912 5.828 6.306 5.828 5.772V3.312C5.828 3.066 6.032 2.862 6.278 2.862C6.524 2.862 6.728 3.066 6.728 3.312V5.772C6.728 5.988 6.908 6.306 7.094 6.414L8.954 7.524C9.17 7.65 9.242 7.926 9.11 8.142Z"
+                                                fill="#FC4D32" />
+                                        </svg>
+                                    </span>
+                                    <span class="span-title">Thời lượng: </span>
+                                    <b class="span-title">{{ item?.khung_gio }}</b>
+                                </div>
+                                <div>
+                                    <span @click="delete_item(item?.id, item?.khung_gio)" class="cp mdi mdi-trash-can-outline"></span>
+                                </div>
                             </div>
-                            <div class=" wow animate__animated animate__zoomIn">
-                                <Suneditor :app="n" :contents="item?.noi_dung"></Suneditor>
+                            <div class="mt-2 wow animate__animated animate__zoomIn">
+                                <v-card>
+                                    <v-card-text>
+                                        <div class="max-height" v-html="item?.noi_dung">
+                                        </div>
+                                    </v-card-text>
+                                </v-card>
+                                <!-- <Suneditor :app="n" :contents="item?.noi_dung"></Suneditor> -->
                             </div>
                         </div>
                         <hr class="support-hr" />
@@ -182,6 +193,42 @@ export default {
                 }
             })
         },
+        async delete_item(user_id, name) {
+            const formData = new FormData();
+            formData.append('id', user_id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá khung giờ ${name}!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có xoá nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('dich-vu/xoa-khung-gio', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Deleted!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            // this.load_type()
+                            this.load_data()
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
+        },
         handleValueChanged(newValue) {
             // Xử lý khi giá trị thay đổi trong thành phần con
             console.log('Value changed in child component:', newValue);
@@ -200,10 +247,10 @@ export default {
         this.$store.dispatch('title/set_title', this.title);
     },
     watch: {
-        selectedFilter () {
+        selectedFilter() {
             this.load_data()
         },
-        async selected () {
+        async selected() {
             console.log(this.selected)
             await api.get('dich-vu/get-khung-thoi-gian?type=' + this.selected, {
                 'Content-Type': 'multipart/form-data',
@@ -225,6 +272,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.max-height {
+    max-height: 500px;
+    overflow-y: auto;
+
+    div {
+        width: 100%;
+    }
+}
+
 .span-title {
     color: #2D2D2D;
     font-family: SVN-Gilroy;

@@ -42,10 +42,10 @@
                                     </div>
                                 </div>
                                 <h3 class="name">
-                                    {{ data?.hoten }}
+                                    {{ data?.hoten ?? 'Chưa cập nhật tên' }}
                                 </h3>
                                 <p class="w-p p-0 m-0 position">
-                                    {{ data?.trinh_do_name }} - {{ data?.gioi_tinh }}
+                                    {{ data?.trinh_do_name ?? 'Chưa cập nhật trình độ' }} - {{ data?.gioi_tinh ?? 'Chưa cập nhật giới tính' }}
                                 </p>
                                 <div class="d-flex align-items-center blade-infor">
                                     <span class="me-3">
@@ -56,7 +56,7 @@
                                                 d="M13.9703 11.5492L15.4486 13.0275C15.7531 13.3321 15.7531 13.8258 15.4486 14.1304C13.802 15.777 11.1952 15.9622 9.33236 14.5651L9.22376 14.4836C7.81856 13.4297 6.57029 12.1814 5.51639 10.7762L5.43494 10.6676C4.03778 8.80476 4.22304 6.19801 5.86961 4.55145C6.17416 4.24689 6.66794 4.24689 6.9725 4.55145L8.45079 6.02974C8.84131 6.42026 8.84131 7.05342 8.45079 7.44395L7.4477 8.44704C7.2432 8.65154 7.1925 8.96395 7.32184 9.22262C8.06951 10.718 9.28203 11.9305 10.7774 12.6782C11.036 12.8075 11.3485 12.7568 11.553 12.5523L12.5561 11.5492C12.9466 11.1587 13.5797 11.1587 13.9703 11.5492Z"
                                                 fill="#0056B1" />
                                         </svg>
-                                        <span>{{ data?.dien_thoai }}</span>
+                                        <span>{{ data?.dien_thoai ?? 'Chưa cập nhật SĐT' }}</span>
                                     </span>
                                     <span class="">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"
@@ -96,7 +96,7 @@
                                     </td>
                                     <td>
                                         <span class="w-text-p-1">
-                                            {{ data?.hoten }}
+                                            {{ data?.hoten ?? 'Chưa cập nhật tên' }}
                                         </span>
                                     </td>
                                 </tr>
@@ -110,7 +110,7 @@
                                     </td>
                                     <td>
                                         <span class="w-text-p-1">
-                                            {{ data?.ngay_sinh }}
+                                            {{ data?.ngay_sinh ?? 'Chưa cập nhật' }}
                                         </span>
                                     </td>
                                 </tr>
@@ -124,7 +124,7 @@
                                     </td>
                                     <td>
                                         <span class="w-text-p-1">
-                                            {{ data?.cmnd_cccd }}
+                                            {{ data?.cmnd_cccd ?? 'Chưa cập nhật' }}
                                         </span>
                                     </td>
                                 </tr>

@@ -624,9 +624,9 @@ export default {
                 this.suneditorcam_ketInstance.setContents(this.cam_ket);
                 this.gia_tri = user?.gia_tri
                 this.suneditorInstance.setContents(this.gia_tri);
-                this.suneditorcam_ketInstance.setContents(this.hop_dong_dich_vu);
                 this.image = user?.image
                 this.hop_dong_dich_vu = user?.hop_dong_dich_vu
+                this.suneditorcam_hop_dong_dich_vu.setContents(this.hop_dong_dich_vu);
                 this.ten_dich_vu = user?.ten_dich_vu
                 this.do_tuoi_id = user?.do_tuoi_id
                 this.link = user?.link
@@ -788,9 +788,9 @@ export default {
                 console.log(contents);
             },
         });
-        this.suneditorcam_ketInstance = editor2;
+        this.suneditorcam_hop_dong_dich_vu = editor2;
 
-        this.suneditorcam_ketInstance.onChange = async (contents, core) => {
+        this.suneditorcam_hop_dong_dich_vu.onChange = async (contents, core) => {
             this.hop_dong_dich_vu = contents;
             await console.log(this.hop_dong_dich_vu)
         };
