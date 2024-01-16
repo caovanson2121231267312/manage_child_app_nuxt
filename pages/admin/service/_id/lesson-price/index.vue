@@ -87,7 +87,7 @@
                             <span class="mdi mdi-plus"></span> Thêm giá buổi học
                         </button-add>
 
-                        <b-modal id="my-modal" hide-footer centered title="Thêm giá buổi học">
+                        <b-modal id="my-modal"  ref="my-modal" hide-footer centered title="Thêm giá buổi học">
                             <!-- <template #modal-header="{ close }">
                             <h5>Thông báo</h5>
                         </template> -->
@@ -95,6 +95,12 @@
                                 <div class="w-100">
                                     <div class="mb-3">
                                         <b-form-select v-model="trinhDo_id" :options="trinhDo"></b-form-select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <b-form-select v-model="ca_id" :options="ca"></b-form-select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <b-form-select v-model="khung_gio_id" :options="khung_gio"></b-form-select>
                                     </div>
                                     <div class="mb-3">
                                         <b-form-input v-model="so_buoi" min="0" max="100000"
@@ -146,6 +152,10 @@ export default {
             data: null,
             trinhDo_id: 1,
             trinhDo: [],
+            khung_gio_id: 0,
+            khung_gio: [],
+            ca_id: 0,
+            ca: [],
             giaBuoiHoc: [],
             so_buoi: null,
             tong_tien: null,
@@ -177,6 +187,19 @@ export default {
                     };
                 })
                 this.do_tuoi_id = this.do_tuoi[0].value
+            })
+
+            await api.get('dich-vu/get-ca', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.ca = res?.data?.data.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+                this.ca_id = this.ca[0].value
             })
         },
         async load_data() {
@@ -211,6 +234,7 @@ export default {
             formData.append('so_buoi', this.so_buoi)
             formData.append('tong_tien', this.tong_tien)
             formData.append('khuyen_mai', this.khuyen_mai)
+            formData.append('khung_gio_id', this.khung_gio_id)
 
             await api.post('dich-vu/them-gia-buoi-hoc', formData, {
                 'Content-Type': 'multipart/form-data',
@@ -222,6 +246,7 @@ export default {
                     this.so_buoi = '';
                     this.tong_tien = '';
                     this.khuyen_mai = '';
+                    this.$refs['my-modal'].hide()
                     // this.$router.push('/admin/service/' + this.id + '/edit');
                 }
             })
@@ -270,6 +295,7 @@ export default {
         }
     },
     mounted() {
+        this.load_role()
         this.load_data()
         this.title.previous = '/admin/service/' + this.id + '/edit'
         this.$store.dispatch('title/set_title', this.title);
@@ -277,6 +303,20 @@ export default {
     watch: {
         selectedFilter () {
             this.load_data()
+        },
+        ca_id() {
+            api.get('dich-vu/get-khung-thoi-gian?type=' + this.ca_id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.khung_gio = res?.data?.data.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+                this.khung_gio_id = this.khung_gio[0].value
+            })
         }
     }
 }

@@ -124,21 +124,27 @@
                     </div>
                     <div v-for="(item, n) in packages" v-bind:key="n">
                         <div class="mt-6 wow animate__animated animate__zoomIn">
-                            <div class="mb-2">
-                                <span class="me-1">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M14.6667 3.23329V11.16C14.6667 11.8066 14.14 12.4 13.4933 12.48L13.2867 12.5066C12.1933 12.6533 10.6533 13.1066 9.41333 13.6266C8.98 13.8066 8.5 13.48 8.5 13.0066V3.73329C8.5 3.48662 8.64 3.25995 8.86 3.13995C10.08 2.47995 11.9267 1.89329 13.18 1.78662H13.22C14.02 1.78662 14.6667 2.43329 14.6667 3.23329Z"
-                                            fill="#FC4D32" />
-                                        <path
-                                            d="M7.14048 3.13995C5.92048 2.47995 4.07381 1.89329 2.82048 1.78662H2.77381C1.97381 1.78662 1.32715 2.43329 1.32715 3.23329V11.16C1.32715 11.8066 1.85382 12.4 2.50048 12.48L2.70715 12.5066C3.80048 12.6533 5.34048 13.1066 6.58048 13.6266C7.01381 13.8066 7.49381 13.48 7.49381 13.0066V3.73329C7.49381 3.47995 7.36048 3.25995 7.14048 3.13995ZM3.33381 5.15995H4.83382C5.10715 5.15995 5.33382 5.38662 5.33382 5.65995C5.33382 5.93995 5.10715 6.15995 4.83382 6.15995H3.33381C3.06048 6.15995 2.83381 5.93995 2.83381 5.65995C2.83381 5.38662 3.06048 5.15995 3.33381 5.15995ZM5.33382 8.15995H3.33381C3.06048 8.15995 2.83381 7.93995 2.83381 7.65995C2.83381 7.38662 3.06048 7.15995 3.33381 7.15995H5.33382C5.60715 7.15995 5.83382 7.38662 5.83382 7.65995C5.83382 7.93995 5.60715 8.15995 5.33382 8.15995Z"
-                                            fill="#FC4D32" />
-                                    </svg>
-                                </span>
-                                <b>
-                                    Buổi {{ item?.buoi }}
-                                </b>
+                            <div class="mb-2 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="me-1">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M14.6667 3.23329V11.16C14.6667 11.8066 14.14 12.4 13.4933 12.48L13.2867 12.5066C12.1933 12.6533 10.6533 13.1066 9.41333 13.6266C8.98 13.8066 8.5 13.48 8.5 13.0066V3.73329C8.5 3.48662 8.64 3.25995 8.86 3.13995C10.08 2.47995 11.9267 1.89329 13.18 1.78662H13.22C14.02 1.78662 14.6667 2.43329 14.6667 3.23329Z"
+                                                fill="#FC4D32" />
+                                            <path
+                                                d="M7.14048 3.13995C5.92048 2.47995 4.07381 1.89329 2.82048 1.78662H2.77381C1.97381 1.78662 1.32715 2.43329 1.32715 3.23329V11.16C1.32715 11.8066 1.85382 12.4 2.50048 12.48L2.70715 12.5066C3.80048 12.6533 5.34048 13.1066 6.58048 13.6266C7.01381 13.8066 7.49381 13.48 7.49381 13.0066V3.73329C7.49381 3.47995 7.36048 3.25995 7.14048 3.13995ZM3.33381 5.15995H4.83382C5.10715 5.15995 5.33382 5.38662 5.33382 5.65995C5.33382 5.93995 5.10715 6.15995 4.83382 6.15995H3.33381C3.06048 6.15995 2.83381 5.93995 2.83381 5.65995C2.83381 5.38662 3.06048 5.15995 3.33381 5.15995ZM5.33382 8.15995H3.33381C3.06048 8.15995 2.83381 7.93995 2.83381 7.65995C2.83381 7.38662 3.06048 7.15995 3.33381 7.15995H5.33382C5.60715 7.15995 5.83382 7.38662 5.83382 7.65995C5.83382 7.93995 5.60715 8.15995 5.33382 8.15995Z"
+                                                fill="#FC4D32" />
+                                        </svg>
+                                    </span>
+                                    <b>
+                                        Buổi {{ item?.buoi }}
+                                    </b>
+                                </div>
+                                <div>
+                                    <span @click="edit_item(item?.id)" class="text-primary cp">Sửa</span>
+                                    <span @click="delete_item(item?.id)" class="text-danger cp ms-2">Xoá</span>
+                                </div>
                             </div>
                             <Suneditor :app="n" :contents="item?.noi_dung"></Suneditor>
                         </div>
@@ -167,6 +173,34 @@
                                     <b-form-group>
                                         <label>Nội dung:</label>
                                         <Suneditor :contents="noi_dung" @valueChanged="handleValueChanged"></Suneditor>
+                                    </b-form-group>
+                                </div>
+
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button class=" btn-delete ms-1" type="submit">Thêm</button>
+                            </div>
+                        </form>
+
+                    </template>
+                </b-modal>
+
+                <b-modal size="lg" id="my-modal-edit" ref="my-modal-edit" hide-footer centered title="Thêm buổi học">
+                    <template #default="{ hide }">
+                        <form id="form" @submit="send_data">
+                            <div class="">
+                                <div>
+                                    <b-form-group>
+                                        <label>Buổi học:</label>
+                                        <b-form-input type="number" min="0" name="buoi" v-model="buoi_edit"
+                                            placeholder="Nhập tên"></b-form-input>
+                                    </b-form-group>
+                                </div>
+                                <div>
+                                    <b-form-group>
+                                        <label>Nội dung:</label>
+                                        <Suneditor :contents="noi_dung_edit" @valueChanged="handleValueChangedEdit"></Suneditor>
                                     </b-form-group>
                                 </div>
 
@@ -219,6 +253,7 @@ export default {
             buoi: 0,
             giao_cu: null,
             giao_cu_id: null,
+            noi_dung_edit: null,
         };
     },
     validate({ params }) {
@@ -254,6 +289,10 @@ export default {
         handleValueChanged(newValue) {
             console.log('Value changed in child component:', newValue);
             this.noi_dung = newValue
+        },
+        handleValueChangedEdit(newValue) {
+            console.log('Value changed in child component:', newValue);
+            this.noi_dung_edit = newValue
         },
         async send_data_g(event) {
             event.preventDefault();
@@ -327,13 +366,21 @@ export default {
                 }
             })
         },
-        async delete_leson() {
+        async edit_item(id) {
+            await api.get('dao-tao/chi-tiet-bai-hoc?bai_hoc_id=' + id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.buoi_edit = res?.data?.data
+            })
+        },
+        async delete_item(id) {
             const formData = new FormData();
-            formData.append('bai_hoc_id', this.id_baihoc)
+            formData.append('bai_hoc_id', id)
 
             Swal.fire({
                 title: 'Bạn có chắc chắn?',
-                text: `Xoá bài học đã chọn!`,
+                text: `Xoá lựa chọn này!`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -342,13 +389,19 @@ export default {
                 cancelButtonText: 'Huỷ'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await api.post('chuong-trinh-hoc/xoa-bai-hoc', formData, {
+                    await api.post('dao-tao/delete-bai-hoc', formData, {
                         'Content-Type': 'multipart/form-data',
                         Authorization: 'Bearer ' + this.token
                     }).then(res => {
                         if (res?.status == 200) {
-                            toastr.success(res?.data?.message);
-                            this.$router.push('/admin/lsm/students/' + this.id + '/detail/' + this.id_lesson);
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Deleted!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            this.load_data()
+                            // this.load_role()
                         } else {
                             toastr.error(res?.data?.message);
                         }
