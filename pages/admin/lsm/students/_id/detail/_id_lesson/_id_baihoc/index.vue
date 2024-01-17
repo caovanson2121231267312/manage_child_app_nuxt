@@ -1,7 +1,7 @@
 <template>
     <div class="content-mp">
         <v-row>
-            <v-col class="mt-0 pt-0" xs="12" sm="12" md="6" lg="6" xl="6" style="min-width: 373px;">
+            <v-col class="mt-0 pt-0" xs="12" sm="12" md="7" lg="7" xl="7" style="min-width: 373px;">
                 <div class="d-flex align-items-center justify-content-between wmt-27">
                     <div>
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -186,9 +186,9 @@
                     </template>
                 </b-modal>
 
-                <b-modal size="lg" id="my-modal-edit" ref="my-modal-edit" hide-footer centered title="Thêm buổi học">
+                <b-modal size="lg" id="my-modal-edit" ref="my-modal-edit" hide-footer centered title="Sửa buổi học">
                     <template #default="{ hide }">
-                        <form id="form" @submit="send_data">
+                        <form id="form" @submit="send_data_edit">
                             <div class="">
                                 <div>
                                     <b-form-group>
@@ -207,7 +207,7 @@
                             </div>
                             <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
                                 <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                                <button class=" btn-delete ms-1" type="submit">Thêm</button>
+                                <button class=" btn-delete ms-1" type="submit">Sửa</button>
                             </div>
                         </form>
 
@@ -254,6 +254,7 @@ export default {
             giao_cu: null,
             giao_cu_id: null,
             noi_dung_edit: null,
+            id_edit: null,
         };
     },
     validate({ params }) {
@@ -308,6 +309,31 @@ export default {
                     toastr.success(res?.data?.message);
                     this.$refs['my-modal-g'].hide()
                     this.load_data();
+                }
+            })
+        },
+        async send_data_edit(event) {
+            event.preventDefault();
+            if (!this.noi_dung_edit) {
+                toastr.warning("vui lòng nhập đủ thông tin");
+                return
+            }
+            const formData = new FormData()
+            formData.append('noi_dung', this.noi_dung_edit)
+            formData.append('buoi', this.buoi_edit)
+            formData.append('buoi_hoc_id', this.id_edit)
+
+            await api.post('chuong-trinh-hoc/sua-buoi-hoc', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-edit'].hide()
+                    this.noi_dung_edit = null
+                    this.buoi_edit = 0
+                    this.load_data();
+                    window.location.reload()
                 }
             })
         },
@@ -367,16 +393,19 @@ export default {
             })
         },
         async edit_item(id) {
-            await api.get('dao-tao/chi-tiet-bai-hoc?bai_hoc_id=' + id, {
+            await api.get('chuong-trinh-hoc/xem-buoi-hoc?buoi_hoc_id=' + id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                this.buoi_edit = res?.data?.data
+                this.$refs['my-modal-edit'].show()
+                this.buoi_edit = res?.data?.data?.buoi
+                this.id_edit = res?.data?.data?.id
+                this.noi_dung_edit = res?.data?.data?.noi_dung
             })
         },
         async delete_item(id) {
             const formData = new FormData();
-            formData.append('bai_hoc_id', id)
+            formData.append('buoi_hoc_id', id)
 
             Swal.fire({
                 title: 'Bạn có chắc chắn?',
@@ -389,7 +418,7 @@ export default {
                 cancelButtonText: 'Huỷ'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await api.post('dao-tao/delete-bai-hoc', formData, {
+                    await api.post('chuong-trinh-hoc/xoa-buoi-hoc', formData, {
                         'Content-Type': 'multipart/form-data',
                         Authorization: 'Bearer ' + this.token
                     }).then(res => {
@@ -401,6 +430,46 @@ export default {
                                 'success'
                             )
                             this.load_data()
+                            window.location.reload()
+                            // this.load_role()
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
+        },
+        async delete_leson() {
+            const formData = new FormData();
+            formData.append('bai_hoc_id', this.id_baihoc)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá bài học này!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có xoá nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('chuong-trinh-hoc/xoa-bai-hoc', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Deleted!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            // this.load_data()
+                            this.$router.push('/admin/lsm/students/' + this.id + '/detail/' + this.id_lesson);
+                            // '/admin/lsm/students/' + this.id + '/detail/' + this.id_lesson
+                            // window.location.reload()
                             // this.load_role()
                         } else {
                             toastr.error(res?.data?.message);

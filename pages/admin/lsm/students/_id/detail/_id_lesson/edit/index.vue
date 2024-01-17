@@ -15,7 +15,7 @@
                         </span>
                     </div>
 
-                    <nuxt-link :to="'/admin/lsm/students/' + id + '/detail/' + id_lesson + '/edit'" class="btn-edit">
+                    <!-- <nuxt-link :to="'/admin/lsm/teacher-training/' + id + '/edit/' + id_lesson" class="btn-edit">
                         <svg class="me-2" width="16" height="16" viewBox="0 0 16 16" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -23,102 +23,44 @@
                                 stroke="#2D2D2D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                         Chỉnh sửa
-                    </nuxt-link>
+                    </nuxt-link> -->
 
                 </div>
                 <div class="my-2">
-                    <title-header>
+                    <!-- <title-header>
                         {{ data?.tieu_de ?? 'Loading...' }}
-                    </title-header>
+                    </title-header> -->
                 </div>
 
-                <div class="w-100 box-img">
-                    <img v-if="data?.image" class="img-w" :src="data?.image" alt="">
-                    <img v-else class="img-w" src="@/static/images/teacher-training/Rectangle4052.png" alt="">
+                <div class="d-flex justify-content-between mb-2">
+                    <label>Ẩn hiện chương trình:</label>
+                    <b-form-checkbox v-model="bat_chuong_trinh" switch size="lg"></b-form-checkbox>
                 </div>
-
-                <div class="mt-4">
-                    <div class="mb-2">
-                        <span class="span-h">
-                            Danh sách gói học
-                        </span>
-                    </div>
-                    <div v-for="(item, n) in packages" v-bind:key="n">
-                        <b-card class="p-0 cp mb-3" v-b-toggle="'collapse-' + item?.id" variant="info">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span>
-                                    {{ item?.name }}
-                                </span>
-                                <span class="mdi mdi-chevron-right"></span>
-                            </div>
-                        </b-card>
-                        <b-collapse :id="'collapse-' + item?.id" class="mt-2 mb-3 ms-3">
-                            <b-card v-for="(i, j) in item?.baiHoc" v-bind:key="j" class="p-0 cp mb-3 bg-info text-light ">
-                                <nuxt-link :to="'/admin/lsm/students/' + id + '/detail/' + id_lesson + '/' + i?.id" class="d-flex justify-content-between align-items-center text-light">
-                                    <span>
-                                        {{ i?.tieu_de }}
-                                    </span>
-                                    <span class="mdi mdi-chevron-right"></span>
-                                </nuxt-link>
-                            </b-card>
-                            <div class="mb-5" @click="add_lesson(item?.id)">
-                                <button-add>
-                                    <span class="mdi mdi-plus"></span> Thêm bài học
-                                </button-add>
-                            </div>
-                        </b-collapse>
+                <div>
+                    <b-form-group>
+                        <label>Tiêu đề:</label>
+                        <b-form-input name="tieu_de" v-model="tieu_de" placeholder="Nhập"></b-form-input>
+                    </b-form-group>
+                </div>
+                <div class="mt-1 mb-2">
+                    <b-form-group>
+                        <label>Ảnh:</label>
+                        <b-form-file name="image" accept="image/*" v-model="file" ref="file-input"
+                            id="file-large"></b-form-file>
+                    </b-form-group>
+                    <div class="w-100 box-img">
+                        <img v-if="data?.image" class="img-w" :src="data?.image" alt="">
+                        <img v-else class="img-w" src="@/static/images/teacher-training/Rectangle4052.png" alt="">
                     </div>
                 </div>
 
-                <div class="mt-3">
-                    <button-add v-b-modal.my-modal>
-                        <span class="mdi mdi-plus"></span> Thêm gói học
-                    </button-add>
+                <div class="mt-7">
+                    <form id="form" @submit="send_data">
+                        <button-component typeBtn="submit">
+                            Lưu
+                        </button-component>
+                    </form>
                 </div>
-
-                <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Thêm gói học">
-                    <template #default="{ hide }">
-                        <form id="form" @submit="send_data">
-                            <div class="">
-                                <div>
-                                    <b-form-group>
-                                        <label>Nhập tên gói học:</label>
-                                        <b-form-input name="goi_hoc" v-model="goi_hoc"
-                                            placeholder="Nhập tên"></b-form-input>
-                                    </b-form-group>
-                                </div>
-
-                            </div>
-                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
-                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                                <button class=" btn-delete ms-1" type="submit">Thêm</button>
-                            </div>
-                        </form>
-
-                    </template>
-                </b-modal>
-
-                <b-modal id="my-modal-lesson" ref="my-modal-lesson" hide-footer centered title="Thêm bài học">
-                    <template #default="{ hide }">
-                        <form id="form" @submit="send_data_lesson">
-                            <div class="">
-                                <div>
-                                    <b-form-group>
-                                        <label>Nhập mã bài học:</label>
-                                        <b-form-input name="goi_hoc" v-model="tieu_de"
-                                            placeholder="Nhập tên"></b-form-input>
-                                    </b-form-group>
-                                </div>
-
-                            </div>
-                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
-                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                                <button class=" btn-delete ms-1" type="submit">Thêm</button>
-                            </div>
-                        </form>
-
-                    </template>
-                </b-modal>
             </v-col>
         </v-row>
 
@@ -137,7 +79,7 @@ export default {
     data() {
         return {
             title: {
-                name: 'Chi tiết chương trình',
+                name: 'Chỉnh sửa',
                 previous: '/admin/lsm/teacher-training/' + (this.id ?? 0)
             },
             panel: [0],
@@ -149,6 +91,8 @@ export default {
             packages: null,
             nhom_id: 0,
             tieu_de: null,
+            file: null,
+            bat_chuong_trinh: true,
         };
     },
     validate({ params }) {
@@ -173,56 +117,26 @@ export default {
         },
         async send_data(event) {
             event.preventDefault();
-            if(!this.goi_hoc) {
+            if (!this.tieu_de) {
                 toastr.warning("vui lòng nhập đủ thông tin");
                 return
             }
             const formData = new FormData()
-            formData.append('goi_hoc', this.goi_hoc)
-            formData.append('id', this.id_lesson)
-
-            await api.post('chuong-trinh-hoc/them-goi-hoc', formData, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                if (res?.status == 200) {
-                    toastr.success(res?.data?.message);
-                    this.$refs['my-modal'].hide()
-                    this.goi_hoc = null
-                    this.load_data();
-                }
-            })
-        },
-        async send_data_lesson(event) {
-            event.preventDefault();
-            if(!this.tieu_de) {
-                toastr.warning("vui lòng nhập đủ thông tin");
-                return
-            }
-            const formData = new FormData()
+            formData.append('bat_chuong_trinh', this.bat_chuong_trinh == true ? 1 : 0)
+            formData.append('dich_vu_id', this.id)
             formData.append('tieu_de', this.tieu_de)
+            formData.append('image', this.file)
             formData.append('id', this.id_lesson)
-            formData.append('nhom_id', this.nhom_id)
 
-            await api.post('chuong-trinh-hoc/them-bai-hoc', formData, {
+            await api.post('chuong-trinh-hoc/sua', formData, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
-                    this.$refs['my-modal-lesson'].hide()
-                    this.tieu_de = null
                     this.load_data();
+                    this.$router.push('/admin/lsm/students/' + this.id + '/detail/' + this.id_lesson);
                 }
-            })
-        },
-        async lesson_show(id_lesson) {
-            await api.get(`dao-tao/chi-tiet-bai-hoc?bai_hoc_id=` + id_lesson, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                this.data_lesson = res?.data?.data
-                this.$refs['my-modal-show'].show()
             })
         },
         async load_data() {
@@ -231,8 +145,12 @@ export default {
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 this.data = res?.data?.data
-                this.title.name = res?.data?.data?.dichVu
-                this.title.previous = '/admin/lsm/students/' + (this.id ?? 0)
+                this.tieu_de = this.data?.tieu_de
+                this.file = this.data?.image
+                this.bat_chuong_trinh = this.data?.bat_chuong_trinh == 1 ? true : false
+
+                this.title.name = "Chỉnh sửa " + res?.data?.data?.dichVu
+                this.title.previous = '/admin/lsm/students/' + this.id + '/detail/' + this.id_lesson
                 this.$store.dispatch('title/set_title', this.title);
             })
 
@@ -258,7 +176,7 @@ export default {
 }
 
 .box-img {
-    max-height: 200px;
+    max-height: 150px;
     overflow: hidden;
     border-radius: 5px;
 }
