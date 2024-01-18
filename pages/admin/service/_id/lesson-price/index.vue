@@ -3,7 +3,7 @@
         <div class="service-edit-lesson-price">
 
             <b-row>
-                <b-col class="mt-0 pt-0" cols="12" sm="9" md="7">
+                <b-col class="mt-0 pt-0" cols="12" sm="10" md="8">
                     <div class="mb-7 ">
                         <div class="d-flex align-items-center">
                             <span @click="updateFilter(item?.value)" v-for="(item, index) in trinhDo" :key="index">
@@ -24,11 +24,12 @@
                                             fill="#0056B1" />
                                     </svg>
                                     <span class="span-title">
-                                        {{ item?.so_buoi }} buổi ( {{ item?.khungGio?.type }} . {{ item?.khungGio?.khung_gio }} )
+                                        {{ item?.so_buoi }} buổi ( {{ item?.khungGio?.type }} . {{ item?.khungGio?.khung_gio
+                                        }} )
                                     </span>
                                 </div>
                                 <div class="position-relative">
-                                    <input :value="item?.tong_tien" type="text" placeholder="350,000"
+                                    <input :value="formatCurrency(item?.tong_tien)" type="text" placeholder="350,000"
                                         class="form-control input-service" />
                                     <span class="end">đ</span>
                                 </div>
@@ -51,27 +52,33 @@
                                     <span class="end">%</span>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-center align-items-end ">
-                                <div class="btn-delete cp" v-b-tooltip.hover title="Xoá"
-                                    @click="delete_item(item?.id, item?.tong_tien)">
-                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="16" cy="16" r="16" fill="white" />
-                                        <g clip-path="url(#clip0_987_8373)">
-                                            <path
-                                                d="M16.0643 11.1534C18.197 11.1534 20.3328 11.1594 22.4655 11.1475C22.7975 11.1475 22.9232 11.1802 22.8783 11.5789C22.627 13.849 22.3638 16.1222 22.2112 18.4013C22.1245 19.6896 22.0198 20.9719 21.9151 22.2572C21.8553 22.9951 21.7925 23.4801 21.6609 24.2061C21.4904 25.1344 21.1075 26.0002 19.7555 25.9883C17.2817 25.9913 14.808 25.9645 12.3373 26.0002C11.3202 26.0151 10.5156 25.8038 10.2793 24.2061C10.0131 22.412 9.44475 14.1019 9.44475 14.1019L9.21742 11.7157C9.21742 11.7157 9.15461 11.1534 9.70798 11.1534C11.8288 11.1534 13.9465 11.1534 16.0673 11.1534H16.0643ZM16.5788 18.55C16.5788 17.2736 16.5788 15.9972 16.5788 14.7208C16.5788 14.2983 16.3634 14.0305 16.0284 14.0216C15.6545 14.0127 15.3853 14.3072 15.3853 14.7387C15.3853 17.2766 15.3853 19.8145 15.3883 22.3554C15.3883 22.8047 15.6366 23.1052 15.9985 23.1171C16.3365 23.129 16.5728 22.8107 16.5728 22.3376C16.5728 21.0761 16.5728 19.8115 16.5728 18.55H16.5788ZM19.4653 18.5411C19.4653 17.2498 19.4653 15.9556 19.4653 14.6643C19.4653 14.4977 19.4863 14.331 19.3158 14.212C19.1243 14.0781 18.9448 13.9591 18.6966 14.0692C18.3795 14.209 18.2838 14.453 18.2868 14.7803C18.2958 17.2944 18.2958 19.8115 18.3017 22.3257C18.3017 22.8017 18.5321 23.1082 18.882 23.1112C19.232 23.1171 19.4713 22.8017 19.4713 22.3376C19.4713 21.0731 19.4713 19.8086 19.4713 18.5441L19.4653 18.5411ZM13.6923 18.5708C13.6923 17.2528 13.6923 15.9347 13.6923 14.6167C13.6923 14.218 13.5218 14.0305 13.1598 14.0246C12.8458 14.0186 12.5915 14.2686 12.5915 14.6167C12.5885 17.2379 12.5885 19.8621 12.5915 22.4834C12.5915 22.8583 12.8667 23.1409 13.1838 23.1082C13.5517 23.0695 13.7042 22.8702 13.6983 22.4863C13.6803 21.1832 13.6923 19.877 13.6923 18.5738V18.5708Z"
-                                                fill="#979797" />
-                                            <path
-                                                d="M15.9776 10.0553C13.7461 10.0553 11.5147 10.0553 9.28024 10.0553C8.58927 10.0553 8 9.51382 8 8.88008C8 8.29097 8.58628 7.72864 9.25631 7.72269C10.5844 7.71079 11.9125 7.70781 13.2406 7.72864C13.6085 7.73459 13.7222 7.63938 13.7042 7.26152C13.6713 6.59802 14.2786 6.01486 14.9576 6.00891C15.6366 6.00296 16.3156 6.04462 16.9916 5.99999C17.7035 5.95238 18.3436 6.6129 18.2868 7.23771C18.2509 7.63641 18.4124 7.73162 18.7893 7.72566C20.0755 7.70781 21.3617 7.74947 22.645 7.71674C23.5094 7.69591 24.3081 8.35048 23.8833 9.40076C23.7308 9.7816 23.312 10.0494 22.7616 10.0494C20.599 10.0494 18.4393 10.0494 16.2767 10.0494C16.178 10.0494 16.0793 10.0494 15.9806 10.0494L15.9776 10.0553Z"
-                                                fill="#979797" />
-                                        </g>
-                                        <defs>
-                                            <clipPath id="clip0_987_8373">
-                                                <rect width="16" height="20" fill="white" transform="translate(8 6)" />
-                                            </clipPath>
-                                        </defs>
-                                    </svg>
+                            <div class="d-flex justify-content-center align-items-center ">
+                                <div class="btn-delete cp text-primary me-2" v-b-tooltip.hover title="Sửa"
+                                    @click="edit_item(item?.id)">
+                                    Sửa
                                 </div>
+                                <div class="btn-delete cp text-danger" v-b-tooltip.hover title="Xoá"
+                                    @click="delete_item(item?.id, item?.tong_tien)">
+                                    Xoá
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100">
+                            <div class="mb-1 mt-2">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M10.52 1.3335H5.48004C2.96004 1.3335 2.33337 2.00683 2.33337 4.6935V12.2002C2.33337 13.9735 3.30671 14.3935 4.48671 13.1268L4.49337 13.1202C5.04004 12.5402 5.87337 12.5868 6.34671 13.2202L7.02004 14.1202C7.56004 14.8335 8.43337 14.8335 8.97337 14.1202L9.64671 13.2202C10.1267 12.5802 10.96 12.5335 11.5067 13.1202C12.6934 14.3868 13.66 13.9668 13.66 12.1935V4.6935C13.6667 2.00683 13.04 1.3335 10.52 1.3335ZM9.89337 6.66016L9.56004 7.00016H9.55337L7.53337 9.02016C7.44671 9.10683 7.26671 9.20016 7.14004 9.2135L6.24004 9.34683C5.91337 9.3935 5.68671 9.16016 5.73337 8.84016L5.86004 7.9335C5.88004 7.80683 5.96671 7.6335 6.05337 7.54016L8.08004 5.52016L8.41337 5.18016C8.63337 4.96016 8.88004 4.80016 9.14671 4.80016C9.37337 4.80016 9.62004 4.90683 9.89337 5.18016C10.4934 5.78016 10.3 6.2535 9.89337 6.66016Z"
+                                        fill="#0056B1" />
+                                </svg>
+                                <span class="span-title">
+                                    Tổng
+                                </span>
+                            </div>
+                            <div class="position-relative">
+                                <input :value="formatCurrency(item?.so_buoi * item?.tong_tien)" type="text" placeholder="15"
+                                    class="form-control input-service" />
+                                <span class="end">đ</span>
                             </div>
                         </div>
                         <hr class="support-hr" />
@@ -80,14 +87,50 @@
                         <b-alert class="wow animate__animated animate__bounce" show dismissible variant="primary">Danh sách
                             trống</b-alert>
                     </div>
+
                 </b-col>
+
+                <b-modal size="lg" id="my-modal-edit" ref="my-modal-edit" hide-footer centered title="Sửa giá buổi học">
+                    <template #default="{ hide }">
+                        <form id="form" @submit="send_data_edit">
+                            <div class="">
+                                <div class="mb-3">
+                                    <b-form-select v-model="trinhDo_id" :options="trinhDo"></b-form-select>
+                                </div>
+                                <div class="mb-3">
+                                    <b-form-select v-model="ca_id" :options="ca"></b-form-select>
+                                </div>
+                                <div class="mb-3">
+                                    <b-form-select v-model="khung_gio_id" :options="khung_gio"></b-form-select>
+                                </div>
+                                <div class="mb-3">
+                                    <b-form-input v-model="so_buoi_edit" min="0" max="100000"
+                                        placeholder="Nhập số buổi"></b-form-input>
+                                </div>
+                                <div class="mb-3">
+                                    <b-form-input v-model="tong_tien_edit" placeholder="Nhập giá tiền"></b-form-input>
+                                </div>
+                                <div class="mb-3">
+                                    <b-form-input v-model="khuyen_mai_edit" min="0" max="100"
+                                        placeholder="Nhập khuyến mãi"></b-form-input>
+                                </div>
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button class=" btn-delete ms-1" type="submit">Sửa</button>
+                            </div>
+                        </form>
+
+                    </template>
+                </b-modal>
+
                 <b-col class="mt-0 pt-0" cols="12" sm="9" md="7">
                     <div class="">
                         <button-add v-b-modal.my-modal>
                             <span class="mdi mdi-plus"></span> Thêm giá buổi học
                         </button-add>
 
-                        <b-modal id="my-modal"  ref="my-modal" hide-footer centered title="Thêm giá buổi học">
+                        <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Thêm giá buổi học">
                             <!-- <template #modal-header="{ close }">
                             <h5>Thông báo</h5>
                         </template> -->
@@ -160,6 +203,10 @@ export default {
             so_buoi: null,
             tong_tien: null,
             khuyen_mai: null,
+            id_edit: 0,
+            so_buoi_edit: null,
+            tong_tien_edit: null,
+            khuyen_mai_edit: null,
         };
     },
     validate({ params }) {
@@ -175,6 +222,52 @@ export default {
         }
     },
     methods: {
+        async send_data_edit(event) {
+            event.preventDefault();
+            if (!this.tong_tien_edit) {
+                toastr.warning("vui lòng nhập đủ thông tin");
+                return
+            }
+            const formData = new FormData()
+            formData.append('id', this.id_edit)
+            formData.append('dich_vu_id', this.id_edit)
+            formData.append('trinh_do', this.trinhDo_id)
+            formData.append('so_buoi', this.so_buoi_edit)
+            formData.append('tong_tien', this.tong_tien_edit)
+            formData.append('khuyen_mai', this.khuyen_mai_edit)
+            formData.append('khung_gio_id', this.khung_gio_id)
+
+            await api.post('dich-vu/cap-nhat-gia-buoi-hoc-v2', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-edit'].hide()
+                    this.load_data();
+                    window.location.reload()
+                }
+            })
+        },
+        edit_item(id) {
+            this.id_edit = id
+            api.get('dich-vu/chi-tiet-gia-buoi-hoc?goi_hoc_phi_id=' + id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.$refs['my-modal-edit'].show()
+                this.ca_id = res?.data?.data?.khungGio?.ca?.id
+                this.so_buoi_edit = res?.data?.data?.so_buoi
+                this.tong_tien_edit = res?.data?.data?.tong_tien
+                this.khuyen_mai_edit = res?.data?.data?.khuyen_mai
+
+                // setTimeout(function() {
+                this.khung_gio_id = res?.data?.data?.khungGio?.id
+                console.log(this.khung_gio_id)
+                // },1500)
+                this.trinhDo_id = res?.data?.data?.trinh_do
+            })
+        },
         async load_role() {
             await api.get('dich-vu/get-do-tuoi', {
                 'Content-Type': 'multipart/form-data',
@@ -301,7 +394,7 @@ export default {
         this.$store.dispatch('title/set_title', this.title);
     },
     watch: {
-        selectedFilter () {
+        selectedFilter() {
             this.load_data()
         },
         ca_id() {
@@ -315,7 +408,9 @@ export default {
                         text: item.name
                     };
                 })
-                this.khung_gio_id = this.khung_gio[0].value
+                if (this.id_edit == 0) {
+                    this.khung_gio_id = this.khung_gio[0].value
+                }
             })
         }
     }
