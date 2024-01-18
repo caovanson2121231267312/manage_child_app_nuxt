@@ -766,9 +766,16 @@ export default {
                 this.khung_gio_target = this.khung_gios[0] ?? 0
             })
         },
-        khung_gio() {
+        async khung_gio() {
             // console.log(this.khung_gio_target)
             this.content = this.khung_gio_target?.content
+
+            await api.get(`don-dich-vu/danh-sach-gia-buoi-hoc?id=${this.dich_vu_id}&page=1&limit=1000&sort=1&khung_gio_id=` + this.khung_gio, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.buoi_hoc = res?.data?.data
+            })
         },
         async chon_ca_id() {
             console.log(this.selected)
