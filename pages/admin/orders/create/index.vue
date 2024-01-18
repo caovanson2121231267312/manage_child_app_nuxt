@@ -78,6 +78,7 @@
                         <div class="mt-2">
                             <b-form-select v-model="dich_vu_id" :options="dich_vu" aria-placeholder="Chọn"></b-form-select>
                         </div>
+
                     </v-card-text>
                 </v-card>
 
@@ -162,6 +163,14 @@
                                         item?.name }}</b-form-radio>
                             </b-form-group>
                         </div>
+                        <div class="mb-3">
+                            <b-form-select v-model="khung_gio" :options="khung_gios"></b-form-select>
+                        </div>
+
+
+                        <!-- <div v-html="content">
+
+                        </div> -->
                     </v-card-text>
                 </v-card>
 
@@ -537,6 +546,9 @@ export default {
             teachers: [],
             teacher: '',
             teacher_id: '',
+            khung_gio: 1,
+            khung_gios: [],
+            content: '',
         };
     },
     components: {
@@ -633,6 +645,7 @@ export default {
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 this.chon_ca = res?.data?.data
+                this.chon_ca_id = res?.data?.data?.[0]?.id ?? 0
             })
 
             await api.get('dich-vu/danh-sach?page=1&limit=1000&sort=1&tuKhoa=', {
@@ -641,8 +654,8 @@ export default {
             }).then(res => {
                 this.dich_vu = res?.data?.data.map(item => {
                     return {
-                        value: item.id,
-                        text: item.ten_dich_vu
+                        value: item?.id,
+                        text: item?.ten_dich_vu
                     };
                 })
                 this.dich_vu_id = this.dich_vu[0].value
@@ -677,7 +690,7 @@ export default {
 
             formData.append('thoi_gian_bat_dau', formattedDate)
             formData.append('thu', this.selectedDays.join(', '))
-            formData.append('chon_ca_id', this.chon_ca_id)
+            // formData.append('chon_ca_id', this.chon_ca_id)
             formData.append('so_luong_be', this.so_luong_be)
             formData.append('goi_hoc_phi_id', this.goi_hoc_phi_id)
 
@@ -688,7 +701,8 @@ export default {
             formData.append('giao_vien_id', this.teacher_id)
             formData.append('an_trua_id', this.an_trua_id)
             formData.append('them_gio_id', this.them_gio_id)
-            formData.append('giao_vien_id', this.teacher_id)
+            // formData.append('giao_vien_id', this.teacher_id)
+            formData.append('chon_ca_id', this.khung_gio)
             formData.append('leader_kd_id', '')
 
             await api.post('don-dich-vu/tao-don', formData, {
@@ -729,11 +743,48 @@ export default {
             this.load_data();
         },
         async dich_vu_id() {
-            await api.get(`don-dich-vu/danh-sach-gia-buoi-hoc?id=${this.dich_vu_id}&page=1&limit=1000&sort=1`, {
+            await api.get(`don-dich-vu/danh-sach-gia-buoi-hoc?id=${this.dich_vu_id}&page=1&limit=1000&sort=1&khung_gio_id=` + this.khung_gio, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 this.buoi_hoc = res?.data?.data
+            })
+
+            await api.get(`dich-vu/danh-sach-khung-gio-full?dich_vu_id=${this.dich_vu_id}&type=` + this.chon_ca_id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+
+                this.khung_gios = res?.data?.data?.khungGio?.map(item => {
+                    return {
+                        value: item?.id,
+                        text: item?.khung_gio,
+                        content: item?.noi_dung ?? ''
+                    };
+                })
+                this.khung_gio = this.khung_gios[0]?.value ?? 0
+                this.khung_gio_target = this.khung_gios[0] ?? 0
+            })
+        },
+        khung_gio() {
+            // console.log(this.khung_gio_target)
+            this.content = this.khung_gio_target?.content
+        },
+        async chon_ca_id() {
+            console.log(this.selected)
+            await api.get(`dich-vu/danh-sach-khung-gio-full?dich_vu_id=${this.dich_vu_id}&type=` + this.chon_ca_id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+
+                this.khung_gios = res?.data?.data?.khungGio?.map(item => {
+                    return {
+                        value: item?.id,
+                        text: item?.khung_gio,
+                        content: item?.noi_dung ?? ''
+                    };
+                })
+                this.khung_gio = this.khung_gios[0]?.value ?? 0
             })
         },
         goi_hoc_phi_id() {

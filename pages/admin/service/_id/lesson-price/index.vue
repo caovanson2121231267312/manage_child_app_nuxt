@@ -24,7 +24,7 @@
                                             fill="#0056B1" />
                                     </svg>
                                     <span class="span-title">
-                                        {{ item?.so_buoi }} buổi
+                                        {{ item?.so_buoi }} buổi ( {{ item?.khungGio?.type }} . {{ item?.khungGio?.khung_gio }} )
                                     </span>
                                 </div>
                                 <div class="position-relative">
