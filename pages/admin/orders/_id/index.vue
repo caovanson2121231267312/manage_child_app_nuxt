@@ -13,7 +13,8 @@
                         v-if="data?.trang_thai == 'Chưa có GV' || data?.trang_thai == 'Đang khảo sát' || data?.trang_thai == 'Đang dạy'">
                         <v-card-text>
                             <div>
-                                <b-form-checkbox v-on:change="xac_nhan_thanh_toan_method" v-model="xac_nhan_thanh_toan" size="lg">
+                                <b-form-checkbox v-on:change="xac_nhan_thanh_toan_method" v-model="xac_nhan_thanh_toan"
+                                    size="lg">
                                     <span class="text-dark">
                                         Xác nhận thanh toán
                                     </span>
@@ -86,7 +87,8 @@
                                 </div>
                                 <div class="mt-4">
                                     <span v-for="(item, n) in data?.ke_hoach_day" v-bind:key="n" class="blade-primary">
-                                        {{ item?.goiHoc[0]?.tieu_de }} <span @click="delete_bh(item?.id)" class="mdi mdi-window-close ms-2 cp"></span>
+                                        {{ item?.goiHoc[0]?.tieu_de }} <span @click="delete_bh(item?.id)"
+                                            class="mdi mdi-window-close ms-2 cp"></span>
                                     </span>
                                 </div>
                             </v-card-text>
@@ -499,6 +501,43 @@
                 </div>
 
 
+                <v-card style="min-width: 245px;" class="teacher-nav p-2 cp mt-5">
+                    <div class="block w-100 teachers " @click="delete_item()">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="">
+                                <span class="me-2">
+                                    <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="16.8335" cy="16" r="16" fill="#F2F2F2" />
+                                        <g clip-path="url(#clip0_683_10960)">
+                                            <path
+                                                d="M16.8979 11.1534C19.0306 11.1534 21.1663 11.1594 23.2991 11.1475C23.6311 11.1475 23.7567 11.1802 23.7118 11.5789C23.4606 13.849 23.1974 16.1222 23.0448 18.4013C22.9581 19.6896 22.8534 20.9719 22.7487 22.2572C22.6889 22.9951 22.626 23.4801 22.4944 24.2061C22.3239 25.1344 21.941 26.0002 20.589 25.9883C18.1153 25.9913 15.6416 25.9645 13.1708 26.0002C12.1538 26.0151 11.3492 25.8038 11.1129 24.2061C10.8466 22.412 10.2783 14.1019 10.2783 14.1019L10.051 11.7157C10.051 11.7157 9.98816 11.1534 10.5415 11.1534C12.6623 11.1534 14.7801 11.1534 16.9009 11.1534H16.8979ZM17.4124 18.55C17.4124 17.2736 17.4124 15.9972 17.4124 14.7208C17.4124 14.2983 17.197 14.0305 16.862 14.0216C16.4881 14.0127 16.2189 14.3072 16.2189 14.7387C16.2189 17.2766 16.2189 19.8145 16.2219 22.3554C16.2219 22.8047 16.4701 23.1052 16.8321 23.1171C17.1701 23.129 17.4064 22.8107 17.4064 22.3376C17.4064 21.0761 17.4064 19.8115 17.4064 18.55H17.4124ZM20.2989 18.5411C20.2989 17.2498 20.2989 15.9556 20.2989 14.6643C20.2989 14.4977 20.3198 14.331 20.1493 14.212C19.9579 14.0781 19.7784 13.9591 19.5301 14.0692C19.2131 14.209 19.1173 14.453 19.1203 14.7803C19.1293 17.2944 19.1293 19.8115 19.1353 22.3257C19.1353 22.8017 19.3656 23.1082 19.7156 23.1112C20.0656 23.1171 20.3049 22.8017 20.3049 22.3376C20.3049 21.0731 20.3049 19.8086 20.3049 18.5441L20.2989 18.5411ZM14.5258 18.5708C14.5258 17.2528 14.5258 15.9347 14.5258 14.6167C14.5258 14.218 14.3553 14.0305 13.9934 14.0246C13.6793 14.0186 13.4251 14.2686 13.4251 14.6167C13.4221 17.2379 13.4221 19.8621 13.4251 22.4834C13.4251 22.8583 13.7003 23.1409 14.0173 23.1082C14.3852 23.0695 14.5378 22.8702 14.5318 22.4863C14.5139 21.1832 14.5258 19.877 14.5258 18.5738V18.5708Z"
+                                                fill="#979797" />
+                                            <path
+                                                d="M16.8111 10.0553C14.5796 10.0553 12.3482 10.0553 10.1137 10.0553C9.42277 10.0553 8.8335 9.51382 8.8335 8.88008C8.8335 8.29097 9.41977 7.72864 10.0898 7.72269C11.4179 7.71079 12.746 7.70781 14.0741 7.72864C14.442 7.73459 14.5557 7.63938 14.5377 7.26152C14.5048 6.59802 15.1121 6.01486 15.7911 6.00891C16.4701 6.00296 17.1491 6.04462 17.8251 5.99999C18.537 5.95238 19.1771 6.6129 19.1203 7.23771C19.0844 7.63641 19.2459 7.73162 19.6228 7.72566C20.909 7.70781 22.1952 7.74947 23.4785 7.71674C24.3429 7.69591 25.1416 8.35048 24.7168 9.40076C24.5643 9.7816 24.1455 10.0494 23.5951 10.0494C21.4325 10.0494 19.2728 10.0494 17.1102 10.0494C17.0115 10.0494 16.9128 10.0494 16.8141 10.0494L16.8111 10.0553Z"
+                                                fill="#979797" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_683_10960">
+                                                <rect width="16" height="20" fill="white" transform="translate(8.8335 6)" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </span>
+                                <span>
+                                    Xoá đơn dịch vụ này
+                                </span>
+                            </div>
+                            <div>
+                                <div class="web-icon">
+                                    <span class="mdi mdi-chevron-right"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </v-card>
+
+
             </v-col>
         </v-row>
 
@@ -660,6 +699,36 @@ export default {
     methods: {
         clearFiles() {
             this.$refs['file-input'].reset()
+        },
+        async delete_item() {
+            const formData = new FormData();
+            formData.append('id', this.id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá dịch vụ đã chọn!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Chắc chắn/Chấp nhận!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('dich-vu/xoa-don-dich-vu', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            toastr.success(res?.data?.message);
+                            this.$router.push('/admin/orders');
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
         },
         set_teacher(id) {
             if (this.teacher_id == id) {
@@ -930,7 +999,7 @@ export default {
                 }
             })
         },
-        xac_nhan_thanh_toan_method () {
+        xac_nhan_thanh_toan_method() {
             const formData = new FormData();
             formData.append('id', this.id)
             formData.append('xac_nhan_thanh_toan', this.xac_nhan_thanh_toan == true ? 1 : 0)
@@ -1014,8 +1083,8 @@ export default {
             this.bai_hoc = bai_hoc
             this.bai_hoc_id = this.bai_hoc[0]?.value
         },
-        async bai_hoc_id () {
-            if(this.bai_hoc_id == 0 || this.bai_hoc_id == null) {
+        async bai_hoc_id() {
+            if (this.bai_hoc_id == 0 || this.bai_hoc_id == null) {
                 return
             }
             this.array_bai_hoc.push(this.bai_hoc_id)
@@ -1024,7 +1093,7 @@ export default {
             formData.append('id', this.id)
             formData.append('chuong_trinh_hoc_id', this.chuong_trinh_id)
 
-            for(var i = 0; i < this.array_bai_hoc.length; i++) {
+            for (var i = 0; i < this.array_bai_hoc.length; i++) {
                 formData.append(`baiHocs[${i}]`, this.array_bai_hoc[i])
             }
 

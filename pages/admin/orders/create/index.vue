@@ -404,8 +404,9 @@
                                             </svg>
                                             <span>{{ item?.so_buoi }} Buổi</span>
                                         </div>
-                                        <div class="text-primary">
-                                            <b>{{ formatCurrency(item?.thanh_tien) }}</b>
+                                        <div>
+                                            <b class="text-secondary text-decoration-line-through me-2">{{ formatCurrency(item?.tong_tien) }}</b>
+                                            <b class="text-danger">{{ formatCurrency(item?.thanh_tien) }}</b>
                                         </div>
                                     </div>
                                     <div>
@@ -436,7 +437,7 @@
                             </tr>
                             <tr>
                                 <td>Tổng</td>
-                                <td><b class="text-primary">{{ formatCurrency(form?.tongTien) }}</b></td>
+                                <td><b class="text-danger">{{ formatCurrency(form?.tongTien) }}</b></td>
                             </tr>
                         </tbody>
                     </table>

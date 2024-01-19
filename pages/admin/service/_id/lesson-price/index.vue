@@ -76,8 +76,9 @@
                                 </span>
                             </div>
                             <div class="position-relative">
-                                <input :value="formatCurrency(item?.so_buoi * item?.tong_tien)" type="text" placeholder="15"
-                                    class="form-control input-service" />
+                                <input
+                                    :value="formatCurrency(total_money(item?.so_buoi, item?.tong_tien, item?.khuyen_mai))"
+                                    type="text" placeholder="15" class="form-control input-service" />
                                 <span class="end">đ</span>
                             </div>
                         </div>
@@ -249,6 +250,32 @@ export default {
                 }
             })
         },
+        total_money(a, b, c) {
+            if (c == 0) {
+                return a * b
+            } else {
+                return (a * b) - (c / 100) * (a * b)
+            }
+        },
+        edit_item(id) {
+            this.id_edit = id
+            api.get('dich-vu/chi-tiet-gia-buoi-hoc?goi_hoc_phi_id=' + id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.$refs['my-modal-edit'].show()
+                this.ca_id = res?.data?.data?.khungGio?.ca?.id
+                this.so_buoi_edit = res?.data?.data?.so_buoi
+                this.tong_tien_edit = res?.data?.data?.tong_tien
+                this.khuyen_mai_edit = res?.data?.data?.khuyen_mai
+
+                // setTimeout(function() {
+                this.khung_gio_id = res?.data?.data?.khungGio?.id
+                console.log(this.khung_gio_id)
+                // },1500)
+                this.trinhDo_id = res?.data?.data?.trinh_do
+            })
+        },
         edit_item(id) {
             this.id_edit = id
             api.get('dich-vu/chi-tiet-gia-buoi-hoc?goi_hoc_phi_id=' + id, {
@@ -398,14 +425,14 @@ export default {
             this.load_data()
         },
         ca_id() {
-            api.get('dich-vu/get-khung-thoi-gian?type=' + this.ca_id, {
+            api.get(`dich-vu/danh-sach-khung-gio-full?dich_vu_id=${this.id}&type=` + this.ca_id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                this.khung_gio = res?.data?.data.map(item => {
+                this.khung_gio = res?.data?.data?.khungGio?.map(item => {
                     return {
-                        value: item.id,
-                        text: item.name
+                        value: item?.id,
+                        text: item?.khung_gio
                     };
                 })
                 if (this.id_edit == 0) {
