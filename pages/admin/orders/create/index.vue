@@ -405,8 +405,14 @@
                                             <span>{{ item?.so_buoi }} Buổi</span>
                                         </div>
                                         <div>
-                                            <b class="text-secondary text-decoration-line-through me-2">{{ formatCurrency(item?.tong_tien) }}</b>
+                                            <b class="text-secondary text-decoration-line-through me-2">{{
+                                                formatCurrency(item?.tong_tien) }}</b>
                                             <b class="text-danger">{{ formatCurrency(item?.thanh_tien) }}</b>
+                                            <sup>
+                                                <b class="ms-1 text-secondary">
+                                                    ( {{ item?.khuyen_mai }}% )
+                                                </b>
+                                            </sup>
                                         </div>
                                     </div>
                                     <div>
@@ -504,7 +510,7 @@ export default {
                 { id: 7, value: 'T7' },
                 { id: 1, value: 'CN' },
             ],
-            selectedDays: [],
+            selectedDays: [2,3,4,5,6],
             ghi_chu: null,
             dia_chi: null,
             dich_vu_id: null,
@@ -794,6 +800,9 @@ export default {
                 })
                 this.khung_gio = this.khung_gios[0]?.value ?? 0
             })
+        },
+        so_luong_be() {
+            this.load_form()
         },
         goi_hoc_phi_id() {
             this.load_form()
