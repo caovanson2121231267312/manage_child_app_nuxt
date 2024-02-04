@@ -19,7 +19,7 @@
                             </select> -->
                         </label>
 
-                        <label class="ms-2 div-0">
+                        <!-- <label class="ms-2 div-0">
                             <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field v-model="date" label="" class="month-picker" prepend-icon="mdi-calendar"
@@ -35,7 +35,7 @@
                                     </v-btn>
                                 </v-date-picker>
                             </v-dialog>
-                        </label>
+                        </label> -->
 
                     </div>
                 </div>
@@ -191,6 +191,10 @@
                 </b-card>
             </v-col>
 
+            <v-col v-if="data == null || data?.length == 0">
+                <b-alert class="wow animate__animated animate__bounce" show dismissible variant="primary">Danh sách
+                    trống</b-alert>
+            </v-col>
         </v-row>
     </div>
 </template>
@@ -244,7 +248,7 @@ export default {
             }
         },
         async load_data() {
-            await api.get(`/khieu-nai/danh-sach-khieu-nai?tuKhoa=&page=1&limit=30&sort=${this.arrange}&thang=${this.selected_date ?? ''}`, {
+            await api.get(`phu-huynh/danh-sach-khieu-nai?tuKhoa=&page=1&limit=1000&sort=${this.arrange}&phu_huynh_id=${this.id}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

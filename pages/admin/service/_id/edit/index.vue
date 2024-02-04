@@ -427,7 +427,7 @@
                                     </b-card>
 
                                     <b-card style="min-width: 245px;" class="teacher-nav cp">
-                                        <div class="block w-100 teachers " @click="delete_item()">
+                                        <div class="block w-100 teachers " v-b-modal.my-modal-delete>
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <div class="">
                                                     <span class="me-2">
@@ -465,6 +465,30 @@
                                 </div>
                             </div>
                         </div>
+
+
+                        <b-modal id="my-modal-delete" ref="my-modal-delete" hide-footer centered title="Xoá dịch vụ">
+                            <template #default="{ hide }">
+                                <div>
+
+                                    <div class="">
+                                        <div>
+                                            <b-form-group>
+                                                <label>Mật khẩu:</label>
+                                                <b-form-input name="link" type="password" v-model="password"
+                                                    placeholder="Nhập mẩu khẩu"></b-form-input>
+                                            </b-form-group>
+                                        </div>
+
+                                    </div>
+                                    <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                        <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                        <button class=" btn-delete ms-1" @click="delete_item()">Xác nhận xoá</button>
+                                    </div>
+                                </div>
+
+                            </template>
+                        </b-modal>
 
                         <div class="mt-8" @click="send_data()">
                             <button-component>Lưu thay đổi</button-component>
@@ -526,6 +550,7 @@ export default {
             image: null,
             file: null,
             link: null,
+            password: '',
         };
     },
     validate({ params }) {
@@ -647,32 +672,53 @@ export default {
         async delete_item() {
             const formData = new FormData();
             formData.append('id', this.id)
+            formData.append('password', this.password)
 
-            Swal.fire({
-                title: 'Bạn có chắc chắn?',
-                text: `Xoá dịch vụ đã chọn!`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Chắc chắn/Chấp nhận!',
-                cancelButtonText: 'Huỷ'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    await api.post('dich-vu/xoa-dich-vu', formData, {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: 'Bearer ' + this.token
-                    }).then(res => {
-                        if (res?.status == 200) {
-                            toastr.success(res?.data?.message);
-                            this.$router.push('/admin/service');
-                        } else {
-                            toastr.error(res?.data?.message);
-                        }
-                    })
+            if (this.password == null || this.password == '') {
+                toastr.error('Nhập mật khẩu để tiếp tục');
+                return
+            } else {
+                await api.post('admin-api/kiem-tra-mat-khau', formData, {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: 'Bearer ' + this.token
+                }).then(res => {
+                    if (res?.status == 200) {
+                        toastr.success(res?.data?.message);
 
-                }
-            })
+                        api.post('dich-vu/xoa-dich-vu', formData, {
+                            'Content-Type': 'multipart/form-data',
+                            Authorization: 'Bearer ' + this.token
+                        }).then(res => {
+                            if (res?.status == 200) {
+                                toastr.success(res?.data?.message);
+                                this.$router.push('/admin/service');
+                            } else {
+                                toastr.error(res?.data?.message);
+                            }
+                        })
+                    } else {
+                        return
+                        // toastr.error(res?.data?.message);
+                    }
+                })
+            }
+            // return
+
+            // Swal.fire({
+            //     title: 'Bạn có chắc chắn?',
+            //     text: `Xoá dịch vụ đã chọn!`,
+            //     icon: 'warning',
+            //     showCancelButton: true,
+            //     confirmButtonColor: '#3085d6',
+            //     cancelButtonColor: '#d33',
+            //     confirmButtonText: 'Chắc chắn/Chấp nhận!',
+            //     cancelButtonText: 'Huỷ'
+            // }).then(async (result) => {
+            //     if (result.isConfirmed) {
+
+
+            // }
+            // })
         },
         async send_data(event) {
             // event.preventDefault();
@@ -876,4 +922,5 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-}</style>
+}
+</style>

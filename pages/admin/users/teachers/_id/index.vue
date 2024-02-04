@@ -152,7 +152,7 @@
                                     </td>
                                     <td>
                                         <span class="w-text-p-1">
-                                            {{ data?.bang_cap == '' ?? 'Chưa cập nhật' }}
+                                            {{ !data?.bang_cap ? 'Chưa cập nhật' : data?.bang_cap}}
                                         </span>
                                     </td>
                                 </tr>

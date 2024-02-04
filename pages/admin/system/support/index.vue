@@ -231,7 +231,7 @@
                                         d="M7.87533 2.68911V4.39828C7.87533 4.78911 7.56033 5.10411 7.16949 5.10411H1.87283C1.47616 5.10411 1.16699 4.77744 1.16699 4.38661C1.17283 3.72744 1.43533 3.12661 1.87283 2.68911C2.31033 2.25161 2.91699 1.98328 3.58199 1.98328H7.16949C7.56033 1.98328 7.87533 2.29828 7.87533 2.68911Z"
                                         fill="#FC4D32" />
                                 </svg>
-                                Hướng dẫn nhận tiền cho Giáo viên
+                                Hướng dẫn quy trình cho giáo viên 
                             </div>
                             <div class="position-relative">
                                 <textarea placeholder="Nhập thông tin" class="form-control support-input"

@@ -2,7 +2,7 @@
     <div class="content-mp">
 
         <v-row>
-            <v-col xs="12" sm="12" md="12" lg="7" xl="7">
+            <v-col xs="12" sm="12" md="12" lg="8" xl="8">
 
 
                 <detail-service-info :data="data" :status="data?.trang_thai" :load_data="load_data"></detail-service-info>
@@ -85,9 +85,10 @@
                                         <b-form-select v-model="bai_hoc_id" :options="bai_hoc"></b-form-select>
                                     </b-form-group>
                                 </div>
-                                <div class="mt-4">
-                                    <span v-for="(item, n) in data?.ke_hoach_day" v-bind:key="n" class="blade-primary">
-                                        {{ item?.goiHoc[0]?.tieu_de }} <span @click="delete_bh(item?.id)"
+                                <div class="mt-4 d-flex flex-wrap">
+                                    <span v-for="(item, n) in data?.ke_hoach_day?.[0]?.goiHoc" v-bind:key="n"
+                                        class="blade-primary me-2 mb-2">
+                                        {{ item?.tieu_de }} <span @click="delete_bh(item?.id)"
                                             class="mdi mdi-window-close ms-2 cp"></span>
                                     </span>
                                 </div>
@@ -265,7 +266,7 @@
                         </div>
                         <div>
 
-                            <div class="my-2">
+                            <div class="my-2 box-teacher">
                                 <div v-for="(item, n) in teachers" v-bind:key="n">
                                     <div :class="'card-teacher ' + (teacher_id == item?.id ? ' active' : '')">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -425,6 +426,18 @@
                             </template>
                         </b-modal>
                     </div>
+
+                    <!-- <div class="mt-4">
+                        <b-button class="w-100 rounded-pill" variant="outline-success" v-b-modal.my-modal>
+                            Đổi ngày dạy
+                        </b-button>
+                    </div>
+
+                    <div class="mt-4">
+                        <b-button class="w-100 rounded-pill" variant="outline-danger" v-b-modal.my-modal>
+                            Đổi giờ dạy
+                        </b-button>
+                    </div> -->
                 </div>
 
                 <!-- // đơn đã huỷ -->
@@ -706,7 +719,7 @@ export default {
 
             Swal.fire({
                 title: 'Bạn có chắc chắn?',
-                text: `Xoá dịch vụ đã chọn!`,
+                text: `Xoá đơn dịch vụ đã chọn!`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -827,7 +840,7 @@ export default {
                 this.teachers = res?.data?.data
             })
 
-            await api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do`, {
+            await api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=26`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -1042,7 +1055,13 @@ export default {
             console.log(this.tuKhoa)
 
             this.timeOut = setTimeout(() => {
-                this.load_kd()
+                // this.load_kd()
+                api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=26`, {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: 'Bearer ' + this.token
+                }).then(res => {
+                    this.teachers = res?.data?.data
+                })
                 // this.load_kd()
 
             }, this.timer);
@@ -1112,6 +1131,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.box-teacher {
+    max-height: 464px;
+    overflow-y: auto;
+    padding: 4px;
+}
 .blade-primary {
     border-radius: 46px;
     border: 1px solid #0056B1;
