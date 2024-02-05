@@ -8,7 +8,7 @@
                     <sales-report></sales-report>
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center mt-5">
+                <div class="d-flex justify-content-between align-items-center flex-wrap mt-5">
                     <title-header>Báo cáo doanh thu</title-header>
 
                     <div class="d-inline-block">
@@ -32,19 +32,31 @@
                 </div>
 
                 <div class="mt-6">
-                    <div class="d-flex filter-warp">
-                        <div class="w-100 m-1" style="min-width: 200px;">
+                    <div class="d-flex filter-warp flex-wrap">
+                        <div class="w-100 m-1" style="min-width: 200px; flex: 50%;">
                             <b-form-input v-model.lazy="tuKhoa" placeholder="Tìm theo số điện thoại"></b-form-input>
                         </div>
-                        <div class="w-100 m-1">
+                        <div class="w-100 m-1" style="flex: 25%;">
+                            <b-form-input v-model.lazy="diachi" placeholder="Địa chỉ"></b-form-input>
+                        </div>
+                        <div class="w-100 m-1" style="flex: 25%;">
                             <b-form-select v-model="dich_vu_id" :options="dich_vu" aria-placeholder="Chọn"></b-form-select>
                         </div>
-                        <div class="w-100 m-1">
+                        <div class="w-100 m-1" style="flex: 25%;">
                             <b-form-select v-model="leader_kd_id" :options="leader_kd"
                                 aria-placeholder="Chọn"></b-form-select>
                         </div>
-                        <div class="w-100 m-1">
-                            <b-form-select v-model="thang_id" :options="thang" aria-placeholder="Chọn"></b-form-select>
+                        <div class="w-100 m-1" style="width: 50%;">
+                            <label for="example-input">Từ ngày</label>
+                            <b-form-datepicker id="example-input" today-button reset-button close-button v-model="value"
+                                locale="vi" class="mb-2"></b-form-datepicker>
+                            <!-- <b-form-select v-model="thang_id" :options="thang" aria-placeholder="Chọn"></b-form-select> -->
+                        </div>
+                        <div class="w-100 m-1" style="width: 50%;">
+                            <label for="example-input1">Đến ngày</label>
+                            <b-form-datepicker id="example-input1" today-button reset-button close-button v-model="value1"
+                                locale="vi" class="mb-2"></b-form-datepicker>
+                            <!-- <b-form-select v-model="thang_id" :options="thang" aria-placeholder="Chọn"></b-form-select> -->
                         </div>
                     </div>
 
@@ -63,6 +75,16 @@
                             <th>
                                 <tr>
                                     <span class="text-light">Số điện thoại</span>
+                                </tr>
+                            </th>
+                            <th>
+                                <tr>
+                                    <span class="text-light">Số tiền dư</span>
+                                </tr>
+                            </th>
+                            <th>
+                                <tr>
+                                    <span class="text-light">Trạng thái</span>
                                 </tr>
                             </th>
                         </thead>
@@ -88,6 +110,18 @@
                                 </td>
                                 <td>
                                     <span>{{ item?.phuHuynh?.dien_thoai ?? 'Chưa cập nhật' }}</span>
+                                </td>
+                                <td>
+                                    <span>{{ formatCurrency(item?.soTienConDu) ?? 0 }}</span>
+                                </td>
+                                <td>
+                                    <span>{{ item?.trang_thai ?? 'Chưa cập nhật' }}</span>
+                                </td>
+                            </tr>
+
+                            <tr v-if="data?.length <= 0">
+                                <td colspan="5">
+                                    <div class="alert alert-danger">Danh sách trống</div>
                                 </td>
                             </tr>
                         </tbody>
@@ -125,6 +159,8 @@ export default {
                 name: 'Báo cáo doanh thu',
                 previous: '/admin/dashboard'
             },
+            value: '',
+            value1: '',
             date: new Date().toISOString().substr(0, 7),
             month: 1,
             menu: false,
@@ -143,6 +179,7 @@ export default {
             leader_kd_id: '',
             leader_kd: [],
             tuKhoa: '',
+            diachi: '',
             thang: [
                 { value: 1, text: 'Tháng 01' },
                 { value: 2, text: 'Tháng 02' },
@@ -203,7 +240,8 @@ export default {
             })
         },
         async load_data() {
-            await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=${this.current_page}&limit=10&sort=`, {
+            // await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=${this.diachi}&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=${this.current_page}&limit=10&sort=&tuNgay=${this.value}&denNgay=${this.value1}`, {
+                await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=${this.diachi}&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=${this.current_page}&limit=10&sort=`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -239,13 +277,37 @@ export default {
         this.$store.dispatch('title/set_title', this.title)
         this.month = this.date.split("-")[1] + '/' + this.date.split("-")[0];
         this.load_type();
-        let currentDate = new Date();
-        this.thang_id = currentDate.getMonth() + 1;
-        this.load_data()
+        let currentDate1 = new Date();
+        this.thang_id = currentDate1.getMonth() + 1;
+
+        var currentDate = new Date();
+
+        // Lấy thông tin năm, tháng, ngày
+        var year = currentDate.getFullYear();
+        var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);  // Thêm '0' và cắt 2 ký tự từ cuối chuỗi để đảm bảo định dạng hh
+        var day = ('0' + currentDate.getDate()).slice(-2);  // Thêm '0' và cắt 2 ký tự từ cuối chuỗi để đảm bảo định dạng hh
+
+        // Tạo chuỗi định dạng "Y-m-d"
+        this.value = year + '-' + month + '-' + day;
+        this.value1 = year + '-' + month + '-' + day;
+        // this.load_data()
     },
     watch: {
         current_page() {
             this.load_data()
+        },
+        value() {
+            console.log(this.value)
+
+            if (this.value != '' && this.value1 != '') {
+                this.load_data()
+            }
+        },
+        value1() {
+            console.log(this.value1)
+            if (this.value != '' && this.value1 != '') {
+                this.load_data()
+            }
         },
         date() {
             console.log(this.date)
@@ -253,6 +315,15 @@ export default {
             console.log(dateArray)
             this.month = dateArray[1] + '/' + dateArray[0];
             this.load_data();
+        },
+        diachi() {
+            clearTimeout(this.timeOut);
+
+            this.timeOut = setTimeout(() => {
+                // this.$emit("click");
+                this.load_data()
+
+            }, this.timer);
         },
         tuKhoa() {
             clearTimeout(this.timeOut);

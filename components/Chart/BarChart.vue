@@ -2,6 +2,7 @@
     <div class="w-100 ">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <label class="chart-title">Tổng quan doanh thu</label>
+            <b-form-select id="example-locales" v-model="arrange" :options="arranges" class="mb-2"></b-form-select>
             <!-- <div>
                 <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
                     <template v-slot:activator="{ on, attrs }">
@@ -42,6 +43,13 @@ export default {
             menu: false,
             modal: false,
             data: null,
+            ctx: null,
+            arrange: 0,
+            arranges: [
+                { value: '0', text: '7 ngày gần nhất' },
+                { value: '1', text: '3 tháng gần nhất' },
+                { value: '2', text: '3 năm gần nhất' },
+            ],
         }
     },
     components: {},
@@ -57,7 +65,7 @@ export default {
             return `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
         },
         async load_data() {
-            await api.get('bao-cao/tong-quan-doanh-thu?type=0', {
+            await api.get('bao-cao/tong-quan-doanh-thu?type=' + this.arrange, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -79,7 +87,6 @@ export default {
 
                 console.log(transformedData)
 
-                const ctx = document.getElementById('myChart');
 
                 const data = {
                     labels: [1, 2, 3, 4, 5, 6, 7],
@@ -109,12 +116,27 @@ export default {
                     data: transformedData,
                 };
 
-                new Chart(ctx, config);
+                new Chart(this.ctx, config);
             })
         },
     },
     mounted() {
+        this.ctx = document.getElementById('myChart');
+
         this.load_data()
+    },
+    watch: {
+        arrange() {
+            this.load_data();
+        },
+        date() {
+            const originalDate = new Date(this.date); // Thời gian ban đầu (yyyy-MM)
+            const month = originalDate.getMonth() + 1; // Lấy tháng (tính từ 0, nên cần cộng thêm 1)
+            const year = originalDate.getFullYear();
+
+            this.selected_date = `${month}/${year}`;
+            this.load_data();
+        },
     }
 }
 </script>
@@ -122,6 +144,10 @@ export default {
 <style lang="scss" scoped>
 .month-picker {
     width: 94px;
+}
+
+#example-locales {
+    width: 200px;
 }
 
 .min-height {

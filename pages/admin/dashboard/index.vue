@@ -501,7 +501,7 @@ export default {
 }
 
 .month-picker {
-    width: 94px;
+    width: 118px;
 }
 
 .chart-title {

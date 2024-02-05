@@ -10,7 +10,7 @@
                                 <v-text-field v-model="date" label="" class="month-picker" prepend-icon="mdi-calendar"
                                     readonly v-bind="attrs" v-on="on"></v-text-field>
                             </template>
-                            <v-date-picker v-model="date" type="month" scrollable>
+                            <v-date-picker v-model="date" type="date" scrollable>
                                 <v-spacer></v-spacer>
                                 <v-btn text color="primary" @click="modal = false">
                                     Cancel
@@ -82,7 +82,8 @@ export default {
                 previous: '/admin/dashboard'
             },
             data: null,
-            date: new Date().toISOString().substr(0, 7),
+            // date: new Date().toISOString().substr(0, 7),
+            date: new Date().toISOString(),
             month: 1,
             menu: false,
             modal: false,
@@ -102,7 +103,7 @@ export default {
     methods: {
         async load_data() {
             await api.get('bao-cao/tong-quan-khach-hang?thang=' + (this.month ?? ''), {
-            // await api.get('bao-cao/tong-quan-khach-hang?thang=', {
+                // await api.get('bao-cao/tong-quan-khach-hang?thang=', {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -116,8 +117,15 @@ export default {
         }
     },
     mounted() {
+        var currentDate = new Date();
+        var year = currentDate.getFullYear();
+        var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+        var day = ('0' + currentDate.getDate()).slice(-2);
+        var formattedDate = year + '-' + month + '-' + day;
+        this.date = formattedDate
+        console.log(this.date)
         this.$store.dispatch('title/set_title', this.title)
-        this.month = this.date.split("-")[1] + '/' + this.date.split("-")[0];
+        this.month = this.date.split("-")[2] + '/' + this.date.split("-")[1] + '/' + this.date.split("-")[0];
         this.load_data()
     },
     watch: {
@@ -125,7 +133,7 @@ export default {
             console.log(this.date)
             const dateArray = this.date.split("-");
             console.log(dateArray)
-            this.month = dateArray[1] + '/' + dateArray[0];
+            this.month = dateArray[2] + '/' + dateArray[1] + '/' + dateArray[0];
             this.load_data();
         }
     }
@@ -143,7 +151,7 @@ export default {
 }
 
 .month-picker {
-    width: 94px;
+    width: 118px;
 }
 
 .chart-title {
@@ -220,4 +228,5 @@ export default {
 
 .c-success {
     background: #00C092 !important;
-}</style>
+}
+</style>

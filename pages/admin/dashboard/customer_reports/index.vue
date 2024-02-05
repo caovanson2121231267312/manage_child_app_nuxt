@@ -90,7 +90,9 @@
                                 </td>
                                 <td>
                                     <span>
-                                        {{ item?.ma_don_hang }}
+                                        <nuxt-link :to="'/admin/orders/' + item?.id">
+                                            {{ item?.ma_don_hang }}
+                                        </nuxt-link>
                                     </span>
                                 </td>
                                 <td>
