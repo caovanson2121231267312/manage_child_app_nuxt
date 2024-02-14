@@ -197,8 +197,9 @@
 
                                 </div>
                                 <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
-                                    <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                                    <button class=" btn-delete ms-1" @click="delete_leson(data_lesson?.id)">Xóa bài</button>
+                                    <!-- <button class=" btn-cancel me-1" @click="hide()">Hủy</button> -->
+                                    <button class="btn btn-primary w-50 rounded-pill" @click="edit_leson(data_lesson?.id)">Sửa</button>
+                                    <button class="btn btn-danger w-50 rounded-pill ms-1" @click="delete_leson(data_lesson?.id)">Xóa</button>
                                 </div>
                             </div>
 
@@ -337,6 +338,9 @@ export default {
 
                 }
             })
+        },
+        async edit_leson(id_lesson) {
+            this.$router.push(`/admin/lsm/teacher-training/${this.id}/detail/${this.course_id}/edit/${id_lesson}`);
         },
         async lesson_show(id_lesson) {
             await api.get(`dao-tao/chi-tiet-bai-hoc?bai_hoc_id=` + id_lesson, {

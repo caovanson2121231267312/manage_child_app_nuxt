@@ -26,26 +26,6 @@
                     <div class="mt-3">
                         <strong class="strong-title">
                             <span class="me-2">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M14.3914 7.86638L14.2785 7.7153C14.081 7.48183 13.8481 7.29642 13.58 7.15908C13.2201 6.95994 12.8109 6.85693 12.3875 6.85693H3.60296C3.17961 6.85693 2.77742 6.95994 2.41052 7.15908C2.13534 7.30329 1.88838 7.50243 1.68376 7.74964C1.28157 8.25092 1.09107 8.86895 1.15457 9.48698L1.41564 12.6938C1.50736 13.6621 1.62731 14.8569 3.86403 14.8569H12.1335C14.3702 14.8569 14.4831 13.6621 14.5819 12.687L14.843 9.49384C14.9065 8.91702 14.7513 8.34019 14.3914 7.86638ZM9.68514 11.6569H6.30537C6.03019 11.6569 5.81146 11.4372 5.81146 11.1762C5.81146 10.9153 6.03019 10.6956 6.30537 10.6956H9.68514C9.96032 10.6956 10.1791 10.9153 10.1791 11.1762C10.1791 11.4441 9.96032 11.6569 9.68514 11.6569Z"
-                                        fill="#FC4D32" />
-                                    <path
-                                        d="M13.6549 5.93035C13.7035 6.32552 13.2526 6.5873 12.8669 6.48853C12.6306 6.42801 12.3866 6.39776 12.1361 6.39776H3.87141C3.61491 6.39776 3.36116 6.43105 3.1164 6.49547C2.73517 6.59582 2.28613 6.34229 2.28613 5.94807V4.71258C2.28613 1.978 3.00912 1.14307 5.37709 1.14307H6.15978C7.10829 1.14307 7.40677 1.49542 7.79148 2.06991L8.58744 3.2955C8.75326 3.55594 8.75989 3.57125 9.05174 3.57125H10.6304C12.6082 3.57125 13.4365 4.15487 13.6549 5.93035Z"
-                                        fill="#FC4D32" />
-                                </svg>
-                            </span>
-                            <span>Thứ tự bài học</span>
-                        </strong>
-                        <div class="input-grop">
-                            <input v-model="thu_tu" type="number" min="1" class="input" placeholder="1" />
-                        </div>
-                    </div>
-
-                    <div class="mt-3">
-                        <strong class="strong-title">
-                            <span class="me-2">
                                 <svg width="13" height="14" viewBox="0 0 13 14" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -229,12 +209,11 @@ export default {
     data() {
         return {
             title: {
-                name: 'Thêm bài học',
+                name: 'Sửa bài học',
                 previous: '/admin/teacher-training/' + (this.id ?? 0)
             },
             panel: [0],
             tieu_de: null,
-            thu_tu: 1,
             cauHoi: [],
             cauHoi_tieu_de: null,
             cauHoi_gioi_thieu: null,
@@ -310,7 +289,6 @@ export default {
             }
             const formData = new FormData()
             formData.append('tieu_de', this.tieu_de)
-            formData.append('thu_tu', this.thu_tu)
             formData.append('hoc_phan_id', this.course_id)
 
             this.cauHoi.forEach((value, key) => {

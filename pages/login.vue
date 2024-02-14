@@ -225,7 +225,7 @@ export default {
 
 .box-login {
     margin: 0 auto;
-    max-width: 400px;
+    max-width: 500px;
     max-height: 852px;
     overflow: hidden;
     width: 100%;

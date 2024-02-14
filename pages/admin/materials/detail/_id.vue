@@ -59,6 +59,65 @@
                         </div>
                     </div>
 
+                    <div class="mt-5">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <span class="fw-bold">Giáo viên:</span>
+                                </td>
+                                <td>{{ data_bangiao?.giaoVien?.hoten }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="fw-bold">Điện thoại:</span>
+                                </td>
+                                <td>{{ data_bangiao?.giaoVien?.dien_thoai }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="fw-bold">id:</span>
+                                </td>
+                                <td>{{ data_bangiao?.giaoVien?.id }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="fw-bold">Số lượng bàn giao:</span>
+                                </td>
+                                <td>{{ data_bangiao?.so_luong }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="fw-bold">Trạng thái:</span>
+                                </td>
+                                <td>{{ data_bangiao?.xacNhanBanGiao == true ? "Đã bàn giao" : "Chưa bàn giao" }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="fw-bold">Xác nhận hoàn trả:</span>
+                                </td>
+                                <td>{{ data_bangiao?.xacNhanHoanTra == true ? "Đã trả" : "Chưa trả" }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="fw-bold">Ngày nhận:</span>
+                                </td>
+                                <td>{{ data_bangiao?.ngay_nhan}}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="fw-bold">Ngày trả:</span>
+                                </td>
+                                <td>{{ data_bangiao?.ngay_tra }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="fw-bold">Ghi chú:</span>
+                                </td>
+                                <td>{{ data_bangiao?.ghi_chu }}</td>
+                            </tr>
+                        </table>
+                    </div>
+
                     <div class="mt-7">
                         <nuxt-link :to="'/admin/materials/' + this.id + '/histories'">
                             <button-component addClass="red">
@@ -116,6 +175,7 @@ export default {
                 previous: '/admin/materials'
             },
             data: null,
+            data_bangiao: null,
         };
     },
     validate({ params }) {
@@ -138,6 +198,14 @@ export default {
             }).then(res => {
                 const user = res?.data?.data
                 this.data = user
+            })
+
+            await api.get('giao-cu/chi-tiet-ban-giao?id=' + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data
+                this.data_bangiao = user
             })
         },
     },

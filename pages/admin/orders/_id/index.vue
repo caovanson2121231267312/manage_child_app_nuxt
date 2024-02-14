@@ -427,13 +427,13 @@
                         </b-modal>
                     </div>
 
-                    <!-- <div class="mt-4">
-                        <b-button class="w-100 rounded-pill" variant="outline-success" v-b-modal.my-modal>
-                            Đổi ngày dạy
+                    <div class="mt-4">
+                        <b-button class="w-100 text-light rounded-pill" variant="success" v-b-modal.my-modal-gia-han>
+                            Gia hạn đơn
                         </b-button>
                     </div>
 
-                    <div class="mt-4">
+                    <!-- <div class="mt-4">
                         <b-button class="w-100 rounded-pill" variant="outline-danger" v-b-modal.my-modal>
                             Đổi giờ dạy
                         </b-button>
@@ -645,6 +645,29 @@
             </template>
         </b-modal>
 
+        <b-modal id="my-modal-gia-han" ref="my-modal-gia-han" hide-footer centered title="Gia hạn đơn">
+            <template #default="{ hide }">
+                <form>
+
+                    <div class="my-2">
+                        <div>
+                            <b-form-group>
+                                <label>Nhập số buổi:</label>
+                                <b-form-input v-model="so_buoi_gia_han" type="number"
+                                    placeholder="Nhập" min="0"></b-form-input>
+                            </b-form-group>
+                        </div>
+
+                    </div>
+                    <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                        <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                        <button type="button" class=" btn-delete ms-1" @click="send_gia_han()">Xác nhận</button>
+                    </div>
+                </form>
+
+            </template>
+        </b-modal>
+
     </div>
 </template>
 
@@ -692,6 +715,7 @@ export default {
             bai_hoc_id: null,
             bai_hoc: [],
             array_bai_hoc: [],
+            so_buoi_gia_han: 0,
         };
     },
     components: {
@@ -796,6 +820,25 @@ export default {
                     this.$refs['my-modal-teacher'].hide()
                     this.teacher_id = null
                     this.load_data();
+                }
+            })
+        },
+        async send_gia_han() {
+            const formData = new FormData()
+            formData.append('id', this.id)
+            formData.append('so_buoi', this.so_buoi_gia_han)
+            await api.post('don-dich-vu/gia-han-don', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-gia-han'].hide()
+                    this.so_buoi_gia_han = 0
+                    setTimeout(function() {
+                        window.location.reload();
+                    },1000)
+                    // this.load_data();
                 }
             })
         },
@@ -1056,7 +1099,7 @@ export default {
 
             this.timeOut = setTimeout(() => {
                 // this.load_kd()
-                api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=26`, {
+                api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=26&tuKhoa=` + this.tuKhoa, {
                     'Content-Type': 'multipart/form-data',
                     Authorization: 'Bearer ' + this.token
                 }).then(res => {
