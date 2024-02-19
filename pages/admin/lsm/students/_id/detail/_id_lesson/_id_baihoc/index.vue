@@ -48,9 +48,11 @@
 
                     <div class="input-grop">
                         <div class="box-x d-flex justify-content-between p-2">
-                            <div class="box-img">
-                                <div></div>
-                                <img v-if="data?.giaoCu" :src="data?.giaoCu?.image" alt="">
+                            <div class="box-img d-flex align-items-center">
+                                <!-- <div></div> -->
+                                <div class="me-2 mt-2" v-for="item in data?.giaoCu" v-bind:key="n">
+                                    <img :src="item.image" alt="">
+                                </div>
                             </div>
                             <div class="action">
                                 <label v-b-modal.my-modal-g class="btn-service-upload d-block" v-b-tooltip.hover
@@ -97,8 +99,19 @@
                                 <div>
                                     <b-form-group>
                                         <label>Mã giáo cụ:</label>
-                                        <b-form-select v-model="giao_cu_id" :options="giao_cu"
-                                            aria-placeholder="Chọn"></b-form-select>
+                                        <!-- <b-form-select v-model="giao_cu_id" :options="giao_cu"
+                                            aria-placeholder="Chọn"></b-form-select> -->
+
+                                            <v-autocomplete
+                                                v-model="giao_cu_id"
+                                                :items="giao_cu"
+                                                outlined
+                                                dense
+                                                chips
+                                                small-chips
+
+                                                multiple
+                                            ></v-autocomplete>
                                     </b-form-group>
                                 </div>
 
@@ -200,7 +213,8 @@
                                 <div>
                                     <b-form-group>
                                         <label>Nội dung:</label>
-                                        <Suneditor :contents="noi_dung_edit" @valueChanged="handleValueChangedEdit"></Suneditor>
+                                        <Suneditor :contents="noi_dung_edit" @valueChanged="handleValueChangedEdit">
+                                        </Suneditor>
                                     </b-form-group>
                                 </div>
 
@@ -252,9 +266,10 @@ export default {
             noi_dung: null,
             buoi: 0,
             giao_cu: null,
-            giao_cu_id: null,
+            giao_cu_id: [],
             noi_dung_edit: null,
             id_edit: null,
+            isUpdating: false,
         };
     },
     validate({ params }) {
@@ -298,7 +313,7 @@ export default {
         async send_data_g(event) {
             event.preventDefault();
             const formData = new FormData()
-            formData.append('giao_cu_id', this.giao_cu_id)
+            formData.append('giao_cu_id', this.giao_cu_id.toString())
             formData.append('bai_hoc_id', this.id_baihoc)
 
             await api.post('chuong-trinh-hoc/gan-giao-cu', formData, {
@@ -490,7 +505,7 @@ export default {
                         text: item?.code ?? (item?.id + ' - Chưa cập nhật')
                     };
                 })
-                this.giao_cu_id = this.giao_cu[0].value
+                // this.giao_cu_id = this.giao_cu[0].value
             })
 
             await api.get(`chuong-trinh-hoc/chi-tiet-bai-hoc?bai_hoc_id=` + this.id_baihoc, {
@@ -500,6 +515,9 @@ export default {
                 this.title.name = res?.data?.data?.tieu_de ?? 'bài học'
                 this.title.previous = '/admin/lsm/students/' + this.id + '/detail/' + this.id_lesson
                 this.data = res?.data?.data
+                res?.data?.data?.giaoCu.map((x) => {
+                    this.giao_cu_id.push(x?.id)
+                })
                 this.$store.dispatch('title/set_title', this.title);
             })
 
@@ -515,6 +533,13 @@ export default {
     mounted() {
         this.load_data()
     },
+    watch: {
+        isUpdating(val) {
+            if (val) {
+                setTimeout(() => (this.isUpdating = false), 3000)
+            }
+        },
+    }
 }
 </script>
 
@@ -553,8 +578,8 @@ export default {
         border-radius: 10px;
 
         img {
-            width: 100%;
-            height: 100%;
+            width: 50px;
+            // height: 100%;
             object-fit: cover;
         }
     }
@@ -721,5 +746,4 @@ table {
     padding: 12px 32px;
     justify-content: center;
     align-items: center;
-}
-</style>
+}</style>

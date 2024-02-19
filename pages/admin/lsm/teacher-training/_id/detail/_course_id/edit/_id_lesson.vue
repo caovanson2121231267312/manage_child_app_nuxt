@@ -26,6 +26,26 @@
                     <div class="mt-3">
                         <strong class="strong-title">
                             <span class="me-2">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M14.3914 7.86638L14.2785 7.7153C14.081 7.48183 13.8481 7.29642 13.58 7.15908C13.2201 6.95994 12.8109 6.85693 12.3875 6.85693H3.60296C3.17961 6.85693 2.77742 6.95994 2.41052 7.15908C2.13534 7.30329 1.88838 7.50243 1.68376 7.74964C1.28157 8.25092 1.09107 8.86895 1.15457 9.48698L1.41564 12.6938C1.50736 13.6621 1.62731 14.8569 3.86403 14.8569H12.1335C14.3702 14.8569 14.4831 13.6621 14.5819 12.687L14.843 9.49384C14.9065 8.91702 14.7513 8.34019 14.3914 7.86638ZM9.68514 11.6569H6.30537C6.03019 11.6569 5.81146 11.4372 5.81146 11.1762C5.81146 10.9153 6.03019 10.6956 6.30537 10.6956H9.68514C9.96032 10.6956 10.1791 10.9153 10.1791 11.1762C10.1791 11.4441 9.96032 11.6569 9.68514 11.6569Z"
+                                        fill="#FC4D32" />
+                                    <path
+                                        d="M13.6549 5.93035C13.7035 6.32552 13.2526 6.5873 12.8669 6.48853C12.6306 6.42801 12.3866 6.39776 12.1361 6.39776H3.87141C3.61491 6.39776 3.36116 6.43105 3.1164 6.49547C2.73517 6.59582 2.28613 6.34229 2.28613 5.94807V4.71258C2.28613 1.978 3.00912 1.14307 5.37709 1.14307H6.15978C7.10829 1.14307 7.40677 1.49542 7.79148 2.06991L8.58744 3.2955C8.75326 3.55594 8.75989 3.57125 9.05174 3.57125H10.6304C12.6082 3.57125 13.4365 4.15487 13.6549 5.93035Z"
+                                        fill="#FC4D32" />
+                                </svg>
+                            </span>
+                            <span>Thứ tự bài học</span>
+                        </strong>
+                        <div class="input-grop">
+                            <input v-model="thu_tu" type="number" min="1" class="input" placeholder="1" />
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <strong class="strong-title">
+                            <span class="me-2">
                                 <svg width="13" height="14" viewBox="0 0 13 14" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -44,10 +64,16 @@
                                 <v-card>
                                     <v-card-text>
                                         <div>
-                                            <strong>
+                                            <strong class="d-flex justify-content-between align-items-center">
                                                 <b>
                                                     {{ item?.cauHoi_tieu_de }}
                                                 </b>
+
+                                                <span>
+                                                    <span @click="edit_leson(item?.id)" class="cp text-primary me-2 mdi mdi-square-edit-outline">sửa</span>
+                                                    <span @click="delete_leson(item?.id)" class="cp text-danger mdi mdi-trash-can">xoá</span>
+                                                </span>
+
                                             </strong>
                                         </div>
                                         <div class="mt-3">
@@ -119,9 +145,47 @@
 
                             </template>
                         </b-modal>
+
+                        <b-modal id="my-modal-edit" ref="my-modal-edit" hide-footer centered title="Sửa câu hỏi">
+                            <template #default="{ hide }">
+                                <div>
+
+                                    <div class="my-2">
+                                        <div>
+                                            <b-form-group>
+                                                <label>Tiêu đề:</label>
+                                                <b-form-input name="link" v-model="cauHoi_tieu_de_edit"
+                                                    placeholder="Nhập tên tiêu đề"></b-form-input>
+                                            </b-form-group>
+                                        </div>
+                                        <div>
+                                            <b-form-group>
+                                                <label>Đường dẫn:</label>
+                                                <b-form-input name="link" v-model="cauHoi_link_edit"
+                                                    placeholder="Nhập đường dẫn Video bài học"></b-form-input>
+                                            </b-form-group>
+                                        </div>
+                                        <div>
+                                            <b-form-group>
+                                                <label>Giới thiệu bài học:</label>
+                                                <b-form-textarea id="textarea" v-model="cauHoi_gioi_thieu_edit"
+                                                    placeholder="Giới thiệu bài học..." rows="3"
+                                                    max-rows="6"></b-form-textarea>
+                                            </b-form-group>
+                                        </div>
+
+                                    </div>
+                                    <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                        <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                        <button class=" btn-delete ms-1" @click="edit_benefit()">Sửa</button>
+                                    </div>
+                                </div>
+
+                            </template>
+                        </b-modal>
                     </div>
 
-                    <div class="mt-3">
+                    <!-- <div class="mt-3">
                         <strong class="strong-title">
                             <span class="me-2">
                                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none"
@@ -186,7 +250,7 @@
                             </template>
                         </b-modal>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="mt-8 cr-btn">
                         <button class="btn btn-cancel" @click="back()">Hủy</button>
@@ -218,8 +282,13 @@ export default {
             cauHoi_tieu_de: null,
             cauHoi_gioi_thieu: null,
             cauHoi_link: null,
+            cauHoi_tieu_de_edit: null,
+            cauHoi_link_edit: null,
+            cauHoi_gioi_thieu_edit: null,
+            id_edit: null,
             baiTest: [],
             baiTest_link: null,
+            thu_tu: 1,
         };
     },
     validate({ params }) {
@@ -232,19 +301,73 @@ export default {
         course_id() {
             return this.$route.params.course_id
         },
+        id_lesson() {
+            return this.$route.params.id_lesson
+        },
         token() {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             return storedUser.auth_key
         }
     },
     methods: {
-        add_benefit() {
+        async edit_leson(id) {
+            this.id_edit = await id
+            const data = this.cauHoi.filter( x => x?.id == id)
+            console.log(data)
+            console.log(data[0])
+            this.cauHoi_tieu_de_edit = data[0]?.cauHoi_tieu_de
+            this.cauHoi_link_edit = data[0]?.cauHoi_link
+            this.cauHoi_gioi_thieu_edit = data[0]?.cauHoi_gioi_thieu
+            this.$refs['my-modal-edit'].show()
+        },
+        async edit_benefit() {
+            const formData = new FormData()
+            formData.append('tieu_de', this.cauHoi_tieu_de_edit)
+            formData.append('cau_hoi_id', this.id_edit)
+            formData.append('link',  this.cauHoi_link_edit)
+            formData.append('gioi_thieu',  this.cauHoi_gioi_thieu_edit)
+
+            await api.post('dao-tao/sua-cau-hoi-bai-hoc', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.load_data()
+                    // this.$router.push('/admin/lsm/teacher-training/' + this.id + '/detail/' + this.course_id)
+                }
+            })
+
+            this.cauHoi_tieu_de_edit = ''
+            this.cauHoi_link_edit = ''
+            this.cauHoi_gioi_thieu_edit = ''
+            this.id_edit = null
+            this.$refs['my-modal-edit'].hide()
+        },
+        async add_benefit() {
             if (this.cauHoi_tieu_de == '' || this.cauHoi_gioi_thieu == '' || this.cauHoi_link == '') {
                 toastr.error('Bạn cần nhập đầy đủ thông tin');
                 return
             }
             const newId = this.cauHoi.length + 1;
-            this.cauHoi.push({ id: newId, cauHoi_tieu_de: this.cauHoi_tieu_de, cauHoi_gioi_thieu: this.cauHoi_gioi_thieu, cauHoi_link: this.cauHoi_link });
+            // this.cauHoi.push({ id: newId, cauHoi_tieu_de: this.cauHoi_tieu_de, cauHoi_gioi_thieu: this.cauHoi_gioi_thieu, cauHoi_link: this.cauHoi_link });
+            const formData = new FormData()
+            formData.append('tieu_de', this.cauHoi_tieu_de)
+            formData.append('bai_hoc_id', this.id_lesson)
+            formData.append('link',  this.cauHoi_link)
+            formData.append('gioi_thieu',  this.cauHoi_gioi_thieu)
+
+            await api.post('dao-tao/them-cau-hoi-bai-hoc', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.load_data()
+                    // this.$router.push('/admin/lsm/teacher-training/' + this.id + '/detail/' + this.course_id)
+                }
+            })
+
             this.cauHoi_tieu_de = ''
             this.cauHoi_gioi_thieu = ''
             this.cauHoi_link = ''
@@ -261,25 +384,18 @@ export default {
             this.$refs['my-modal-test'].hide()
         },
         async load_data() {
-            await api.get(`dao-tao/chi-tiet-hoc-phan?hoc_phan_id=` + this.course_id, {
+            await api.get(`dao-tao/chi-tiet-bai-hoc?bai_hoc_id=` + this.id_lesson, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 this.data = res?.data?.data
-            })
+                this.tieu_de = res?.data?.data?.tieu_de
+                this.thu_tu = res?.data?.data?.thu_tu
+                this.cauHoi = []
+                res?.data?.data?.cauHoi?.map(x => {
+                    this.cauHoi.push({ id: x?.id, cauHoi_tieu_de: x?.tieu_de, cauHoi_gioi_thieu: x?.gioi_thieu, cauHoi_link: x?.link });
+                })
 
-            await api.get(`dao-tao/danh-sach-bai-hoc?page=1&limit=1000&sort=1&tuKhoa=&hoc_phan_id=` + this.course_id, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                this.lesson = res?.data?.data
-            })
-
-            await api.get(`dao-tao/danh-sach-giao-vien-da-gan?page=1&limit=100&sort=1&tuKhoa=&hoc_phan_id=` + this.course_id, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                this.teachers = res?.data?.data
             })
         },
         async send_data() {
@@ -289,7 +405,8 @@ export default {
             }
             const formData = new FormData()
             formData.append('tieu_de', this.tieu_de)
-            formData.append('hoc_phan_id', this.course_id)
+            formData.append('bai_hoc_id', this.id_lesson)
+            formData.append('thu_tu', this.thu_tu)
 
             this.cauHoi.forEach((value, key) => {
                 formData.append(`cauHoi[${key}][tieu_de]`, value.cauHoi_tieu_de)
@@ -305,13 +422,48 @@ export default {
                 console.log(`${key}: ${value}`);
             });
 
-            await api.post('dao-tao/tao-moi-bai-hoc', formData, {
+            await api.post('dao-tao/sua-bai-hoc', formData, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
                     this.$router.push('/admin/lsm/teacher-training/' + this.id + '/detail/' + this.course_id)
+                }
+            })
+        },
+        async delete_leson(id_delete) {
+            const formData = new FormData();
+            formData.append('cau_hoi_id', id_delete)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá câu hỏi đã chọn!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có xoá nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('dao-tao/delete-cau-hoi-bai-hoc', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            Swal.fire(
+                                'Deleted!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            // this.$refs['my-modal-show'].hide()
+                            this.load_data()
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
                 }
             })
         },
@@ -322,6 +474,8 @@ export default {
     mounted() {
         this.title.previous = '/admin/lsm/teacher-training/' + this.id + '/detail/' + this.course_id
         this.$store.dispatch('title/set_title', this.title);
+
+        this.load_data()
     },
 }
 </script>
