@@ -28,10 +28,24 @@
                         <div class="mt-2">
                             <div>
                                 <div>
-                                    <strong class="text-dark">
-                                        Nội dung hoạt động buổi {{ data?.buoi ?? 1 }}
-                                    </strong>
-                                    <p class="text-secondary">{{ data?.ke_hoach_day ?? 'Chưa cập nhật nội dung ...' }}</p>
+                                    <div v-for="item in data?.ke_hoach_day?.[0]?.goiHoc" v-bind:key="item?.id">
+                                        <h5 class="text-primary fw-bold mt-5">
+                                            {{ item?.tieu_de ?? 'Chưa cập nhật tiêu đề buổi học ...' }}
+                                        </h5>
+                                        <v-expansion-panels>
+                                            <v-expansion-panel
+                                            v-for="i in item?.buoiHoc" v-bind:key="i?.id"
+                                            >
+                                            <v-expansion-panel-header>
+                                                Nội dung hoạt động buổi {{ i?.buoi ?? 1 }}
+                                            </v-expansion-panel-header>
+                                            <v-expansion-panel-content>
+                                                <p v-html="i?.noi_dung"></p>
+                                            </v-expansion-panel-content>
+                                            </v-expansion-panel>
+                                        </v-expansion-panels>
+                                    </div>
+                                    <!-- <p class="text-secondary">{{ data?.ke_hoach_day ?? 'Chưa cập nhật nội dung ...' }}</p> -->
                                 </div>
                             </div>
                         </div>
@@ -65,7 +79,7 @@
                                             {{ giaoVien?.hoten }}
                                         </h3>
                                         <p class="w-p p-0 m-0">
-                                            {{ giaoVien?.vai_tro }}
+                                            {{ giaoVien?.dien_thoai }}
                                         </p>
                                     </div>
                                 </div>
@@ -94,6 +108,12 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <v-divider></v-divider>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>Tình trạng</div>
+                            <div>{{ data?.trang_thai?.name }}</div>
                         </div>
                     </div>
                 </div>

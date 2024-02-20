@@ -1035,7 +1035,7 @@ export default {
                 cancelButtonText: 'Huỷ'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await api.post('don-dich-vu/xoa-chuong-trinh-hoc', formData, {
+                    await api.post('don-dich-vu/xoa-bai-hoc', formData, {
                         'Content-Type': 'multipart/form-data',
                         Authorization: 'Bearer ' + this.token
                     }).then(res => {
