@@ -59,7 +59,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-5">
+                    <!-- <div class="mt-5">
                         <table class="table">
                             <tr>
                                 <td>
@@ -116,7 +116,7 @@
                                 <td>{{ data_bangiao?.ghi_chu }}</td>
                             </tr>
                         </table>
-                    </div>
+                    </div> -->
 
                     <div class="mt-7">
                         <nuxt-link :to="'/admin/materials/' + this.id + '/histories'">

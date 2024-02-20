@@ -33,15 +33,13 @@
                                             {{ item?.tieu_de ?? 'Chưa cập nhật tiêu đề buổi học ...' }}
                                         </h5>
                                         <v-expansion-panels>
-                                            <v-expansion-panel
-                                            v-for="i in item?.buoiHoc" v-bind:key="i?.id"
-                                            >
-                                            <v-expansion-panel-header>
-                                                Nội dung hoạt động buổi {{ i?.buoi ?? 1 }}
-                                            </v-expansion-panel-header>
-                                            <v-expansion-panel-content>
-                                                <p v-html="i?.noi_dung"></p>
-                                            </v-expansion-panel-content>
+                                            <v-expansion-panel v-for="i in item?.buoiHoc" v-bind:key="i?.id">
+                                                <v-expansion-panel-header>
+                                                    Nội dung hoạt động buổi {{ i?.buoi ?? 1 }}
+                                                </v-expansion-panel-header>
+                                                <v-expansion-panel-content>
+                                                    <p v-html="i?.noi_dung"></p>
+                                                </v-expansion-panel-content>
                                             </v-expansion-panel>
                                         </v-expansion-panels>
                                     </div>
@@ -115,10 +113,40 @@
                             <div>Tình trạng</div>
                             <div>{{ data?.trang_thai?.name }}</div>
                         </div>
+
+                        <v-divider></v-divider>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <v-btn rounded color="primary" dark v-b-modal.my-modal-doi-gio>
+                                Đổi giờ
+                            </v-btn>
+                        </div>
                     </div>
                 </div>
             </v-col>
         </v-row>
+
+        <b-modal id="my-modal-doi-gio" ref="my-modal-doi-gio" hide-footer centered title="Thay đổi giờ dạy">
+            <template #default="{ hide }">
+                <form>
+
+                    <div class="my-2">
+                        <div>
+                            <b-form-group>
+                                <label>Nhập số buổi:</label>
+                                <b-form-input v-model="so_buoi_gia_han" type="number"
+                                    placeholder="Nhập" min="0"></b-form-input>
+                            </b-form-group>
+                        </div>
+
+                    </div>
+                    <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                        <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                        <button type="button" class=" btn-delete ms-1" @click="send_gia_han()">Xác nhận</button>
+                    </div>
+                </form>
+
+            </template>
+        </b-modal>
 
     </div>
 </template>
