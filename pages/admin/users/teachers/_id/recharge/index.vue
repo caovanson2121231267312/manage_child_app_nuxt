@@ -22,7 +22,7 @@
                                 <span class="mt-1">Số tiền đang có</span>
                             </span>
                             <strong class="span-2">
-                                500.000 đ
+                                {{ formatCurrency(data?.vi_dien_tu) }}
                             </strong>
                         </div>
 
@@ -51,7 +51,10 @@
 
                                 <div>
                                     <div class="mb-2">Thông tin ngân hàng</div>
-                                    <div>************02 • BIDV</div>
+                                    <div>{{ data?.hoten }}
+                                    </div>
+                                    <div>{{ data?.so_tai_khoan }} • {{ data?.ten_ngan_hang ?? 'Chưa cập nhật ngân hàng' }}
+                                    </div>
                                 </div>
                             </div>
                             <div>
@@ -105,16 +108,17 @@
                     </div>
 
                     <div class="d-flex w-100">
-                        <button class="btn btn-min"  v-b-modal.my-modal-tru>Trừ tiền</button>
+                        <button class="btn btn-min" v-b-modal.my-modal-tru>Trừ tiền</button>
                         <b-modal id="my-modal-tru" ref="my-modal-tru" hide-footer centered title="Trừ tiền">
                             <template #default="{ hide }">
-                                <form id="form" >
+                                <form id="form">
 
                                     <div class="">
                                         <div>
                                             <b-form-group>
                                                 <label>Loại trừ tiền:</label>
-                                                <b-form-select v-model="tru_tien_id" :options="tru_tien" aria-placeholder="Chọn"></b-form-select>
+                                                <b-form-select v-model="tru_tien_id" :options="tru_tien"
+                                                    aria-placeholder="Chọn"></b-form-select>
                                             </b-form-group>
                                         </div>
 
@@ -128,16 +132,17 @@
                             </template>
                         </b-modal>
 
-                        <button class="btn btn-plus"  v-b-modal.my-modal-nap>Nạp tiền</button>
+                        <button class="btn btn-plus" v-b-modal.my-modal-nap>Nạp tiền</button>
                         <b-modal id="my-modal-nap" ref="my-modal-nap" hide-footer centered title="Nạp tiền">
                             <template #default="{ hide }">
-                                <form id="form" >
+                                <form id="form">
 
                                     <div class="">
                                         <div>
                                             <b-form-group>
                                                 <label>Loại nạp:</label>
-                                                <b-form-select v-model="nap_tien_id" :options="nap_tien" aria-placeholder="Chọn"></b-form-select>
+                                                <b-form-select v-model="nap_tien_id" :options="nap_tien"
+                                                    aria-placeholder="Chọn"></b-form-select>
                                             </b-form-group>
                                         </div>
 
@@ -178,6 +183,7 @@ export default {
             nap_tien: null,
             so_tien: null,
             ghi_chu: null,
+            data: null,
         };
     },
     validate({ params }) {
@@ -195,6 +201,13 @@ export default {
     },
     methods: {
         async load_role() {
+            await api.get('giao-vien/get-vi?giao_vien_id=' + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.data = res?.data?.data
+            })
+
             await api.get('giao-vien/loai-giao-dich-tru-tien', {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
@@ -422,5 +435,4 @@ export default {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-}
-</style>
+}</style>

@@ -1022,7 +1022,8 @@ export default {
         },
         async delete_bh(id) {
             const formData = new FormData();
-            formData.append('id', id)
+            formData.append('id', this.id)
+            formData.append('bai_hoc_id', id)
 
             Swal.fire({
                 title: 'Bạn có chắc chắn?',

@@ -2,7 +2,7 @@
     <div class="content-mp">
 
         <b-row>
-            <b-col cols="12" sm="7">
+            <b-col cols="12" sm="10">
 
                 <div>
                     <sales-report></sales-report>
@@ -79,7 +79,22 @@
                             </th>
                             <th>
                                 <tr>
+                                    <span class="text-light">Mã đơn hàng</span>
+                                </tr>
+                            </th>
+                            <th>
+                                <tr>
+                                    <span class="text-light">Dịch vụ</span>
+                                </tr>
+                            </th>
+                            <th>
+                                <tr>
                                     <span class="text-light">Số tiền dư</span>
+                                </tr>
+                            </th>
+                            <th>
+                                <tr>
+                                    <span class="text-light">Gói</span>
                                 </tr>
                             </th>
                             <th>
@@ -112,7 +127,16 @@
                                     <span>{{ item?.phuHuynh?.dien_thoai ?? 'Chưa cập nhật' }}</span>
                                 </td>
                                 <td>
-                                    <span>{{ formatCurrency(item?.soTienConDu) ?? 0 }}</span>
+                                    <span>{{ item?.ma_don_hang ?? 'Chưa cập nhật' }}</span>
+                                </td>
+                                <td>
+                                    <span>{{ item?.dichVu ?? 'Chưa cập nhật' }}</span>
+                                </td>
+                                <td>
+                                    <span class="text-danger">{{ formatCurrency(item?.soTienConDu) ?? 0 }}</span>
+                                </td>
+                                <td>
+                                    <span class="text-danger">{{ formatCurrency(item?.goi) ?? 0 }}</span>
                                 </td>
                                 <td>
                                     <span>{{ item?.trang_thai ?? 'Chưa cập nhật' }}</span>
@@ -241,7 +265,7 @@ export default {
         },
         async load_data() {
             // await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=${this.diachi}&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=${this.current_page}&limit=10&sort=&tuNgay=${this.value}&denNgay=${this.value1}`, {
-                await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=${this.diachi}&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=${this.current_page}&limit=10&sort=`, {
+                await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=${this.diachi}&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=${this.current_page}&limit=20&sort=`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

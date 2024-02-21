@@ -43,7 +43,7 @@
                         <div class="card-order">
                             <div class="span-title">SL User Phụ huynh</div>
                             <div class="mt-3">
-                                <div class="text">{{ (data?.phuHuynh?.dang_hoat_dong * 100) / data?.phuHuynh?.tong }} %</div>
+                                <div class="text">{{ sum_t(data?.phuHuynh?.dang_hoat_dong, data?.phuHuynh?.tong) }} %</div>
                                 <div class="text-center">
                                     <svg width="126" height="32" viewBox="0 0 126 32" fill="none"
                                         xmlns="http://www.w3.org/2000/svg"  v-b-tooltip.hover :title="data?.phuHuynh?.dung_hoat_dong">
@@ -88,7 +88,7 @@
                         <div class="card-order">
                             <div class="span-title">SL User Giáo viên</div>
                             <div class="mt-3">
-                                <div class="text">{{ (data?.giaoVien?.dang_hoat_dong * 100) / data?.giaoVien?.tong }} %</div>
+                                <div class="text">{{ sum_t(data?.giaoVien?.dang_hoat_dong, data?.giaoVien?.tong) }} %</div>
                                 <div class="text-center">
                                     <svg width="126" height="32" viewBox="0 0 126 32" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" v-b-tooltip.hover :title="data?.giaoVien?.dung_hoat_dong">
@@ -167,6 +167,13 @@ export default {
         }
     },
     methods: {
+        sum_t (x, y) {
+            if (y == 0) {
+                return 0
+            } else {
+                return (x * 100) / y
+            }
+        },
         async load_data() {
             await api.get('bao-cao/tong-quan-user?thang=' + (this.month ?? ''), {
                 'Content-Type': 'multipart/form-data',
