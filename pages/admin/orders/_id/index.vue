@@ -97,6 +97,29 @@
                     </div>
                 </div>
 
+                <div v-if="data?.trang_thai != 'Chưa có GV'">
+                    <div class="mt-6" v-for="(item, n) in data?.ke_hoach_day?.[0]?.goiHoc" v-bind:key="n">
+                        <div>
+                            <h5>
+                                Giáo cụ liên quan ( {{ item?.tieu_de }} )
+                            </h5>
+                        </div>
+                        <v-card>
+                            <v-card-text>
+                                <div class="mt-4 d-flex flex-wrap">
+                                    <div class="box-img me-4" v-for="(item_i, i) in item?.giaoCu" v-bind:key="i">
+                                        <img v-b-tooltip.hover :title="item_i?.code" v-if="item_i?.image" class="img-w" :src="item_i?.image" :alt="item_i?.code">
+                                    </div>
+
+                                    <div class="alert alert-info w-100" v-if="item?.giaoCu?.length == 0">
+                                        Không có giáo cụ được gán.
+                                    </div>
+                                </div>
+                            </v-card-text>
+                        </v-card>
+                    </div>
+                </div>
+
 
                 <!-- Thông tin quản lý  -->
                 <div v-if="data?.trang_thai == 'Đang khảo sát'">
@@ -1212,7 +1235,9 @@ button {
         transition: 0.3s;
     }
 }
-
+.box-img img {
+    width: 40px;
+}
 .btn {
     padding: 0.575rem 0.75rem !important;
 }

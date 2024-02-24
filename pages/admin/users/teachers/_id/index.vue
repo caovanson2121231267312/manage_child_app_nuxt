@@ -1,7 +1,7 @@
 <template>
     <div class="content-mp">
         <v-row>
-            <v-col class="mt-0 pt-0" xs="12" sm="6" md="4" lg="4" xl="3">
+            <v-col class="mt-0 pt-0" xs="12" sm="8" md="8" lg="4" xl="3">
                 <b-card style="min-width: 245px;" class="">
                     <nuxt-link class="block w-100 teachers teacher-detail" to="#">
                         <div class="d-flex align-center">
@@ -80,7 +80,7 @@
                 </b-card>
             </v-col>
 
-            <v-col class="mt-0 pt-0" xs="12" sm="6" md="5" lg="5" xl="5">
+            <v-col class="mt-0 pt-0" xs="12" sm="8" md="8" lg="5" xl="5">
                 <div class="w-100 teacher-detail-info" style="min-width: 300px;">
                     <h3>Thông tin cá nhân</h3>
                     <div>
@@ -100,7 +100,7 @@
                                         </span>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr v-if="data?.ngay_sinh">
                                     <td>
                                         <div class="align-top td-first">
                                             <span class="w-text-p">
@@ -114,7 +114,7 @@
                                         </span>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr v-if="data?.cmnd_cccd">
                                     <td>
                                         <div class="align-top td-first">
                                             <span class="w-text-p">
@@ -128,7 +128,7 @@
                                         </span>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr v-if="data?.email">
                                     <td>
                                         <div class="align-top td-first">
                                             <span class="w-text-p">
@@ -142,7 +142,7 @@
                                         </span>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr  v-if="data?.bang_cap">
                                     <td>
                                         <div class="align-top td-first">
                                             <span class="w-text-p">
@@ -156,7 +156,7 @@
                                         </span>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr  v-if="chungNhan?.length != 0">
                                     <td>
                                         <div class="align-top td-first">
                                             <span class="w-text-p">

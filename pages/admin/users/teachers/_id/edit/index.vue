@@ -42,12 +42,66 @@
                     </div>
                 </div>
 
-                <div class="input-teacher-group mt-7 mb-4">
+                <div class="input-teacher-group mt-5 mb-4">
                     <div class="mb-2">
                         <span class="input-text">CMND/CCCD</span> <span class="text-danger">*</span>
                     </div>
                     <div>
                         <input v-model="cmnd_cccd" class="form-control input-teacher" type="text" placeholder="nhập nội dung" />
+                    </div>
+                </div>
+
+                <div class="input-teacher-group mt-5 mb-4">
+                    <div class="mb-2">
+                        <span class="input-text">Họ và tên</span> <span class="text-danger">*</span>
+                    </div>
+                    <div>
+                        <input v-model="hoten" class="form-control input-teacher" type="text" placeholder="nhập họ tên" />
+                    </div>
+                </div>
+
+                <div class="input-teacher-group mt-5 mb-4">
+                    <div class="mb-2">
+                        <span class="input-text">Ngày sinh</span> <span class="text-danger">*</span>
+                    </div>
+                    <div>
+                        <input v-model="ngay_sinh" class="form-control input-teacher" type="date" placeholder="vd: 20/11/2024" />
+                    </div>
+                </div>
+
+                <div class="input-teacher-group mt-5 mb-4">
+                    <div class="mb-2">
+                        <span class="input-text">Email</span> <span class="text-danger">*</span>
+                    </div>
+                    <div>
+                        <input v-model="email" class="form-control input-teacher" type="text"  />
+                    </div>
+                </div>
+
+                <div class="input-teacher-group mt-5 mb-4">
+                    <div class="mb-2">
+                        <span class="input-text">Trình độ</span> <span class="text-danger">*</span>
+                    </div>
+                    <div>
+                        <input v-model="trinh_do" class="form-control input-teacher" type="text"  />
+                    </div>
+                </div>
+
+                <div class="input-teacher-group mt-5 mb-4">
+                    <div class="mb-2">
+                        <span class="input-text">Chuyên ngành</span> <span class="text-danger">*</span>
+                    </div>
+                    <div>
+                        <input v-model="chuyen_nganh" class="form-control input-teacher" type="text"  />
+                    </div>
+                </div>
+
+                <div class="input-teacher-group mt-5 mb-4">
+                    <div class="mb-2">
+                        <span class="input-text">Trường đào tạo</span> <span class="text-danger">*</span>
+                    </div>
+                    <div>
+                        <input v-model="truong_dao_tao" class="form-control input-teacher" type="text"  />
                     </div>
                 </div>
 
@@ -106,6 +160,24 @@
                     </div> -->
                 </div>
 
+                <div class="input-teacher-group mt-5 mb-4">
+                    <div class="mb-2">
+                        <span class="input-text">Mật khẩu mới</span> <span class="text-danger">*</span>
+                    </div>
+                    <div>
+                        <input v-model="password" class="form-control input-teacher" type="password" placeholder="nhập nội dung" />
+                    </div>
+                </div>
+
+                <div class="input-teacher-group mt-5 mb-4">
+                    <div class="mb-2">
+                        <span class="input-text">Xác nhận mật khẩu</span> <span class="text-danger">*</span>
+                    </div>
+                    <div>
+                        <input v-model="password_confirm" class="form-control input-teacher" type="password" placeholder="nhập nội dung" />
+                    </div>
+                </div>
+
                 <div class="mt-8" @click="send_data">
                     <button-component>Lưu thay đổi</button-component>
                 </div>
@@ -136,6 +208,14 @@ export default {
             name: null,
             image: null,
             cmnd_cccd: null,
+            password_confirm: null,
+            password: null,
+            hoten: null,
+            ngay_sinh: null,
+            email: null,
+            trinh_do: null,
+            chuyen_nganh: null,
+            truong_dao_tao: null,
         };
     },
     validate({ params }) {
@@ -171,6 +251,9 @@ export default {
                 const user = res?.data?.data.user
                 this.chungNhan = res?.data?.data.chungNhan
                 this.cmnd_cccd = res?.data?.data.user?.cmnd_cccd
+                this.hoten = res?.data?.data.user?.hoten
+                this.ngay_sinh = res?.data?.data.user?.ngay_sinh
+                this.email = res?.data?.data.user?.email
                 this.image = res?.data?.data.user?.anh_nguoi_dung
                 this.data = user
                 // this.hoten = user?.hoten
@@ -185,6 +268,14 @@ export default {
             formData.append('anh_nguoi_dung', this.file)
             formData.append('cmnd_cccd', this.cmnd_cccd)
             formData.append('chung_chi', this.files)
+            formData.append('password', this.password)
+            formData.append('password_confirm', this.password_confirm)
+            formData.append('hoten', this.hoten)
+            formData.append('ngay_sinh', this.ngay_sinh)
+            formData.append('email', this.email)
+            formData.append('bang_cap[trinh_do]', this.trinh_do)
+            formData.append('bang_cap[chuyen_nganh]', this.chuyen_nganh)
+            formData.append('bang_cap[truong_dao_tao]', this.truong_dao_tao)
 
             await api.post('giao-vien/sua', formData, {
                 'Content-Type': 'multipart/form-data',
@@ -192,7 +283,7 @@ export default {
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
-                    this.$router.push('admin/users/teachers/' + this.id);
+                    // this.$router.push('admin/users/teachers/' + this.id);
                 }
             })
         },

@@ -31,6 +31,16 @@ export default {
     padding: 10px;
     cursor: pointer;
 }
+.btn-success-2 {
+    border: 1px solid #18cb3f;
+    color: #18cb3f;
+    background: #e3f9e5;
+}
+.btn-danger-2 {
+    border: 1px solid #c91919;
+    color: #c91919;
+    background: #ffebe8;
+}
 .hover {
     transition: 0.3s;
     font-family: SVN-Gilroy;

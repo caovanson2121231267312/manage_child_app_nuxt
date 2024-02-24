@@ -52,18 +52,29 @@
                                 <span class="mdi mdi-chevron-right"></span>
                             </div>
                         </b-card>
-                        <b-collapse :id="'collapse-' + item?.id" class="mt-2 mb-3 ms-3">
-                            <b-card v-for="(i, j) in item?.baiHoc" v-bind:key="j" class="p-0 cp mb-3 bg-info text-light ">
-                                <nuxt-link :to="'/admin/lsm/students/' + id + '/detail/' + id_lesson + '/' + i?.id" class="d-flex justify-content-between align-items-center text-light">
+                        <b-collapse :id="'collapse-' + item?.id" class="mt-2 mb-3 ms-4">
+                            <b-card v-for="(i, j) in item?.baiHoc" v-bind:key="j" class="p-0 cp mb-3 text-dark ">
+                                <nuxt-link :to="'/admin/lsm/students/' + id + '/detail/' + id_lesson + '/' + i?.id"
+                                    class="d-flex justify-content-between align-items-center text-dark">
                                     <span>
-                                        {{ i?.tieu_de }}
+                                        {{ j + 1 }}. {{ i?.tieu_de }}
                                     </span>
                                     <span class="mdi mdi-chevron-right"></span>
                                 </nuxt-link>
                             </b-card>
-                            <div class="mb-5" @click="add_lesson(item?.id)">
+                            <div class="mb-4" @click="add_lesson(item?.id)">
                                 <button-add>
                                     <span class="mdi mdi-plus"></span> Thêm bài học
+                                </button-add>
+                            </div>
+                            <div class="mb-4" @click="edit_lesson(item?.id)">
+                                <button-add addClass="btn-success-2">
+                                    <span class="mdi mdi-plus"></span> Sửa gói học
+                                </button-add>
+                            </div>
+                            <div class="mb-5" @click="delete_item(item?.id)">
+                                <button-add addClass="btn-danger-2">
+                                    <span class="mdi mdi-plus"></span> Xoá gói học
                                 </button-add>
                             </div>
                         </b-collapse>
@@ -119,6 +130,28 @@
 
                     </template>
                 </b-modal>
+
+                <b-modal id="my-modal-edit" ref="my-modal-edit" hide-footer centered title="Sửa gói học">
+                    <template #default="{ hide }">
+                        <form id="form" @submit="send_edit_lesson">
+                            <div class="">
+                                <div>
+                                    <b-form-group>
+                                        <label>Nhập tên gói học:</label>
+                                        <b-form-input name="goi_hoc" v-model="tieu_de_edit"
+                                            placeholder="Nhập tên"></b-form-input>
+                                    </b-form-group>
+                                </div>
+
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button class=" btn-delete ms-1" type="submit">Xác nhận</button>
+                            </div>
+                        </form>
+
+                    </template>
+                </b-modal>
             </v-col>
         </v-row>
 
@@ -149,6 +182,8 @@ export default {
             packages: null,
             nhom_id: 0,
             tieu_de: null,
+            tieu_de_edit: null,
+            data_edit: null,
         };
     },
     validate({ params }) {
@@ -171,9 +206,47 @@ export default {
             this.nhom_id = item
             this.$refs['my-modal-lesson'].show()
         },
+        async edit_lesson(item) {
+            this.id_edit = item
+            await api.get(`chuong-trinh-hoc/xem-goi-hoc?goi_hoc_id=` + item, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.data_edit = res?.data?.data
+                this.tieu_de_edit = res?.data?.data?.name
+                this.$refs['my-modal-edit'].show()
+            })
+        },
+        async send_edit_lesson() {
+            event.preventDefault();
+            if (!this.tieu_de_edit || this.tieu_de_edit == '') {
+                toastr.warning("vui lòng nhập đủ thông tin");
+                return
+            }
+            const formData = new FormData()
+            formData.append('goi_hoc', this.tieu_de_edit)
+            formData.append('id', this.id_lesson)
+            formData.append('goi_hoc_id', this.id_edit)
+
+            await api.post('chuong-trinh-hoc/sua-goi-hoc', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-edit'].hide()
+                    this.tieu_de_edit = null
+                    this.load_data();
+
+                    setTimeout(function () {
+                        window.location.reload()
+                    }, 1000)
+                }
+            })
+        },
         async send_data(event) {
             event.preventDefault();
-            if(!this.goi_hoc) {
+            if (!this.goi_hoc) {
                 toastr.warning("vui lòng nhập đủ thông tin");
                 return
             }
@@ -195,7 +268,7 @@ export default {
         },
         async send_data_lesson(event) {
             event.preventDefault();
-            if(!this.tieu_de) {
+            if (!this.tieu_de) {
                 toastr.warning("vui lòng nhập đủ thông tin");
                 return
             }
@@ -242,7 +315,45 @@ export default {
             }).then(res => {
                 this.packages = res?.data?.data
             })
+        },
+        async delete_item(goi_hoc_id) {
+            const formData = new FormData();
+            formData.append('id', this.id_lesson)
+            formData.append('goi_hoc_id', goi_hoc_id)
 
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá gói học đã chọn!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Chắc chắn/Chấp nhận!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('chuong-trinh-hoc/xoa-goi-hoc', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Đã xoá!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            this.load_data()
+                            setTimeout(function () {
+                                window.location.reload()
+                            }, 1000)
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
         },
     },
     mounted() {
