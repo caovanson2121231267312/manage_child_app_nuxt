@@ -248,7 +248,7 @@ export default {
     },
     methods: {
         async load_data() {
-            await api.get('giao-cu/danh-sach-ban-giao?page=1&limit=1000&sort=1&tuKhoa=', {
+            await api.get('giao-cu/danh-sach-ban-giao?page=1&limit=1000&sort=1&tuKhoa=&giao_cu_id=' + this.id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

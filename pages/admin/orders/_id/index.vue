@@ -108,7 +108,8 @@
                             <v-card-text>
                                 <div class="mt-4 d-flex flex-wrap">
                                     <div class="box-img me-4" v-for="(item_i, i) in item?.giaoCu" v-bind:key="i">
-                                        <img v-b-tooltip.hover :title="item_i?.code" v-if="item_i?.image" class="img-w" :src="item_i?.image" :alt="item_i?.code">
+                                        <img v-b-tooltip.hover :title="item_i?.code" v-if="item_i?.image" class="img-w"
+                                            :src="item_i?.image" :alt="item_i?.code">
                                     </div>
 
                                     <div class="alert alert-info w-100" v-if="item?.giaoCu?.length == 0">
@@ -120,13 +121,34 @@
                     </div>
                 </div>
 
+                <b-modal id="my-modal-edit-kd" ref="my-modal-edit-kd" hide-footer centered title="Sửa thông tin quản lý">
+                    <template #default="{ hide }">
+                        <form>
+                            <div class="">
+                                <div>
+                                    <b-form-group>
+                                        <label>Gán leader KD:</label>
+                                        <b-form-select v-model="kds_id" :options="kds"
+                                            aria-placeholder="Chọn"></b-form-select>
+                                    </b-form-group>
+                                </div>
+
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button type="button" class=" btn-delete ms-1" @click="duyet_don_kd()">Đồng ý</button>
+                            </div>
+                        </form>
+
+                    </template>
+                </b-modal>
 
                 <!-- Thông tin quản lý  -->
                 <div v-if="data?.trang_thai == 'Đang khảo sát'">
                     <div class="mt-6">
                         <div>
-                            <h5>
-                                Thông tin quản lý
+                            <h5 class="d-flex justify-content-between">
+                                <span>Thông tin quản lý</span> <span v-b-modal.my-modal-edit-kd class="cp text-primary" v-if="data?.leaderKD">Sửa</span>
                             </h5>
                         </div>
                         <v-card>
@@ -143,6 +165,9 @@
                                             <h6 class="text-dark mt-1">
                                                 {{ data?.leaderKD?.hoten }}
                                             </h6>
+                                            <div class="text-dark">
+                                                {{ data?.leaderKD?.dien_thoai }}
+                                            </div>
                                         </div>
                                     </div>
 
@@ -332,6 +357,10 @@
                                 <div class="mt-5">
                                     <b-form-input class="w-100" v-model.lazy="tuKhoa"
                                         placeholder="Gán giáo viên cụ thể"></b-form-input>
+                                </div>
+                                <div class="mt-3">
+                                    <b-form-select v-model="trinh_do_giao_vien"
+                                        :options="trinh_do_giao_viens"></b-form-select>
                                 </div>
 
                             </div>
@@ -676,8 +705,8 @@
                         <div>
                             <b-form-group>
                                 <label>Nhập số buổi:</label>
-                                <b-form-input v-model="so_buoi_gia_han" type="number"
-                                    placeholder="Nhập" min="0"></b-form-input>
+                                <b-form-input v-model="so_buoi_gia_han" type="number" placeholder="Nhập"
+                                    min="0"></b-form-input>
                             </b-form-group>
                         </div>
 
@@ -738,6 +767,8 @@ export default {
             bai_hoc_id: null,
             bai_hoc: [],
             array_bai_hoc: [],
+            trinh_do_giao_viens: [],
+            trinh_do_giao_vien: 0,
             so_buoi_gia_han: 0,
         };
     },
@@ -858,9 +889,9 @@ export default {
                     toastr.success(res?.data?.message);
                     this.$refs['my-modal-gia-han'].hide()
                     this.so_buoi_gia_han = 0
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.reload();
-                    },1000)
+                    }, 1000)
                     // this.load_data();
                 }
             })
@@ -953,6 +984,19 @@ export default {
                 })
             })
 
+            await api.get(`don-dich-vu/get-trinh-do-khi-dieu-giao-vien`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.trinh_do_giao_viens = res?.data?.data.map(item => {
+                    return {
+                        value: item?.id,
+                        text: item?.name ?? (item?.id + ' - Chưa cập nhật')
+                    };
+                })
+                this.trinh_do_giao_vien = this.trinh_do_giao_viens[0].value
+            })
+
             await api.get(`giao-vien/loai-giao-dich-nap-tien`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
@@ -1000,6 +1044,24 @@ export default {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
                     this.$refs['my-modal'].hide()
+                    this.kds_id = null
+                    window.location.reload();
+                    this.load_data();
+                }
+            })
+        },
+        async duyet_don_kd() {
+            const formData = new FormData()
+            formData.append('id', this.id)
+            formData.append('leader_kd_id', this.kds_id)
+
+            await api.post('don-dich-vu/sua-leaderkd', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-edit-kd'].hide()
                     this.kds_id = null
                     window.location.reload();
                     this.load_data();
@@ -1123,7 +1185,7 @@ export default {
 
             this.timeOut = setTimeout(() => {
                 // this.load_kd()
-                api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=26&tuKhoa=` + this.tuKhoa, {
+                api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=${this.trinh_do_giao_vien}&tuKhoa=` + this.tuKhoa, {
                     'Content-Type': 'multipart/form-data',
                     Authorization: 'Bearer ' + this.token
                 }).then(res => {
@@ -1132,6 +1194,14 @@ export default {
                 // this.load_kd()
 
             }, this.timer);
+        },
+        async trinh_do_giao_vien() {
+            await api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=${this.trinh_do_giao_vien}&tuKhoa=` + this.tuKhoa, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.teachers = res?.data?.data
+            })
         },
         async chuong_trinh_id() {
             await api.get(`don-dich-vu/danh-sach-goi-hoc?page=1&limit=1000&chuong_trinh_hoc_id=` + this.chuong_trinh_id, {
@@ -1203,6 +1273,7 @@ export default {
     overflow-y: auto;
     padding: 4px;
 }
+
 .blade-primary {
     border-radius: 46px;
     border: 1px solid #0056B1;
@@ -1235,9 +1306,11 @@ button {
         transition: 0.3s;
     }
 }
+
 .box-img img {
     width: 40px;
 }
+
 .btn {
     padding: 0.575rem 0.75rem !important;
 }
@@ -1255,5 +1328,4 @@ button {
     border: 1px solid #4EAEEA;
 
     background: #E7F6FF;
-}
-</style>
+}</style>
