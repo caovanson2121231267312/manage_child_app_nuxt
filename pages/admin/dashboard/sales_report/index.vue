@@ -69,6 +69,11 @@
                             </th>
                             <th>
                                 <tr>
+                                    <span class="text-light">Giáo viên</span>
+                                </tr>
+                            </th>
+                            <th>
+                                <tr>
                                     <span class="text-light">Tên Phụ huynh</span>
                                 </tr>
                             </th>
@@ -111,6 +116,22 @@
                                     </span>
                                 </td>
                                 <td>
+                                    <div v-if="item?.giaoVien" class="d-flex align-items-center">
+                                        <div class="box-img me-2">
+                                            <img :src="item?.giaoVien?.image" />
+                                        </div>
+                                        <div>
+                                            <div class="blade blade-id"># {{ item?.giaoVien?.id }}</div>
+                                            <div class="user-name">
+                                                {{ item?.giaoVien?.hoten ?? 'Chưa cập nhật tên' }}
+                                            </div>
+                                            <div class="">
+                                                {{ item?.giaoVien?.dien_thoai }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
                                     <div class="d-flex align-items-center">
                                         <div class="box-img me-2">
                                             <img :src="item?.phuHuynh?.anh_nguoi_dung" />
@@ -127,7 +148,9 @@
                                     <span>{{ item?.phuHuynh?.dien_thoai ?? 'Chưa cập nhật' }}</span>
                                 </td>
                                 <td>
-                                    <span>{{ item?.ma_don_hang ?? 'Chưa cập nhật' }}</span>
+                                    <nuxt-link :to="'/admin/orders/' + item?.id">
+                                        <span>{{ item?.ma_don_hang ?? 'Chưa cập nhật' }}</span>
+                                    </nuxt-link>
                                 </td>
                                 <td>
                                     <span>{{ item?.dichVu ?? 'Chưa cập nhật' }}</span>
@@ -265,7 +288,7 @@ export default {
         },
         async load_data() {
             // await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=${this.diachi}&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=${this.current_page}&limit=10&sort=&tuNgay=${this.value}&denNgay=${this.value1}`, {
-                await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=${this.diachi}&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=${this.current_page}&limit=20&sort=`, {
+            await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=${this.diachi}&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=${this.current_page}&limit=20&sort=`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

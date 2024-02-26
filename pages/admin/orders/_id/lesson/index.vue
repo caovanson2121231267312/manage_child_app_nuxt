@@ -119,6 +119,9 @@
                             <v-btn rounded color="primary" dark v-b-modal.my-modal-doi-gio>
                                 Đổi giờ
                             </v-btn>
+                            <v-btn rounded color="red" dark @click="delete_item()">
+                                Huỷ buổi
+                            </v-btn>
                         </div>
                     </div>
                 </div>
@@ -129,19 +132,40 @@
             <template #default="{ hide }">
                 <form>
 
-                    <div class="my-2">
-                        <div>
-                            <b-form-group>
-                                <label>Nhập số buổi:</label>
-                                <b-form-input v-model="so_buoi_gia_han" type="number"
-                                    placeholder="Nhập" min="0"></b-form-input>
-                            </b-form-group>
-                        </div>
+                    <div class="">
+                        <v-card class="">
+                            <v-card-text>
+                                <div>
+                                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M8.92188 0C4.51387 0 0.921875 3.592 0.921875 8C0.921875 12.408 4.51387 16 8.92188 16C13.3299 16 16.9219 12.408 16.9219 8C16.9219 3.592 13.3299 0 8.92188 0ZM12.4019 10.856C12.2899 11.048 12.0899 11.152 11.8819 11.152C11.7779 11.152 11.6739 11.128 11.5779 11.064L9.09788 9.584C8.48188 9.216 8.02588 8.408 8.02588 7.696V4.416C8.02588 4.088 8.29788 3.816 8.62587 3.816C8.95388 3.816 9.22587 4.088 9.22587 4.416V7.696C9.22587 7.984 9.46587 8.408 9.71387 8.552L12.1939 10.032C12.4819 10.2 12.5779 10.568 12.4019 10.856Z"
+                                            fill="#00C092" />
+                                    </svg>
+                                    <span>Chọn ca</span>
+                                </div>
+                                <div class="mt-2 d-in">
+                                    <b-form-group class="" v-slot="{ ariaDescribedby }">
+                                        <b-form-radio v-for="(item, i) in chon_ca" v-bind:key="i" v-model="chon_ca_id"
+                                            :aria-describedby="ariaDescribedby" name="chon_ca" :value="item?.id">{{
+                                                item?.name }}</b-form-radio>
+                                    </b-form-group>
+                                </div>
+                                <div class="mb-3">
+                                    <b-form-select v-model="khung_gio" :options="khung_gios"></b-form-select>
+                                </div>
+
+
+                                <!-- <div v-html="content">
+
+                        </div> -->
+                            </v-card-text>
+                        </v-card>
 
                     </div>
                     <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
                         <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                        <button type="button" class=" btn-delete ms-1" @click="send_gia_han()">Xác nhận</button>
+                        <button type="button" class=" btn-delete ms-1" @click="send_doi_gio()">Xác nhận</button>
                     </div>
                 </form>
 
@@ -182,6 +206,11 @@ export default {
             phu_phi_tien: null,
             xac_nhan_thanh_toan: false,
             buoi: 1,
+            chon_ca: [],
+            chon_ca_id: 0,
+            khung_gio: 1,
+            khung_gios: [],
+            don_dich_vu_id: null,
         };
     },
     components: {
@@ -202,15 +231,34 @@ export default {
     },
     methods: {
         async load_data() {
+            await api.get(`don-dich-vu/chi-tiet?id=` + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.don_dich_vu_id = res?.data?.data?.dich_vu_id
+            })
+
             await api.get(`don-dich-vu/tien-do-khoa-hoc?id=${this.id}&buoi=${this.buoi}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                console.log(res)
+                console.log("123",res)
                 this.data = res?.data?.tienDo
                 this.buoi = res?.data?.tienDo?.buoi
                 this.giaoVien = res?.data?.giaoVien
+
+                this.chon_ca_id = res?.data?.tienDo?.ca_id ?? 0
+                this.khung_gio = res?.data?.tienDo?.khung_gio_id ?? 0
             })
+
+            await api.get(`dich-vu/get-ca`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.chon_ca = res?.data?.data
+            })
+
+
         },
         async prev() {
             this.buoi = this.buoi - 1
@@ -264,6 +312,55 @@ export default {
                 }
             })
         },
+        async send_doi_gio() {
+            const formData = new FormData()
+            formData.append('ca_day_id', this.chon_ca_id)
+            formData.append('khung_gio_id', this.khung_gio)
+
+            await api.post('don-dich-vu/doi-gio-day', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                }
+            })
+        },
+        async delete_item() {
+            const formData = new FormData();
+            formData.append('ca_day_id', this.chon_ca_id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Huỷ buổi!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có huỷ nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('don-dich-vu/huy-ca', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Deleted!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            this.load_data()
+                        } else {
+                            // toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
+        },
     },
     mounted() {
         this.title.previous = '/admin/orders/' + this.id
@@ -277,6 +374,25 @@ export default {
             freeMode: true,
         });
     },
+    watch: {
+        async chon_ca_id() {
+            console.log(this.selected)
+            await api.get(`dich-vu/danh-sach-khung-gio-full?dich_vu_id=${this.don_dich_vu_id}&type=` + this.chon_ca_id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+
+                this.khung_gios = res?.data?.data?.khungGio?.map(item => {
+                    return {
+                        value: item?.id,
+                        text: item?.khung_gio,
+                        content: item?.noi_dung ?? ''
+                    };
+                })
+                // this.khung_gio = this.khung_gios[0]?.value ?? 0
+            })
+        },
+    }
 }
 </script>
 

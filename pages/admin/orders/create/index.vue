@@ -555,6 +555,7 @@ export default {
             teacher_id: '',
             khung_gio: 1,
             khung_gios: [],
+            don_dich_vu_id: null,
             content: '',
         };
     },
@@ -654,6 +655,7 @@ export default {
                 this.chon_ca = res?.data?.data
                 this.chon_ca_id = res?.data?.data?.[0]?.id ?? 0
             })
+
 
             await api.get('dich-vu/danh-sach?page=1&limit=1000&sort=1&tuKhoa=', {
                 'Content-Type': 'multipart/form-data',
