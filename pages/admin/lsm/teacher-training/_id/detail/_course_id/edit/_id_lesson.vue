@@ -46,6 +46,27 @@
                     <div class="mt-3">
                         <strong class="strong-title">
                             <span class="me-2">
+                                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M13 1.58169V10.2482C13 10.9552 12.4449 11.604 11.7632 11.6914L11.5454 11.7206C10.393 11.8809 8.76973 12.3766 7.4627 12.9451C7.00595 13.1419 6.5 12.7848 6.5 12.2672V2.12836C6.5 1.85867 6.64757 1.61085 6.87946 1.47965C8.16541 0.758047 10.1119 0.116623 11.433 0H11.4751C12.3184 0 13 0.707025 13 1.58169Z"
+                                        fill="#00C092" />
+                                    <path
+                                        d="M6.12757 1.47965C4.84162 0.758047 2.89514 0.116623 1.57405 0H1.52486C0.681621 0 0 0.707025 0 1.58169V10.2482C0 10.9552 0.555135 11.604 1.23676 11.6914L1.45459 11.7206C2.60703 11.8809 4.23027 12.3766 5.5373 12.9451C5.99405 13.1419 6.5 12.7848 6.5 12.2672V2.12836C6.5 1.85138 6.35946 1.61085 6.12757 1.47965ZM2.11514 3.68819H3.69622C3.98432 3.68819 4.22324 3.93601 4.22324 4.23486C4.22324 4.541 3.98432 4.78153 3.69622 4.78153H2.11514C1.82703 4.78153 1.58811 4.541 1.58811 4.23486C1.58811 3.93601 1.82703 3.68819 2.11514 3.68819ZM4.22324 6.9682H2.11514C1.82703 6.9682 1.58811 6.72767 1.58811 6.42154C1.58811 6.12269 1.82703 5.87487 2.11514 5.87487H4.22324C4.51135 5.87487 4.75027 6.12269 4.75027 6.42154C4.75027 6.72767 4.51135 6.9682 4.22324 6.9682Z"
+                                        fill="#00C092" />
+                                </svg>
+                            </span>
+                            <span>Bài test</span>
+                        </strong>
+
+                        <div class="input-grop">
+                            <input v-model="test" type="text" class="input" placeholder="link..." />
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <strong class="strong-title">
+                            <span class="me-2">
                                 <svg width="13" height="14" viewBox="0 0 13 14" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -289,6 +310,8 @@ export default {
             baiTest: [],
             baiTest_link: null,
             thu_tu: 1,
+            test: '',
+            kiem_tra_id: 0,
         };
     },
     validate({ params }) {
@@ -345,10 +368,10 @@ export default {
             this.$refs['my-modal-edit'].hide()
         },
         async add_benefit() {
-            if (this.cauHoi_tieu_de == '' || this.cauHoi_gioi_thieu == '' || this.cauHoi_link == '') {
-                toastr.error('Bạn cần nhập đầy đủ thông tin');
-                return
-            }
+            // if (this.cauHoi_tieu_de == '' || this.cauHoi_gioi_thieu == '' || this.cauHoi_link == '') {
+            //     toastr.error('Bạn cần nhập đầy đủ thông tin');
+            //     return
+            // }
             const newId = this.cauHoi.length + 1;
             // this.cauHoi.push({ id: newId, cauHoi_tieu_de: this.cauHoi_tieu_de, cauHoi_gioi_thieu: this.cauHoi_gioi_thieu, cauHoi_link: this.cauHoi_link });
             const formData = new FormData()
@@ -374,10 +397,10 @@ export default {
             this.$refs['my-modal'].hide()
         },
         add_test() {
-            if (this.baiTest_link == '') {
-                toastr.error('Bạn cần nhập đầy đủ thông tin');
-                return
-            }
+            // if (this.baiTest_link == '') {
+            //     toastr.error('Bạn cần nhập đầy đủ thông tin');
+            //     return
+            // }
             const newId = this.baiTest.length + 1;
             this.baiTest.push({ id: newId, baiTest_link: this.baiTest_link });
             this.baiTest_link = ''
@@ -391,6 +414,8 @@ export default {
                 this.data = res?.data?.data
                 this.tieu_de = res?.data?.data?.tieu_de
                 this.thu_tu = res?.data?.data?.thu_tu
+                this.kiem_tra_id = res?.data?.data?.baiTest?.id
+                this.test = res?.data?.data?.baiTest?.link
                 this.cauHoi = []
                 res?.data?.data?.cauHoi?.map(x => {
                     this.cauHoi.push({ id: x?.id, cauHoi_tieu_de: x?.tieu_de, cauHoi_gioi_thieu: x?.gioi_thieu, cauHoi_link: x?.link });
@@ -428,6 +453,20 @@ export default {
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
+
+                    const formData1 = new FormData()
+                    formData1.append('link', this.test)
+                    formData1.append('kiem_tra_id', this.kiem_tra_id)
+
+                    api.post('dao-tao/sua-kiem-tra-bai-hoc', formData1, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            // this.$router.push('/admin/lsm/teacher-training/' + this.id + '/detail/' + this.course_id)
+                        }
+                    })
                     this.$router.push('/admin/lsm/teacher-training/' + this.id + '/detail/' + this.course_id)
                 }
             })
