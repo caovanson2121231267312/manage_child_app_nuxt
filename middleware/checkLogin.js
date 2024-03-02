@@ -8,7 +8,7 @@ export default function ({ route, redirect }) {
         const currentTime = new Date().getTime()
 
         // Kiểm tra xem đã qua thời gian chờ đợi (ví dụ: 4 tiếng = 14400000 miligiây) hay chưa
-        const expirationTime = 14400000 // 4 tiếng trong miligiây
+        const expirationTime = 34400000 // 4 tiếng trong miligiây
         if (currentTime - parseInt(loginTime) > expirationTime) {
             // Thời gian đăng nhập đã hết hạn, tự động đăng xuất người dùng
             // Xóa thông tin người dùng và thời gian đăng nhập từ localStorage

@@ -135,7 +135,7 @@
                     </div>
 
                     <div class="mt-7">
-                        <nuxt-link :to="'/admin/materials/' + this.id + '/create'">
+                        <!-- <nuxt-link :to="'/admin/materials/' + this.id + '/create'">
                             <button-component addClass="primary">
                                 <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -151,7 +151,7 @@
                                 </svg>
                                 Tạo bàn giao
                             </button-component>
-                        </nuxt-link>
+                        </nuxt-link> -->
                     </div>
 
                 </v-col>
