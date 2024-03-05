@@ -2,10 +2,11 @@
     <div class="content-mp">
         <div class="support">
             <b-row>
-                <b-col v-for="n in 3" cols="12" sm="7" v-bind:key="n">
+                <b-col v-for="item in data" cols="12" sm="7" v-bind:key="item?.id">
                     <div>
                         <div class="mb-2">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M8.45202 13.3047C8.63518 13.3473 8.65196 13.5872 8.47356 13.6467L7.42023 13.9933C4.77356 14.8467 3.38023 14.1333 2.52023 11.4867L1.66689 8.85332C0.813561 6.20665 1.52023 4.80665 4.16689 3.95332L4.17756 3.94979C4.58042 3.81637 4.98127 4.22363 4.87926 4.63557C4.87288 4.6613 4.86654 4.68722 4.86023 4.71332L4.20689 7.50665C3.47356 10.6467 4.54689 12.38 7.68689 13.1267L8.45202 13.3047Z"
                                     fill="#FC4D32" />
@@ -14,7 +15,7 @@
                                     fill="#FC4D32" />
                             </svg>
                             <span class="title-support">
-                                Hướng dẫn sử dụng App cho Giáo viên
+                                {{ item?.tieu_de }}
                             </span>
                         </div>
 
@@ -22,7 +23,7 @@
                             <div class="card-support-body">
                                 <div>
                                     <div class="link-youtube">
-                                        https://github.com/JiHong88/SunEditor
+                                        {{ item?.link }}
                                     </div>
                                     <div class="support-img">
                                         <img src="@/static/images/banner/banner3.png" />
@@ -30,7 +31,7 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between flex-column align-items-center">
-                                    <div class="btn-support-save copy-link" v-b-tooltip.hover title="Copy link">
+                                    <div @click="copy_link(item?.link)" class="btn-support-save copy-link cp" v-b-tooltip.hover title="Copy link">
                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -40,7 +41,8 @@
                                         </svg>
                                     </div>
 
-                                    <div class="mb-3 btn-support-delete" v-b-tooltip.hover title="Xoá ảnh">
+                                    <div @click="delete_item(item?.id, item?.id)" class="mb-3 btn-support-delete cp"
+                                        v-b-tooltip.hover title="Xoá hướng dẫn này">
                                         <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="16.5" cy="16" r="16" fill="#F2F2F2" />
@@ -70,16 +72,47 @@
 
                 <b-col cols="12" sm="7">
                     <div class="my-0">
-                        <button-add>
+                        <button-add v-b-modal.my-modal>
                             <span class="mdi mdi-plus"></span> Thêm tài liệu
                         </button-add>
                     </div>
-                    <div class="my-5">
+                    <!-- <div class="my-5">
                         <button-save>
                             Lưu thay đổi
                         </button-save>
-                    </div>
+                    </div> -->
                 </b-col>
+
+                <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Thêm banner mới">
+                <!-- <template #modal-header="{ close }">
+                            <h5>Thông báo</h5>
+                        </template> -->
+                <template #default="{ hide }">
+                    <form id="form">
+
+                        <div class="my-4 pb-3">
+                            <div>
+                                <b-form-group>
+                                    <label>Tiêu đề:</label>
+                                    <b-form-input name="tieu_de" v-model="tieu_de" placeholder="Nhập tiêu đề"></b-form-input>
+                                </b-form-group>
+                            </div>
+                            <div>
+                                <b-form-group>
+                                    <label>Link:</label>
+                                    <b-form-input name="link" v-model="link" placeholder="Nhập đường dẫn"></b-form-input>
+                                </b-form-group>
+                            </div>
+
+                        </div>
+                        <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                            <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                            <button class=" btn-delete ms-1" @click="send_data">Thêm</button>
+                        </div>
+                    </form>
+
+                </template>
+            </b-modal>
             </b-row>
         </div>
 
@@ -93,6 +126,9 @@ import ButtonSave from '~/components/button/ButtonComponent.vue';
 import SUNEDITOR from 'suneditor'
 import plugins from 'suneditor/src/plugins'
 import 'suneditor/dist/css/suneditor.min.css'
+import api from '@/store/axios'
+import Swal from 'sweetalert2'
+import toastr from 'toastr';
 
 export default {
     layout: 'admin',
@@ -110,11 +146,95 @@ export default {
             hotline: 'Nhập hotline',
             tutorial: 'Nhập nội dung',
             tutorial_money: 'Nhập nội dung',
+            data: [],
+            tieu_de: '',
+            link: '',
         };
     },
-    computed: {},
+    computed: {
+        token() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return storedUser.auth_key
+        }
+    },
+    methods: {
+        async load_data() {
+            await api.get('he-thong/danh-sach-huong-dan-app?tuKhoa', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                console.log(res)
+                this.data = res?.data?.data ?? []
+            })
+        },
+        async send_data(event) {
+            event.preventDefault();
+            const formData = new FormData()
+            formData.append('tieu_de', this.tieu_de)
+            formData.append('link', this.link)
+
+            await api.post('he-thong/tao-moi-huong-dan-app', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal'].hide()
+                    this.link = null
+                    this.tieu_de = null
+                    this.load_data();
+                }
+            })
+        },
+        copy_link(textToCopy) {
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            toastr.success('Đã sao chép nội dung');
+        },
+        async delete_item(user_id, name) {
+            const formData = new FormData();
+            formData.append('id', user_id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá hướng dẫn đã chọn!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Chắc chắn/Chấp nhận!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('he-thong/xoa-huong-dan', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Đã xoá!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            this.load_data()
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
+                }
+            })
+
+        },
+    },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+        this.load_data()
     },
     components: { CardItem, ButtonAdd, ButtonSave }
 }

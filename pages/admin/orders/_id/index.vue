@@ -445,9 +445,9 @@
                             v-b-modal.my-modal-rollback>
                             Hoàn tiền
                         </div>
-                        <div class="w-100 text-light rounded-pill btn btn-chuong" variant="warning">
+                        <!-- <div class="w-100 text-light rounded-pill btn btn-chuong" variant="warning">
                             Chương trình
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="mt-4" v-if="data?.trang_thai == 'Chưa có GV'">
@@ -508,9 +508,9 @@
                         <div disabled class="w-100 rounded-pill mx-4 btn btn-deactive" variant="info">
                             Hoàn tiền
                         </div>
-                        <div disabled class="w-100 rounded-pill btn btn-deactive" variant="warning">
+                        <!-- <div disabled class="w-100 rounded-pill btn btn-deactive" variant="warning">
                             Chương trình
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="mt-4">
@@ -530,9 +530,9 @@
                         <b-button disabled class="w-100 text-light rounded-pill mx-4" variant="info">
                             Hoàn tiền
                         </b-button>
-                        <b-button disabled class="w-100 text-light rounded-pill" variant="warning">
+                        <!-- <b-button disabled class="w-100 text-light rounded-pill" variant="warning">
                             Chương trình
-                        </b-button>
+                        </b-button> -->
                     </div>
 
                     <div class="mt-4">
@@ -552,9 +552,9 @@
                         <div disabled class="w-100 rounded-pill mx-4 btn btn-deactive" variant="info">
                             Hoàn tiền
                         </div>
-                        <div disabled class="w-100 rounded-pill btn btn-deactive" variant="warning">
+                        <!-- <div disabled class="w-100 rounded-pill btn btn-deactive" variant="warning">
                             Chương trình
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="mt-4">
@@ -1204,7 +1204,7 @@ export default {
             })
         },
         async chuong_trinh_id() {
-            await api.get(`don-dich-vu/danh-sach-goi-hoc?page=1&limit=1000&chuong_trinh_hoc_id=` + this.chuong_trinh_id, {
+            await api.get(`don-dich-vu/danh-sach-goi-hoc?page=1&limit=1000&chuong_trinh_hoc_id=` + (this.chuong_trinh_id ?? ''), {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
