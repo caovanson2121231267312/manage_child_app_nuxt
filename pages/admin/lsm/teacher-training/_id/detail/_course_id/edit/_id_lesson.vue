@@ -56,7 +56,7 @@
                                         fill="#00C092" />
                                 </svg>
                             </span>
-                            <span>Bài test</span>
+                            <span>Bài kiểm tra</span>
                         </strong>
 
                         <div class="input-grop">

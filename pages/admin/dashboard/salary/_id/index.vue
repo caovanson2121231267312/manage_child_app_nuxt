@@ -202,6 +202,7 @@ export default {
             month: 1,
             menu: false,
             modal: false,
+            select_date: '',
         };
     },
     validate({ params }) {
@@ -218,10 +219,10 @@ export default {
     },
     methods: {
         change_page() {
-            this.$router.push('/admin/dashboard/salary/' + this.id + '/create');
+            this.$router.push('/admin/dashboard/salary/' + this.id + '/create/' + this.date);
         },
         async load_data() {
-            await api.get('chi-luong/chi-tiet?thang=11/2023&page=1&limit=&sort=&tuKhoa=&id=' + this.id, {
+            await api.get(`chi-luong/chi-tiet?thang=${this.select_date}&page=1&limit=&sort=&tuKhoa=&id=` + this.id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -247,8 +248,22 @@ export default {
     mounted() {
         // this.title.previous =
         this.$store.dispatch('title/set_title', this.title);
+        let chuoi = this.date;
+        let ketqua = chuoi.split('-');
+        this.select_date = ketqua[1] + "/" + ketqua[0]
         this.load_data()
     },
+    watch: {
+        date () {
+            console.log(this.date)
+            let chuoi = this.date;
+            let ketqua = chuoi.split('-');
+            this.select_date = ketqua[1] + "/" + ketqua[0]
+        },
+        select_date() {
+            this.load_data()
+        }
+    }
 }
 </script>
 

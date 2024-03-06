@@ -560,7 +560,7 @@ export default {
     position: absolute;
     color: #fff;
     font-family: SVN-Gilroy;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 700;
     line-height: 20px;
@@ -649,6 +649,17 @@ export default {
 
     .title-component {
         font-size: 16px;
+    }
+
+
+    .title-box {
+        position: absolute;
+        color: #fff;
+        font-family: SVN-Gilroy;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        padding: 3px 1px 10px 0px;
     }
 }
 </style>

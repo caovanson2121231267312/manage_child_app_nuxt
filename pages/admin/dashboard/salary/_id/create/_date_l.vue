@@ -196,6 +196,9 @@ export default {
         id() {
             return this.$route.params.id
         },
+        date_l() {
+            return this.$route.params.date_l
+        },
         token() {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             return storedUser.auth_key
@@ -203,7 +206,9 @@ export default {
     },
     methods: {
         async load_data() {
-            await api.get('chi-luong/tao-phieu-luong?thang=11/2023&id=' + this.id, {
+            let chuoi = this.date_l;
+            let ketqua = chuoi.split('-');
+            await api.get(`chi-luong/tao-phieu-luong?thang=${ketqua[1] + "/" + ketqua[0]}&id=` + this.id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -244,10 +249,12 @@ export default {
             let month = currentDate.getMonth() + 1; // Lấy tháng (lưu ý rằng tháng bắt đầu từ 0, nên cần cộng thêm 1)
             let year = currentDate.getFullYear(); // Lấy năm
 
+            let chuoi = this.date_l;
+            let ketqua = chuoi.split('-');
             // Hiển thị ngày hiện tại
             console.log(`${month}/${year}`);
 
-            await api.get(`chi-luong/export-phieu-luong?id=${this.id}&thang=${month}/${year}`, {
+            await api.get(`chi-luong/export-phieu-luong?id=${this.id}&thang=${ketqua[1]}/${ketqua[0]}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -275,10 +282,12 @@ export default {
             let month = currentDate.getMonth() + 1; // Lấy tháng (lưu ý rằng tháng bắt đầu từ 0, nên cần cộng thêm 1)
             let year = currentDate.getFullYear(); // Lấy năm
 
+            let chuoi = this.date_l;
+            let ketqua = chuoi.split('-');
             // Hiển thị ngày hiện tại
             console.log(`${month}/${year}`);
 
-            await api.get(`/chi-luong/pdf-phieu-luong?id=${this.id}&thang=${month}/${year}`, {
+            await api.get(`/chi-luong/pdf-phieu-luong?id=${this.id}&thang=${ketqua[1]}/${ketqua[0]}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
