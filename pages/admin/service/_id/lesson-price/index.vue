@@ -29,7 +29,7 @@
                                     </span>
                                 </div>
                                 <div class="position-relative">
-                                    <input :value="formatCurrency(item?.tong_tien)" type="text" placeholder="350,000"
+                                    <input disabled :value="formatCurrency(item?.tong_tien)" type="text" placeholder="350,000"
                                         class="form-control input-service" />
                                     <span class="end">đ</span>
                                 </div>
@@ -47,7 +47,7 @@
                                     </span>
                                 </div>
                                 <div class="position-relative">
-                                    <input :value="item?.khuyen_mai" type="text" placeholder="15"
+                                    <input disabled :value="item?.khuyen_mai" type="text" placeholder="15"
                                         class="form-control input-service" />
                                     <span class="end">%</span>
                                 </div>
@@ -76,7 +76,7 @@
                                 </span>
                             </div>
                             <div class="position-relative">
-                                <input
+                                <input disabled
                                     :value="formatCurrency(total_money(item?.so_buoi, item?.tong_tien, item?.khuyen_mai))"
                                     type="text" placeholder="15" class="form-control input-service" />
                                 <span class="end">đ</span>

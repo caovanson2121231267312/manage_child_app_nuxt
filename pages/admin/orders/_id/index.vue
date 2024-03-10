@@ -5,7 +5,8 @@
             <v-col xs="12" sm="12" md="12" lg="8" xl="8">
 
 
-                <detail-service-info :data="data" :status="data?.trang_thai" :load_data="load_data"></detail-service-info>
+                <detail-service-info v-if="data" :data="data" :status="data?.trang_thai"
+                    :load_data="load_data" :nap_tien="nap_tien"></detail-service-info>
 
                 <!-- xac nhan thanh toan -->
                 <div class="mt-4">
@@ -72,7 +73,8 @@
                             <v-card-text>
                                 <div>
                                     <b-form-group label="Gán khóa học" class="mb-0">
-                                        <b-form-select v-model="chuong_trinh_id" :options="chuong_trinh"></b-form-select>
+                                        <b-form-select v-model="chuong_trinh_id"
+                                            :options="chuong_trinh"></b-form-select>
                                     </b-form-group>
                                 </div>
                                 <div class="mt-2">
@@ -121,7 +123,8 @@
                     </div>
                 </div>
 
-                <b-modal id="my-modal-edit-kd" ref="my-modal-edit-kd" hide-footer centered title="Sửa thông tin quản lý">
+                <b-modal id="my-modal-edit-kd" ref="my-modal-edit-kd" hide-footer centered
+                    title="Sửa thông tin quản lý">
                     <template #default="{ hide }">
                         <form>
                             <div class="">
@@ -148,7 +151,8 @@
                     <div class="mt-6">
                         <div>
                             <h5 class="d-flex justify-content-between">
-                                <span>Thông tin quản lý</span> <span v-b-modal.my-modal-edit-kd class="cp text-primary" v-if="data?.leaderKD">Sửa</span>
+                                <span>Thông tin quản lý</span> <span v-b-modal.my-modal-edit-kd class="cp text-primary"
+                                    v-if="data?.leaderKD">Sửa</span>
                             </h5>
                         </div>
                         <v-card>
@@ -211,7 +215,49 @@
                             <v-card>
                                 <v-card-text>
                                     <div>
-                                        Chưa có giáo viên
+                                        <div class="my-2 box-teacher">
+                                <div v-for="(item, n) in teachers" v-bind:key="n">
+                                    <div :class="'card-teacher ' + (teacher_id == item?.id ? ' active' : '')">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-3 layout-user">
+                                                    <img :src="item?.anh_nguoi_dung" alt="">
+                                                </div>
+                                                <div class="ps-2" style="margin-left: 5px;">
+                                                    <div>
+                                                        <b-badge pill variant="danger">
+                                                            # {{ item?.id }}
+                                                        </b-badge>
+                                                        <b-badge pill variant="success">
+                                                            Đang trống ca
+                                                        </b-badge>
+                                                    </div>
+                                                    <strong>
+                                                        <span class="user-name">
+                                                            {{ item?.hoten }}
+                                                        </span>
+                                                    </strong>
+                                                    <p class="w-p p-0 m-0">
+                                                        {{ item?.trinh_do }}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="">
+                                                <b-button @click="set_teacher(item?.id)" size="sm"
+                                                    style="min-width: 130px;padding: 0.325rem 0.75rem !important;"
+                                                    :class="'w-100 rounded-pill ' + (teacher_id == item?.id ? 'text-light' : 'text-primary')"
+                                                    :variant="teacher_id == item?.id ? 'primary' : 'outline-primary'">
+                                                    Chọn
+                                                </b-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
                                     </div>
                                     <div class="mt-3">
                                         <b-button class="w-100 text-light rounded-pill" variant="primary"
@@ -374,7 +420,8 @@
                     </template>
                 </b-modal>
 
-                <b-modal id="my-modal-teacher-doi" ref="my-modal-teacher-doi" hide-footer centered title="Đổi giáo viên">
+                <b-modal id="my-modal-teacher-doi" ref="my-modal-teacher-doi" hide-footer centered
+                    title="Đổi giáo viên">
                     <template #default="{ hide }">
                         <div>
                             <span>Có <b class="text-primary">{{ teacherss?.length ?? 0 }}</b> giáo viên nhận lịch</span>
@@ -424,7 +471,8 @@
                             </div>
                             <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
                                 <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                                <button type="button" class=" btn-delete ms-1" @click="add_teachers()">Xác nhận đổi</button>
+                                <button type="button" class=" btn-delete ms-1" @click="add_teachers()">Xác nhận
+                                    đổi</button>
                             </div>
                         </div>
 
@@ -471,7 +519,8 @@
                                     </div>
                                     <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
                                         <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                                        <button type="button" class=" btn-delete ms-1" @click="duyet_don()">Đồng ý</button>
+                                        <button type="button" class=" btn-delete ms-1" @click="duyet_don()">Đồng
+                                            ý</button>
                                     </div>
                                 </form>
 
@@ -584,7 +633,8 @@
                                         </g>
                                         <defs>
                                             <clipPath id="clip0_683_10960">
-                                                <rect width="16" height="20" fill="white" transform="translate(8.8335 6)" />
+                                                <rect width="16" height="20" fill="white"
+                                                    transform="translate(8.8335 6)" />
                                             </clipPath>
                                         </defs>
                                     </svg>
@@ -966,6 +1016,7 @@ export default {
                 this.xac_nhan_thanh_toan = res?.data?.data?.trang_thai_thanh_toan == 'Đã thanh toán' ? true : false
                 const chuong_trinh_hoc_id = res?.data?.data?.chuong_trinh_hoc_id
                 this.chuong_trinh_id = chuong_trinh_hoc_id
+                this.kds_id = res?.data?.data?.leaderKD?.id
 
                 api.get(`don-dich-vu/danh-sach-chuong-trinh-hoc?id=` + res?.data?.data?.id, {
                     'Content-Type': 'multipart/form-data',
@@ -1204,21 +1255,24 @@ export default {
             })
         },
         async chuong_trinh_id() {
-            await api.get(`don-dich-vu/danh-sach-goi-hoc?page=1&limit=1000&chuong_trinh_hoc_id=` + (this.chuong_trinh_id ?? ''), {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                this.goi_hoc = res?.data?.data.map(item => {
-                    return {
-                        value: item.id,
-                        text: item.name ?? item.id,
-                        baiHoc: item.baiHoc ?? [],
-                    };
+            if (this.chuong_trinh_id) {
+                await api.get(`don-dich-vu/danh-sach-goi-hoc?page=1&limit=1000&chuong_trinh_hoc_id=` + (this.chuong_trinh_id ?? ''), {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: 'Bearer ' + this.token
+                }).then(res => {
+                    this.goi_hoc = res?.data?.data.map(item => {
+                        return {
+                            value: item.id,
+                            text: item.name ?? item.id,
+                            baiHoc: item.baiHoc ?? [],
+                        };
+                    })
+                    if (this.goi_hoc_id == null && this.goi_hoc.length > 0) {
+                        this.goi_hoc_id = this.goi_hoc[0].value
+                    }
                 })
-                if (this.goi_hoc_id == null && this.goi_hoc.length > 0) {
-                    this.goi_hoc_id = this.goi_hoc[0].value
-                }
-            })
+            }
+
         },
         goi_hoc_id() {
             let bai_hoc = this.bai_hoc
@@ -1328,4 +1382,5 @@ button {
     border: 1px solid #4EAEEA;
 
     background: #E7F6FF;
-}</style>
+}
+</style>

@@ -31,13 +31,30 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between flex-column align-items-center">
-                                    <div @click="copy_link(item?.link)" class="btn-support-save copy-link cp" v-b-tooltip.hover title="Copy link">
+                                    <div @click="copy_link(item?.link)" class="btn-support-save copy-link cp"
+                                        v-b-tooltip.hover title="Copy link">
                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M9.61204 14.5083L8.38796 15.7324C6.69786 17.4225 3.95767 17.4225 2.26757 15.7324C0.577475 14.0423 0.577476 11.3021 2.26757 9.61204L3.49165 8.38796M14.5083 9.61204L15.7324 8.38796C17.4225 6.69786 17.4225 3.95767 15.7324 2.26757C14.0423 0.577475 11.3021 0.577476 9.61204 2.26757L8.38796 3.49165M5.97056 12.0294L12.0294 5.97054"
                                                 stroke="#979797" stroke-width="1.5" stroke-linecap="round"
                                                 stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+
+                                    <div @click="edit_sp(item?.id)" class="cp" v-b-tooltip.hover title="Sửa">
+                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="15" cy="15" r="15" fill="white" fill-opacity="0.8" />
+                                            <path
+                                                d="M21.75 22.5H8.25C7.9425 22.5 7.6875 22.245 7.6875 21.9375C7.6875 21.63 7.9425 21.375 8.25 21.375H21.75C22.0575 21.375 22.3125 21.63 22.3125 21.9375C22.3125 22.245 22.0575 22.5 21.75 22.5Z"
+                                                fill="#979797" />
+                                            <path
+                                                d="M20.2649 8.61024C18.8099 7.15524 17.3849 7.11774 15.8924 8.61024L14.9849 9.51774C14.9099 9.59274 14.8799 9.71274 14.9099 9.81774C15.4799 11.8052 17.0699 13.3952 19.0574 13.9652C19.0874 13.9727 19.1174 13.9802 19.1474 13.9802C19.2299 13.9802 19.3049 13.9502 19.3649 13.8902L20.2649 12.9827C21.0074 12.2477 21.3674 11.5352 21.3674 10.8152C21.3749 10.0727 21.0149 9.35274 20.2649 8.61024Z"
+                                                fill="#979797" />
+                                            <path
+                                                d="M17.7073 14.6476C17.4898 14.5426 17.2798 14.4376 17.0773 14.3176C16.9123 14.2201 16.7548 14.1151 16.5973 14.0026C16.4698 13.9201 16.3198 13.8001 16.1773 13.6801C16.1623 13.6726 16.1098 13.6276 16.0498 13.5676C15.8023 13.3576 15.5248 13.0876 15.2773 12.7876C15.2548 12.7726 15.2173 12.7201 15.1648 12.6526C15.0898 12.5626 14.9623 12.4126 14.8498 12.2401C14.7598 12.1276 14.6548 11.9626 14.5573 11.7976C14.4373 11.5951 14.3323 11.3926 14.2273 11.1826C14.0896 10.8876 13.7024 10.8 13.4722 11.0302L9.25475 15.2476C9.15725 15.3451 9.06725 15.5326 9.04475 15.6601L8.63975 18.5326C8.56475 19.0426 8.70725 19.5226 9.02225 19.8451C9.29225 20.1076 9.66725 20.2501 10.0723 20.2501C10.1623 20.2501 10.2523 20.2426 10.3423 20.2276L13.2223 19.8226C13.3573 19.8001 13.5448 19.7101 13.6348 19.6126L17.8592 15.3882C18.0847 15.1626 18 14.7744 17.7073 14.6476Z"
+                                                fill="#979797" />
                                         </svg>
                                     </div>
 
@@ -83,36 +100,66 @@
                     </div> -->
                 </b-col>
 
-                <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Thêm banner mới">
-                <!-- <template #modal-header="{ close }">
-                            <h5>Thông báo</h5>
-                        </template> -->
-                <template #default="{ hide }">
-                    <form id="form">
+                <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Thêm hướng dẫn mới">
+                    <template #default="{ hide }">
+                        <form id="form">
 
-                        <div class="my-4 pb-3">
-                            <div>
-                                <b-form-group>
-                                    <label>Tiêu đề:</label>
-                                    <b-form-input name="tieu_de" v-model="tieu_de" placeholder="Nhập tiêu đề"></b-form-input>
-                                </b-form-group>
+                            <div class="my-4 pb-3">
+                                <div>
+                                    <b-form-group>
+                                        <label>Tiêu đề:</label>
+                                        <b-form-input name="tieu_de" v-model="tieu_de"
+                                            placeholder="Nhập tiêu đề"></b-form-input>
+                                    </b-form-group>
+                                </div>
+                                <div>
+                                    <b-form-group>
+                                        <label>Link:</label>
+                                        <b-form-input name="link" v-model="link"
+                                            placeholder="Nhập đường dẫn"></b-form-input>
+                                    </b-form-group>
+                                </div>
+
                             </div>
-                            <div>
-                                <b-form-group>
-                                    <label>Link:</label>
-                                    <b-form-input name="link" v-model="link" placeholder="Nhập đường dẫn"></b-form-input>
-                                </b-form-group>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button class=" btn-delete ms-1" @click="send_data">Thêm</button>
                             </div>
+                        </form>
 
-                        </div>
-                        <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
-                            <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
-                            <button class=" btn-delete ms-1" @click="send_data">Thêm</button>
-                        </div>
-                    </form>
+                    </template>
+                </b-modal>
 
-                </template>
-            </b-modal>
+
+                <b-modal id="my-modal-edit" ref="my-modal-edit" hide-footer centered title="Sửa hướng dẫn">
+                    <template #default="{ hide }">
+                        <form id="form">
+
+                            <div class="my-4 pb-3">
+                                <div>
+                                    <b-form-group>
+                                        <label>Tiêu đề:</label>
+                                        <b-form-input name="tieu_de" v-model="sua_tieu_de"
+                                            placeholder="Nhập tiêu đề"></b-form-input>
+                                    </b-form-group>
+                                </div>
+                                <div>
+                                    <b-form-group>
+                                        <label>Link:</label>
+                                        <b-form-input name="link" v-model="sua_link"
+                                            placeholder="Nhập đường dẫn"></b-form-input>
+                                    </b-form-group>
+                                </div>
+
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button class=" btn-delete ms-1" @click="send_data_edit">Sửa</button>
+                            </div>
+                        </form>
+
+                    </template>
+                </b-modal>
             </b-row>
         </div>
 
@@ -149,6 +196,9 @@ export default {
             data: [],
             tieu_de: '',
             link: '',
+            sua_id: null,
+            sua_tieu_de: null,
+            sua_link: null,
         };
     },
     computed: {
@@ -158,6 +208,20 @@ export default {
         }
     },
     methods: {
+        async edit_sp(id) {
+            this.sua_id = id
+
+            api.get(`he-thong/chi-tiet-huong-dan-app?id=` + id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.sua_tieu_de = res?.data?.data?.tieu_de
+                this.sua_link = res?.data?.data?.link
+
+                this.$refs['my-modal-edit'].show()
+
+            })
+        },
         async load_data() {
             await api.get('he-thong/danh-sach-huong-dan-app?tuKhoa', {
                 'Content-Type': 'multipart/form-data',
@@ -165,6 +229,26 @@ export default {
             }).then(res => {
                 console.log(res)
                 this.data = res?.data?.data ?? []
+            })
+        },
+        async send_data_edit(event) {
+            event.preventDefault();
+            const formData = new FormData()
+            formData.append('tieu_de', this.sua_tieu_de)
+            formData.append('link', this.sua_link)
+            formData.append('id', this.sua_id)
+
+            await api.post('he-thong/sua-huong-dan-app', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-edit'].hide()
+                    this.sua_tieu_de = null
+                    this.sua_link = null
+                    this.load_data();
+                }
             })
         },
         async send_data(event) {

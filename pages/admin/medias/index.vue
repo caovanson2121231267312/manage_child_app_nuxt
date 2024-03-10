@@ -54,7 +54,8 @@
                             </div>
                             <div class="box-img">
                                 <a :href="item?.link" class="d-block" target="_blank">
-                                    <img src="@/static/images/media/yt.jpg" v-b-tooltip.hover :title="item?.link ?? 'Chưa cập nhật'" />
+                                    <img v-if="item?.anh_dai_dien" :src="item?.anh_dai_dien" />
+                                    <img v-else src="@/static/images/media/yt.jpg" v-b-tooltip.hover :title="item?.link ?? 'Chưa cập nhật'" />
                                 </a>
                                 <!-- <iframe src="https://www.youtube.com/embed/Zknq_nzLNvE" :title="item?.tieu_de"
                                     frameborder="0"
@@ -84,7 +85,7 @@
                                     </defs>
                                 </svg>
                             </div>
-                            <div class="button" v-b-tooltip.hover title="...">
+                            <!-- <div class="button" v-b-tooltip.hover title="...">
                                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="16" cy="16" r="16" fill="#F2F2F2" />
@@ -102,7 +103,7 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-                            </div>
+                            </div> -->
                             <nuxt-link :to="'/admin/medias/' + item?.id + '/edit'" class="btn btn-edit" v-b-tooltip.hover
                                 title="Sửa bài viết">
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none"
@@ -206,7 +207,7 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Có xoá nó!',
+                confirmButtonText: 'Xác nhận xoá!',
                 cancelButtonText: 'Huỷ'
             }).then(async (result) => {
                 if (result.isConfirmed) {

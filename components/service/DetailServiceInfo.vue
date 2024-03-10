@@ -311,7 +311,8 @@
                                                 </v-list-item-title>
                                             </v-list-item>
                                             <v-list-item>
-                                                <v-list-item-title @click="delete_khaosat(item?.id)">Xóa</v-list-item-title>
+                                                <v-list-item-title
+                                                    @click="delete_khaosat(item?.id)">Xóa</v-list-item-title>
                                             </v-list-item>
                                         </v-list>
                                     </v-menu>
@@ -332,8 +333,8 @@
                                 <v-menu offset-y open-on-hover transition="scale-transition">
                                     <template v-slot:activator="{ on, attrs }">
                                         <div v-bind="attrs" v-on="on">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="4" height="18" viewBox="0 0 4 18"
-                                                fill="none">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="4" height="18"
+                                                viewBox="0 0 4 18" fill="none">
                                                 <path
                                                     d="M2 10C2.55228 10 3 9.55228 3 9C3 8.44772 2.55228 8 2 8C1.44772 8 1 8.44772 1 9C1 9.55228 1.44772 10 2 10Z"
                                                     stroke="#979797" stroke-width="2" stroke-linecap="round"
@@ -674,7 +675,8 @@
                                 </td>
                                 <td>
                                     <span class="text-dark span-2">
-                                        <a :href="data?.ghi_chu_thanh_toan" class="d-block img-thumbnail" target="_blank">
+                                        <a :href="data?.ghi_chu_thanh_toan" class="d-block img-thumbnail"
+                                            target="_blank">
                                             <img class="max-img" :src="data?.ghi_chu_thanh_toan" />
                                         </a>
                                     </span>
@@ -783,12 +785,16 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-between align-items-center w-100">
-                                        <span class="text-danger fw-bold span-2 cp" v-b-popover.hover.right="item?.ghi_chu"
-                                            :title="item?.tieu_de">
+                                        <span class="text-danger fw-bold span-2 cp"
+                                            v-b-popover.hover.right="item?.ghi_chu" :title="item?.tieu_de">
                                             <b>{{ formatCurrency(item?.tong_tien) }}</b>
                                         </span>
-                                        <span class="cp text-danger">
-                                            <span @click="delete_phuPhi(item?.id)" class="mdi mdi-trash-can-outline"></span>
+                                        <span class="cp text-dark fw-bold">
+                                            <span @click="sua_phuPhi(item?.id)"
+                                                class="mdi mdi-square-edit-outline"></span>
+
+                                            <span @click="delete_phuPhi(item?.id)"
+                                                class="mdi mdi-trash-can-outline"></span>
                                         </span>
                                     </div>
                                 </td>
@@ -826,6 +832,66 @@
         <!--  -->
 
 
+        <div class="mt-6" v-if="data_hd">
+            <div>
+                <h5>
+                    Thông tin hoá đơn
+                </h5>
+            </div>
+            <v-card class="mx-auto" outlined>
+                <v-card-text>
+                    <div>
+                        <table class="table table-borderless">
+                            <tr>
+                                <td>Họ tên</td>
+                                <td>
+                                    {{ data_hd?.ho_ten }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>CCCD</td>
+                                <td>
+                                    {{ data_hd?.cmnd_cccd }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>MST</td>
+                                <td>
+                                    {{ data_hd?.ma_so_thue }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>
+                                    {{ data_hd?.email }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Họ tên con</td>
+                                <td>
+                                    {{ data_hd?.ho_ten_con }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Năm sinh con</td>
+                                <td>
+                                    {{ data_hd?.nam_sinh_cua_con }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Địa chỉ</td>
+                                <td>
+                                    {{ data_hd?.dia_chi }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </v-card-text>
+            </v-card>
+        </div>
+        <!--  -->
+
+
         <b-modal id="my-modal-edit" ref="my-modal-edit" hide-footer centered title="Sửa khảo sát">
             <template #default="{ hide }">
                 <div>
@@ -834,7 +900,8 @@
                         <div>
                             <b-form-group>
                                 <label>Gán nội dung khảo sát:</label>
-                                <b-form-input name="link" v-model="link_edit" placeholder="Nhập đường dẫn"></b-form-input>
+                                <b-form-input name="link" v-model="link_edit"
+                                    placeholder="Nhập đường dẫn"></b-form-input>
                             </b-form-group>
                         </div>
 
@@ -844,6 +911,44 @@
                         <button class=" btn-delete ms-1" @click="edit_confirm()">Xác nhận</button>
                     </div>
                 </div>
+
+            </template>
+        </b-modal>
+
+        <!-- them-phu-phi -->
+        <b-modal id="my-modal-sua-phu-phi" ref="my-modal-sua-phu-phi" hide-footer centered title="Sửa phụ phí">
+            <template #default="{ hide }">
+                <form>
+
+                    <div class="my-2">
+                        <div>
+                            <b-form-group>
+                                <label>Nhập số tiền:</label>
+                                <b-form-input v-model="sua_phu_phi_tien" type="number"
+                                    placeholder="Nhập số tiền"></b-form-input>
+                            </b-form-group>
+                        </div>
+                        <div>
+                            <b-form-group>
+                                <label>Loại phí:</label>
+                                <b-form-select v-model="sua_nap_tien_id" :options="nap_tien"
+                                    aria-placeholder="Chọn"></b-form-select>
+                            </b-form-group>
+                        </div>
+                        <div>
+                            <b-form-group>
+                                <label>Nhập ghi chú:</label>
+                                <b-form-textarea id="textarea" v-model="sua_phu_phi_li_do" placeholder="Nhập ghi chú..."
+                                    rows="3" max-rows="6"></b-form-textarea>
+                            </b-form-group>
+                        </div>
+
+                    </div>
+                    <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                        <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                        <button type="button" class=" btn-delete ms-1" @click="sua_phu_phi()">Sửa phụ phí</button>
+                    </div>
+                </form>
 
             </template>
         </b-modal>
@@ -862,6 +967,10 @@ export default {
             noi_dung_khao_sat: null,
             link_edit: null,
             edit_id: null,
+            sua_phu_phi_tien: null,
+            sua_nap_tien_id: null,
+            sua_phu_phi_li_do: null,
+            data_hd: null,
         };
     },
     props: {
@@ -875,6 +984,9 @@ export default {
         load_data: {
             type: Function,
         },
+        nap_tien: {
+            type: Array,
+        }
     },
     computed: {
         card() {
@@ -901,6 +1013,41 @@ export default {
         }
     },
     methods: {
+        sua_phuPhi(id) {
+            this.sua_phu_phi_id = id
+
+            api.get(`don-dich-vu/chi-tiet-phu-phi?phu_phi_id=` + id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.sua_phu_phi_tien = res?.data?.data?.tong_tien
+                this.sua_nap_tien_id = res?.data?.data?.type_id
+                this.sua_phu_phi_li_do = res?.data?.data?.ghi_chu
+
+                this.$refs['my-modal-sua-phu-phi'].show()
+
+            })
+        },
+        async sua_phu_phi() {
+
+            const formData = new FormData()
+            formData.append('phu_phi_id', this.sua_phu_phi_id)
+            formData.append('tong_tien', this.sua_phu_phi_tien)
+            formData.append('ghi_chu', this.sua_phu_phi_li_do)
+            formData.append('type_id', this.sua_nap_tien_id)
+
+            await api.post('don-dich-vu/sua-phu-phi', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-sua-phu-phi'].hide()
+                    // window.location.reload();
+                    this.load_data()
+                }
+            })
+        },
         show_edit(id) {
             this.edit_id = id
             this.$refs['my-modal-edit'].show()
@@ -1006,6 +1153,16 @@ export default {
     mounted() {
         this.link_edit = this.data?.noi_dung_khao_sat
         this.noi_dung_khao_sat = this.data?.noi_dung_khao_sat
+
+        if (this.data) {
+            api.get(`don-dich-vu/get-hoa-don?id=` + this.data?.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.data_hd = res?.data?.data
+            })
+        }
+
     }
 }
 </script>

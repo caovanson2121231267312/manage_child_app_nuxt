@@ -152,12 +152,30 @@
                                         d="M2.75 4.71429C3.57734 4.71429 4.25 4.0096 4.25 3.14286C4.25 2.27612 3.57734 1.57143 2.75 1.57143C1.92266 1.57143 1.25 2.27612 1.25 3.14286C1.25 4.0096 1.92266 4.71429 2.75 4.71429ZM13.25 4.71429C14.0773 4.71429 14.75 4.0096 14.75 3.14286C14.75 2.27612 14.0773 1.57143 13.25 1.57143C12.4227 1.57143 11.75 2.27612 11.75 3.14286C11.75 4.0096 12.4227 4.71429 13.25 4.71429ZM14 5.5H12.5C12.0875 5.5 11.7148 5.67433 11.443 5.9567C12.3875 6.49933 13.0578 7.47902 13.2031 8.64286H14.75C15.1648 8.64286 15.5 8.29174 15.5 7.85714V7.07143C15.5 6.20469 14.8273 5.5 14 5.5ZM8 5.5C9.45078 5.5 10.625 4.26987 10.625 2.75C10.625 1.23013 9.45078 0 8 0C6.54922 0 5.375 1.23013 5.375 2.75C5.375 4.26987 6.54922 5.5 8 5.5ZM9.8 6.28571H9.60547C9.11797 6.53125 8.57656 6.67857 8 6.67857C7.42344 6.67857 6.88438 6.53125 6.39453 6.28571H6.2C4.70937 6.28571 3.5 7.55268 3.5 9.11429V9.82143C3.5 10.4721 4.00391 11 4.625 11H11.375C11.9961 11 12.5 10.4721 12.5 9.82143V9.11429C12.5 7.55268 11.2906 6.28571 9.8 6.28571ZM4.55703 5.9567C4.28516 5.67433 3.9125 5.5 3.5 5.5H2C1.17266 5.5 0.5 6.20469 0.5 7.07143V7.85714C0.5 8.29174 0.835156 8.64286 1.25 8.64286H2.79453C2.94219 7.47902 3.6125 6.49933 4.55703 5.9567Z"
                                         fill="#00C092" />
                                 </svg>
+                                <span class="service-title">Loại dịch vụ</span>
+                            </span>
+
+                        </div>
+
+                        <div>
+                            <b-form-select v-model="loai_dich_vu_id" :options="loai_dich_vu" aria-placeholder="Chọn loại dịch vụ" name="loai_dich_vu_id"></b-form-select>
+                        </div>
+
+                        <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
+                            <span>
+                                <svg width="16" height="11" viewBox="0 0 16 11" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M2.75 4.71429C3.57734 4.71429 4.25 4.0096 4.25 3.14286C4.25 2.27612 3.57734 1.57143 2.75 1.57143C1.92266 1.57143 1.25 2.27612 1.25 3.14286C1.25 4.0096 1.92266 4.71429 2.75 4.71429ZM13.25 4.71429C14.0773 4.71429 14.75 4.0096 14.75 3.14286C14.75 2.27612 14.0773 1.57143 13.25 1.57143C12.4227 1.57143 11.75 2.27612 11.75 3.14286C11.75 4.0096 12.4227 4.71429 13.25 4.71429ZM14 5.5H12.5C12.0875 5.5 11.7148 5.67433 11.443 5.9567C12.3875 6.49933 13.0578 7.47902 13.2031 8.64286H14.75C15.1648 8.64286 15.5 8.29174 15.5 7.85714V7.07143C15.5 6.20469 14.8273 5.5 14 5.5ZM8 5.5C9.45078 5.5 10.625 4.26987 10.625 2.75C10.625 1.23013 9.45078 0 8 0C6.54922 0 5.375 1.23013 5.375 2.75C5.375 4.26987 6.54922 5.5 8 5.5ZM9.8 6.28571H9.60547C9.11797 6.53125 8.57656 6.67857 8 6.67857C7.42344 6.67857 6.88438 6.53125 6.39453 6.28571H6.2C4.70937 6.28571 3.5 7.55268 3.5 9.11429V9.82143C3.5 10.4721 4.00391 11 4.625 11H11.375C11.9961 11 12.5 10.4721 12.5 9.82143V9.11429C12.5 7.55268 11.2906 6.28571 9.8 6.28571ZM4.55703 5.9567C4.28516 5.67433 3.9125 5.5 3.5 5.5H2C1.17266 5.5 0.5 6.20469 0.5 7.07143V7.85714C0.5 8.29174 0.835156 8.64286 1.25 8.64286H2.79453C2.94219 7.47902 3.6125 6.49933 4.55703 5.9567Z"
+                                        fill="#00C092" />
+                                </svg>
                                 <span class="service-title">Độ tuổi <span class="text-danger">*</span></span>
                             </span>
 
                         </div>
                         <div>
-                            <b-form-select v-model="do_tuoi_id" :options="do_tuoi" aria-placeholder="Chọn"></b-form-select>
+                            <b-form-select v-model="do_tuoi_id" :options="do_tuoi"
+                                aria-placeholder="Chọn"></b-form-select>
                         </div>
 
                         <hr class="support-hr" />
@@ -277,10 +295,12 @@
                                             <v-list>
                                                 <v-list-item>
                                                     <v-list-item-title @click="show_edit(item?.id)"
-                                                        v-b-modal.my-modal-edit>Sửa quyền lợi</v-list-item-title>
+                                                        v-b-modal.my-modal-edit>Sửa quyền
+                                                        lợi</v-list-item-title>
                                                 </v-list-item>
                                                 <v-list-item>
-                                                    <v-list-item-title @click="deleteTodo(item?.id)">Xóa</v-list-item-title>
+                                                    <v-list-item-title
+                                                        @click="deleteTodo(item?.id)">Xóa</v-list-item-title>
                                                 </v-list-item>
                                             </v-list>
                                         </v-menu>
@@ -343,6 +363,15 @@
                             </div>
 
                             <div class="mt-3">
+                                <div class="mb-2">
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <title-header>
+                                                đường dẫn hợp đồng <span class="text-danger">*</span>
+                                            </title-header>
+                                        </div>
+                                    </div>
+                                </div>
                                 <input type="text" v-model="link" placeholder="Nhập đường dẫn"
                                     class="form-control form-benefits" />
                             </div>
@@ -406,6 +435,8 @@ export default {
             id_benefit_edit: '',
             do_tuoi: [],
             do_tuoi_id: 0,
+            loai_dich_vu: [],
+            loai_dich_vu_id: 0,
             todos: [],
             image: null,
             file: null,
@@ -477,6 +508,19 @@ export default {
             }
         },
         async load_role() {
+            await api.get('dich-vu/loai-dich-vu', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.loai_dich_vu = res?.data?.data.map(item => {
+                    return {
+                        value: item.id,
+                        text: item.name
+                    };
+                })
+                this.loai_dich_vu_id = this.loai_dich_vu[0].value
+            })
+            
             await api.get('dich-vu/get-do-tuoi', {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
@@ -491,7 +535,7 @@ export default {
             })
         },
         async send_data(event) {
-            if(this.hop_dong_dich_vu == '' || this.hop_dong_dich_vu == null) {
+            if (this.hop_dong_dich_vu == '' || this.hop_dong_dich_vu == null) {
                 toastr.error("vui lòng nhập đủ thông tin");
                 return
             }
@@ -505,6 +549,7 @@ export default {
             formData.append('hop_dong_dich_vu', this.hop_dong_dich_vu)
             formData.append('image', this.file)
             formData.append('link', this.link)
+            formData.append('loai_dich_vu_id', this.loai_dich_vu_id)
 
             this.todos.forEach((value, key) => {
                 formData.append(`quyen_loi[${key}][name]`, value.name_benefit)
