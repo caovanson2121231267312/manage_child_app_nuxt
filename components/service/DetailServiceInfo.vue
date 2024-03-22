@@ -282,7 +282,9 @@
                             </h6>
 
                             <div class="position-relative">
-                                <b-form-input @change="khao_sat()" v-model="noi_dung_khao_sat"
+                                <b-form-input v-if="data?.trang_thai == 'Đang khảo sát'" @change="khao_sat()" v-model="noi_dung_khao_sat"
+                                    placeholder="Nhập đường dẫn"></b-form-input>
+                                <b-form-input v-else disabled v-model="noi_dung_khao_sat"
                                     placeholder="Nhập đường dẫn"></b-form-input>
                                 <span class="show_s">
                                     <v-menu offset-y open-on-hover transition="scale-transition">

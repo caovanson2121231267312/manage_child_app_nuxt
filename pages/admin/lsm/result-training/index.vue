@@ -116,7 +116,7 @@ export default {
     },
     methods: {
         async load_data() {
-            await api.get(`dao-tao/danh-sach-ket-qua-dao-tao?page=1&limit=100&sort=1&tuKhoa=Bài 1&thang=` + this.formattedDate, {
+            await api.get(`dao-tao/danh-sach-ket-qua-dao-tao?page=1&limit=100&sort=1&tuKhoa=&thang=` + this.formattedDate, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

@@ -187,8 +187,11 @@ export default {
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
-                    this.load_data()
+                    // this.load_data()
                     this.$refs['my-modal'].hide()
+
+                    this.selectedFilter = this.selected
+                    // this.selected = this.selected
                     // this.load_role()
                 }
             })

@@ -352,7 +352,7 @@ export default {
             formData.append('ghi_chu', this.ghi_chu ?? 'Chưa đạt')
 
             Swal.fire({
-                title: 'Bạn có chắc chắn cho ' + this?.data?.giaoVien?.hoten + ' học lại ?',
+                title: 'Bạn có chắc chắn cho người này học lại ?',
                 text: `Học lại!`,
                 icon: 'warning',
                 showCancelButton: true,
