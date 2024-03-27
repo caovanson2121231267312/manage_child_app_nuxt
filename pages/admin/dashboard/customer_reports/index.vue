@@ -75,6 +75,11 @@
                                     <span class="text-light">Trạng thái</span>
                                 </tr>
                             </th>
+                            <th>
+                                <tr>
+                                    <span class="text-light">Số buổi hoàn thành</span>
+                                </tr>
+                            </th>
                         </thead>
                         <tbody>
                             <tr v-for="(item, n) in data" v-bind:key="n">
@@ -84,8 +89,8 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <span>
-                                        {{ item?.goi }}
+                                    <span class="text-danger">
+                                        {{ formatCurrency(item?.goi) }}
                                     </span>
                                 </td>
                                 <td>
@@ -103,6 +108,11 @@
                                 <td>
                                     <span>
                                         {{ item?.trang_thai }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span>
+                                        {{ item?.soBuoiHoanThanh }}
                                     </span>
                                 </td>
                             </tr>
