@@ -44,6 +44,7 @@ export default {
             modal: false,
             data: null,
             ctx: null,
+            chartInstance: null,
             arrange: 0,
             arranges: [
                 { value: '0', text: '7 ngày gần nhất' },
@@ -86,37 +87,22 @@ export default {
                 };
 
                 console.log(transformedData)
+                if (this.chartInstance) {
+                    this.chartInstance.destroy(); // Hủy biểu đồ cũ trước khi vẽ lại
+                }
 
+                // const config = {
+                //     type: 'line',
+                //     data: transformedData,
+                // };
 
-                const data = {
-                    labels: [1, 2, 3, 4, 5, 6, 7],
-                    datasets: [{
-                        label: 'Bảo mẫu Pro',
-                        data: [65, 99, 80, 181, 56, 55, 40],
-                        fill: false,
-                        borderColor: 'rgb(75, 192, 192)',
-                    }, {
-                        // type: 'line',
-                        label: 'Gia sư Pro',
-                        data: [165, 259, 30, 41, 36, 155, 240],
-                        borderColor: 'rgb(255, 99, 132)',
-                        fill: false,
-                        // backgroundColor: 'rgba(255, 99, 132, 0.2)'
-                    }, {
-                        // type: 'line',
-                        label: 'Giáo dục sớm',
-                        data: [85, 159, 36, 71, 236, 255, 140],
-                        fill: false,
-                        borderColor: 'rgb(54, 162, 235)'
-                    }]
-                };
+                // new Chart(this.ctx, config);
 
-                const config = {
+                const ctx = this.ctx.getContext('2d');
+                this.chartInstance = new Chart(ctx, {
                     type: 'line',
                     data: transformedData,
-                };
-
-                new Chart(this.ctx, config);
+                });
             })
         },
     },
