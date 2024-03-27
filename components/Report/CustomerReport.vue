@@ -98,7 +98,7 @@ export default {
             },
             data: null,
             // date: new Date().toISOString().substr(0, 7),
-            date: new Date().setDate(1).toISOString(),
+            date: new Date().toISOString(),
             date1: new Date().toISOString(),
             month: 1,
             menu: false,
