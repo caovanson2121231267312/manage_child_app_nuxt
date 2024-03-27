@@ -60,7 +60,7 @@
                         </div>
                     </div>
 
-                    <table class="table table-bordered table-hover table-striped">
+                    <table class="table table-bordered table-hover table-striped table-responsive">
                         <thead class="bg-primary">
                             <th>
                                 <tr>
@@ -92,11 +92,7 @@
                                     <span class="text-light">Dịch vụ</span>
                                 </tr>
                             </th>
-                            <th>
-                                <tr>
-                                    <span class="text-light">Số tiền dư</span>
-                                </tr>
-                            </th>
+                            
                             <th>
                                 <tr>
                                     <span class="text-light">Gói</span>
@@ -109,7 +105,14 @@
                             </th>
                             <th>
                                 <tr>
-                                    <span class="text-light">Số buổi hoàn thành</span>
+                                    <span class="text-light">Số buổi đã thực hiện (tính đến thời điểm xuất)
+                                    </span>
+                                </tr>
+                            </th>
+                            <th>
+                                <tr>
+                                    <span class="text-light">Tiền còn dư (gói đã đóng - số buổi còn lại chưa thực hiện) 
+                                    </span>
                                 </tr>
                             </th>
                         </thead>
@@ -160,9 +163,7 @@
                                 <td>
                                     <span>{{ item?.dichVu ?? 'Chưa cập nhật' }}</span>
                                 </td>
-                                <td>
-                                    <span class="text-danger">{{ formatCurrency(item?.soTienConDu) ?? 0 }}</span>
-                                </td>
+                                
                                 <td>
                                     <span class="text-danger">{{ formatCurrency(item?.goi) ?? 0 }}</span>
                                 </td>
@@ -173,6 +174,9 @@
                                     <tr>
                                         {{ item?.soBuoiHoanThanh }}
                                     </tr>
+                                </td>
+                                <td>
+                                    <span class="text-danger">{{ formatCurrency(item?.soTienConDu) ?? 0 }}</span>
                                 </td>
                             </tr>
 
