@@ -98,7 +98,7 @@ export default {
             },
             data: null,
             // date: new Date().toISOString().substr(0, 7),
-            date: new Date().toISOString(),
+            date: new Date().setDate(1).toISOString(),
             date1: new Date().toISOString(),
             month: 1,
             menu: false,
@@ -140,7 +140,13 @@ export default {
         var day = ('0' + currentDate.getDate()).slice(-2);
         var formattedDate = year + '-' + month + '-' + day;
         this.date = formattedDate
-        this.date1 = formattedDate
+
+
+        var month = ('0' + (currentDate.getMonth())).slice(-2);
+        var year = currentDate.getFullYear();
+        var day = ('0' + currentDate.getDate()).slice(-2);
+
+        this.date1 = year + '-' + month + '-' + day;
 
         this.$store.dispatch('title/set_title', this.title)
         this.month = this.date.split("-")[2] + '/' + this.date.split("-")[1] + '/' + this.date.split("-")[0];
