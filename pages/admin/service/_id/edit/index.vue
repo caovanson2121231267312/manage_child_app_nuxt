@@ -667,7 +667,7 @@ export default {
                         text: item.name
                     };
                 })
-                // this.loai_dich_vu_id = this.loai_dich_vu[0].value
+                this.loai_dich_vu_id = this.loai_dich_vu[0].value
             })
 
             await api.get('dich-vu/get-do-tuoi', {
@@ -700,6 +700,7 @@ export default {
                 this.suneditorcam_hop_dong_dich_vu.setContents(this.hop_dong_dich_vu);
                 this.ten_dich_vu = user?.ten_dich_vu
                 this.do_tuoi_id = user?.do_tuoi_id
+                this.loai_dich_vu_id = user?.loai_dich_vu_id
                 this.link = user?.link
                 console.log(this.data)
 
@@ -804,9 +805,10 @@ export default {
         },
     },
     mounted() {
+        this.$store.dispatch('title/set_title', this.title);
+
         this.load_role();
         this.load_data();
-        this.$store.dispatch('title/set_title', this.title);
 
 
         const editor = SUNEDITOR.create((document.getElementById('gia_tri') || 'gia_tri'), {

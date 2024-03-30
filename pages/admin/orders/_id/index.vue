@@ -5,8 +5,8 @@
             <v-col xs="12" sm="12" md="12" lg="8" xl="8">
 
 
-                <detail-service-info v-if="data" :data="data" :status="data?.trang_thai"
-                    :load_data="load_data" :nap_tien="nap_tien"></detail-service-info>
+                <detail-service-info v-if="data" :data="data" :status="data?.trang_thai" :load_data="load_data"
+                    :nap_tien="nap_tien"></detail-service-info>
 
                 <!-- xac nhan thanh toan -->
                 <div class="mt-4">
@@ -216,48 +216,49 @@
                                 <v-card-text>
                                     <div>
                                         <div class="my-2 box-teacher">
-                                <div v-for="(item, n) in teachers" v-bind:key="n">
-                                    <div :class="'card-teacher ' + (teacher_id == item?.id ? ' active' : '')">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="d-flex align-items-center">
-                                                <div class="me-3 layout-user">
-                                                    <img :src="item?.anh_nguoi_dung" alt="">
-                                                </div>
-                                                <div class="ps-2" style="margin-left: 5px;">
-                                                    <div>
-                                                        <b-badge pill variant="danger">
-                                                            # {{ item?.id }}
-                                                        </b-badge>
-                                                        <b-badge pill variant="success">
-                                                            Đang trống ca
-                                                        </b-badge>
+                                            <div v-for="(item, n) in teachers" v-bind:key="n">
+                                                <div
+                                                    :class="'card-teacher ' + (teacher_id == item?.id ? ' active' : '')">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="me-3 layout-user">
+                                                                <img :src="item?.anh_nguoi_dung" alt="">
+                                                            </div>
+                                                            <div class="ps-2" style="margin-left: 5px;">
+                                                                <div>
+                                                                    <b-badge pill variant="danger">
+                                                                        # {{ item?.id }}
+                                                                    </b-badge>
+                                                                    <b-badge pill variant="success">
+                                                                        Đang trống ca
+                                                                    </b-badge>
+                                                                </div>
+                                                                <strong>
+                                                                    <span class="user-name">
+                                                                        {{ item?.hoten }}
+                                                                    </span>
+                                                                </strong>
+                                                                <p class="w-p p-0 m-0">
+                                                                    {{ item?.trinh_do }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="">
+                                                            <b-button @click="set_teacher(item?.id)" size="sm"
+                                                                style="min-width: 130px;padding: 0.325rem 0.75rem !important;"
+                                                                :class="'w-100 rounded-pill ' + (teacher_id == item?.id ? 'text-light' : 'text-primary')"
+                                                                :variant="teacher_id == item?.id ? 'primary' : 'outline-primary'">
+                                                                Chọn
+                                                            </b-button>
+                                                        </div>
                                                     </div>
-                                                    <strong>
-                                                        <span class="user-name">
-                                                            {{ item?.hoten }}
-                                                        </span>
-                                                    </strong>
-                                                    <p class="w-p p-0 m-0">
-                                                        {{ item?.trinh_do }}
-                                                    </p>
                                                 </div>
                                             </div>
 
-                                            <div class="">
-                                                <b-button @click="set_teacher(item?.id)" size="sm"
-                                                    style="min-width: 130px;padding: 0.325rem 0.75rem !important;"
-                                                    :class="'w-100 rounded-pill ' + (teacher_id == item?.id ? 'text-light' : 'text-primary')"
-                                                    :variant="teacher_id == item?.id ? 'primary' : 'outline-primary'">
-                                                    Chọn
-                                                </b-button>
-                                            </div>
+
+
                                         </div>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
                                     </div>
                                     <div class="mt-3">
                                         <b-button class="w-100 text-light rounded-pill" variant="primary"
@@ -424,7 +425,7 @@
                     title="Đổi giáo viên">
                     <template #default="{ hide }">
                         <div>
-                            <span>Có <b class="text-primary">{{ teacherss?.length ?? 0 }}</b> giáo viên nhận lịch</span>
+                            <span>Có <b class="text-primary">{{ teacherss?.length ?? 0 }}</b> giáo viên</span>
                         </div>
                         <div>
 
@@ -1018,6 +1019,16 @@ export default {
                 this.chuong_trinh_id = chuong_trinh_hoc_id
                 this.kds_id = res?.data?.data?.leaderKD?.id
 
+                this.array_bai_hoc.push(...this.data?.ke_hoach_day[0]?.goiHoc?.map(item => (
+                    item.id
+                //     {
+                //     value:  item.id,
+                //     text: item.tieu_de ?? item.id,
+                // }
+                )));
+                console.log(123)
+                console.log(this.array_bai_hoc)
+
                 api.get(`don-dich-vu/danh-sach-chuong-trinh-hoc?id=` + res?.data?.data?.id, {
                     'Content-Type': 'multipart/form-data',
                     Authorization: 'Bearer ' + this.token
@@ -1183,7 +1194,10 @@ export default {
                                 res?.data?.message,
                                 'success'
                             )
-                            this.load_data()
+                            // this.load_data()
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000)
                         } else {
                             toastr.error(res?.data?.message);
                         }
@@ -1314,6 +1328,10 @@ export default {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
                     this.load_data();
+
+                    // setTimeout(function () {
+                    //     window.location.reload();
+                    // }, 1000)
                 }
             })
         }
