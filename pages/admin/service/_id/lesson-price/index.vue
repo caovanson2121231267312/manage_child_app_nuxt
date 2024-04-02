@@ -113,7 +113,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <b-form-input v-model="khuyen_mai_edit" min="0" max="100"
-                                        placeholder="Nhập khuyến mãi"></b-form-input>
+                                        placeholder="Nhập khuyến mãi %"></b-form-input>
                                 </div>
                             </div>
                             <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
@@ -155,7 +155,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <b-form-input v-model="khuyen_mai" min="0" max="100"
-                                            placeholder="Nhập khuyến mãi"></b-form-input>
+                                            placeholder="Nhập khuyến mãi %"></b-form-input>
                                     </div>
                                 </div>
                                 <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
@@ -251,6 +251,9 @@ export default {
             })
         },
         total_money(a, b, c) {
+            a= parseInt(a)
+            b= parseInt(b)
+            c= parseInt(c)
             if (c == 0) {
                 return a * b
             } else {
@@ -367,6 +370,9 @@ export default {
                     this.tong_tien = '';
                     this.khuyen_mai = '';
                     this.$refs['my-modal'].hide()
+                    setTimeout(function () {
+                        window.location.reload()
+                    }, 1000)
                     // this.$router.push('/admin/service/' + this.id + '/edit');
                 }
             })
