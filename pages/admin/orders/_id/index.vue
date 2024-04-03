@@ -1009,43 +1009,6 @@ export default {
                 })
             })
 
-            await api.get(`don-dich-vu/chi-tiet?id=` + this.id, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                this.data = res?.data?.data
-                this.xac_nhan_thanh_toan = res?.data?.data?.trang_thai_thanh_toan == 'Đã thanh toán' ? true : false
-                const chuong_trinh_hoc_id = res?.data?.data?.chuong_trinh_hoc_id
-                this.chuong_trinh_id = chuong_trinh_hoc_id
-                this.kds_id = res?.data?.data?.leaderKD?.id
-
-                this.array_bai_hoc.push(...this.data?.ke_hoach_day[0]?.goiHoc?.map(item => (
-                    item.id
-                //     {
-                //     value:  item.id,
-                //     text: item.tieu_de ?? item.id,
-                // }
-                )));
-                console.log(123)
-                console.log(this.array_bai_hoc)
-
-                api.get(`don-dich-vu/danh-sach-chuong-trinh-hoc?id=` + res?.data?.data?.id, {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: 'Bearer ' + this.token
-                }).then(res => {
-                    this.chuong_trinh = res?.data?.data.map(item => {
-                        return {
-                            value: item.id,
-                            text: item.tieu_de ?? item.id,
-                        };
-                    })
-                    if (this.chuong_trinh_id == null) {
-                        this.chuong_trinh_id = this.chuong_trinh[0].value
-                    }
-
-                })
-            })
-
             await api.get(`don-dich-vu/get-trinh-do-khi-dieu-giao-vien`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
@@ -1071,6 +1034,45 @@ export default {
                 })
                 this.nap_tien_id = this.nap_tien[0].value
             })
+
+            await api.get(`don-dich-vu/chi-tiet?id=` + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.data = res?.data?.data
+                this.xac_nhan_thanh_toan = res?.data?.data?.trang_thai_thanh_toan == 'Đã thanh toán' ? true : false
+                const chuong_trinh_hoc_id = res?.data?.data?.chuong_trinh_hoc_id
+                this.chuong_trinh_id = chuong_trinh_hoc_id
+                this.kds_id = res?.data?.data?.leaderKD?.id
+
+                api.get(`don-dich-vu/danh-sach-chuong-trinh-hoc?id=` + res?.data?.data?.id, {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: 'Bearer ' + this.token
+                }).then(res => {
+                    this.chuong_trinh = res?.data?.data.map(item => {
+                        return {
+                            value: item.id,
+                            text: item.tieu_de ?? item.id,
+                        };
+                    })
+                    if (this.chuong_trinh_id == null) {
+                        this.chuong_trinh_id = this.chuong_trinh[0].value
+                    }
+
+                })
+
+                this.array_bai_hoc.push(...this.data?.ke_hoach_day[0]?.goiHoc?.map(item => (
+                    item.id
+                //     {
+                //     value:  item.id,
+                //     text: item.tieu_de ?? item.id,
+                // }
+                )));
+                console.log(123)
+                console.log(this.array_bai_hoc)
+            })
+
+
         },
         async add_phu_phi() {
             const formData = new FormData()
