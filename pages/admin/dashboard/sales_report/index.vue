@@ -302,7 +302,8 @@ export default {
         },
         async load_data() {
             // await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=${this.diachi}&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=${this.current_page}&limit=10&sort=&tuNgay=${this.value}&denNgay=${this.value1}`, {
-            await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=${this.diachi}&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=${this.current_page}&limit=20&sort=&tuNgay=${this.value}&denNgay=${this.value1}`, {
+            await api.get(`/bao-cao/bao-cao-doanh-thu-theo-ngay?don_dich_vu_id=${this.dich_vu_id}&page=${this.current_page}&limit=20&sort=&tuNgay=${this.value}&denNgay=${this.value1}&giao_vien_id=`, {
+            // await api.get(`bao-cao/bao-cao-doanh-thu?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=${this.diachi}&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=${this.current_page}&limit=20&sort=&tuNgay=${this.value}&denNgay=${this.value1}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
