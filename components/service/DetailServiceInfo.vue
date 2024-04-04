@@ -319,7 +319,7 @@
                                         </v-list>
                                     </v-menu>
                                 </span>
-                                <i class="sm-i">{{ data?.noi_dung_khao_sat }}</i>
+                                <!-- <i class="sm-i">{{ data?.noi_dung_khao_sat }}</i> -->
                             </div>
                         </div>
                     </div>
@@ -1084,12 +1084,12 @@ export default {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                if (res?.status == 200) {
-                    toastr.success(res?.data?.message);
+                // if (res?.status == 200) {
+                    toastr.success('Đã sửa khảo sát');
                     this.$refs['my-modal-edit'].hide()
-                    window.location.reload();
+                    // window.location.reload();
                     this.load_data()
-                }
+                // }
             })
         },
         async khao_sat() {
