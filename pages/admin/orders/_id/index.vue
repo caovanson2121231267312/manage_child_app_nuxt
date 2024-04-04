@@ -1256,7 +1256,7 @@ export default {
         tuKhoa() {
             clearTimeout(this.timeOut);
             console.log(this.tuKhoa)
-            if(this.tuKhoa) {
+            if(this.tuKhoa != null && this.tuKhoa != '') {
                 this.timeOut = setTimeout(() => {
                     // this.load_kd()
                     api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=${this.trinh_do_giao_vien}&tuKhoa=` + this.tuKhoa, {
