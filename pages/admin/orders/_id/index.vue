@@ -808,7 +808,7 @@ export default {
             nap_tien_id: null,
             so_buoi_hoan: 0,
             so_tien_hoan: 0,
-            tuKhoa: null,
+            tuKhoa: '',
             timeOut: null,
             timer: 400,
             chuong_trinh_id: null,
