@@ -159,19 +159,19 @@
                             <div class="br-top"></div>
 
                             <div class="d-flex align-items-center justify-content-between card-body-p-16">
-                                <a :href="'tel:+' + data?.phuHuynh?.dien_thoai">
-                                    <button type="text" class="btn btn-call position-relative">
-                                        <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="19" cy="19" r="19" fill="white" fill-opacity="0.3" />
-                                            <path
-                                                d="M11.6796 9.84669L12.8192 8.70711C13.2097 8.31658 13.8429 8.31658 14.2334 8.70711L17.2403 11.7139C17.6308 12.1045 17.6308 12.7376 17.2403 13.1282L15.1847 15.1837C14.8544 15.514 14.7725 16.0187 14.9814 16.4365C16.1892 18.8521 18.1479 20.8108 20.5635 22.0186C20.9813 22.2275 21.486 22.1456 21.8163 21.8153L23.8718 19.7597C24.2624 19.3692 24.8955 19.3692 25.2861 19.7597L28.2929 22.7666C28.6834 23.1571 28.6834 23.7903 28.2929 24.1808L27.1533 25.3204C25.042 27.4317 21.6994 27.6693 19.3107 25.8777L17.2602 24.3398C15.5166 23.0322 13.9678 21.4834 12.6602 19.7399L11.1223 17.6893C9.33072 15.3006 9.56827 11.958 11.6796 9.84669Z"
-                                                fill="white" />
-                                        </svg>
-                                        <span>Gọi điện</span>
-                                    </button>
-                                </a>u
-                                <button type="text" class="btn btn-chat position-relative">
+                                
+                                <a class="btn btn-call position-relative" :href="'tel:+' + data?.phuHuynh?.dien_thoai">
+                                    <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="19" cy="19" r="19" fill="white" fill-opacity="0.3" />
+                                        <path
+                                            d="M11.6796 9.84669L12.8192 8.70711C13.2097 8.31658 13.8429 8.31658 14.2334 8.70711L17.2403 11.7139C17.6308 12.1045 17.6308 12.7376 17.2403 13.1282L15.1847 15.1837C14.8544 15.514 14.7725 16.0187 14.9814 16.4365C16.1892 18.8521 18.1479 20.8108 20.5635 22.0186C20.9813 22.2275 21.486 22.1456 21.8163 21.8153L23.8718 19.7597C24.2624 19.3692 24.8955 19.3692 25.2861 19.7597L28.2929 22.7666C28.6834 23.1571 28.6834 23.7903 28.2929 24.1808L27.1533 25.3204C25.042 27.4317 21.6994 27.6693 19.3107 25.8777L17.2602 24.3398C15.5166 23.0322 13.9678 21.4834 12.6602 19.7399L11.1223 17.6893C9.33072 15.3006 9.56827 11.958 11.6796 9.84669Z"
+                                            fill="white" />
+                                    </svg>
+                                    <span>Gọi điện</span>
+                                </a>
+                                
+                                <a class="btn btn-call position-relative" :href="'sms:+' + data?.phuHuynh?.dien_thoai">
                                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="19" cy="19" r="19" fill="white" fill-opacity="0.3" />
@@ -184,7 +184,7 @@
                                     </svg>
 
                                     <span>Nhắn tin</span>
-                                </button>
+                                </a>
                             </div>
 
                         </div>
