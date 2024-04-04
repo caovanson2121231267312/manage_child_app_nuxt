@@ -92,10 +92,10 @@
                                     <span class="text-light">Dịch vụ</span>
                                 </tr>
                             </th>
-                            
+
                             <th>
                                 <tr>
-                                    <span class="text-light">Gói</span>
+                                    <span class="text-light">Đơn giá</span>
                                 </tr>
                             </th>
                             <th>
@@ -103,7 +103,7 @@
                                     <span class="text-light">Trạng thái</span>
                                 </tr>
                             </th>
-                            <th>
+                            <!-- <th>
                                 <tr>
                                     <span class="text-light">Số buổi đã thực hiện (tính đến thời điểm xuất)
                                     </span>
@@ -111,10 +111,10 @@
                             </th>
                             <th>
                                 <tr>
-                                    <span class="text-light">Tiền còn dư (gói đã đóng - số buổi còn lại chưa thực hiện) 
+                                    <span class="text-light">Tiền còn dư (gói đã đóng - số buổi còn lại chưa thực hiện)
                                     </span>
                                 </tr>
-                            </th>
+                            </th> -->
                         </thead>
                         <tbody>
                             <tr v-for="(item, n) in data" v-bind:key="n">
@@ -163,21 +163,21 @@
                                 <td>
                                     <span>{{ item?.dichVu ?? 'Chưa cập nhật' }}</span>
                                 </td>
-                                
+
                                 <td>
-                                    <span class="text-danger">{{ formatCurrency(item?.goi) ?? 0 }}</span>
+                                    <span class="text-danger">{{ formatCurrency(item?.don_gia) ?? 0 }}</span>
                                 </td>
                                 <td>
                                     <span>{{ item?.trang_thai ?? 'Chưa cập nhật' }}</span>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <tr>
                                         {{ item?.soBuoiHoanThanh }}
                                     </tr>
                                 </td>
                                 <td>
                                     <span class="text-danger">{{ formatCurrency(item?.soTienConDu) ?? 0 }}</span>
-                                </td>
+                                </td> -->
                             </tr>
 
                             <tr v-if="data?.length <= 0">

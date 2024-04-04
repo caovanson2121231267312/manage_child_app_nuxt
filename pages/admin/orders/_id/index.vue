@@ -1049,16 +1049,16 @@ export default {
                 })
 
             //     if(this.data?.giaoVien) {
-                
+
             // } else {
 
             // }
 
-            await api.get(`don-dich-vu/danh-sach-giao-vien?tuKhoa=${this.tuKhoa ?? ''}&page=1&limit=1000&id=` + this.id, {
+            api.get(`don-dich-vu/danh-sach-giao-vien?tuKhoa=${this.tuKhoa ?? ''}&page=1&limit=1000&id=` + this.id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                this.teacherss = res?.data?.data
+                this.teachers = res?.data?.data
             })
 
             // await api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=26`, {
