@@ -1256,18 +1256,19 @@ export default {
         tuKhoa() {
             clearTimeout(this.timeOut);
             console.log(this.tuKhoa)
+            if(this.tuKhoa) {
+                this.timeOut = setTimeout(() => {
+                    // this.load_kd()
+                    api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=${this.trinh_do_giao_vien}&tuKhoa=` + this.tuKhoa, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        this.teachers = res?.data?.data
+                    })
+                    // this.load_kd()
 
-            this.timeOut = setTimeout(() => {
-                // this.load_kd()
-                api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=${this.trinh_do_giao_vien}&tuKhoa=` + this.tuKhoa, {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: 'Bearer ' + this.token
-                }).then(res => {
-                    this.teachers = res?.data?.data
-                })
-                // this.load_kd()
-
-            }, this.timer);
+                }, this.timer);
+            }
         },
         // async trinh_do_giao_vien() {
         //     await api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=${this.trinh_do_giao_vien}&tuKhoa=` + this.tuKhoa, {
