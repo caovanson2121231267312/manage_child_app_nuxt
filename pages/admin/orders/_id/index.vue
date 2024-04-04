@@ -981,19 +981,6 @@ export default {
                 })
             })
 
-            await api.get(`don-dich-vu/danh-sach-giao-vien?tuKhoa=${this.tuKhoa ?? ''}&page=1&limit=1000&id=` + this.id, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                this.teachers = res?.data?.data
-            })
-
-            await api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=26`, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                this.teacherss = res?.data?.data
-            })
         },
         async load_data() {
             await api.get(`dich-vu/danh-sach?page=1&limit=1000&sort=1&tuKhoa=`, {
@@ -1060,6 +1047,26 @@ export default {
                     }
 
                 })
+
+            //     if(this.data?.giaoVien) {
+                
+            // } else {
+
+            // }
+
+            await api.get(`don-dich-vu/danh-sach-giao-vien?tuKhoa=${this.tuKhoa ?? ''}&page=1&limit=1000&id=` + this.id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.teacherss = res?.data?.data
+            })
+
+            // await api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=26`, {
+            //     'Content-Type': 'multipart/form-data',
+            //     Authorization: 'Bearer ' + this.token
+            // }).then(res => {
+            //     this.teacherss = res?.data?.data
+            // })
 
                 this.array_bai_hoc.push(...this.data?.ke_hoach_day[0]?.goiHoc?.map(item => (
                     item.id
