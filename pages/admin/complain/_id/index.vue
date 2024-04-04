@@ -45,23 +45,25 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <div class="span1" style="min-width: 94px;">
-                                                    <span>
-                                                        <svg width="12" height="14" viewBox="0 0 12 14" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="0.5" y="0.5" width="11" height="13" rx="2.5"
-                                                                fill="#FC4D32" stroke="#FC4D32" />
-                                                            <path d="M9 10H3" stroke="white" />
-                                                        </svg>
-                                                    </span>
-                                                    <span class="p">
-                                                        Điện thoại
-                                                    </span>
-                                                </div>
+                                                <a :href="'tel:+' + data?.phuHuynh?.dien_thoai">
+                                                    <div class="span1" style="min-width: 94px;">
+                                                        <span>
+                                                            <svg width="12" height="14" viewBox="0 0 12 14" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <rect x="0.5" y="0.5" width="11" height="13" rx="2.5"
+                                                                    fill="#FC4D32" stroke="#FC4D32" />
+                                                                <path d="M9 10H3" stroke="white" />
+                                                            </svg>
+                                                        </span>
+                                                        <span class="p">
+                                                            Điện thoại
+                                                        </span>
+                                                    </div>
+                                                </a>
                                             </td>
                                             <td>
                                                 <div class="w-100 p-text">
-                                                    0123 456 789
+                                                    {{ data?.phuHuynh?.dien_thoai }}
                                                 </div>
                                             </td>
                                         </tr>
