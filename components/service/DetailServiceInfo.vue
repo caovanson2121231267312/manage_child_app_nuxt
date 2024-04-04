@@ -1087,8 +1087,10 @@ export default {
                 // if (res?.status == 200) {
                     toastr.success('Đã sửa khảo sát');
                     this.$refs['my-modal-edit'].hide()
-                    // window.location.reload();
-                    this.load_data()
+                    setTimeout(() => {
+                        window.location.reload();
+                        this.load_data()
+                    }, 1500);
                 // }
             })
         },
