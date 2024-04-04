@@ -219,7 +219,7 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Có xoá nó!',
+                confirmButtonText: 'Chắc chắn!',
                 cancelButtonText: 'Huỷ'
             }).then(async (result) => {
                 if (result.isConfirmed) {
