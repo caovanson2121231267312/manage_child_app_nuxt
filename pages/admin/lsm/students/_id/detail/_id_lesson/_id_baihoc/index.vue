@@ -164,12 +164,40 @@
                     </div>
                 </div>
 
+                <div class="mt-3">
+                    <button-add v-b-modal.my-modal-td>
+                        Sửa tiêu đề
+                    </button-add>
+                </div>
 
                 <div class="mt-3">
                     <button-add v-b-modal.my-modal>
                         <span class="mdi mdi-plus"></span> Thêm buổi học
                     </button-add>
                 </div>
+
+                <b-modal size="lg" id="my-modal-td" ref="my-modal-td" hide-footer centered title="Sửa tiêu đề">
+                    <template #default="{ hide }">
+                        <form id="form">
+                            <div class="">
+                                <div>
+                                    <b-form-group>
+                                        <label>Tiều đề:</label>
+                                        <b-form-input v-model="tieu_de" name="goi_hoc"
+                                            placeholder="Nhập Tiều đề"></b-form-input>
+                                    </b-form-group>
+                                </div>
+
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button type="button" class=" btn-delete ms-1" @click="send_data_td">Sửa</button>
+                            </div>
+                        </form>
+
+                    </template>
+                </b-modal>
+
 
                 <b-modal size="lg" id="my-modal" ref="my-modal" hide-footer centered title="Thêm buổi học">
                     <template #default="{ hide }">
@@ -270,6 +298,7 @@ export default {
             noi_dung_edit: null,
             id_edit: null,
             isUpdating: false,
+            tieu_de: null,
         };
     },
     validate({ params }) {
@@ -372,6 +401,30 @@ export default {
                     this.$refs['my-modal'].hide()
                     this.noi_dung = null
                     this.buoi = 0
+                    this.load_data();
+                }
+            })
+        },
+        async send_data_td () {
+            // event.preventDefault();
+            if (!this.tieu_de) {
+                toastr.warning("vui lòng nhập đủ thông tin");
+                return
+            }
+            const formData = new FormData()
+            formData.append('goi_hoc', this.tieu_de)
+            formData.append('id', this.id_lesson)
+            formData.append('goi_hoc_id', this.id_baihoc)
+
+            await api.post('chuong-trinh-hoc/sua-goi-hoc', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-td'].hide()
+                    // this.noi_dung = null
+                    // this.buoi = 0
                     this.load_data();
                 }
             })
@@ -515,10 +568,13 @@ export default {
                 this.title.name = res?.data?.data?.tieu_de ?? 'bài học'
                 this.title.previous = '/admin/lsm/students/' + this.id + '/detail/' + this.id_lesson
                 this.data = res?.data?.data
+
+                this.tieu_de = this.data?.tieu_de
+
                 res?.data?.data?.giaoCu.map((x) => {
                     this.giao_cu_id.push(x?.id)
                 })
-                this.$store.dispatch('title/set_title', this.title);
+                this.$store.dispatch('title/set_title', this.title ?? '');
             })
 
             await api.get(`chuong-trinh-hoc/danh-sach-buoi-hoc?page=1&limit=1000&sort=0&bai_hoc_id=` + this.id_baihoc, {
