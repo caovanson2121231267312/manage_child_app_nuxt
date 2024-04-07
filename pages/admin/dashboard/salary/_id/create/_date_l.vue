@@ -54,7 +54,7 @@
                                         <b>Họ và tên</b>
                                     </td>
                                     <td>
-                                        <b>{{ data?.hoten }}</b>
+                                        <b>{{ data?.giaoVien?.hoten }}</b>
                                     </td>
                                 </tr>
                                 <tr>
@@ -62,7 +62,7 @@
                                         <b>Mã đối tác</b>
                                     </td>
                                     <td>
-                                        <b>{{ data?.id }}</b>
+                                        <b>{{ data?.giaoVien?.id }}</b>
                                     </td>
                                 </tr>
                             </table>
