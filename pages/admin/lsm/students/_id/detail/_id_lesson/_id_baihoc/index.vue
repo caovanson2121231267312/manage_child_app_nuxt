@@ -412,11 +412,12 @@ export default {
                 return
             }
             const formData = new FormData()
-            formData.append('goi_hoc', this.tieu_de)
-            formData.append('id', this.id_lesson)
-            formData.append('goi_hoc_id', this.id_baihoc)
+            formData.append('tieu_de', this.tieu_de)
+            formData.append('bai_hoc_id', this.id_lesson)
+            formData.append('id', this.id)
+            formData.append('nhom_id', this.id_baihoc )
 
-            await api.post('chuong-trinh-hoc/sua-goi-hoc', formData, {
+            await api.post('chuong-trinh-hoc/sua-bai-hoc', formData, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

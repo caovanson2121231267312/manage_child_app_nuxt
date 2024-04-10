@@ -853,7 +853,7 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Chắc chắn/Chấp nhận!',
+                confirmButtonText: 'Xác nhận!',
                 cancelButtonText: 'Huỷ'
             }).then(async (result) => {
                 if (result.isConfirmed) {
@@ -1188,7 +1188,7 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Chắc chắn/Chấp nhận!',
+                confirmButtonText: 'Xác nhận!',
                 cancelButtonText: 'Huỷ'
             }).then(async (result) => {
                 if (result.isConfirmed) {

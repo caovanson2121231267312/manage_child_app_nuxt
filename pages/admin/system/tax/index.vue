@@ -4,18 +4,54 @@
             <div class="mb-7 d-none d-sm-block ">
                 <div class="d-flex justify-content-between align-items-center">
                     <title-header>
-                        Cấu hình % chiết khấu cho GV
+                        Cấu hình
                     </title-header>
                 </div>
             </div>
 
             <b-row>
-                <b-col cols="12" sm="12"
-                    class="border-bottom-baner wow animate__animated animate__zoomIn" >
+                <b-col cols="12" sm="12" class="border-bottom-baner wow animate__animated animate__zoomIn">
                     <div>
                         <b-form-group>
-                            <label>Chiết khấu:</label>
-                            <b-form-input name="ck" type="number" min="0" max="100" v-model="ck" placeholder="Nhập % chiếu khấu"></b-form-input>
+                            <label>{{ data?.chiet_khau_don?.name }}:</label>
+                            <b-form-input name="ck" type="number" min="0" max="100"
+                                v-model="chiet_khau_don"></b-form-input>
+                        </b-form-group>
+                    </div>
+                </b-col>
+                <b-col cols="12" sm="12" class="border-bottom-baner wow animate__animated animate__zoomIn">
+                    <div>
+                        <b-form-group>
+                            <label>{{ data?.phu_phi_them_gio?.name }}:</label>
+                            <b-form-input name="ck" type="number" min="0" max="100"
+                                v-model="phu_phi_them_gio"></b-form-input>
+                        </b-form-group>
+                    </div>
+                </b-col>
+                <b-col cols="12" sm="12" class="border-bottom-baner wow animate__animated animate__zoomIn">
+                    <div>
+                        <b-form-group>
+                            <label>{{ data?.phu_thu_an_trua?.name }}:</label>
+                            <b-form-input name="ck" type="number" min="0" max="100"
+                                v-model="phu_thu_an_trua"></b-form-input>
+                        </b-form-group>
+                    </div>
+                </b-col>
+                <b-col cols="12" sm="12" class="border-bottom-baner wow animate__animated animate__zoomIn">
+                    <div>
+                        <b-form-group>
+                            <label>{{ data?.phu_thu_them_tre?.name }}:</label>
+                            <b-form-input name="ck" type="number" min="0" max="100"
+                                v-model="phu_thu_them_tre"></b-form-input>
+                        </b-form-group>
+                    </div>
+                </b-col>
+                <b-col cols="12" sm="12" class="border-bottom-baner wow animate__animated animate__zoomIn">
+                    <div>
+                        <b-form-group>
+                            <label>{{ data?.phu_cap_them?.name }}:</label>
+                            <b-form-input name="ck" type="number" min="0" max="100"
+                                v-model="phu_cap_them"></b-form-input>
                         </b-form-group>
                     </div>
                 </b-col>
@@ -43,7 +79,7 @@ export default {
     data() {
         return {
             title: {
-                name: 'Banner App',
+                name: 'Cấu hình',
                 previous: '/admin/dashboard'
             },
             data: null,
@@ -53,6 +89,17 @@ export default {
             edit_file: null,
             ck: null,
             id: 0,
+            chiet_khau_don: null,
+            chiet_khau_don_id: 0,
+            phu_cap_them: null,
+            phu_cap_them_id: 0,
+            phu_phi_them_gio: null,
+            phu_phi_them_gio_id: 0,
+            phu_thu_an_trua: null,
+            phu_thu_an_trua_id: 0,
+            phu_thu_them_tre: null,
+            phu_thu_them_tre_id: 0,
+
         };
     },
     computed: {
@@ -89,32 +136,121 @@ export default {
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 console.log(res)
-                this.data = res?.data?.data?.chiet_khau_don
-                this.ck = this.data?.content ?? 0
-                this.id = this.data?.id ?? 0
+                this.data = res?.data?.data
+                this.chiet_khau_don = this.data?.chiet_khau_don?.content
+                this.chiet_khau_don_id = this.data?.chiet_khau_don?.id
+                this.phu_cap_them = this.data?.phu_cap_them?.content
+                this.phu_cap_them_id = this.data?.phu_cap_them?.id
+                this.phu_phi_them_gio = this.data?.phu_phi_them_gio?.content
+                this.phu_phi_them_gio_id = this.data?.phu_phi_them_gio?.id
+                this.phu_thu_an_trua = this.data?.phu_thu_an_trua?.content
+                this.phu_thu_an_trua_id = this.data?.phu_thu_an_trua?.id
+                this.phu_thu_them_tre = this.data?.phu_thu_them_tre?.content
+                this.phu_thu_them_tre_id = this.data?.phu_thu_them_tre?.id
+                // this.ck = this.data?.content ?? 0
+                // this.id = this.data?.id ?? 0
+                setTimeout(function () {
+                    this.id = 1
+                }, 1500)
             })
         },
         async send_data() {
-            const formData = new FormData()
-            formData.append('content', this.ck)
-            formData.append('id', this.id)
+            // console.log(this.id)
+            // if (this.id != 0) {
 
-            await api.post('he-thong/save-chiet-khau', formData, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                if (res?.status == 200) {
-                    toastr.success(res?.data?.message);
-                    this.load_data();
-                }
-            })
+                var formData = new FormData()
+                formData.append('content', this.chiet_khau_don)
+                formData.append('id', this.chiet_khau_don_id)
+
+                await api.post('he-thong/save-chiet-khau', formData, {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: 'Bearer ' + this.token
+                }).then(res => {
+                    if (res?.status == 200) {
+                        // toastr.success(res?.data?.message);
+                        this.load_data();
+                    }
+                })
+                var formData = new FormData()
+                formData.append('content', this.phu_cap_them)
+                formData.append('id', this.phu_cap_them_id)
+
+                await api.post('he-thong/save-chiet-khau', formData, {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: 'Bearer ' + this.token
+                }).then(res => {
+                    if (res?.status == 200) {
+                        // toastr.success(res?.data?.message);
+                        this.load_data();
+                    }
+                })
+                var formData = new FormData()
+                formData.append('content', this.phu_phi_them_gio)
+                formData.append('id', this.phu_phi_them_gio_id)
+
+                await api.post('he-thong/save-chiet-khau', formData, {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: 'Bearer ' + this.token
+                }).then(res => {
+                    if (res?.status == 200) {
+                        // toastr.success(res?.data?.message);
+                        this.load_data();
+                    }
+                })
+                var formData = new FormData()
+                formData.append('content', this.phu_thu_an_trua)
+                formData.append('id', this.phu_thu_an_trua_id)
+
+                await api.post('he-thong/save-chiet-khau', formData, {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: 'Bearer ' + this.token
+                }).then(res => {
+                    if (res?.status == 200) {
+                        // toastr.success(res?.data?.message);
+                        this.load_data();
+                    }
+                })
+                var formData = new FormData()
+                formData.append('content', this.phu_thu_them_tre)
+                formData.append('id', this.phu_thu_them_tre_id)
+
+                await api.post('he-thong/save-chiet-khau', formData, {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: 'Bearer ' + this.token
+                }).then(res => {
+                    if (res?.status == 200) {
+                        // toastr.success(res?.data?.message);
+                        this.load_data();
+                    }
+                })
+
+                toastr.success("Đã sửa thành công");
+            // }
+
         },
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
         this.load_data()
     },
-    components: { CardItem, ButtonAdd }
+    components: { CardItem, ButtonAdd },
+    // watch: {
+    //     chiet_khau_don() {
+    //         this.send_data(this.chiet_khau_don_id, this.chiet_khau_don)
+    //     },
+    //     phu_cap_them() {
+    //         this.send_data(this.phu_cap_them_id, this.phu_cap_them)
+    //     },
+    //     phu_phi_them_gio() {
+    //         this.send_data(this.phu_phi_them_gio_id, this.phu_phi_them_gio)
+    //     },
+    //     phu_thu_an_trua() {
+    //         this.send_data(this.phu_thu_an_trua_id, this.phu_thu_an_trua)
+    //     },
+    //     phu_thu_them_tre() {
+    //         this.send_data(this.phu_thu_them_tre_id, this.phu_thu_them_tre)
+    //     },
+    // }
 }
 </script>
 
@@ -223,7 +359,7 @@ export default {
     // }
 }
 
-.btn-banner-delete {
+.btn-banner-devare {
     cursor: pointer;
     transition: 0.3s;
     // &:hover {
