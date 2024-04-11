@@ -158,8 +158,68 @@
                                 </tr>
                             </table>
                         </div>
+
+                        <button class="btn btn-primary mb-3" v-b-modal.my-modal>Thanh toán lương toàn bộ</button>
+                        <button class="btn btn-success mb-3" v-b-modal.my-modal-2>Thanh toán lương 1 phần</button>
+
                     </div>
                 </div>
+
+                <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Thanh toán lương 1 lần">
+                    <template #default="{ hide }">
+                        <form id="form">
+
+                            <div class="my-4 pb-3">
+                                <div>
+                                    <b-form-group>
+                                        <label>Tổng tiền:</label>
+                                        <b-form-input type="number" name="tong_tien" v-model="tong_tien" placeholder="Nhập số tiền"></b-form-input>
+                                    </b-form-group>
+                                </div>
+                                <div>
+                                    <b-form-group>
+                                        <label>Ghi chú:</label>
+                                        <b-form-input name="ghi_chu" v-model="ghi_chu" placeholder="Nhập ghi chú"></b-form-input>
+                                    </b-form-group>
+                                </div>
+
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button class=" btn-delete ms-1" type="button" @click="send_data">Xác nhận</button>
+                            </div>
+                        </form>
+
+                    </template>
+                </b-modal>
+
+                <b-modal id="my-modal-2" ref="my-modal-2" hide-footer centered title="Thanh toán lương 1 phần">
+                    <template #default="{ hide }">
+                        <form id="form">
+
+                            <div class="my-4 pb-3">
+                                <div>
+                                    <b-form-group>
+                                        <label>Tổng tiền:</label>
+                                        <b-form-input type="number" name="tong_tien" v-model="tong_tien_2" placeholder="Nhập số tiền"></b-form-input>
+                                    </b-form-group>
+                                </div>
+                                <div>
+                                    <b-form-group>
+                                        <label>Ghi chú:</label>
+                                        <b-form-input  name="ghi_chu" v-model="ghi_chu" placeholder="Nhập ghi chú"></b-form-input>
+                                    </b-form-group>
+                                </div>
+
+                            </div>
+                            <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                <button class=" btn-delete ms-1" type="button" @click="send_data_2">Xác nhận</button>
+                            </div>
+                        </form>
+
+                    </template>
+                </b-modal>
 
 
             </v-col>
@@ -187,6 +247,9 @@ export default {
             month: 1,
             menu: false,
             modal: false,
+            tong_tien: 0,
+            tong_tien_2: 0,
+            ghi_chu: null,
         };
     },
     validate({ params }) {
@@ -214,18 +277,39 @@ export default {
             }).then(res => {
                 const user = res?.data?.data
                 this.data = user
+                this.tong_tien = this.data?.thanhTien
             })
         },
-        async send_data(event) {
-            event.preventDefault();
-            console.log(123)
-            const formData = new FormData(document.getElementById('form'))
-            await api.post('admin-api/cap-nhat-quan-tri-vien', formData, {
+        async send_data() {
+            const formData = new FormData()
+            formData.append('tong_tien', this.tong_tien)
+            formData.append('phieu_luong_id', this.id)
+            formData.append('ghi_chu', this.ghi_chu)
+
+            await api.post('chi-luong/thanh-toan', formData, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
+                    this.$refs['my-modal'].hide()
+                    this.load_data()
+                }
+            })
+        },
+        async send_data_2() {
+            const formData = new FormData()
+            formData.append('tong_tien_2', this.tong_tien)
+            formData.append('phieu_luong_id', this.id)
+            formData.append('ghi_chu', this.ghi_chu)
+
+            await api.post('chi-luong/thanh-toan', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-2'].hide()
                     this.load_data()
                 }
             })

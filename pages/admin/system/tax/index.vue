@@ -168,7 +168,10 @@ export default {
                 }).then(res => {
                     if (res?.status == 200) {
                         // toastr.success(res?.data?.message);
-                        this.load_data();
+                        // this.load_data();
+                        // setTimeout(function () {
+                        //     window.location.reload()
+                        // }, 2500)
                     }
                 })
                 var formData = new FormData()
@@ -181,7 +184,7 @@ export default {
                 }).then(res => {
                     if (res?.status == 200) {
                         // toastr.success(res?.data?.message);
-                        this.load_data();
+                        // this.load_data();
                     }
                 })
                 var formData = new FormData()
@@ -194,7 +197,7 @@ export default {
                 }).then(res => {
                     if (res?.status == 200) {
                         // toastr.success(res?.data?.message);
-                        this.load_data();
+                        // this.load_data();
                     }
                 })
                 var formData = new FormData()
@@ -207,7 +210,7 @@ export default {
                 }).then(res => {
                     if (res?.status == 200) {
                         // toastr.success(res?.data?.message);
-                        this.load_data();
+                        // this.load_data();
                     }
                 })
                 var formData = new FormData()

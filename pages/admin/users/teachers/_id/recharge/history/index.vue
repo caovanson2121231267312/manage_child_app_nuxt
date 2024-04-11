@@ -3,6 +3,13 @@
         <v-row>
             <v-col class="mt-0 pt-0" xs="12" sm="12" md="8" lg="8" xl="8">
                 <div>
+                    <b-row class="search mb-3">
+                        <b-col cols="12" md="6">
+                            <b-form-input v-model.lazy="tuKhoa" placeholder="Tìm kiếm lịch sử"></b-form-input>
+                        </b-col>
+                    </b-row>
+                </div>
+                <div>
                     <table class="table table-bordered table-hover table-striped">
                         <thead>
                             <tr>
@@ -66,6 +73,9 @@ export default {
                 name: 'Nạp/ Trừ tiền',
                 previous: '/admin/users/teachers/' + (this.id ?? 0)
             },
+            tuKhoa: '',
+            timeOut: null,
+            timer: 700,
             tru_tien_id: null,
             tru_tien: null,
             nap_tien_id: null,
@@ -93,7 +103,7 @@ export default {
     },
     methods: {
         async load_role() {
-            await api.get(`giao-vien/lich-su-tai-chinh?page=${this.current_page}&limit=10000&tuKhoa=&sort=1&id=` + this.id, {
+            await api.get(`giao-vien/lich-su-tai-chinh?page=${this.current_page}&limit=10000&tuKhoa=${this.tuKhoa}&sort=1&id=` + this.id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -142,5 +152,17 @@ export default {
         this.$store.dispatch('title/set_title', this.title);
         this.load_role()
     },
+    watch: {
+        tuKhoa() {
+            clearTimeout(this.timeOut);
+
+            this.timeOut = setTimeout(() => {
+                // this.$emit("click");
+                this.current_page = 1
+                this.load_role()
+
+            }, this.timer);
+        },
+    }
 }
 </script>
