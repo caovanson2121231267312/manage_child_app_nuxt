@@ -891,6 +891,40 @@
                 </v-card-text>
             </v-card>
         </div>
+
+        <div class="mt-6" v-if="data?.gia_han_don?.length > 0">
+            <div>
+                <h5>
+                    Gia hạn đơn
+                </h5>
+            </div>
+            <v-card class="mx-auto" outlined>
+                <v-card-text>
+                    <div>
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>Số buổi</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Tạo lúc</th>
+                                </tr>
+                            </thead>
+                            <tr v-for="(item, n) in data?.gia_han_don" v-bind:key="n">
+                                <td>
+                                    {{ item?.so_buoi }}
+                                </td>
+                                <td>
+                                    {{ formatCurrency(item?.tong_tien) }}
+                                </td>
+                                <td>
+                                    {{ item?.created }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </v-card-text>
+            </v-card>
+        </div>
         <!--  -->
 
 

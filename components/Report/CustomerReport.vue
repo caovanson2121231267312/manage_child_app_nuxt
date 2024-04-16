@@ -44,22 +44,32 @@
                     </div>
                     <b-progress class="mb-1" max="100" show-value>
                         <b-progress-bar
-                            :value="(parseInt(item?.dang_day) * 100) / (parseInt(item?.dang_day) + parseInt(item?.chua_co_gv) + parseInt(item?.da_huy) + parseInt(item?.hoan_thanh))"
+                            :value="(parseInt(item?.dang_khao_sat) * 100) / (parseInt(item?.dang_day) + parseInt(item?.chua_co_gv) + parseInt(item?.da_huy) + parseInt(item?.hoan_thanh) + parseInt(item?.dang_khao_sat))"
+                            class="" variant="info"></b-progress-bar>
+
+                        <b-progress-bar
+                            :value="(parseInt(item?.dang_day) * 100) / (parseInt(item?.dang_day) + parseInt(item?.chua_co_gv) + parseInt(item?.da_huy) + parseInt(item?.hoan_thanh) + parseInt(item?.dang_khao_sat))"
                             class="c-primary" variant="success"></b-progress-bar>
 
                         <b-progress-bar
-                            :value="(parseInt(item?.chua_co_gv) * 100) / (parseInt(item?.dang_day) + parseInt(item?.chua_co_gv) + parseInt(item?.da_huy) + parseInt(item?.hoan_thanh))"
+                            :value="(parseInt(item?.chua_co_gv) * 100) / (parseInt(item?.dang_day) + parseInt(item?.chua_co_gv) + parseInt(item?.da_huy) + parseInt(item?.hoan_thanh) + parseInt(item?.dang_khao_sat))"
                             class="c-warning" variant="warning"></b-progress-bar>
 
                         <b-progress-bar
-                            :value="(parseInt(item?.da_huy) * 100) / (parseInt(item?.dang_day) + parseInt(item?.chua_co_gv) + parseInt(item?.da_huy) + parseInt(item?.hoan_thanh))"
+                            :value="(parseInt(item?.da_huy) * 100) / (parseInt(item?.dang_day) + parseInt(item?.chua_co_gv) + parseInt(item?.da_huy) + parseInt(item?.hoan_thanh) + parseInt(item?.dang_khao_sat))"
                             class="c-danger" variant="danger"></b-progress-bar>
 
                         <b-progress-bar
-                            :value="(parseInt(item?.hoan_thanh) * 100) / (parseInt(item?.dang_day) + parseInt(item?.chua_co_gv) + parseInt(item?.da_huy) + parseInt(item?.hoan_thanh))"
+                            :value="(parseInt(item?.hoan_thanh) * 100) / (parseInt(item?.dang_day) + parseInt(item?.chua_co_gv) + parseInt(item?.da_huy) + parseInt(item?.hoan_thanh) + parseInt(item?.dang_khao_sat))"
                             class="c-success" variant="info"></b-progress-bar>
+
+
                     </b-progress>
                     <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="text-admin">
+                            <span class="text text-info">{{ item?.dang_khao_sat }}</span>
+                            <span class="text-span">Đang khảo sát</span>
+                        </div>
                         <div class="text-admin">
                             <span class="text text-c-primary">{{ item?.dang_day }}</span>
                             <span class="text-span">Đang dạy</span>
@@ -76,6 +86,7 @@
                             <span class="text text-c-success">{{ item?.hoan_thanh }}</span>
                             <span class="text-span">Hoàn thành</span>
                         </div>
+
                     </div>
                 </div>
             </div>

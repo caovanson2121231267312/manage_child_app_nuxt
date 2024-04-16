@@ -283,7 +283,7 @@ export default {
         async send_data() {
             const formData = new FormData()
             formData.append('tong_tien', this.tong_tien)
-            formData.append('phieu_luong_id', this.id)
+            formData.append('phieu_luong_id', this.data?.phieu_luong_id)
             formData.append('ghi_chu', this.ghi_chu)
 
             await api.post('chi-luong/thanh-toan', formData, {
@@ -299,8 +299,8 @@ export default {
         },
         async send_data_2() {
             const formData = new FormData()
-            formData.append('tong_tien_2', this.tong_tien)
-            formData.append('phieu_luong_id', this.id)
+            formData.append('tong_tien', this.tong_tien)
+            formData.append('phieu_luong_id', this.data?.phieu_luong_id)
             formData.append('ghi_chu', this.ghi_chu)
 
             await api.post('chi-luong/thanh-toan', formData, {
