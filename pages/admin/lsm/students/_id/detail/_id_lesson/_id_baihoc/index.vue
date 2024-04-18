@@ -413,8 +413,12 @@ export default {
             }
             const formData = new FormData()
             formData.append('tieu_de', this.tieu_de)
+            // formData.append('bai_hoc_id', this.id_lesson)
+            // formData.append('id', this.id)
+            // formData.append('nhom_id', this.id_baihoc )
+
             formData.append('bai_hoc_id', this.id_lesson)
-            formData.append('id', this.id)
+            formData.append('id', this.id_lesson)
             formData.append('nhom_id', this.id_baihoc )
 
             await api.post('chuong-trinh-hoc/sua-bai-hoc', formData, {
@@ -427,6 +431,9 @@ export default {
                     // this.noi_dung = null
                     // this.buoi = 0
                     this.load_data();
+                    setTimeout(function () {
+                        window.location.reload()
+                    },1500)
                 }
             })
         },

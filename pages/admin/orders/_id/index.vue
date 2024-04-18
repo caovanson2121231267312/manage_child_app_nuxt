@@ -428,8 +428,7 @@
                             <span>Có <b class="text-primary">{{ teacherss?.length ?? 0 }}</b> giáo viên</span>
                         </div>
                         <div>
-
-                            <div class="my-2">
+                            <div class="my-2 box-teacher">
                                 <div v-for="(item, n) in teacherss" v-bind:key="n">
                                     <div :class="'card-teacher ' + (teacher_ids == item?.id ? ' active' : '')">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -1061,12 +1060,12 @@ export default {
                 this.teachers = res?.data?.data
             })
 
-            // await api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=26`, {
-            //     'Content-Type': 'multipart/form-data',
-            //     Authorization: 'Bearer ' + this.token
-            // }).then(res => {
-            //     this.teacherss = res?.data?.data
-            // })
+            api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=26`, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.teacherss = res?.data?.data
+            })
 
                 this.array_bai_hoc.push(...this.data?.ke_hoach_day[0]?.goiHoc?.map(item => (
                     item.id

@@ -2,7 +2,7 @@
     <div class="content-mp">
 
         <b-row>
-            <b-col cols="12" sm="7">
+            <b-col cols="12" sm="10">
 
                 <div>
                     <div class="mb-4">
@@ -61,6 +61,11 @@
                             </th>
                             <th>
                                 <tr>
+                                    <span class="text-light">Phụ huynh</span>
+                                </tr>
+                            </th>
+                            <th>
+                                <tr>
                                     <span class="text-light">Gói</span>
                                 </tr>
                             </th>
@@ -91,6 +96,22 @@
                                     <span>
                                         {{ item?.ngay_thanh_toan }}
                                     </span>
+                                </td>
+                                <td>
+                                    <div v-if="item?.phuHuynh" class="d-flex align-items-center">
+                                        <div class="box-img me-2">
+                                            <img :src="item?.phuHuynh?.image" />
+                                        </div>
+                                        <div>
+                                            <div class="blade blade-id"># {{ item?.phuHuynh?.id }}</div>
+                                            <div class="user-name">
+                                                {{ item?.phuHuynh?.hoten ?? 'Chưa cập nhật tên' }}
+                                            </div>
+                                            <div class="">
+                                                {{ item?.phuHuynh?.dien_thoai }}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
                                     <span class="text-danger">
@@ -234,7 +255,7 @@ export default {
             })
         },
         async load_data() {
-            await api.get(`bao-cao/danh-sach-khach-hang?dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=&dich_vu_id=${this.dich_vu_id}&denNgay=&tuNgay=&page=${this.current_page}&limit=10&sort=1`, {
+            await api.get(`bao-cao/danh-sach-khach-hang?dien_thoai=${this.tuKhoa}&tuKhoa=${this.tuKhoaPH}&leader_kd_id=${this.leader_kd_id}&dia_chi=&dich_vu_id=${this.dich_vu_id}&denNgay=&tuNgay=&page=${this.current_page}&limit=10&sort=1`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

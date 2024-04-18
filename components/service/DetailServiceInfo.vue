@@ -372,10 +372,14 @@
         <!--  -->
 
         <div class="mt-6">
-            <div>
+            <div class="d-flex justify-content-between align-items-center w-100">
                 <h5>
                     Thông tin dịch vụ
                 </h5>
+                <div class="btn-delete cp text-primary me-2" v-b-tooltip.hover title="Sửa"
+                    >
+                    Sửa
+                </div>
             </div>
             <v-card class="mx-auto" outlined>
                 <v-card-text>
@@ -496,10 +500,14 @@
         <!--  -->
 
         <div class="mt-6">
-            <div>
+            <div class="d-flex justify-content-between align-items-center w-100">
                 <h5>
                     Thông tin lịch học
                 </h5>
+                <div class="btn-delete cp text-primary me-2" v-b-tooltip.hover title="Sửa"
+                    >
+                    Sửa
+                </div>
             </div>
             <v-card class="mx-auto" outlined>
                 <v-card-text>
