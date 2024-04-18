@@ -39,8 +39,12 @@
                         <div class="w-100 m-1" style="min-width: 200px;">
                             <b-form-input v-model.lazy="tuKhoa" placeholder="Tìm theo số điện thoại"></b-form-input>
                         </div>
+                        <div class="w-100 m-1" style="min-width: 200px;">
+                            <b-form-input v-model.lazy="tuKhoaPH" placeholder="Tìm theo tên phụ huynh"></b-form-input>
+                        </div>
                         <div class="w-100 m-1">
-                            <b-form-select v-model="dich_vu_id" :options="dich_vu" aria-placeholder="Chọn"></b-form-select>
+                            <b-form-select v-model="dich_vu_id" :options="dich_vu"
+                                aria-placeholder="Chọn"></b-form-select>
                         </div>
                         <div class="w-100 m-1">
                             <b-form-select v-model="leader_kd_id" :options="leader_kd"
@@ -169,6 +173,7 @@ export default {
             leader_kd_id: '',
             leader_kd: [],
             tuKhoa: '',
+            tuKhoaPH: '',
             thang: [
                 { value: 1, text: 'Tháng 01' },
                 { value: 2, text: 'Tháng 02' },
@@ -279,6 +284,15 @@ export default {
             this.load_data();
         },
         tuKhoa() {
+            clearTimeout(this.timeOut);
+
+            this.timeOut = setTimeout(() => {
+                // this.$emit("click");
+                this.load_data()
+
+            }, this.timer);
+        },
+        tuKhoaPH() {
             clearTimeout(this.timeOut);
 
             this.timeOut = setTimeout(() => {

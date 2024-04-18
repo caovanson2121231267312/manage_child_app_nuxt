@@ -261,7 +261,7 @@ export default {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
                     this.$refs['my-modal-nap'].hide()
-                    this.$router.push('/admin/users/teachers/' + this.id ?? 0);
+                    // this.$router.push('/admin/users/teachers/' + this.id ?? 0);
                 }
             })
         },
@@ -270,7 +270,7 @@ export default {
             formData.append('id', this.id)
             formData.append('so_tien', this.so_tien)
             formData.append('ghi_chu', this.ghi_chu)
-            formData.append('type_id', this.nap_tien_id)
+            formData.append('type_id', this.tru_tien_id)
 
             await api.post('giao-vien/rut-tien', formData, {
                 'Content-Type': 'multipart/form-data',
@@ -279,7 +279,7 @@ export default {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
                     this.$refs['my-modal-tru'].hide()
-                    this.$router.push('/admin/users/teachers/' + this.id ?? 0);
+                    // this.$router.push('/admin/users/teachers/' + this.id ?? 0);
                 }
             })
         }
