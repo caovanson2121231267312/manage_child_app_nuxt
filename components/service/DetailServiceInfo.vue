@@ -372,14 +372,14 @@
         <!--  -->
 
         <div class="mt-6">
-            <div class="d-flex justify-content-between align-items-center w-100">
+            <div class="">
                 <h5>
                     Thông tin dịch vụ
                 </h5>
-                <div class="btn-delete cp text-primary me-2" v-b-tooltip.hover title="Sửa"
+                <!-- <div class="btn-delete cp text-primary me-2" v-b-tooltip.hover title="Sửa"
                     >
                     Sửa
-                </div>
+                </div> -->
             </div>
             <v-card class="mx-auto" outlined>
                 <v-card-text>
@@ -505,7 +505,7 @@
                     Thông tin lịch học
                 </h5>
                 <div class="btn-delete cp text-primary me-2" v-b-tooltip.hover title="Sửa"
-                    >
+                v-b-modal.my-modal-sua-don >
                     Sửa
                 </div>
             </div>
@@ -634,6 +634,38 @@
             </v-card>
         </div>
         <!--  -->
+
+        <!-- them-phu-phi -->
+        <b-modal id="my-modal-sua-don" ref="my-modal-sua-don" hide-footer centered title="Sửa thông tin">
+            <template #default="{ hide }">
+                <form>
+
+                    <div class="my-2">
+                        <div>
+                            <b-form-group>
+                                <label>Ngày bắt đầu:</label>
+                                <b-form-datepicker locale="vi" id="example-datepicker" v-model="date_bd" class="mb-2"></b-form-datepicker>
+                            </b-form-group>
+                        </div>
+                        <div class="mt-2">
+                            <label>Thứ:</label>
+                            <div class="d-flex align-items-center list-day">
+                                <span v-for="(item, n) in days" v-bind:key="n" @click="handleClick(item?.id)"
+                                    :class="'day ' + (activeDay(item?.id) === item?.id ? 'active' : '')">
+                                    {{ item?.value }}
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                        <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                        <button type="button" class=" btn-delete ms-1" @click="edit_info()">Sửa</button>
+                    </div>
+                </form>
+
+            </template>
+        </b-modal>
 
 
         <div class="mt-6">
@@ -1015,6 +1047,17 @@ export default {
             sua_nap_tien_id: null,
             sua_phu_phi_li_do: null,
             data_hd: null,
+            days: [
+                { id: 2, value: 'T2' },
+                { id: 3, value: 'T3' },
+                { id: 4, value: 'T4' },
+                { id: 5, value: 'T5' },
+                { id: 6, value: 'T6' },
+                { id: 7, value: 'T7' },
+                { id: 1, value: 'CN' },
+            ],
+            selectedDays: [],
+            date_bd: null,
         };
     },
     props: {
@@ -1057,6 +1100,38 @@ export default {
         }
     },
     methods: {
+        activeDay(id) {
+            if (this.selectedDays.includes(id)) {
+                return id;
+            }
+            return id + 1000;
+        },
+        handleClick(index) {
+            if (this.selectedDays.includes(index)) {
+                this.selectedDays = this.selectedDays.filter(day => day !== index);
+            } else {
+                this.selectedDays.push(index);
+            }
+            console.log(this.selectedDays)
+        },
+        async edit_info() {
+            const formData = new FormData()
+            formData.append('id', this.data?.id)
+            formData.append('thu', this.selectedDays.join(', '))
+            formData.append('thoi_gian_bat_dau', this.date_bd)
+
+            await api.post('don-dich-vu/sua-don', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-sua-don'].hide()
+                    // window.location.reload();
+                    this.load_data()
+                }
+            })
+        },
         sua_phuPhi(id) {
             this.sua_phu_phi_id = id
 
@@ -1207,6 +1282,12 @@ export default {
             }).then(res => {
                 this.data_hd = res?.data?.data
             })
+
+            let arr = []
+            this.data?.lich_hoc_arr.forEach(element => {
+                arr.push(parseInt(element))
+            });
+            this.selectedDays = arr
         }
 
     }

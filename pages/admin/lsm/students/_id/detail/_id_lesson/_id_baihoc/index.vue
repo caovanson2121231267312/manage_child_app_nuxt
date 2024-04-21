@@ -299,6 +299,7 @@ export default {
             id_edit: null,
             isUpdating: false,
             tieu_de: null,
+            nhom_id: 0,
         };
     },
     validate({ params }) {
@@ -417,9 +418,10 @@ export default {
             // formData.append('id', this.id)
             // formData.append('nhom_id', this.id_baihoc )
 
-            formData.append('bai_hoc_id', this.id_lesson)
             formData.append('id', this.id_lesson)
-            formData.append('nhom_id', this.id_baihoc )
+            formData.append('nhom_id', this.nhom_id )
+            formData.append('bai_hoc_id', this.id_baihoc)
+
 
             await api.post('chuong-trinh-hoc/sua-bai-hoc', formData, {
                 'Content-Type': 'multipart/form-data',
@@ -430,7 +432,7 @@ export default {
                     this.$refs['my-modal-td'].hide()
                     // this.noi_dung = null
                     // this.buoi = 0
-                    this.load_data();
+                    // this.load_data();
                     setTimeout(function () {
                         window.location.reload()
                     },1500)
@@ -578,6 +580,7 @@ export default {
                 this.data = res?.data?.data
 
                 this.tieu_de = this.data?.tieu_de
+                this.nhom_id = this.data?.nhom_id
 
                 res?.data?.data?.giaoCu.map((x) => {
                     this.giao_cu_id.push(x?.id)
