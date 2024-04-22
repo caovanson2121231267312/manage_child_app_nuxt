@@ -159,7 +159,7 @@
                             <div class="br-top"></div>
 
                             <div class="d-flex align-items-center justify-content-between card-body-p-16">
-                                
+
                                 <a class="btn btn-call position-relative" :href="'tel:+' + data?.phuHuynh?.dien_thoai">
                                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -170,7 +170,7 @@
                                     </svg>
                                     <span>Gọi điện</span>
                                 </a>
-                                
+
                                 <a class="btn btn-chat position-relative" :href="'sms:+' + data?.phuHuynh?.dien_thoai + '?body=Xin chào'">
                                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">

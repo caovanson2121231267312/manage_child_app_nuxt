@@ -165,7 +165,7 @@
                             <div class="br-top"></div>
 
                             <div class="d-flex align-items-center justify-content-between card-body-p-16">
-                                <button type="text" class="btn btn-call position-relative">
+                                <a  :href="'tel:+' + data?.giaoVien?.dien_thoai" type="text" class="btn btn-call position-relative">
                                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="19" cy="19" r="19" fill="white" fill-opacity="0.3" />
@@ -174,8 +174,8 @@
                                             fill="white" />
                                     </svg>
                                     <span>Gọi điện</span>
-                                </button>
-                                <button type="text" class="btn btn-chat position-relative">
+                                </a>
+                                <a  :href="'sms:+' + data?.giaoVien?.dien_thoai + '?body=Xin chào'" type="text" class="btn btn-chat position-relative">
                                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="19" cy="19" r="19" fill="white" fill-opacity="0.3" />
@@ -188,7 +188,7 @@
                                     </svg>
 
                                     <span>Nhắn tin</span>
-                                </button>
+                                </a>
                             </div>
 
                         </div>

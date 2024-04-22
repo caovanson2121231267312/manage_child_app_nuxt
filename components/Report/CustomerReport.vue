@@ -172,8 +172,8 @@ export default {
             this.load_data();
         },
         date1() {
-            console.log(this.date)
-            const dateArray = this.date.split("-");
+            console.log(this.date1)
+            const dateArray = this.date1.split("-");
             console.log(dateArray)
             this.month = dateArray[2] + '/' + dateArray[1] + '/' + dateArray[0];
             this.load_data();

@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="mt-8">
-                    <div class="d-flex filter-warp">
+                    <div class="d-flex filter-warp flex-wrap">
                         <div class="w-100 m-1" style="min-width: 200px;">
                             <b-form-input v-model.lazy="tuKhoa" placeholder="Tìm theo số điện thoại"></b-form-input>
                         </div>
@@ -49,6 +49,45 @@
                         <div class="w-100 m-1">
                             <b-form-select v-model="leader_kd_id" :options="leader_kd"
                                 aria-placeholder="Chọn"></b-form-select>
+                        </div>
+
+                        <div class="w-100">
+                            <div class="d-flex">
+                                <v-dialog ref="dialog1" v-model="modal1" :return-value.sync="date1" persistent
+                                    width="290px">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-text-field v-model="date1" label="" class="month-picker me-3"
+                                            prepend-icon="mdi-calendar" readonly v-bind="attrs"
+                                            v-on="on"></v-text-field>
+                                    </template>
+                                    <v-date-picker v-model="date1" type="date" scrollable>
+                                        <v-spacer></v-spacer>
+                                        <v-btn text color="primary" @click="modal1 = false">
+                                            Cancel
+                                        </v-btn>
+                                        <v-btn text color="primary" @click="$refs.dialog1.save(date1)">
+                                            OK
+                                        </v-btn>
+                                    </v-date-picker>
+                                </v-dialog>
+                                <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent
+                                    width="290px">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-text-field v-model="date" label="" class="month-picker"
+                                            prepend-icon="mdi-calendar" readonly v-bind="attrs"
+                                            v-on="on"></v-text-field>
+                                    </template>
+                                    <v-date-picker v-model="date" type="date" scrollable>
+                                        <v-spacer></v-spacer>
+                                        <v-btn text color="primary" @click="modal = false">
+                                            Cancel
+                                        </v-btn>
+                                        <v-btn text color="primary" @click="$refs.dialog.save(date)">
+                                            OK
+                                        </v-btn>
+                                    </v-date-picker>
+                                </v-dialog>
+                            </div>
                         </div>
                     </div>
 
@@ -212,6 +251,12 @@ export default {
             thang_id: '',
             timeOut: null,
             timer: 700,
+            date: new Date().toISOString(),
+            date1: new Date().toISOString(),
+            // month: 1,
+            // menu: false,
+            // modal: false,
+            modal1: false,
         }
     },
     computed: {
@@ -255,7 +300,7 @@ export default {
             })
         },
         async load_data() {
-            await api.get(`bao-cao/danh-sach-khach-hang?dien_thoai=${this.tuKhoa}&tuKhoa=${this.tuKhoaPH}&leader_kd_id=${this.leader_kd_id}&dia_chi=&dich_vu_id=${this.dich_vu_id}&denNgay=&tuNgay=&page=${this.current_page}&limit=10&sort=1`, {
+            await api.get(`bao-cao/danh-sach-khach-hang?dien_thoai=${this.tuKhoa}&tuKhoa=${this.tuKhoaPH}&leader_kd_id=${this.leader_kd_id}&dia_chi=&dich_vu_id=${this.dich_vu_id}&page=${this.current_page}&limit=10&sort=1` + `&tuNgay=${this.date1}&denNgay=${this.date}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -288,6 +333,23 @@ export default {
         }
     },
     mounted() {
+        var currentDate = new Date();
+        var year = currentDate.getFullYear();
+        var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+        var day = ('0' + currentDate.getDate()).slice(-2);
+        var formattedDate = year + '-' + month + '-' + day;
+        this.date = formattedDate
+
+
+        var month = ('0' + (currentDate.getMonth())).slice(-2);
+        var year = currentDate.getFullYear();
+        var day = ('0' + currentDate.getDate()).slice(-2);
+
+        this.date1 = year + '-' + month + '-' + day;
+
+        this.$store.dispatch('title/set_title', this.title)
+        this.month = this.date.split("-")[2] + '/' + this.date.split("-")[1] + '/' + this.date.split("-")[0];
+
         this.$store.dispatch('title/set_title', this.title)
         this.month = this.date.split("-")[1] + '/' + this.date.split("-")[0];
         this.load_type()
@@ -330,6 +392,20 @@ export default {
         },
         leader_kd_id() {
             this.load_data()
+        },
+        date() {
+            console.log(this.date)
+            const dateArray = this.date.split("-");
+            console.log(dateArray)
+            this.month = dateArray[2] + '/' + dateArray[1] + '/' + dateArray[0];
+            this.load_data();
+        },
+        date1() {
+            console.log(this.date1)
+            const dateArray = this.date1.split("-");
+            console.log(dateArray)
+            this.month = dateArray[2] + '/' + dateArray[1] + '/' + dateArray[0];
+            this.load_data();
         }
     }
 }
