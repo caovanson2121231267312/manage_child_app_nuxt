@@ -2,7 +2,7 @@ import axios from 'axios'
 // import { createToast } from 'mosha-vue-toastify'
 import toastr from 'toastr';
 
-const domain = process.env.link_api
+const domain = process.env.link_api ?? 'https://trongtre.top/'
 
 const api = {
     async get(url, headers = {}) {
