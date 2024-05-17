@@ -103,6 +103,11 @@
                                     <span class="text-light">Trạng thái</span>
                                 </tr>
                             </th>
+                            <th>
+                                <tr>
+                                    <span class="text-light">Số buổi</span>
+                                </tr>
+                            </th>
                             <!-- <th>
                                 <tr>
                                     <span class="text-light">Số buổi đã thực hiện (tính đến thời điểm xuất)
@@ -169,6 +174,9 @@
                                 </td>
                                 <td>
                                     <span>{{ item?.trang_thai ?? 'Chưa cập nhật' }}</span>
+                                </td>
+                                <td>
+                                    <span>{{ item?.soBuoiHoanThanh ?? '0' }}</span>
                                 </td>
                                 <!-- <td>
                                     <tr>

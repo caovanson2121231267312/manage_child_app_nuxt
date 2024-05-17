@@ -102,6 +102,20 @@
 
                     <div class="input">
                         <p class="rechange-p pb-2 m-0">
+                            <svg width="14" height="11" viewBox="0 0 14 11" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M9.93457 0H3.43457C1.48457 0 0.18457 0.970588 0.18457 3.23529V7.76471C0.18457 10.0294 1.48457 11 3.43457 11H9.93457C11.8846 11 13.1846 10.0294 13.1846 7.76471V3.23529C13.1846 0.970588 11.8846 0 9.93457 0ZM2.94707 7.11765C2.94707 7.38294 2.72607 7.60294 2.45957 7.60294C2.19307 7.60294 1.97207 7.38294 1.97207 7.11765V3.88235C1.97207 3.61706 2.19307 3.39706 2.45957 3.39706C2.72607 3.39706 2.94707 3.61706 2.94707 3.88235V7.11765ZM6.68457 7.44118C5.60557 7.44118 4.73457 6.57412 4.73457 5.5C4.73457 4.42588 5.60557 3.55882 6.68457 3.55882C7.76357 3.55882 8.63457 4.42588 8.63457 5.5C8.63457 6.57412 7.76357 7.44118 6.68457 7.44118ZM11.3971 7.11765C11.3971 7.38294 11.1761 7.60294 10.9096 7.60294C10.6431 7.60294 10.4221 7.38294 10.4221 7.11765V3.88235C10.4221 3.61706 10.6431 3.39706 10.9096 3.39706C11.1761 3.39706 11.3971 3.61706 11.3971 3.88235V7.11765Z"
+                                    fill="#FC4D32" />
+                            </svg>
+                            Ngày tháng
+                        </p>
+                        <input v-model="ngay_nhap" type="date" class="form-control input-text"
+                            placeholder="Nhập" />
+                    </div>
+
+                    <div class="input">
+                        <p class="rechange-p pb-2 m-0">
                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -197,6 +211,7 @@ export default {
             so_tien: null,
             ghi_chu: null,
             data: null,
+            ngay_nhap: null,
         };
     },
     validate({ params }) {
@@ -253,6 +268,7 @@ export default {
             formData.append('so_tien', this.so_tien)
             formData.append('ghi_chu', this.ghi_chu)
             formData.append('type_id', this.nap_tien_id)
+            formData.append('ngay_nhap', this.ngay_nhap)
 
             await api.post('giao-vien/nap-tien', formData, {
                 'Content-Type': 'multipart/form-data',
@@ -271,6 +287,7 @@ export default {
             formData.append('so_tien', this.so_tien)
             formData.append('ghi_chu', this.ghi_chu)
             formData.append('type_id', this.tru_tien_id)
+            formData.append('ngay_nhap', this.ngay_nhap)
 
             await api.post('giao-vien/rut-tien', formData, {
                 'Content-Type': 'multipart/form-data',

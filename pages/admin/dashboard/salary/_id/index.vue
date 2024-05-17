@@ -114,7 +114,12 @@
                             <div class="d-flex">
                                 <div class="me-5">
                                     <b class="me-1">Mã đơn:</b>
-                                    <span>{{ item?.ma_don_hang }}</span>
+                                    <span>
+                                        <!-- {{ item?.ma_don_hang }} -->
+                                        <nuxt-link :to="'/admin/orders/' + item?.id">
+                                        <span>{{ item?.ma_don_hang ?? 'Chưa cập nhật' }}</span>
+                                    </nuxt-link>
+                                    </span>
                                 </div>
                                 <div>
                                     <b class="me-1">Ngày:</b>

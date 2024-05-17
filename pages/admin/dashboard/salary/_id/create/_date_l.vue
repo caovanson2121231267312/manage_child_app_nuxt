@@ -84,7 +84,12 @@
                                 <tr v-for="(item, n) in data?.donDichVu" v-bind:key="n">
                                     <td>
                                         <div>Mã đơn dịch vụ</div>
-                                        <div class="text-primary">{{ item?.ma_don_hang }}</div>
+                                        <div class="text-primary">
+                                            <!-- {{ item?.ma_don_hang }} -->
+                                            <nuxt-link :to="'/admin/orders/' + item?.id">
+                                        <span>{{ item?.ma_don_hang ?? 'Chưa cập nhật' }}</span>
+                                    </nuxt-link>
+                                        </div>
                                     </td>
                                     <td>
                                         <span>{{ item?.so_buoi }}</span>

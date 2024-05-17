@@ -43,6 +43,10 @@
                             <b-form-input v-model.lazy="tuKhoaPH" placeholder="Tìm theo tên phụ huynh"></b-form-input>
                         </div>
                         <div class="w-100 m-1">
+                            <b-form-select v-model="trang_thai_id" :options="trang_thai"
+                                aria-placeholder="Chọn"></b-form-select>
+                        </div>
+                        <div class="w-100 m-1">
                             <b-form-select v-model="dich_vu_id" :options="dich_vu"
                                 aria-placeholder="Chọn"></b-form-select>
                         </div>
@@ -257,6 +261,9 @@ export default {
             // menu: false,
             // modal: false,
             modal1: false,
+            trang_thai_text: '',
+            trang_thai_id: '',
+            trang_thai: [],
         }
     },
     computed: {
@@ -267,6 +274,22 @@ export default {
     },
     methods: {
         async load_type() {
+            await api.get('don-dich-vu/trang-thai-don', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.trang_thai.unshift({
+                    value: '',
+                    text: 'Tất cả trạng thái'
+                });
+                this.trang_thai.push(...res?.data?.data.map(item => ({
+                    value: item.id,
+                    text: item.name
+                })));
+
+                this.trang_thai_id = this.trang_thai[0].value
+            })
+
             await api.get('dich-vu/danh-sach?page=1&limit=1000&sort=1&tuKhoa=', {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
@@ -300,7 +323,7 @@ export default {
             })
         },
         async load_data() {
-            await api.get(`bao-cao/danh-sach-khach-hang?dien_thoai=${this.tuKhoa}&tuKhoa=${this.tuKhoaPH}&leader_kd_id=${this.leader_kd_id}&dia_chi=&dich_vu_id=${this.dich_vu_id}&page=${this.current_page}&limit=10&sort=1` + `&tuNgay=${this.date1}&denNgay=${this.date}`, {
+            await api.get(`bao-cao/danh-sach-khach-hang?dien_thoai=${this.tuKhoa}&tuKhoa=${this.tuKhoaPH}&leader_kd_id=${this.leader_kd_id}&dia_chi=&dich_vu_id=${this.dich_vu_id}&page=${this.current_page}&limit=10&sort=1` + `&tuNgay=${this.date1}&denNgay=${this.date}&trang_thai=${this.trang_thai_text}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -392,6 +415,15 @@ export default {
         },
         leader_kd_id() {
             this.load_data()
+        },
+        trang_thai_id() {
+            this.trang_thai.forEach(element => {
+                console.log(element,  this.trang_thai_id)
+                if(element.value == this.trang_thai_id) {
+                    this.trang_thai_text = (element.text ?? '')
+                    this.load_data()
+                }
+            });
         },
         date() {
             console.log(this.date)
