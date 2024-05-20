@@ -431,6 +431,39 @@
                                     </div>
                                 </nuxt-link>
                             </b-card>
+
+                            <b-card style="min-width: 245px;" class="teacher-nav cp">
+                                <div class="block w-100 teachers " v-b-modal.my-modal-password>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="">
+                                            <span class="me-2">
+                                                <svg width="21" height="14" viewBox="0 0 21 14" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M1.46324 7.6113C1.3363 7.42646 1.27283 7.33404 1.2373 7.1915C1.21061 7.08443 1.21061 6.91557 1.2373 6.8085C1.27283 6.66596 1.3363 6.57354 1.46324 6.3887C2.51225 4.86129 5.6347 1 10.3931 1C15.1516 1 18.274 4.86129 19.323 6.3887C19.4499 6.57354 19.5134 6.66596 19.549 6.8085C19.5756 6.91557 19.5756 7.08443 19.549 7.1915C19.5134 7.33404 19.4499 7.42646 19.323 7.6113C18.274 9.13871 15.1516 13 10.3931 13C5.6347 13 2.51225 9.13871 1.46324 7.6113Z"
+                                                        stroke="#979797" stroke-width="1.3" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path
+                                                        d="M10.3931 9.57143C11.9375 9.57143 13.1895 8.42016 13.1895 7C13.1895 5.57984 11.9375 4.42857 10.3931 4.42857C8.84875 4.42857 7.59679 5.57984 7.59679 7C7.59679 8.42016 8.84875 9.57143 10.3931 9.57143Z"
+                                                        stroke="#979797" stroke-width="1.3" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </span>
+                                            <span>
+                                                Đổi mật khẩu
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <div class="web-icon">
+                                                <span class="mdi mdi-chevron-right"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b-card>
+
+
                         </div>
                     </div>
                 </div>
@@ -438,6 +471,35 @@
         </v-row>
 
 
+        <b-modal id="my-modal-password" ref="my-modal-password" hide-footer centered title="Đổi mật khẩu">
+            <template #default="{ hide }">
+                <div>
+
+                    <div class="">
+                        <div>
+                            <b-form-group>
+                                <label>Mật khẩu mới:</label>
+                                <b-form-input name="link" type="password" v-model="password"
+                                    placeholder="Nhập mẩu khẩu mới"></b-form-input>
+                            </b-form-group>
+                        </div>
+                        <div>
+                            <b-form-group>
+                                <label>Nhập lại mật khẩu:</label>
+                                <b-form-input name="link" type="password" v-model="password_comfirm"
+                                    placeholder="Nhập mẩu khẩu mới"></b-form-input>
+                            </b-form-group>
+                        </div>
+
+                    </div>
+                    <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                        <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                        <button class=" btn-delete ms-1" @click="edit_password()">Xác nhận đổi</button>
+                    </div>
+                </div>
+
+            </template>
+        </b-modal>
     </div>
 </template>
 
@@ -458,6 +520,9 @@ export default {
             data: null,
             chungNhan: null,
             open: true,
+            showPassword: false,
+            password: null,
+            password_comfirm: null,
         };
     },
     validate({ params }) {
@@ -549,6 +614,28 @@ export default {
                 }
             })
         },
+        async edit_password() {
+            const formData = new FormData();
+            formData.append('password', this.password)
+            formData.append('phu_huynh_id', this.id)
+            formData.append('password_comfirm', this.password_comfirm)
+
+            if (this.password == null || this.password == '') {
+                toastr.error('Nhập mật khẩu để tiếp tục');
+                return
+            }
+            api.post('phu-huynh/reset-password', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$router.push('/admin/users/teachers');
+                } else {
+                    // toastr.error(res?.data?.message);
+                }
+            })
+        }
     },
     mounted() {
         this.$store.dispatch('title/set_title', this.title);

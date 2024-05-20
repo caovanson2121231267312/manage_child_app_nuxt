@@ -38,6 +38,12 @@
   "ButtonWeb": {
     "description": "Auto imported from components/button/ButtonWeb.vue"
   },
+  "IconsRightSvg": {
+    "description": "Auto imported from components/icons/RightSvg.vue"
+  },
+  "InputFieldSuneditor": {
+    "description": "Auto imported from components/inputField/Suneditor.vue"
+  },
   "CardItem": {
     "description": "Auto imported from components/card/CardItem.vue"
   },
@@ -58,12 +64,6 @@
   },
   "CardTeacherTrainingUsers": {
     "description": "Auto imported from components/card/CardTeacherTrainingUsers.vue"
-  },
-  "IconsRightSvg": {
-    "description": "Auto imported from components/icons/RightSvg.vue"
-  },
-  "InputFieldSuneditor": {
-    "description": "Auto imported from components/inputField/Suneditor.vue"
   },
   "ServiceDetailServiceInfo": {
     "description": "Auto imported from components/service/DetailServiceInfo.vue"
