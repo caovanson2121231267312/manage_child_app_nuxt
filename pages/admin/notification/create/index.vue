@@ -299,23 +299,23 @@ export default {
             formData.append('tieu_de', this.tieu_de)
 
             if(this.disabled_giao_vien) {
-                const check = this.giao_vien.some(item => item.itemId == 0);
-                if(check){
-                    formData.append('giao_vien_id', '0')
-                } else {
+                // const check = this.giao_vien.some(item => item.itemId == 0);
+                // if(check){
+                //     formData.append('giao_vien_id', '0')
+                // } else {
                     formData.append('giao_vien_id', this.giao_vien.map(item => item.itemId).join(','))
-                }
+                // }
             }else {
                 formData.append('giao_vien_id', '')
             }
 
             if(this.disabled_phu_huynh) {
-                const check = this.phu_huynh.some(item => item.itemId == 0);
-                if(check){
-                    formData.append('phu_huynh_id', '0')
-                } else {
+                // const check = this.phu_huynh.some(item => item.itemId == 0);
+                // if(check){
+                //     formData.append('phu_huynh_id', '0')
+                // } else {
                     formData.append('phu_huynh_id', this.phu_huynh.map(item => item.itemId).join(','))
-                }
+                // }
             }else {
                 formData.append('phu_huynh_id', '')
             }
