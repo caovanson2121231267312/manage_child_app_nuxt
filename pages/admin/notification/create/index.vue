@@ -303,7 +303,8 @@ export default {
                 // if(check){
                 //     formData.append('giao_vien_id', '0')
                 // } else {
-                    formData.append('giao_vien_id', this.giao_vien_id.map(item => item.itemId).join(','))
+                    // formData.append('giao_vien_id', this.giao_vien_id.map(item => item.itemId).join(','))
+                    formData.append('giao_vien_id', this.giao_vien_id.join(','))
                 // }
             }else {
                 formData.append('giao_vien_id', '')
@@ -314,7 +315,8 @@ export default {
                 // if(check){
                 //     formData.append('phu_huynh_id', '0')
                 // } else {
-                    formData.append('phu_huynh_id', this.phu_huynh_id.map(item => item.itemId).join(','))
+                    // formData.append('phu_huynh_id', this.phu_huynh_id.map(item => item.itemId).join(','))
+                    formData.append('phu_huynh_id', this.phu_huynh_id.join(','))
                 // }
             }else {
                 formData.append('phu_huynh_id', '')
