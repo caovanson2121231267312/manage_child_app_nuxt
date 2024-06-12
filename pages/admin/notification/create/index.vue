@@ -304,6 +304,7 @@ export default {
                 //     formData.append('giao_vien_id', '0')
                 // } else {
                     // formData.append('giao_vien_id', this.giao_vien_id.map(item => item.itemId).join(','))
+                    console.log(this.giao_vien_id)
                     formData.append('giao_vien_id', this.giao_vien_id.join(','))
                 // }
             }else {
