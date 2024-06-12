@@ -28,7 +28,7 @@
                         <div class="mt-2">
                             <div>
                                 <div>
-                                    <div v-for="item in data?.ke_hoach_day?.[0]?.goiHoc" v-bind:key="item?.id">
+                                    <div class="mb-3" v-for="item in data?.ke_hoach_day?.goiHoc" v-bind:key="item?.id">
                                         <h5 class="text-primary fw-bold mt-5">
                                             {{ item?.tieu_de ?? 'Chưa cập nhật tiêu đề buổi học ...' }}
                                         </h5>
