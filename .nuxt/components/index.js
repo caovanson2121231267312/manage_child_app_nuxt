@@ -1,29 +1,29 @@
-export const NuxtLogo = () => import('../../components/NuxtLogo.vue' /* webpackChunkName: "components/nuxt-logo" */).then(c => wrapFunctional(c.default || c))
-export const Tutorial = () => import('../../components/Tutorial.vue' /* webpackChunkName: "components/tutorial" */).then(c => wrapFunctional(c.default || c))
-export const VuetifyLogo = () => import('../../components/VuetifyLogo.vue' /* webpackChunkName: "components/vuetify-logo" */).then(c => wrapFunctional(c.default || c))
-export const ChartBarChart = () => import('../../components/Chart/BarChart.vue' /* webpackChunkName: "components/chart-bar-chart" */).then(c => wrapFunctional(c.default || c))
-export const ReportCustomerReport = () => import('../../components/Report/CustomerReport.vue' /* webpackChunkName: "components/report-customer-report" */).then(c => wrapFunctional(c.default || c))
-export const ReportOrderReport = () => import('../../components/Report/OrderReport.vue' /* webpackChunkName: "components/report-order-report" */).then(c => wrapFunctional(c.default || c))
-export const ReportSalaryReport = () => import('../../components/Report/SalaryReport.vue' /* webpackChunkName: "components/report-salary-report" */).then(c => wrapFunctional(c.default || c))
-export const ReportSalesReport = () => import('../../components/Report/SalesReport.vue' /* webpackChunkName: "components/report-sales-report" */).then(c => wrapFunctional(c.default || c))
-export const ReportUserReport = () => import('../../components/Report/UserReport.vue' /* webpackChunkName: "components/report-user-report" */).then(c => wrapFunctional(c.default || c))
-export const ButtonAdd = () => import('../../components/button/ButtonAdd.vue' /* webpackChunkName: "components/button-add" */).then(c => wrapFunctional(c.default || c))
-export const ButtonComponent = () => import('../../components/button/ButtonComponent.vue' /* webpackChunkName: "components/button-component" */).then(c => wrapFunctional(c.default || c))
-export const ButtonFilter = () => import('../../components/button/ButtonFilter.vue' /* webpackChunkName: "components/button-filter" */).then(c => wrapFunctional(c.default || c))
-export const ButtonWeb = () => import('../../components/button/ButtonWeb.vue' /* webpackChunkName: "components/button-web" */).then(c => wrapFunctional(c.default || c))
-export const IconsRightSvg = () => import('../../components/icons/RightSvg.vue' /* webpackChunkName: "components/icons-right-svg" */).then(c => wrapFunctional(c.default || c))
-export const InputFieldSuneditor = () => import('../../components/inputField/Suneditor.vue' /* webpackChunkName: "components/input-field-suneditor" */).then(c => wrapFunctional(c.default || c))
-export const CardItem = () => import('../../components/card/CardItem.vue' /* webpackChunkName: "components/card-item" */).then(c => wrapFunctional(c.default || c))
-export const CardMaterials = () => import('../../components/card/CardMaterials.vue' /* webpackChunkName: "components/card-materials" */).then(c => wrapFunctional(c.default || c))
-export const CardResultTraining = () => import('../../components/card/CardResultTraining.vue' /* webpackChunkName: "components/card-result-training" */).then(c => wrapFunctional(c.default || c))
-export const CardService = () => import('../../components/card/CardService.vue' /* webpackChunkName: "components/card-service" */).then(c => wrapFunctional(c.default || c))
-export const CardServiceOrder = () => import('../../components/card/CardServiceOrder.vue' /* webpackChunkName: "components/card-service-order" */).then(c => wrapFunctional(c.default || c))
-export const CardTeacherTraining = () => import('../../components/card/CardTeacherTraining.vue' /* webpackChunkName: "components/card-teacher-training" */).then(c => wrapFunctional(c.default || c))
-export const CardTeacherTrainingUsers = () => import('../../components/card/CardTeacherTrainingUsers.vue' /* webpackChunkName: "components/card-teacher-training-users" */).then(c => wrapFunctional(c.default || c))
-export const ServiceDetailServiceInfo = () => import('../../components/service/DetailServiceInfo.vue' /* webpackChunkName: "components/service-detail-service-info" */).then(c => wrapFunctional(c.default || c))
-export const TitleHeader = () => import('../../components/title/TitleHeader.vue' /* webpackChunkName: "components/title-header" */).then(c => wrapFunctional(c.default || c))
-export const UserAvatar = () => import('../../components/user/Avatar.vue' /* webpackChunkName: "components/user-avatar" */).then(c => wrapFunctional(c.default || c))
-export const UserAvatarSiderbar = () => import('../../components/user/AvatarSiderbar.vue' /* webpackChunkName: "components/user-avatar-siderbar" */).then(c => wrapFunctional(c.default || c))
+export { default as NuxtLogo } from '../../components/NuxtLogo.vue'
+export { default as Tutorial } from '../../components/Tutorial.vue'
+export { default as VuetifyLogo } from '../../components/VuetifyLogo.vue'
+export { default as ChartBarChart } from '../../components/Chart/BarChart.vue'
+export { default as ReportCustomerReport } from '../../components/Report/CustomerReport.vue'
+export { default as ReportOrderReport } from '../../components/Report/OrderReport.vue'
+export { default as ReportSalaryReport } from '../../components/Report/SalaryReport.vue'
+export { default as ReportSalesReport } from '../../components/Report/SalesReport.vue'
+export { default as ReportUserReport } from '../../components/Report/UserReport.vue'
+export { default as ButtonAdd } from '../../components/button/ButtonAdd.vue'
+export { default as ButtonComponent } from '../../components/button/ButtonComponent.vue'
+export { default as ButtonFilter } from '../../components/button/ButtonFilter.vue'
+export { default as ButtonWeb } from '../../components/button/ButtonWeb.vue'
+export { default as IconsRightSvg } from '../../components/icons/RightSvg.vue'
+export { default as CardItem } from '../../components/card/CardItem.vue'
+export { default as CardMaterials } from '../../components/card/CardMaterials.vue'
+export { default as CardResultTraining } from '../../components/card/CardResultTraining.vue'
+export { default as CardService } from '../../components/card/CardService.vue'
+export { default as CardServiceOrder } from '../../components/card/CardServiceOrder.vue'
+export { default as CardTeacherTraining } from '../../components/card/CardTeacherTraining.vue'
+export { default as CardTeacherTrainingUsers } from '../../components/card/CardTeacherTrainingUsers.vue'
+export { default as ServiceDetailServiceInfo } from '../../components/service/DetailServiceInfo.vue'
+export { default as InputFieldSuneditor } from '../../components/inputField/Suneditor.vue'
+export { default as TitleHeader } from '../../components/title/TitleHeader.vue'
+export { default as UserAvatar } from '../../components/user/Avatar.vue'
+export { default as UserAvatarSiderbar } from '../../components/user/AvatarSiderbar.vue'
 
 // nuxt/nuxt.js#8607
 function wrapFunctional(options) {

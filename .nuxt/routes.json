@@ -224,6 +224,13 @@
     "_name": "_517b488e"
   },
   {
+    "name": "admin-system-configs",
+    "path": "/admin/system/configs",
+    "component": "/home/caovanson/Documents/VUEJS/child_app/pages/admin/system/configs/index.vue",
+    "chunkName": "pages/admin/system/configs/index",
+    "_name": "_31829a36"
+  },
+  {
     "name": "admin-system-educational-ecosystem",
     "path": "/admin/system/educational-ecosystem",
     "component": "/home/caovanson/Documents/VUEJS/child_app/pages/admin/system/educational-ecosystem/index.vue",
@@ -376,6 +383,13 @@
     "component": "/home/caovanson/Documents/VUEJS/child_app/pages/admin/students/edit/_id.vue",
     "chunkName": "pages/admin/students/edit/_id",
     "_name": "_e7b602ea"
+  },
+  {
+    "name": "admin-system-configs-id",
+    "path": "/admin/system/configs/:id",
+    "component": "/home/caovanson/Documents/VUEJS/child_app/pages/admin/system/configs/_id.vue",
+    "chunkName": "pages/admin/system/configs/_id",
+    "_name": "_2793aae6"
   },
   {
     "name": "admin-teacher-training-training-result-id",

@@ -36,6 +36,7 @@ const _1653f0aa = () => interopDefault(import('../pages/admin/service/create/ind
 const _0ba87455 = () => interopDefault(import('../pages/admin/students/create/index.vue' /* webpackChunkName: "pages/admin/students/create/index" */))
 const _3f23df7e = () => interopDefault(import('../pages/admin/system/about/index.vue' /* webpackChunkName: "pages/admin/system/about/index" */))
 const _517b488e = () => interopDefault(import('../pages/admin/system/banner/index.vue' /* webpackChunkName: "pages/admin/system/banner/index" */))
+const _31829a36 = () => interopDefault(import('../pages/admin/system/configs/index.vue' /* webpackChunkName: "pages/admin/system/configs/index" */))
 const _5e4120fa = () => interopDefault(import('../pages/admin/system/educational-ecosystem/index.vue' /* webpackChunkName: "pages/admin/system/educational-ecosystem/index" */))
 const _42416fc3 = () => interopDefault(import('../pages/admin/system/support/index.vue' /* webpackChunkName: "pages/admin/system/support/index" */))
 const _1d5d7dc2 = () => interopDefault(import('../pages/admin/system/tax/index.vue' /* webpackChunkName: "pages/admin/system/tax/index" */))
@@ -58,6 +59,7 @@ const _16533160 = () => interopDefault(import('../pages/admin/materials/detail/_
 const _798299ee = () => interopDefault(import('../pages/admin/materials/edit/_id.vue' /* webpackChunkName: "pages/admin/materials/edit/_id" */))
 const _5aa0986c = () => interopDefault(import('../pages/admin/review-lesson/form-review/_id/index.vue' /* webpackChunkName: "pages/admin/review-lesson/form-review/_id/index" */))
 const _e7b602ea = () => interopDefault(import('../pages/admin/students/edit/_id.vue' /* webpackChunkName: "pages/admin/students/edit/_id" */))
+const _2793aae6 = () => interopDefault(import('../pages/admin/system/configs/_id.vue' /* webpackChunkName: "pages/admin/system/configs/_id" */))
 const _11bb4482 = () => interopDefault(import('../pages/admin/teacher-training/training-result/_id.vue' /* webpackChunkName: "pages/admin/teacher-training/training-result/_id" */))
 const _3c88792c = () => interopDefault(import('../pages/admin/users/admins/_id/index.vue' /* webpackChunkName: "pages/admin/users/admins/_id/index" */))
 const _0d74eae0 = () => interopDefault(import('../pages/admin/users/parent/_id/index.vue' /* webpackChunkName: "pages/admin/users/parent/_id/index" */))
@@ -246,6 +248,10 @@ export const routerOptions = {
     component: _517b488e,
     name: "admin-system-banner"
   }, {
+    path: "/admin/system/configs",
+    component: _31829a36,
+    name: "admin-system-configs"
+  }, {
     path: "/admin/system/educational-ecosystem",
     component: _5e4120fa,
     name: "admin-system-educational-ecosystem"
@@ -333,6 +339,10 @@ export const routerOptions = {
     path: "/admin/students/edit/:id?",
     component: _e7b602ea,
     name: "admin-students-edit-id"
+  }, {
+    path: "/admin/system/configs/:id",
+    component: _2793aae6,
+    name: "admin-system-configs-id"
   }, {
     path: "/admin/teacher-training/training-result/:id",
     component: _11bb4482,

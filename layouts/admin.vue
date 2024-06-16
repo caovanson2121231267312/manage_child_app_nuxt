@@ -145,6 +145,11 @@
                                                 <v-list-item-title>Chiết khấu cho giáo viên</v-list-item-title>
                                             </v-list-item-content>
                                         </v-list-item>
+                                        <v-list-item to="/admin/system/configs">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Cài đặt</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
                                     </v-list-item-group>
                                 </v-list-group>
 

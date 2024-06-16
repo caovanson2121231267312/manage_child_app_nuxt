@@ -41,9 +41,6 @@
   "IconsRightSvg": {
     "description": "Auto imported from components/icons/RightSvg.vue"
   },
-  "InputFieldSuneditor": {
-    "description": "Auto imported from components/inputField/Suneditor.vue"
-  },
   "CardItem": {
     "description": "Auto imported from components/card/CardItem.vue"
   },
@@ -67,6 +64,9 @@
   },
   "ServiceDetailServiceInfo": {
     "description": "Auto imported from components/service/DetailServiceInfo.vue"
+  },
+  "InputFieldSuneditor": {
+    "description": "Auto imported from components/inputField/Suneditor.vue"
   },
   "TitleHeader": {
     "description": "Auto imported from components/title/TitleHeader.vue"
