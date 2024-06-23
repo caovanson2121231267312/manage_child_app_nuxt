@@ -307,11 +307,45 @@
 
                 <div class="w-100 mt-7" @click="create_new()">
                     <button-add>
-                        <span class="icon-plus mdi mdi-plus"></span> Thêm khóa học
+                        <span class="icon-plus mdi mdi-plus"></span> Thêm khóa học mới
+                    </button-add>
+                </div>
+
+                <div class="w-100 mt-7" v-b-modal.my-modal>
+                    <button-add>
+                        <span class="mdi mdi-tag-edit"></span> Sửa khóa học
+                    </button-add>
+                </div>
+
+                <div class="w-100 mt-7" @click="delete_item_lesson()">
+                    <button-add>
+                        <span class="mdi mdi-delete-alert"></span> Xoá khóa học
                     </button-add>
                 </div>
             </v-col>
         </v-row>
+
+        <b-modal id="my-modal" ref="my-modal" hide-footer centered title="Sửa khóa học">
+                <template #default="{ hide }">
+                    <form id="form" @submit="send_data_edit">
+
+                        <div class="my-4 pb-3">
+                            <div>
+                                <b-form-group>
+                                    <label>Tiêu đề:</label>
+                                    <b-form-input name="link" v-model="tieu_de" placeholder="Nhập"></b-form-input>
+                                </b-form-group>
+                            </div>
+
+                        </div>
+                        <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                            <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                            <button class=" btn-delete ms-1" type="submit">Xác nhận</button>
+                        </div>
+                    </form>
+
+                </template>
+            </b-modal>
 
     </div>
 </template>
@@ -339,6 +373,7 @@ export default {
             data: null,
             file: null,
             image: null,
+            tieu_de: '',
         };
     },
     setup() {
@@ -417,6 +452,24 @@ export default {
                 this.nangCao = res?.data?.data?.nangCao
                 this.data = res?.data?.data
                 this.image = res?.data?.data?.image
+                this.tieu_de = res?.data?.data?.tieu_de ?? ''
+            })
+        },
+        async send_data_edit(event) {
+            event.preventDefault();
+            const formData = new FormData()
+            formData.append('id', this.id)
+            formData.append('tieu_de', this.tieu_de)
+
+            await api.post('dao-tao/sua', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal'].hide()
+                    this.load_data();
+                }
             })
         },
         async send_data(event) {
@@ -432,6 +485,43 @@ export default {
                     this.clearFiles();
                     this.name = null
                     this.load_data();
+                }
+            })
+        },
+        async delete_item_lesson() {
+            const formData = new FormData();
+            formData.append('id', this.id)
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: `Xoá lựa chọn này!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có xoá nó!',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.post('dao-tao/xoa-khoa-hoc', formData, {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + this.token
+                    }).then(res => {
+                        if (res?.status == 200) {
+                            // toastr.success(res?.data?.message);
+                            Swal.fire(
+                                'Deleted!',
+                                res?.data?.message,
+                                'success'
+                            )
+                            // this.load_data()
+                            this.$router.push('/admin/lsm/teacher-training');
+                            // this.load_role()
+                        } else {
+                            toastr.error(res?.data?.message);
+                        }
+                    })
+
                 }
             })
         },

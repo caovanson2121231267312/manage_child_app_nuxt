@@ -116,8 +116,45 @@
                                     </span>
                                     Gán giáo viên
                                 </div>
-                                <v-select v-model="giao_vien_id" :items="giao_vien" label="Chọn giáo viên" multiple filled
-                                    flat chips item-text="itemName" item-value="itemId"></v-select>
+                                <!-- <v-select v-model="giao_vien_id" :items="giao_vien" label="Chọn giáo viên" multiple filled
+                                    flat chips item-text="itemName" item-value="itemId"></v-select> -->
+
+                                    <v-autocomplete v-model="giao_vien_id" :disabled="isUpdating" :items="giao_vien" filled chips
+                                color="blue-grey lighten-2" label="" item-text="name" item-value="group">
+                                <template v-slot:selection="data">
+                                    <div class="d-flex">
+                                        <div class="ms-2">
+                                            <div class="mt-2">
+                                                <b>{{ data.item.name }}</b>
+                                            </div>
+                                            <div>
+                                                <span class="blade-id"># {{ data.item.group }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <v-chip v-bind="data.attrs" :input-value="data.selected" close @click="data.select"
+                                        @click:close="remove(data.item)">
+                                        <v-avatar left>
+                                            <v-img :src="data.item.avatar"></v-img>
+                                        </v-avatar>
+                                        {{ data.item.name }}
+                                    </v-chip> -->
+                                </template>
+                                <template v-slot:item="data">
+                                    <template v-if="typeof data.item !== 'object'">
+                                        <v-list-item-content v-text="data.item"></v-list-item-content>
+                                    </template>
+                                    <template v-else>
+                                        <v-list-item-avatar>
+                                            <img :src="data.item.avatar">
+                                        </v-list-item-avatar>
+                                        <v-list-item-content>
+                                            <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                                            <v-list-item-subtitle v-html="data.item.group"></v-list-item-subtitle>
+                                        </v-list-item-content>
+                                    </template>
+                                </template>
+                            </v-autocomplete>
                             </b-form-group>
                         </div>
 
@@ -208,6 +245,7 @@ export default {
         },
         selected: 0,
         tieu_de: null,
+        isUpdating: false,
         types: null,
         get_toi: [],
         giao_vien_id: [],
@@ -234,6 +272,7 @@ export default {
         }
     },
     methods: {
+
         async load_type() {
             await api.get('thong-bao/get-type', {
                 'Content-Type': 'multipart/form-data',
@@ -265,14 +304,23 @@ export default {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
+                // this.giao_vien = res?.data?.data.map(item => {
+                //     return {
+                //         itemId: item?.id,
+                //         itemName: item?.hoten ?? item?.id,
+                //     }
+                // })
+
+                // this.giao_vien.unshift({itemId:0, itemName:'Tất cả'});
+
                 this.giao_vien = res?.data?.data.map(item => {
                     return {
-                        itemId: item?.id,
-                        itemName: item?.hoten ?? item?.id,
-                    }
+                        group: item?.id,
+                        name: item?.hoten ?? (item?.id + ' - Chưa cập nhât tên'),
+                        avatar: item?.anh_nguoi_dung,
+                    };
                 })
-
-                this.giao_vien.unshift({itemId:0, itemName:'Tất cả'});
+                this.giao_vien_id = this.giao_vien[0].group
             })
 
             await api.get('thong-bao/danh-sach-phu-huynh?tuKhoa=', {
@@ -305,7 +353,11 @@ export default {
                 // } else {
                     // formData.append('giao_vien_id', this.giao_vien_id.map(item => item.itemId).join(','))
                     console.log(this.giao_vien_id)
-                    formData.append('giao_vien_id', this.giao_vien_id.join(','))
+                    try {
+                        formData.append('giao_vien_id', this.giao_vien_id.join(','))
+                    } catch (e) {
+                        formData.append('giao_vien_id', this.giao_vien_id)
+                    }
                 // }
             }else {
                 formData.append('giao_vien_id', '')
@@ -372,6 +424,11 @@ export default {
     },
     components: {},
     watch: {
+        isUpdating(val) {
+            if (val) {
+                setTimeout(() => (this.isUpdating = false), 3000)
+            }
+        },
         get_toi_id() {
             if (this.get_toi_id == 60) {
                 this.disabled_giao_vien = true

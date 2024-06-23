@@ -43,7 +43,7 @@
                                 <hr class="my-1" />
                                 <div>
                                     <span class="span1">Nội dung:</span>
-                                    <span class="ms-1 span2">{{ i?.noi_dung }}</span>
+                                    <span class="ms-1 span2" v-html="i?.noi_dung"></span>
                                 </div>
                                 <div>
                                     <span class="span1">Bởi:</span>

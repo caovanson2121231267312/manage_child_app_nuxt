@@ -9,8 +9,7 @@
                             <div>
                                 <b-form-group>
                                     <label><b>Tiêu đề:</b></label>
-                                    <b-form-input name="ck" disabled
-                                        v-model="name"></b-form-input>
+                                    <b-form-input name="ck" disabled v-model="name"></b-form-input>
                                 </b-form-group>
                             </div>
                         </div>
@@ -27,7 +26,9 @@
                                     </span>
                                     Nội dung
                                 </div>
-                                <textarea v-model="noi_dung" id="sample"></textarea>
+                                <b-form-textarea id="textarea" placeholder="Enter something..." v-model="noi_dung"
+                                    rows="7" max-rows="6"></b-form-textarea>
+                                <!-- <textarea class="form-controll" v-model="noi_dung" id="sample"></textarea> -->
                             </b-form-group>
                         </div>
 
@@ -144,32 +145,33 @@ export default {
     },
     mounted() {
 
-        const editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'), {
-            toolbarContainer: '#toolbar_container',
-            showPathLabel: false,
-            charCounter: true,
-            width: 'auto',
-            height: 'auto',
-            minHeight: '300px',
-            maxHeight: '250px',
-            plugins: plugins,
-            buttonList: [
-                ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
-                ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
-                ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
-                ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
-            ],
-            callBackSave: function (noi_dung, isChanged) {
-                this.noi_dung = noi_dung
-                console.log(noi_dung);
-            },
-        });
-        this.suneditorInstance = editor; // Store the Suneditor instance in a component property
+        // const editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'), {
+        //     toolbarContainer: '#toolbar_container',
+        //     showPathLabel: false,
+        //     charCounter: true,
+        //     width: 'auto',
+        //     height: 'auto',
+        //     minHeight: '300px',
+        //     maxHeight: '250px',
+        //     plugins: plugins,
+        //     buttonList: [
+        //         ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
+        //         ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+        //         ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+        //         ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']
+        //     ],
+        //     callBackSave: function (noi_dung, isChanged) {
+        //         this.noi_dung = noi_dung
+        //         console.log(noi_dung);
+        //     },
+        // });
+        // this.suneditorInstance = editor; // Store the Suneditor instance in a component property
 
-        this.suneditorInstance.onChange = async (noi_dung, core) => {
-            this.noi_dung = noi_dung;
-            await console.log(this.noi_dung)
-        };
+        // this.suneditorInstance.onChange = async (noi_dung, core) => {
+        //     this.noi_dung = noi_dung;
+        //     await console.log(this.noi_dung)
+        // };
+        //
 
         this.load_data()
         this.$store.dispatch('title/set_title', this.title);

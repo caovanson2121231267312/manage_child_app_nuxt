@@ -26,21 +26,6 @@
   "ReportUserReport": {
     "description": "Auto imported from components/Report/UserReport.vue"
   },
-  "ButtonAdd": {
-    "description": "Auto imported from components/button/ButtonAdd.vue"
-  },
-  "ButtonComponent": {
-    "description": "Auto imported from components/button/ButtonComponent.vue"
-  },
-  "ButtonFilter": {
-    "description": "Auto imported from components/button/ButtonFilter.vue"
-  },
-  "ButtonWeb": {
-    "description": "Auto imported from components/button/ButtonWeb.vue"
-  },
-  "IconsRightSvg": {
-    "description": "Auto imported from components/icons/RightSvg.vue"
-  },
   "CardItem": {
     "description": "Auto imported from components/card/CardItem.vue"
   },
@@ -62,11 +47,26 @@
   "CardTeacherTrainingUsers": {
     "description": "Auto imported from components/card/CardTeacherTrainingUsers.vue"
   },
-  "ServiceDetailServiceInfo": {
-    "description": "Auto imported from components/service/DetailServiceInfo.vue"
+  "ButtonAdd": {
+    "description": "Auto imported from components/button/ButtonAdd.vue"
+  },
+  "ButtonComponent": {
+    "description": "Auto imported from components/button/ButtonComponent.vue"
+  },
+  "ButtonFilter": {
+    "description": "Auto imported from components/button/ButtonFilter.vue"
+  },
+  "ButtonWeb": {
+    "description": "Auto imported from components/button/ButtonWeb.vue"
+  },
+  "IconsRightSvg": {
+    "description": "Auto imported from components/icons/RightSvg.vue"
   },
   "InputFieldSuneditor": {
     "description": "Auto imported from components/inputField/Suneditor.vue"
+  },
+  "ServiceDetailServiceInfo": {
+    "description": "Auto imported from components/service/DetailServiceInfo.vue"
   },
   "TitleHeader": {
     "description": "Auto imported from components/title/TitleHeader.vue"
