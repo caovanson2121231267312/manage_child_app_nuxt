@@ -199,7 +199,7 @@
                                     class="m-0 p-0 d-block w-100 d-flex justify-content-between align-items-center">
                                     <span>Hoàn tất xử lý phản hồi</span>
                                     <span class="center">
-                                        <input id="check" type="checkbox" class="input-check" />
+                                        <input v-model="xac_nhan" id="check" type="checkbox" class="input-check" />
                                     </span>
                                 </label>
                             </div>
@@ -218,13 +218,13 @@
                     </div>
 
                     <div>
-                        <textarea class="form-control text-input" placeholder="Nhập thông tin ">
+                        <textarea v-model="phan_hoi" class="form-control text-input" placeholder="Nhập thông tin ">
 
                         </textarea>
                     </div>
                 </div>
 
-                <div class="mt-7">
+                <div class="mt-7" @click="send_data()">
                     <button-component>Lưu</button-component>
                 </div>
             </v-col>
@@ -284,9 +284,10 @@ export default {
                 this.data = user
                 this.xac_nhan = user?.tinh_trang == 'Chưa xử lý' ? false : true
                 this.xac_nhan = user?.tinh_trang == 'Chưa xử lý' ? false : true
+                this.phan_hoi = user?.phan_hoi
             })
         },
-        async send_data(event) {
+        async send_data() {
             // event.preventDefault();
 
             const formData = new FormData()

@@ -19,7 +19,7 @@
         </div>
 
         <v-row>
-            <v-col class="mt-0 pt-0" xs="12" sm="12" md="8" lg="5" xl="4">
+            <v-col class="mt-0 pt-0" xs="12" sm="12" md="8" lg="6" xl="6">
                 <b-card style="min-width: 245px;" class="">
                     <div class="block w-100 teachers teacher-detail">
                         <div class="w-100">
@@ -191,6 +191,21 @@
                                 </a>
                             </div>
 
+                        </div>
+                    </div>
+                </b-card>
+
+                <b-card v-for="(item, n) in this.data?.giaoCu" v-bind:key="n" style="min-width: 245px;" class=" my-6">
+                    <div class="block w-100 teachers teacher-detail">
+                        <div class="card-body-p-16">
+                            <div class="d-flex">
+                                <label for="check1"
+                                    class="m-0 p-0 d-block w-100 d-flex justify-content-between align-items-center">
+                                    <span>Code: {{ item?.code }}</span>
+                                    <span class="fw-cold text-primary">Số lượng: {{ item?.so_luong }}</span>
+
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </b-card>

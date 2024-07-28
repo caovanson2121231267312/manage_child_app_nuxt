@@ -253,8 +253,22 @@ export default {
                 this.cmnd_cccd = res?.data?.data.user?.cmnd_cccd
                 this.hoten = res?.data?.data.user?.hoten
                 this.ngay_sinh = res?.data?.data.user?.ngay_sinh
+
+                let dateArray = this.ngay_sinh.split("/");
+                let year = dateArray[2];
+                let month = dateArray[1];
+                let day = dateArray[0];
+                // let currentDate = new Date();
+                // let day = currentDate.getDate();
+                // this.ngay_sinh = `${day}-${month}-${year}`;
+                this.ngay_sinh = `${year}-${month}-${day}`;
+                console.log(this.ngay_sinh)
+
                 this.email = res?.data?.data.user?.email
                 this.image = res?.data?.data.user?.anh_nguoi_dung
+                this.chuyen_nganh = res?.data?.data.bangCap?.chuyen_nganh
+                this.trinh_do = res?.data?.data.bangCap?.trinh_do
+                this.truong_dao_tao = res?.data?.data.bangCap?.truong_dao_tao
                 this.data = user
                 // this.hoten = user?.hoten
                 // this.dien_thoai = user?.dien_thoai
