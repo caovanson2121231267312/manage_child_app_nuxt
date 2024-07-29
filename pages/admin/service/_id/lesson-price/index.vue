@@ -326,7 +326,7 @@ export default {
             })
         },
         async load_data() {
-            await api.get(`dich-vu/danh-sach-gia-buoi-hoc?trinh_do=${this.selectedFilter}&page=1&limit=40&sort=0&dich_vu_id=` + this.id, {
+            await api.get(`dich-vu/danh-sach-gia-buoi-hoc?trinh_do=${this.selectedFilter}&page=1&limit=1000&sort=0&dich_vu_id=` + this.id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

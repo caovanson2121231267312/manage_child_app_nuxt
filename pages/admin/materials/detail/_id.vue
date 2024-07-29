@@ -248,13 +248,13 @@ export default {
                 this.data = user
             })
 
-            await api.get('giao-cu/chi-tiet-ban-giao?id=' + this.id, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                const user = res?.data?.data
-                this.data_bangiao = user
-            })
+            // await api.get('giao-cu/chi-tiet-ban-giao?id=' + this.id, {
+            //     'Content-Type': 'multipart/form-data',
+            //     Authorization: 'Bearer ' + this.token
+            // }).then(res => {
+            //     const user = res?.data?.data
+            //     this.data_bangiao = user
+            // })
         },
     },
     mounted() {

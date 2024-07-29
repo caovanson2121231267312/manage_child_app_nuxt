@@ -29,7 +29,8 @@
                                     <b class="span-title">{{ item?.khung_gio }}</b>
                                 </div>
                                 <div>
-                                    <span @click="delete_item(item?.id, item?.khung_gio)" class="cp mdi mdi-trash-can-outline"></span>
+                                    <span @click="edit_item(item?.id, item?.khung_gio)" class="cp text-primary mdi mdi-tag-edit"></span>
+                                    <span @click="delete_item(item?.id, item?.khung_gio)" class="cp text-danger mdi mdi-trash-can-outline"></span>
                                 </div>
                             </div>
                             <div class="mt-2 wow animate__animated animate__zoomIn">
@@ -56,9 +57,6 @@
                         </button-add>
 
                         <b-modal size="lg" id="my-modal" ref="my-modal" hide-footer centered title="Thêm nội dung buổi học">
-                            <!-- <template #modal-header="{ close }">
-                <h5>Thông báo</h5>
-            </template> -->
                             <template #default="{ hide }">
                                 <div class="w-100">
                                     <div class="mb-3">
@@ -76,6 +74,28 @@
                                 <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
                                     <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
                                     <button class=" btn-delete ms-1" @click="send_data()">Xác nhận tạo</button>
+                                </div>
+                            </template>
+                        </b-modal>
+
+                        <b-modal size="lg" id="my-modal-edit" ref="my-modal-edit" hide-footer centered title="Sửa">
+                            <template #default="{ hide }">
+                                <div class="w-100">
+                                    <div class="mb-3">
+                                        <b-form-select v-model="selected" :options="chonCa"></b-form-select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <b-form-select v-model="khung_gio" :options="khung_gios"></b-form-select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <Suneditor :contents="noi_dung" @valueChanged="handleValueChanged"></Suneditor>
+                                    </div>
+
+                                </div>
+                                <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                                    <button class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                                    <button class=" btn-delete ms-1" @click="send_data_edit()">Xác nhận sửa</button>
                                 </div>
                             </template>
                         </b-modal>
@@ -115,6 +135,7 @@ export default {
             khung_gios: [],
             selected1: 1,
             selected: 1,
+            edit_id: null,
         };
     },
     validate({ params }) {
@@ -146,21 +167,6 @@ export default {
                 this.selected = this.chonCa[0].value
 
             })
-
-            // await api.get('dich-vu/get-khung-thoi-gian?type=10', {
-            //     'Content-Type': 'multipart/form-data',
-            //     Authorization: 'Bearer ' + this.token
-            // }).then(res => {
-
-            //     this.khung_gios = res?.data?.data?.map(item => {
-            //         return {
-            //             value: item.id,
-            //             text: item.name
-            //         };
-            //     })
-            //     this.khung_gio = this.khung_gios[0].value
-
-            // })
         },
         async load_data() {
             await api.get(`dich-vu/danh-sach-khung-gio?type=${this.selectedFilter ?? ''}&page=1&limit=100&sort=1&dich_vu_id=` + this.id, {
@@ -173,8 +179,6 @@ export default {
             })
         },
         async send_data(event) {
-            // event.preventDefault();
-
             const formData = new FormData()
             formData.append('dich_vu_id', this.id)
             formData.append('type', this.selected)
@@ -193,6 +197,38 @@ export default {
                     this.selectedFilter = this.selected
                     // this.selected = this.selected
                     // this.load_role()
+                }
+            })
+        },
+        edit_item (id, link) {
+            this.edit_id = id
+
+            api.get(`dich-vu/chi-tiet-khung-gio-v2?id=` + id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                const user = res?.data?.data
+                this.selected = user?.type
+                this.khung_gio = user?.khung_gio
+                this.noi_dung = user?.noi_dung
+                this.$refs['my-modal-edit'].show()
+            })
+        },
+        async send_data_edit(event) {
+            const formData = new FormData()
+            formData.append('id', this.edit_id)
+            formData.append('type', this.selected)
+            formData.append('khung_gio', this.khung_gio)
+            formData.append('noi_dung', this.noi_dung)
+
+            await api.post('dich-vu/cap-nhat-khung-gio-v2', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+                    this.$refs['my-modal-edit'].hide()
+                    this.load_data()
                 }
             })
         },
