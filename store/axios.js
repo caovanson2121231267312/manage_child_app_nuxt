@@ -10,13 +10,16 @@ const api = {
             console.log(headers)
 
             const data = await axios.get(domain + url, { headers: headers })
-            console.log(url)
-            console.log(data)
+            // console.log(url)
+            // console.log(data)
             return data
         } catch (error) {
             console.log(error)
             toastr.error('Đã có lỗi xảy ra');
             if(error?.response?.status == 401) {
+                toastr.error(error?.response?.data?.message);
+            }
+            if(error?.response?.status == 500) {
                 toastr.error(error?.response?.data?.message);
             }
 
@@ -31,7 +34,7 @@ const api = {
             const data = await axios.post(domain + url, formData, {
                 headers: headers,
             })
-            console.log(data)
+            // console.log(data)
             return data
         } catch (error) {
             console.log(error)

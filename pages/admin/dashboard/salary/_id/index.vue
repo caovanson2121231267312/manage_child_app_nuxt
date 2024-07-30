@@ -38,7 +38,9 @@
                                         <div>
                                             <div class="blade blade-id"># {{ data?.id }}</div>
                                             <div class="user-name">
+                                                <nuxt-link class="" :to="'/admin/dashboard/salary/' + data?.id ">
                                                 {{ data?.hoten ?? 'Chưa cập nhật tên' }}
+                                                </nuxt-link>
                                             </div>
                                             <div class="">
                                                 <span class="text-muted">

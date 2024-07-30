@@ -242,7 +242,7 @@
                                     class="m-0 p-0 d-block w-100 d-flex justify-content-between align-items-center">
                                     <span>Xác nhận hoàn trả giáo cụ</span>
                                     <span class="center">
-                                        <input id="check1" @change="send_xacNhanBanGiao" v-model="xacNhanHoanTra"
+                                        <input id="check1" @click="send_xacNhanBanGiao" v-model="xacNhanHoanTra"
                                             type="checkbox" class="input-check" />
                                     </span>
                                 </label>
@@ -342,7 +342,13 @@ export default {
         send_xacNhanBanGiao() {
             const formData = new FormData()
             formData.append('id', this.id_list)
-            formData.append('ghi_chu', this.ghi_chu)
+            if(this.ghi_chu) {
+                formData.append('ghi_chu', this.ghi_chu)
+            } else {
+                this.load_data()
+                toastr.error("Vui lòng nhập ghi chú");
+                return
+            }
 
             api.post('giao-cu/xac-nhan-hoan-tra', formData, {
                 'Content-Type': 'multipart/form-data',
@@ -363,7 +369,16 @@ export default {
             const formData = new FormData()
             formData.append('id', this.id_list)
             formData.append('ngay_tra', `${day}/${month}/${year}`)
-            formData.append('ghi_chu', this.ghi_chu)
+            if(this.ghi_chu) {
+                // this.load_data()
+                formData.append('ghi_chu', this.ghi_chu)
+                toastr.error("Vui lòng nhập ghi chú");
+                return
+            } else {
+                this.load_data()
+                toastr.error("Vui lòng nhập ghi chú");
+                return
+            }
 
             await api.post('giao-cu/giao-vien-hoan-tra', formData, {
                 'Content-Type': 'multipart/form-data',
@@ -383,9 +398,9 @@ export default {
         this.$store.dispatch('title/set_title', this.title);
     },
     watch: {
-        xacNhanBanGiao() {
+        // xacNhanBanGiao() {
 
-        }
+        // }
     }
 }
 </script>

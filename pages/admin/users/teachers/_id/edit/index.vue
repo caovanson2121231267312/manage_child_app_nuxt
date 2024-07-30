@@ -282,8 +282,12 @@ export default {
             formData.append('anh_nguoi_dung', this.file)
             formData.append('cmnd_cccd', this.cmnd_cccd)
             formData.append('chung_chi', this.files)
-            formData.append('password', this.password)
-            formData.append('password_confirm', this.password_confirm)
+            if( this.password) {
+                formData.append('password', this.password)
+            }
+            if(this.password_confirm) {
+                formData.append('password_confirm', this.password_confirm)
+            }
             formData.append('hoten', this.hoten)
             formData.append('ngay_sinh', this.ngay_sinh)
             formData.append('email', this.email)
