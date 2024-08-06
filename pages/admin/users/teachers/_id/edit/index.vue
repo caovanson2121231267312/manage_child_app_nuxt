@@ -155,21 +155,21 @@ export default {
                 name: 'Chỉnh sửa thông tin',
                 previous: '/admin/users/teachers/' + this.id
             },
-            chungNhan: null,
+            chungNhan: '',
             data: null,
             file: null,
             files: null,
             name: null,
             image: null,
-            cmnd_cccd: null,
+            cmnd_cccd: '',
             password_confirm: null,
             password: null,
-            hoten: null,
-            ngay_sinh: null,
-            email: null,
-            trinh_do: null,
-            chuyen_nganh: null,
-            truong_dao_tao: null,
+            hoten: '',
+            ngay_sinh: '',
+            email: '',
+            trinh_do: '',
+            chuyen_nganh: '',
+            truong_dao_tao: '',
         };
     },
     validate({ params }) {
@@ -235,34 +235,33 @@ export default {
             formData.append('id', this.id)
             formData.append('anh_nguoi_dung', this.file)
             formData.append('cmnd_cccd', this.cmnd_cccd)
-            if( this.files) {
+            //if( this.files) {
                 formData.append('chung_chi', this.files)
-            }
-            if( this.password) {
+            //}
+            //if( this.password) {
                 formData.append('password', this.password)
-            }
-            if(this.password_confirm) {
+            //}
+            //if(this.password_confirm) {
                 formData.append('password_confirm', this.password_confirm)
-            }
-            if(this.hoten) {
+            //}
+            //if(this.hoten) {
                 formData.append('hoten', this.hoten)
-            }
-            if(this.ngay_sinh) {
+            //}
+            //if(this.ngay_sinh) {
                 formData.append('ngay_sinh', this.ngay_sinh)
-            }
-            if(this.email) {
+            //}
+            //if(this.email) {
                 formData.append('email', this.email)
-            }
-            if(this.trinh_do) {
+            //}
+            //if(this.trinh_do) {
                 formData.append('bang_cap[trinh_do]', this.trinh_do)
-
-            }
-            if(this.chuyen_nganh) {
+            //}
+            //if(this.chuyen_nganh) {
                 formData.append('bang_cap[chuyen_nganh]', this.chuyen_nganh)
-            }
-            if(this.truong_dao_tao) {
+            //}
+            //if(this.truong_dao_tao) {
                 formData.append('bang_cap[truong_dao_tao]', this.truong_dao_tao)
-            }
+            //}
 
             await api.post('giao-vien/sua', formData, {
                 'Content-Type': 'multipart/form-data',
