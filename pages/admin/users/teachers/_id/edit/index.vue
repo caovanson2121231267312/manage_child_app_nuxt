@@ -114,7 +114,7 @@
                     </div>
                 </div>
 
-                <div class="input-teacher-group mt-5 mb-4">
+                <!-- <div class="input-teacher-group mt-5 mb-4">
                     <div class="mb-2">
                         <span class="input-text">Mật khẩu mới</span>
                     </div>
@@ -130,7 +130,7 @@
                     <div>
                         <input v-model="password_confirm" class="form-control input-teacher" type="password" placeholder="nhập nội dung" />
                     </div>
-                </div>
+                </div> -->
 
                 <div class="mt-8" @click="send_data">
                     <button-component>Lưu thay đổi</button-component>

@@ -81,7 +81,7 @@
                                 Email
                             </div>
                             <div>
-                                <input name="id" :value="data?.email" type="text" class="form-control roles-input"
+                                <input name="email" :value="data?.email" type="text" class="form-control roles-input"
                                     placeholder="Nhập email" />
                             </div>
                         </div>
