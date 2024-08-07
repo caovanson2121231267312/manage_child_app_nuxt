@@ -209,9 +209,12 @@ export default {
             }).then(res => {
                 const user = res?.data?.data
                 this.selected = user?.type
-                this.khung_gio = user?.khung_gio
                 this.noi_dung = user?.noi_dung
-                this.$refs['my-modal-edit'].show()
+
+                setTimeout(() => {
+                    this.khung_gio = user?.khung_gio
+                    this.$refs['my-modal-edit'].show()
+                }, 1000);
             })
         },
         async send_data_edit(event) {
