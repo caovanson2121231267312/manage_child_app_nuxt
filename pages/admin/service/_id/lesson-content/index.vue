@@ -85,7 +85,7 @@
                                         <b-form-select v-model="selected" :options="chonCa"></b-form-select>
                                     </div>
                                     <div class="mb-3">
-                                        <b-form-select v-model="khung_gio" :options="khung_gios"></b-form-select>
+                                        <b-form-select v-model="khung_gio_edit" :options="khung_gios"></b-form-select>
                                     </div>
 
                                     <div class="mb-3">
@@ -132,6 +132,7 @@ export default {
             noi_dung: 'Nhập nội dung',
             selectedFilter: '',
             khung_gio: 1,
+            khung_gio_edit: 1,
             khung_gios: [],
             selected1: 1,
             selected: 1,
@@ -211,17 +212,17 @@ export default {
                 this.selected = user?.type
                 this.noi_dung = user?.noi_dung
 
-                setTimeout(() => {
-                    this.khung_gio = user?.khung_gio
+                // setTimeout(() => {
+                    this.khung_gio_edit = user?.khung_gio
                     this.$refs['my-modal-edit'].show()
-                }, 1000);
+                // }, 1000);
             })
         },
         async send_data_edit(event) {
             const formData = new FormData()
             formData.append('id', this.edit_id)
             formData.append('type', this.selected)
-            formData.append('khung_gio', this.khung_gio)
+            formData.append('khung_gio', this.khung_gio_edit)
             formData.append('noi_dung', this.noi_dung)
 
             await api.post('dich-vu/cap-nhat-khung-gio-v2', formData, {
