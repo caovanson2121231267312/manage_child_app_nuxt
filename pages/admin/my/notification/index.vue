@@ -98,6 +98,8 @@ export default {
     computed: {},
     mounted() {
         this.$store.dispatch('title/set_title', this.title);
+
+        
     },
     components: {}
 }

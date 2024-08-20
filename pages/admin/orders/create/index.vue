@@ -676,8 +676,8 @@ export default {
             }).then(res => {
                 this.phu_huynh = res?.data?.data.map(item => {
                     return {
-                        group: item?.id,
-                        name: item?.hoten ?? (item?.id + ' - Chưa cập nhât tên'),
+                        group: item?.dien_thoai,
+                        name: item?.hoten ?? (item?.dien_thoai + ' - Chưa cập nhât tên'),
                         avatar: item?.anh_nguoi_dung,
                     };
                 })
