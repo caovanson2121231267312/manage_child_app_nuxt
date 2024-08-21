@@ -27,7 +27,7 @@
                                         </v-avatar>
                                         <div class="ms-2">
                                             <div class="mt-2">
-                                                <b>{{ data.item.name }}</b>
+                                                <b>{{ data.item.name  + ' - ' + data.item.dien_thoai }}</b>
                                             </div>
                                             <div>
                                                 <span class="blade-id"># {{ data.item.group }}</span>
@@ -51,7 +51,7 @@
                                             <img :src="data.item.avatar">
                                         </v-list-item-avatar>
                                         <v-list-item-content>
-                                            <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                                            <v-list-item-title v-html="data.item.name + ' - ' + data.item.dien_thoai"></v-list-item-title>
                                             <v-list-item-subtitle v-html="data.item.group"></v-list-item-subtitle>
                                         </v-list-item-content>
                                     </template>
@@ -695,8 +695,9 @@ export default {
             }).then(res => {
                 this.phu_huynh = res?.data?.data.map(item => {
                     return {
-                        group: item?.dien_thoai,
-                        name: item?.hoten ?? (item?.dien_thoai + ' - Chưa cập nhât tên'),
+                        dien_thoai: item?.dien_thoai,
+                        group: item?.id,
+                        name: item?.hoten ?? 'Chưa cập nhât tên',
                         avatar: item?.anh_nguoi_dung,
                     };
                 })
