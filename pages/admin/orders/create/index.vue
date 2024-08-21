@@ -807,7 +807,7 @@ export default {
             // console.log(this.khung_gio_target)
             this.content = this.khung_gio_target?.content
 
-            await api.get(`don-dich-vu/danh-sach-gia-buoi-hoc?id=${this.dich_vu_id}&page=1&limit=1000&sort=1&khung_gio_id=` + this.khung_gio, {
+            await api.get(`don-dich-vu/danh-sach-gia-buoi-hoc?id=${this.dich_vu_id}&page=1&limit=1000&sort=1&khung_gio_id=` + this.khung_gio + `&trinh_do=` + this.loai_giao_vien_id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
