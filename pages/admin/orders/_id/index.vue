@@ -87,8 +87,8 @@
                                         <b-form-select v-model="bai_hoc_id" :options="bai_hoc"></b-form-select>
                                     </b-form-group>
                                 </div>
-                                <div class="mt-4 d-flex flex-wrap">
-                                    <span v-for="(item, n) in data?.ke_hoach_day?.[0]?.goiHoc" v-bind:key="n"
+                                <div class="mt-4 d-flex flex-wrap" v-for="(goiHoc, i) in data?.ke_hoach_day" v-bind:key="i">
+                                    <span v-for="(item, n) in goiHoc" v-bind:key="n"
                                         class="blade-primary me-2 mb-2">
                                         {{ item?.tieu_de }} <span @click="delete_bh(item?.id)"
                                             class="mdi mdi-window-close ms-2 cp"></span>
@@ -1329,6 +1329,7 @@ export default {
             for (var i = 0; i < this.array_bai_hoc.length; i++) {
                 formData.append(`baiHocs[${i}]`, this.array_bai_hoc[i])
             }
+            console.log(this.array_bai_hoc, this.bai_hoc_id)
 
             await api.post('don-dich-vu/them-chuong-trinh-hoc', formData, {
                 'Content-Type': 'multipart/form-data',
