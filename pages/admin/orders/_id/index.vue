@@ -206,7 +206,8 @@
 
                 <div class="mt-6">
                     <div v-if="data?.giaoVien == null || data?.giaoVien?.length == 0">
-                        <div v-if="data?.trang_thai != 'Chưa có GV'">
+                        <div>
+                        <!-- <div v-if="data?.trang_thai != 'Chưa có GV'"> -->
                             <div>
                                 <h5>
                                     Thông tin Giáo viên
@@ -270,87 +271,85 @@
                             </v-card>
                         </div>
                     </div>
-
-                    <!--  -->
-
                     <div v-else>
                         <div>
-                            <h5>
-                                Thông tin Giáo viên
-                            </h5>
-                        </div>
-                        <v-card>
-                            <v-card-text>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center">
-                                        <div class="me-3 layout-user">
-                                            <img :src="data?.giaoVien?.anh_nguoi_dung" alt="">
-                                        </div>
-                                        <div>
-                                            <h6 class="text-dark mt-1">
-                                                {{ data?.giaoVien?.hoten }}
-                                            </h6>
+                            <div>
+                                <h5>
+                                    Thông tin Giáo viên
+                                </h5>
+                            </div>
+                            <v-card>
+                                <v-card-text>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <div class="me-3 layout-user">
+                                                <img :src="data?.giaoVien?.anh_nguoi_dung" alt="">
+                                            </div>
                                             <div>
-                                                <span class="me-5">
-                                                    Giáo viên
-                                                </span>
-                                                <span class="text-warning text-star blade-start">
-                                                    <span class="mdi mdi-star me-1"></span>
-                                                    <span class="text-dark">{{ data?.giaoVien?.danh_gia }}</span>
-                                                </span>
+                                                <h6 class="text-dark mt-1">
+                                                    {{ data?.giaoVien?.hoten }}
+                                                </h6>
+                                                <div>
+                                                    <span class="me-5">
+                                                        Giáo viên
+                                                    </span>
+                                                    <span class="text-warning text-star blade-start">
+                                                        <span class="mdi mdi-star me-1"></span>
+                                                        <span class="text-dark">{{ data?.giaoVien?.danh_gia }}</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex">
+                                            <div class="me-2 cp" v-b-tooltip.hover.top="data?.giaoVien?.dien_thoai">
+                                                <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="19" cy="19" r="19" fill="#0056B1" fill-opacity="0.1" />
+                                                    <path
+                                                        d="M11.6796 9.84669L12.8192 8.70711C13.2097 8.31658 13.8429 8.31658 14.2334 8.70711L17.2403 11.7139C17.6308 12.1045 17.6308 12.7376 17.2403 13.1282L15.1847 15.1837C14.8544 15.514 14.7725 16.0187 14.9814 16.4365C16.1892 18.8521 18.1479 20.8108 20.5635 22.0186C20.9813 22.2275 21.486 22.1456 21.8163 21.8153L23.8718 19.7597C24.2624 19.3692 24.8955 19.3692 25.2861 19.7597L28.2929 22.7666C28.6834 23.1571 28.6834 23.7903 28.2929 24.1808L27.1533 25.3204C25.042 27.4317 21.6994 27.6693 19.3107 25.8777L17.2602 24.3398C15.5166 23.0322 13.9678 21.4834 12.6602 19.7399L11.1223 17.6893C9.33072 15.3006 9.56827 11.958 11.6796 9.84669Z"
+                                                        fill="#0056B1" />
+                                                </svg>
+                                            </div>
+                                            <div class="cp">
+                                                <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="19" cy="19" r="19" fill="#0056B1" fill-opacity="0.1" />
+                                                    <path opacity="0.4"
+                                                        d="M29 13.25V18.35C29 19.62 28.58 20.69 27.83 21.43C27.09 22.18 26.02 22.6 24.75 22.6V24.41C24.75 25.09 23.99 25.5 23.43 25.12L22.46 24.48C22.55 24.17 22.59 23.83 22.59 23.47V19.4C22.59 17.36 21.23 16 19.19 16H12.4C12.26 16 12.13 16.01 12 16.02V13.25C12 10.7 13.7 9 16.25 9H24.75C27.3 9 29 10.7 29 13.25Z"
+                                                        fill="#0056B1" />
+                                                    <path
+                                                        d="M22.59 19.4V23.47C22.59 23.83 22.55 24.17 22.46 24.48C22.09 25.95 20.87 26.87 19.19 26.87H16.47L13.45 28.88C13 29.19 12.4 28.86 12.4 28.32V26.87C11.38 26.87 10.53 26.53 9.94 25.94C9.34 25.34 9 24.49 9 23.47V19.4C9 17.5 10.18 16.19 12 16.02C12.13 16.01 12.26 16 12.4 16H19.19C21.23 16 22.59 17.36 22.59 19.4Z"
+                                                        fill="#0056B1" />
+                                                </svg>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="d-flex">
-                                        <div class="me-2 cp" v-b-tooltip.hover.top="data?.giaoVien?.dien_thoai">
-                                            <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <circle cx="19" cy="19" r="19" fill="#0056B1" fill-opacity="0.1" />
-                                                <path
-                                                    d="M11.6796 9.84669L12.8192 8.70711C13.2097 8.31658 13.8429 8.31658 14.2334 8.70711L17.2403 11.7139C17.6308 12.1045 17.6308 12.7376 17.2403 13.1282L15.1847 15.1837C14.8544 15.514 14.7725 16.0187 14.9814 16.4365C16.1892 18.8521 18.1479 20.8108 20.5635 22.0186C20.9813 22.2275 21.486 22.1456 21.8163 21.8153L23.8718 19.7597C24.2624 19.3692 24.8955 19.3692 25.2861 19.7597L28.2929 22.7666C28.6834 23.1571 28.6834 23.7903 28.2929 24.1808L27.1533 25.3204C25.042 27.4317 21.6994 27.6693 19.3107 25.8777L17.2602 24.3398C15.5166 23.0322 13.9678 21.4834 12.6602 19.7399L11.1223 17.6893C9.33072 15.3006 9.56827 11.958 11.6796 9.84669Z"
-                                                    fill="#0056B1" />
-                                            </svg>
+                                </v-card-text>
+                                <v-divider class="m-0 p-0"></v-divider>
+                                <v-card-text>
+                                    <div v-if="data?.trang_thai == 'Đang dạy'"
+                                        class="d-flex align-items-center justify-content-between">
+                                        <div class="w-100 btn btn-doi text- rounded-pill" variant="outline-danger"
+                                            v-b-modal.my-modal-teacher-doi>
+                                            Đổi giáo viên
                                         </div>
-                                        <div class="cp">
-                                            <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <circle cx="19" cy="19" r="19" fill="#0056B1" fill-opacity="0.1" />
-                                                <path opacity="0.4"
-                                                    d="M29 13.25V18.35C29 19.62 28.58 20.69 27.83 21.43C27.09 22.18 26.02 22.6 24.75 22.6V24.41C24.75 25.09 23.99 25.5 23.43 25.12L22.46 24.48C22.55 24.17 22.59 23.83 22.59 23.47V19.4C22.59 17.36 21.23 16 19.19 16H12.4C12.26 16 12.13 16.01 12 16.02V13.25C12 10.7 13.7 9 16.25 9H24.75C27.3 9 29 10.7 29 13.25Z"
-                                                    fill="#0056B1" />
-                                                <path
-                                                    d="M22.59 19.4V23.47C22.59 23.83 22.55 24.17 22.46 24.48C22.09 25.95 20.87 26.87 19.19 26.87H16.47L13.45 28.88C13 29.19 12.4 28.86 12.4 28.32V26.87C11.38 26.87 10.53 26.53 9.94 25.94C9.34 25.34 9 24.49 9 23.47V19.4C9 17.5 10.18 16.19 12 16.02C12.13 16.01 12.26 16 12.4 16H19.19C21.23 16 22.59 17.36 22.59 19.4Z"
-                                                    fill="#0056B1" />
-                                            </svg>
+                                        <div class="w-100 btn btn-dieu-lai rounded-pill ms-4" variant="outline-primary"
+                                            v-b-modal.my-modal-teacher>
+                                            Điều lại
                                         </div>
                                     </div>
-                                </div>
-                            </v-card-text>
-                            <v-divider class="m-0 p-0"></v-divider>
-                            <v-card-text>
-                                <div v-if="data?.trang_thai == 'Đang dạy'"
-                                    class="d-flex align-items-center justify-content-between">
-                                    <div class="w-100 btn btn-doi text- rounded-pill" variant="outline-danger"
-                                        v-b-modal.my-modal-teacher-doi>
-                                        Đổi giáo viên
+                                    <div v-else class="d-flex align-items-center justify-content-between">
+                                        <div class="w-100 btn btn-deactive rounded-pill">
+                                            Đổi giáo viên
+                                        </div>
+                                        <div class="w-100 btn btn-deactive rounded-pill ms-4">
+                                            Điều lại
+                                        </div>
                                     </div>
-                                    <div class="w-100 btn btn-dieu-lai rounded-pill ms-4" variant="outline-primary"
-                                        v-b-modal.my-modal-teacher>
-                                        Điều lại
-                                    </div>
-                                </div>
-                                <div v-else class="d-flex align-items-center justify-content-between">
-                                    <div class="w-100 btn btn-deactive rounded-pill">
-                                        Đổi giáo viên
-                                    </div>
-                                    <div class="w-100 btn btn-deactive rounded-pill ms-4">
-                                        Điều lại
-                                    </div>
-                                </div>
-                            </v-card-text>
-                        </v-card>
-
+                                </v-card-text>
+                            </v-card>
+                        </div>
                     </div>
                 </div>
 
