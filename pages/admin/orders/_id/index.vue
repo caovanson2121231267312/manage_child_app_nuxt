@@ -499,7 +499,7 @@
                     </div>
 
                     <div class="mt-4" v-if="data?.trang_thai == 'Chưa có GV'">
-                        <b-button class="w-100 text-light rounded-pill" variant="primary" v-b-modal.my-modal>
+                        <b-button v-if="data?.leaderKD != null" class="w-100 text-light rounded-pill" variant="primary" v-b-modal.my-modal>
                             Duyệt đơn
                         </b-button>
 
