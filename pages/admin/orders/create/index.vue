@@ -27,7 +27,7 @@
                                         </v-avatar>
                                         <div class="ms-2">
                                             <div class="mt-2">
-                                                <b>{{ data.item.name  + ' - ' + data.item.dien_thoai }}</b>
+                                                <b>{{ data.item.name }}</b>
                                             </div>
                                             <div>
                                                 <span class="blade-id"># {{ data.item.group }}</span>
@@ -51,7 +51,7 @@
                                             <img :src="data.item.avatar">
                                         </v-list-item-avatar>
                                         <v-list-item-content>
-                                            <v-list-item-title v-html="data.item.name + ' - ' + data.item.dien_thoai"></v-list-item-title>
+                                            <v-list-item-title v-html="data.item.name"></v-list-item-title>
                                             <v-list-item-subtitle v-html="data.item.group"></v-list-item-subtitle>
                                         </v-list-item-content>
                                     </template>
@@ -697,7 +697,7 @@ export default {
                     return {
                         dien_thoai: item?.dien_thoai,
                         group: item?.id,
-                        name: item?.hoten ?? 'Chưa cập nhât tên',
+                        name: item?.hoten ? (item?.hoten + ' - ' + item?.dien_thoai) : ? ('Chưa cập nhât tên' + ' - ' + item?.dien_thoai),
                         avatar: item?.anh_nguoi_dung,
                     };
                 })
@@ -773,13 +773,6 @@ export default {
             this.load_data();
         },
         async dich_vu_id() {
-            await api.get(`don-dich-vu/danh-sach-gia-buoi-hoc?id=${this.dich_vu_id}&page=1&limit=1000&sort=1&khung_gio_id=` + this.khung_gio, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                this.buoi_hoc = res?.data?.data
-            })
-
             await api.get(`dich-vu/danh-sach-khung-gio-full?dich_vu_id=${this.dich_vu_id}&type=` + this.chon_ca_id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
@@ -801,6 +794,14 @@ export default {
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 this.loai_giao_vien = res?.data?.data
+            })
+        },
+        async loai_giao_vien_id() {
+            await api.get(`don-dich-vu/danh-sach-gia-buoi-hoc?id=${this.dich_vu_id}&page=1&limit=1000&sort=1&khung_gio_id=` + this.khung_gio + `&trinh_do=` + this.loai_giao_vien_id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.buoi_hoc = res?.data?.data
             })
         },
         async khung_gio() {

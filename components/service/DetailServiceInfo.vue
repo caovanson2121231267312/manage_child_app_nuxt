@@ -426,7 +426,7 @@
                                         </svg>
                                     </span>
                                     <span class="ms-1 span-text">
-                                        Hiển thị Loại lao động
+                                        Loại lao động
                                     </span>
                                 </td>
                                 <td>
