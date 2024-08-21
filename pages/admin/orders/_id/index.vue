@@ -88,7 +88,7 @@
                                     </b-form-group>
                                 </div>
                                 <div class="mt-4 d-flex flex-wrap" v-for="(goiHoc, i) in data?.ke_hoach_day" v-bind:key="i">
-                                    <span v-for="(item, n) in goiHoc" v-bind:key="n"
+                                    <span v-for="(item, n) in goiHoc?.goiHoc" v-bind:key="n"
                                         class="blade-primary me-2 mb-2">
                                         {{ item?.tieu_de }} <span @click="delete_bh(item?.id)"
                                             class="mdi mdi-window-close ms-2 cp"></span>
