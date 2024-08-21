@@ -499,7 +499,7 @@
                     </div>
 
                     <div class="mt-4" v-if="data?.trang_thai == 'Chưa có GV'">
-                        <b-button v-if="data?.leaderKD != null" class="w-100 text-light rounded-pill" variant="primary" v-b-modal.my-modal>
+                        <b-button v-if="data?.leaderKD == null" class="w-100 text-light rounded-pill" variant="primary" v-b-modal.my-modal>
                             Duyệt đơn
                         </b-button>
 
@@ -1067,13 +1067,12 @@ export default {
                 this.teacherss = res?.data?.data
             })
 
-                this.array_bai_hoc.push(...this.data?.ke_hoach_day[0]?.goiHoc?.map(item => (
-                    item.id
-                //     {
-                //     value:  item.id,
-                //     text: item.tieu_de ?? item.id,
-                // }
-                )));
+                this.data?.ke_hoach_day.map(goiHoc => (
+                    this.array_bai_hoc.push(...goiHoc?.goiHoc?.map(item => (
+                        item.id
+                    )));
+                ))
+                
                 console.log(123)
                 console.log(this.array_bai_hoc)
             })
