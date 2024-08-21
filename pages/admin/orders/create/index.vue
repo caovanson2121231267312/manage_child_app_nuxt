@@ -697,7 +697,7 @@ export default {
                     return {
                         dien_thoai: item?.dien_thoai,
                         group: item?.id,
-                        name: item?.hoten ? (item?.hoten + ' - ' + item?.dien_thoai) : ? ('Chưa cập nhât tên' + ' - ' + item?.dien_thoai),
+                        name: item?.hoten ? (item?.hoten + ' - ' + item?.dien_thoai) : ('Chưa cập nhât tên' + ' - ' + item?.dien_thoai),
                         avatar: item?.anh_nguoi_dung,
                     };
                 })
