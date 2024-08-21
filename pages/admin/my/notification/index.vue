@@ -188,7 +188,7 @@ export default {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                this.data = res?.data?.data
+                this.data = res?.data?.thong_bao
                 // this.per_page = res?.data?.per_page ?? 0
                 // this.current_page = res?.data?.current_page ?? 0
                 // this.total = res?.data?.total
