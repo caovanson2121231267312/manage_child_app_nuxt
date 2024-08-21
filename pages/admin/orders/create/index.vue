@@ -230,7 +230,7 @@
                                 <div v-for="(item, n) in teachers" v-bind:key="n">
                                     <div :class="'card-teacher ' + (teacher_id == item?.id ? ' active' : '')">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <div class="d-flex align-items-center">
+                                            <div class="d-flex align-items-center" style="height: 500px; overflow: auto;">
                                                 <div class="me-3 layout-user">
                                                     <img :src="item?.anh_nguoi_dung" alt="">
                                                 </div>
