@@ -87,7 +87,7 @@
                                         <b-form-select v-model="bai_hoc_id" :options="bai_hoc"></b-form-select>
                                     </b-form-group>
                                 </div>
-                                <div class="mt-4 d-flex flex-wrap" v-for="(goiHoc, i) in data?.ke_hoach_day" v-bind:key="i">
+                                <div class="mt-5 d-flex flex-wrap" v-for="(goiHoc, i) in data?.ke_hoach_day" v-bind:key="i">
                                     <span v-for="(item, n) in goiHoc?.goiHoc" v-bind:key="n"
                                         class="blade-primary me-2 mb-2">
                                         {{ item?.tieu_de }} <span @click="delete_bh(item?.id)"
