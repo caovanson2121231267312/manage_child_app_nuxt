@@ -1067,11 +1067,11 @@ export default {
                 this.teacherss = res?.data?.data
             })
 
-                this.data?.ke_hoach_day.map(goiHoc => (
+                this.data?.ke_hoach_day.map(goiHoc => {
                     this.array_bai_hoc.push(...goiHoc?.goiHoc?.map(item => (
                         item.id
                     )));
-                ))
+                })
                 
                 console.log(123)
                 console.log(this.array_bai_hoc)
