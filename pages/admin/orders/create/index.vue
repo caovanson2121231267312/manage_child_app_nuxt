@@ -660,6 +660,19 @@ export default {
             })
         },
         async load_data() {
+            await api.get('dich-vu/danh-sach?page=1&limit=1000&sort=1&tuKhoa=', {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.dich_vu = res?.data?.data.map(item => {
+                    return {
+                        value: item?.id,
+                        text: item?.ten_dich_vu
+                    };
+                })
+                this.dich_vu_id = this.dich_vu[0].value
+            })
+
             await api.get(`don-dich-vu/danh-sach-giao-vien-dang-ranh?trinh_do=`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
@@ -673,20 +686,6 @@ export default {
             }).then(res => {
                 this.chon_ca = res?.data?.data
                 this.chon_ca_id = res?.data?.data?.[0]?.id ?? 0
-            })
-
-
-            await api.get('dich-vu/danh-sach?page=1&limit=1000&sort=1&tuKhoa=', {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer ' + this.token
-            }).then(res => {
-                this.dich_vu = res?.data?.data.map(item => {
-                    return {
-                        value: item?.id,
-                        text: item?.ten_dich_vu
-                    };
-                })
-                this.dich_vu_id = this.dich_vu[0].value
             })
 
             await api.get('don-dich-vu/danh-sach-phu-huynh', {
