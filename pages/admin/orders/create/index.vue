@@ -79,6 +79,23 @@
                             <b-form-select v-model="dich_vu_id" :options="dich_vu" aria-placeholder="Chọn"></b-form-select>
                         </div>
 
+
+                        <div class="mt-2">
+                            <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M8.92188 0C4.51387 0 0.921875 3.592 0.921875 8C0.921875 12.408 4.51387 16 8.92188 16C13.3299 16 16.9219 12.408 16.9219 8C16.9219 3.592 13.3299 0 8.92188 0ZM12.4019 10.856C12.2899 11.048 12.0899 11.152 11.8819 11.152C11.7779 11.152 11.6739 11.128 11.5779 11.064L9.09788 9.584C8.48188 9.216 8.02588 8.408 8.02588 7.696V4.416C8.02588 4.088 8.29788 3.816 8.62587 3.816C8.95388 3.816 9.22587 4.088 9.22587 4.416V7.696C9.22587 7.984 9.46587 8.408 9.71387 8.552L12.1939 10.032C12.4819 10.2 12.5779 10.568 12.4019 10.856Z"
+                                    fill="#00C092" />
+                            </svg>
+                            <span>Loại lao động</span>
+                        </div>
+                        <div class="mt-2 d-in">
+                            <b-form-group class="" v-slot="{ ariaDescribedby }">
+                                <b-form-radio v-for="(item, i) in loai_giao_vien" v-bind:key="i" v-model="loai_giao_vien_id"
+                                    :aria-describedby="ariaDescribedby" name="loai_giao_vien" :value="item?.id">{{
+                                        item?.name }}</b-form-radio>
+                            </b-form-group>
+                        </div>
+
                     </v-card-text>
                 </v-card>
 
@@ -557,6 +574,8 @@ export default {
             khung_gios: [],
             don_dich_vu_id: null,
             content: '',
+            loai_giao_vien: [],
+            loai_giao_vien_id: null,
         };
     },
     components: {
@@ -712,6 +731,7 @@ export default {
             formData.append('them_gio_id', this.them_gio_id)
             // formData.append('giao_vien_id', this.teacher_id)
             formData.append('chon_ca_id', this.khung_gio)
+            formData.append('loai_giao_vien', this.loai_giao_vien_id)
             formData.append('leader_kd_id', '')
 
             await api.post('don-dich-vu/tao-don', formData, {
@@ -773,6 +793,13 @@ export default {
                 })
                 this.khung_gio = this.khung_gios[0]?.value ?? 0
                 this.khung_gio_target = this.khung_gios[0] ?? 0
+            })
+
+            await api.get(`don-dich-vu/get-nhom-nhan-su?dich_vu_id=` + this.dich_vu_id, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                this.loai_giao_vien = res?.data?.data
             })
         },
         async khung_gio() {
