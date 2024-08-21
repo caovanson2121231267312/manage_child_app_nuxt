@@ -133,11 +133,11 @@
                     </v-col>
                 </template>
 
-                <div class="d-flex justify-content-center mt-4 w-100">
+                <!-- <div class="d-flex justify-content-center mt-4 w-100">
                     <b-pagination v-model="current_page" :total-rows="total" :per-page="per_page" first-text="First"
                         prev-text="Prev" next-text="Next" last-text="Last"></b-pagination>
 
-                </div>
+                </div> -->
             </v-row>
         </div>
     </div>
