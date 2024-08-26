@@ -147,7 +147,8 @@
                 </b-modal>
 
                 <!-- Thông tin quản lý  -->
-                <div v-if="data?.trang_thai == 'Đang khảo sát'">
+                <div v-if="data?.leaderKD != null">
+                <!-- <div v-if="data?.trang_thai == 'Đang khảo sát'"> -->
                     <div class="mt-6">
                         <div>
                             <h5 class="d-flex justify-content-between">
@@ -204,7 +205,7 @@
                     </div>
                 </div>
 
-                <div class="mt-6">
+                <div class="mt-6" v-if="data?.leaderKD != null">
                     <div v-if="data?.giaoVien == null || data?.giaoVien?.length == 0">
                         <div>
                         <!-- <div v-if="data?.trang_thai != 'Chưa có GV'"> -->
