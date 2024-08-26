@@ -204,7 +204,7 @@
                                             <!-- <b-form-radio v-for="(x, y) in h?.muc_do" v-bind:key="y" class="me-4"
                                             :name="'radio-size' + k" size="lg" :checked="x == h.muc_do_da_cho"> -->
                                             <span class="answer">{{ x }}</span>
-                                        </b-form-radio>
+                                        <!-- </b-form-radio> -->
                                         </div>
                                     </div>
                                     <!-- <div class="d-flex">
@@ -214,10 +214,16 @@
                                         </b-form-radio>
                                     </div> -->
                                     <div class="">
-                                        <b-form-radio v-for="(h, k) in i?.muc_do" v-bind:key="k" class="me-4"
-                                            :name="'radio-size' + k" size="lg" :checked="x == h.muc_do_da_cho">
+                                        <!-- <b-form-radio v-for="(h, k) in i?.muc_do" v-bind:key="k" class="me-4"
+                                            :name="'radio-size' + k" size="lg" :checked="x == h.muc_do_da_cho"> -->
+                                            <input v-for="(x, y) in h?.muc_do" v-bind:key="y" type="radio"  
+                                            :name="'radio-size' + k" 
+                                            :value="x" 
+                                            :checked="x === h.muc_do_da_cho"  
+                                            class="custom-control-input" 
+                                            :id="'__BVID__' + k">
                                             <span class="answer">{{ h }}</span>
-                                        </b-form-radio>
+                                        <!-- </b-form-radio> -->
                                     </div>
                                     <div>
                                         <div class="title-h mt-4 mb-1">
