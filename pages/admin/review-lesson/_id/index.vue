@@ -219,8 +219,8 @@
                                             <input type="radio"  
                                             :name="'radio-size' + k" 
                                             :value="h" 
-                                            :checked="h === i.muc_do_da_cho"  
-                                            class="custom-control-input" 
+                                            :checked="h == i.muc_do_da_cho"  
+                                       
                                             :id="'__BVID__' + k">
                                             <span class="answer">{{ h }}</span>
                                         <!-- </b-form-radio> -->
