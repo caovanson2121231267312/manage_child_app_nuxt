@@ -213,11 +213,11 @@
                                             <span class="answer">{{ h }}</span>
                                         </b-form-radio>
                                     </div> -->
-                                    <div class="">
-                                        <b-form-radio v-for="(h, k) in i?.muc_do" v-bind:key="k" class="me-4"
-                                            :name="'radio-size' + k" size="lg" :checked="x == h.muc_do_da_cho">
+                                    <div class="" v-for="(h, k) in i?.muc_do" v-bind:key="k">
+                                        <!-- <b-form-radio class="me-4"
+                                            :name="'radio-size' + k" size="lg" :checked="x == h.muc_do_da_cho"> -->
                                             <span class="answer">{{ h }}</span>
-                                        </b-form-radio>
+                                        <!-- </b-form-radio> -->
                                     </div>
                                     <div>
                                         <div class="title-h mt-4 mb-1">
