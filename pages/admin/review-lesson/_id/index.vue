@@ -217,7 +217,7 @@
                                         <!-- <b-form-radio class="me-4"
                                             :name="'radio-size' + k" size="lg" :checked="x == h.muc_do_da_cho"> -->
                                             <input type="radio"  
-                                            :name="'radio-size-' + k" 
+                                            :name="'radio-size-' + i?.id" 
                                             :value="h" 
                                             :checked="h == i.muc_do_da_cho"  
                                        
