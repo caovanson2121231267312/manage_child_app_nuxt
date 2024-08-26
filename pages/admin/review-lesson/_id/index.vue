@@ -216,6 +216,12 @@
                                     <div class="" v-for="(h, k) in i?.muc_do" v-bind:key="k">
                                         <!-- <b-form-radio class="me-4"
                                             :name="'radio-size' + k" size="lg" :checked="x == h.muc_do_da_cho"> -->
+                                            <input type="radio"  
+                                            :name="'radio-size' + k" 
+                                            :value="h" 
+                                            :checked="h === i.muc_do_da_cho"  
+                                            class="custom-control-input" 
+                                            :id="'__BVID__' + k">
                                             <span class="answer">{{ h }}</span>
                                         <!-- </b-form-radio> -->
                                     </div>
