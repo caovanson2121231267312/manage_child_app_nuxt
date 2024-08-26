@@ -55,7 +55,7 @@
                                         <strong class="text-dark">
                                             Nhận xét buổi học
                                         </strong>
-                                        <a class="btn-detail" :href="data?.nhan_xet_buoi_hoc" target="_blank">
+                                        <a class="btn-detail" :href="'/admin/review-lesson/' + data?.id" target="_blank">
                                             Xem chi tiết <span class="mdi mdi-arrow-right-thin ms-2"></span>
                                         </a>
                                     </div>
@@ -119,7 +119,7 @@
                             <v-btn rounded color="primary" dark v-b-modal.my-modal-doi-gio>
                                 Đổi giờ
                             </v-btn>
-                            <v-btn rounded color="red" dark @click="delete_item()">
+                            <v-btn v-if="data?.trang_thai?.name != 'Đã hoàn thành'" rounded color="red" dark @click="delete_item()">
                                 Huỷ buổi
                             </v-btn>
                         </div>
@@ -328,7 +328,7 @@ export default {
         },
         async delete_item() {
             const formData = new FormData();
-            formData.append('ca_day_id', this.chon_ca_id)
+            formData.append('ca_day_id', this.id)
 
             Swal.fire({
                 title: 'Bạn có chắc chắn?',
