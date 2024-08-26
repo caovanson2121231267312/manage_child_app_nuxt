@@ -196,7 +196,7 @@
                                         </div>
                                         <div class="d-flex">
                                             <b-form-radio v-for="(x, y) in h?.muc_do" v-bind:key="y" class="me-4"
-                                            :name="'radio-size' + k" size="lg">
+                                            :name="'radio-size' + k" size="lg" :checked="x == h.muc_do_da_cho">
                                             <span class="answer">{{ x }}</span>
                                         </b-form-radio>
                                         </div>
@@ -209,7 +209,7 @@
                                     </div> -->
                                     <div class="">
                                         <b-form-radio v-for="(h, k) in i?.muc_do" v-bind:key="k" class="me-4"
-                                            :name="'radio-size' + k" size="lg">
+                                            :name="'radio-size' + k" size="lg" :checked="x == h.muc_do_da_cho">
                                             <span class="answer">{{ h }}</span>
                                         </b-form-radio>
                                     </div>
