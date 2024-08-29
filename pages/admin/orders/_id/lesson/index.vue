@@ -334,7 +334,7 @@ export default {
         },
         async delete_item() {
             const formData = new FormData();
-            formData.append('ca_day_id', this.id)
+            formData.append('ca_day_id', this.id_buoi)
 
             Swal.fire({
                 title: 'Bạn có chắc chắn?',
