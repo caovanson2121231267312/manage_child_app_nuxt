@@ -211,6 +211,7 @@ export default {
             khung_gio: 1,
             khung_gios: [],
             don_dich_vu_id: null,
+            id_buoi: null,
         };
     },
     components: {
@@ -249,6 +250,7 @@ export default {
 
                 this.chon_ca_id = res?.data?.tienDo?.ca_id ?? 0
                 this.khung_gio = res?.data?.tienDo?.khung_gio_id ?? 0
+                this.id_buoi = res?.data?.tienDo?.id
             })
 
             await api.get(`dich-vu/get-ca`, {
@@ -276,6 +278,8 @@ export default {
                 this.data = res?.data?.tienDo
                 this.buoi = res?.data?.tienDo?.buoi
                 this.giaoVien = res?.data?.giaoVien
+
+                this.id_buoi = res?.data?.tienDo?.id
             })
         },
         async next() {
@@ -294,6 +298,8 @@ export default {
                 this.data = res?.data?.tienDo
                 this.buoi = res?.data?.tienDo?.buoi
                 this.giaoVien = res?.data?.giaoVien
+
+                this.id_buoi = res?.data?.tienDo?.id
             })
         },
         async send_data(event) {
