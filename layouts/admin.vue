@@ -678,8 +678,13 @@ export default {
         ready() {
             return this.$store.getters[`title/title`]
         },
+        user() {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            return user;
+        },
         token() {
             const storedUser = JSON.parse(localStorage.getItem('user'));
+            console.log(storedUser);
             return storedUser.auth_key
         }
     },

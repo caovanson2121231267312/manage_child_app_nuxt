@@ -120,7 +120,8 @@ export default {
     },
     methods: {
         async load_data() {
-            await api.get('dich-vu/danh-sach?page=1&limit=300&sort=1&tuKhoa=', {
+            // await api.get('dich-vu/danh-sach?page=1&limit=300&sort=1&tuKhoa=', {
+            await api.get('dich-vu/danh-sach-dich-vu?page=1&limit=300&sort=1&tuKhoa=', {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
