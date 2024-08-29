@@ -100,7 +100,7 @@
                                     </div>
                                 </v-list-item>
 
-                                <v-list-group class="group-list" no-action :value="isCurrentRouteMatching('/admin/system')">
+                                <v-list-group v-if="user.vai_tro == 'Admin'" class="group-list" no-action :value="isCurrentRouteMatching('/admin/system')">
                                     <template v-slot:activator>
                                         <v-list-item-icon class="icon-bar" default>
                                             <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
