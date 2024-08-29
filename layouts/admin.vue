@@ -153,7 +153,7 @@
                                     </v-list-item-group>
                                 </v-list-group>
 
-                                <v-list-item class="li-bar" to="/admin/service">
+                                <v-list-item v-if="user.vai_tro == 'Admin'" class="li-bar" to="/admin/service">
                                     <v-list-item-icon class="icon-bar" default>
                                         <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
