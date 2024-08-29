@@ -680,7 +680,7 @@ export default {
         },
         user() {
             const storedUser = JSON.parse(localStorage.getItem('user'));
-            return user;
+            return storedUser;
         },
         token() {
             const storedUser = JSON.parse(localStorage.getItem('user'));
