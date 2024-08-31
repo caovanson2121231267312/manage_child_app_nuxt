@@ -111,19 +111,19 @@
         <!--  -->
         <div class="mt-6">
             <nuxt-link v-if="data?.trang_thai == 'Đang dạy'" class="btn btn-primary text-light w-100 rounded-pill"
-                :to="'/admin/orders/' + data?.id + '/lesson'">
+                :to="'/admin/orders/' + data?.id + '/lesson?d=' + this.buoi">
                 Xem tiến độ khóa học
             </nuxt-link>
             <nuxt-link v-if="data?.trang_thai == 'Đã hủy'" class="btn btn-danger text-light w-100 rounded-pill"
-                :to="'/admin/orders/' + data?.id + '/lesson'">
+                :to="'/admin/orders/' + data?.id + '/lesson?d=' + this.buoi">
                 Xem tiến độ khóa học
             </nuxt-link>
             <nuxt-link v-if="data?.trang_thai == 'Đã hoàn thành'" class="btn btn-success text-light w-100 rounded-pill"
-                :to="'/admin/orders/' + data?.id + '/lesson'">
+                :to="'/admin/orders/' + data?.id + '/lesson?d=' + this.buoi">
                 Xem tiến độ khóa học
             </nuxt-link>
             <nuxt-link v-if="data?.trang_thai == 'Đơn hoàn'" class="btn btn-info text-light w-100 rounded-pill"
-                :to="'/admin/orders/' + data?.id + '/lesson'">
+                :to="'/admin/orders/' + data?.id + '/lesson?d=' + this.buoi">
                 Xem tiến độ khóa học
             </nuxt-link>
         </div>
@@ -1085,6 +1085,7 @@ export default {
             ],
             selectedDays: [],
             date_bd: null,
+            buoi: 1,
         };
     },
     props: {
@@ -1301,6 +1302,8 @@ export default {
     mounted() {
         this.link_edit = this.data?.noi_dung_khao_sat
         this.noi_dung_khao_sat = this.data?.noi_dung_khao_sat
+        this.buoi = this.data?.soBuoiHoanThanh.split('/')[0] ?? 1
+        console.log(this.data?.soBuoiHoanThanh.split('/'))
 
         if (this.data) {
             api.get(`don-dich-vu/get-hoa-don?id=` + this.data?.id, {

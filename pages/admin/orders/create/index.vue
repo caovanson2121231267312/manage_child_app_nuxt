@@ -136,10 +136,10 @@
                             <div>
                                 <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
                                     <template v-slot:activator="{ on, attrs }">
-                                        <v-text-field v-model="date" label="" class="month-picker"
+                                        <v-text-field v-model="date" label=""
                                             prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
                                     </template>
-                                    <v-date-picker v-model="date" type="month" scrollable>
+                                    <v-date-picker v-model="date" scrollable>
                                         <v-spacer></v-spacer>
                                         <v-btn text color="primary" @click="modal = false">
                                             Cancel
@@ -551,7 +551,7 @@ export default {
                 { name: 'John Smith', group: 'Group 2', avatar: srcs[1] },
                 { name: 'Sandra Williams', group: 'Group 2', avatar: srcs[3] },
             ],
-            date: new Date().toISOString().substr(0, 7),
+            date: new Date().toISOString().split('T')[0],
             month: 1,
             menu: false,
             modal: false,
@@ -712,8 +712,9 @@ export default {
             let dateArray = this.date.split("-");
             let year = dateArray[0];
             let month = dateArray[1];
-            let currentDate = new Date();
-            let day = currentDate.getDate();
+            let day = dateArray[2];
+            // let currentDate = new Date();
+            // let day = currentDate.getDate();
             let formattedDate = `${day}/${month}/${year}`;
 
             formData.append('thoi_gian_bat_dau', formattedDate)

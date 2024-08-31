@@ -119,7 +119,7 @@
                             <v-btn rounded color="primary" dark v-b-modal.my-modal-doi-gio>
                                 Đổi giờ
                             </v-btn>
-                            <v-btn v-if="data?.trang_thai?.name != 'Đã hoàn thành'" rounded color="red" dark @click="delete_item()">
+                            <v-btn v-if="data?.trang_thai?.name != 'Đã hoàn thành' && data?.trang_thai?.name != 'Đã hủy'" rounded color="red" dark @click="delete_item()">
                                 Huỷ buổi
                             </v-btn>
                         </div>
@@ -369,6 +369,13 @@ export default {
         },
     },
     mounted() {
+        const buoi = this.$route.query.d ?? 1;
+        if(buoi && buoi !=1) {
+            this.buoi = parseInt(buoi) + 1
+        } else {
+            this.buoi = buoi
+        }
+        // console.log(d); // Output: "6"
         this.title.previous = '/admin/orders/' + this.id
         this.$store.dispatch('title/set_title', this.title);
         this.load_data()
