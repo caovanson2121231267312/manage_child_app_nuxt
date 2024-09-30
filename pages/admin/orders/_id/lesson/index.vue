@@ -371,7 +371,8 @@ export default {
     mounted() {
         const buoi = this.$route.query.d ?? 1;
         if(buoi && buoi !=1) {
-            this.buoi = parseInt(buoi) + 1
+            this.buoi = parseInt(buoi)
+            // this.buoi = parseInt(buoi) + 1
         } else {
             this.buoi = buoi
         }
