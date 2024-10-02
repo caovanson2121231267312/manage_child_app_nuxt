@@ -116,9 +116,14 @@
 
                         <v-divider></v-divider>
                         <div class="d-flex justify-content-between align-items-center">
-                            <v-btn rounded color="primary" dark v-b-modal.my-modal-doi-gio>
-                                Đổi giờ
-                            </v-btn>
+                            <div>
+                                <v-btn rounded color="primary" dark v-b-modal.my-modal-doi-gio>
+                                    Đổi giờ
+                                </v-btn>
+                                <v-btn rounded color="warning" dark v-b-modal.my-modal-doi-ngay>
+                                    Đổi ngày
+                                </v-btn>
+                            </div>
                             <v-btn v-if="data?.trang_thai?.name != 'Đã hoàn thành' && data?.trang_thai?.name != 'Đã hủy'" rounded color="red" dark @click="delete_item()">
                                 Huỷ buổi
                             </v-btn>
@@ -127,6 +132,59 @@
                 </div>
             </v-col>
         </v-row>
+
+        <b-modal id="my-modal-doi-ngay" ref="my-modal-doi-ngay" hide-footer centered title="Thay đổi ngày dạy">
+            <template #default="{ hide }">
+                <form>
+
+                    <div class="">
+                        <!-- <v-card class=""> -->
+                            <!-- <v-card-text> -->
+                                <div>
+                                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M8.92188 0C4.51387 0 0.921875 3.592 0.921875 8C0.921875 12.408 4.51387 16 8.92188 16C13.3299 16 16.9219 12.408 16.9219 8C16.9219 3.592 13.3299 0 8.92188 0ZM12.4019 10.856C12.2899 11.048 12.0899 11.152 11.8819 11.152C11.7779 11.152 11.6739 11.128 11.5779 11.064L9.09788 9.584C8.48188 9.216 8.02588 8.408 8.02588 7.696V4.416C8.02588 4.088 8.29788 3.816 8.62587 3.816C8.95388 3.816 9.22587 4.088 9.22587 4.416V7.696C9.22587 7.984 9.46587 8.408 9.71387 8.552L12.1939 10.032C12.4819 10.2 12.5779 10.568 12.4019 10.856Z"
+                                            fill="#00C092" />
+                                    </svg>
+                                    <span>Chọn Ngày</span>
+                                </div>
+                                <div class="mb-3">
+                                    <div>
+                                        <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-text-field v-model="date" label=""
+                                                    prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
+                                            </template>
+                                            <v-date-picker v-model="date" scrollable>
+                                                <v-spacer></v-spacer>
+                                                <v-btn text color="primary" @click="modal = false">
+                                                    Cancel
+                                                </v-btn>
+                                                <v-btn text color="primary" @click="$refs.dialog.save(date)">
+                                                    OK
+                                                </v-btn>
+                                            </v-date-picker>
+                                        </v-dialog>
+                                    </div>
+                                </div>
+
+
+                                <!-- <div v-html="content">
+
+                        </div> -->
+                            <!-- </v-card-text> -->
+                        <!-- </v-card> -->
+
+                    </div>
+                    <div class="mt-4 pb-3 d-flex justify-content-between align-items-center w-100">
+                        <button type="button" class=" btn-cancel me-1" @click="hide()">Hủy</button>
+                        <button type="button" class=" btn-delete ms-1" @click="send_doi_ngay()">Xác nhận</button>
+                    </div>
+                </form>
+
+            </template>
+        </b-modal>
 
         <b-modal id="my-modal-doi-gio" ref="my-modal-doi-gio" hide-footer centered title="Thay đổi giờ dạy">
             <template #default="{ hide }">
@@ -212,6 +270,7 @@ export default {
             khung_gios: [],
             don_dich_vu_id: null,
             id_buoi: null,
+            date: null,
         };
     },
     components: {
@@ -320,7 +379,7 @@ export default {
         },
         async send_doi_gio() {
             const formData = new FormData()
-            formData.append('ca_day_id', this.chon_ca_id)
+            formData.append('ca_day_id', this.id_buoi)
             formData.append('khung_gio_id', this.khung_gio)
 
             await api.post('don-dich-vu/doi-gio-day', formData, {
@@ -329,6 +388,35 @@ export default {
             }).then(res => {
                 if (res?.status == 200) {
                     toastr.success(res?.data?.message);
+
+                    // setTimeout(function() {
+                    //     window.location.reload()
+                    // },1000)
+                    this.load_data()
+                }
+            })
+        },
+        async send_doi_ngay() {
+            const formData = new FormData()
+            formData.append('ca_day_id', this.id_buoi)
+            const date = new Date(this.date);
+            // const formattedDate = date.toLocaleDateString('en-GB');
+            const day = date.getDate(); // Get day (without leading zero)
+            const month = date.getMonth() + 1; // Get month (0-based index, so add 1)
+            const year = date.getFullYear(); // Get full year
+
+            const formattedDate = `${day}/${month}/${year}`;
+            // console.lo
+            formData.append('ngay_day', formattedDate)
+
+            await api.post('don-dich-vu/doi-ngay-day', formData, {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.token
+            }).then(res => {
+                if (res?.status == 200) {
+                    toastr.success(res?.data?.message);
+
+                    this.load_data()
                 }
             })
         },

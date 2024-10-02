@@ -199,7 +199,7 @@ export async function setContext (app, context) {
       payload: context.payload,
       error: context.error,
       base: app.router.options.base,
-      env: {"link_api":"https://trongtre.top/"}
+      env: {"link_api":"https://trongtrepro.htecom.com/"}
     }
     // Only set once
 
