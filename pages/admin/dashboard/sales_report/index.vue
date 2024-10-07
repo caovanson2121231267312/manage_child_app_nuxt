@@ -332,8 +332,8 @@ export default {
                     console.log("I was closed by the timer");
                 }
             });
-
-            await api.get(`bao-cao/export-excel-bao-cao-doanh-thu?dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&thang=${this.month}&page=1&limit=&sort=`, {
+            // &thang=${this.month}
+            await api.get(`bao-cao/export-excel-bao-cao-doanh-thu?dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&page=1&limit=&sort=&tuNgay=${this.value}&denNgay=${this.value1}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
