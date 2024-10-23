@@ -30,7 +30,7 @@
                 <div class="mt-6">
                     <div class="d-flex filter-warp">
                         <div class="w-100 m-1" style="min-width: 200px;">
-                            <b-form-input v-model.lazy="tuKhoa" placeholder="Tìm theo số điện thoại"></b-form-input>
+                            <b-form-input v-model.lazy="tuKhoa" placeholder="Tìm theo tên khách hàng"></b-form-input>
                         </div>
                         <div class="w-100 m-1">
                             <b-form-select v-model="dich_vu_id" :options="dich_vu" aria-placeholder="Chọn"></b-form-select>
@@ -194,7 +194,7 @@ export default {
             })
         },
         async load_data() {
-            await api.get(`chi-luong/danh-sach?tuKhoa=&dien_thoai=${this.tuKhoa}&leader_kd_id=${this.leader_kd_id}&dia_chi=&dich_vu_id=${this.dich_vu_id}&page=${this.current_page}&limit=1000000&sort=1&thang=${this.thang_id +'/'+ (new Date()).getFullYear()}`, {
+            await api.get(`chi-luong/danh-sach?tuKhoa=${this.tuKhoa}&dien_thoai=&leader_kd_id=${this.leader_kd_id}&dia_chi=&dich_vu_id=${this.dich_vu_id}&page=${this.current_page}&limit=1000000&sort=1&thang=${this.thang_id +'/'+ (new Date()).getFullYear()}`, {
                 // await api.get('chi-luong/danh-sach?tuKhoa=&dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&page=1&limit=&sort=1&thang=' + (this.month ?? ''), {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
