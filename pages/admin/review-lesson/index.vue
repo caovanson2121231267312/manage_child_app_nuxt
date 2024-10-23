@@ -215,6 +215,27 @@
                 </v-col>
             </v-row>
         </div>
+
+        <div class="mt-3">
+            <v-row>
+                <v-col v-for="(item, n) in data" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
+                    <!-- <CardItem /> -->
+                    <card-service-order :data="item" :status="item?.trang_thai"></card-service-order>
+                </v-col>
+
+                <v-col v-if="data == null || data?.length == 0">
+                    <b-alert class="wow animate__animated animate__bounce" show dismissible variant="primary">Danh sách
+                        trống</b-alert>
+                </v-col>
+                <div class="w-100" v-else>
+                    <div class="d-flex justify-content-center mt-4 w-100">
+                        <b-pagination v-model="current_page" :total-rows="total" :per-page="per_page" first-text="First"
+                            prev-text="Prev" next-text="Next" last-text="Last"></b-pagination>
+
+                    </div>
+                </div>
+            </v-row>
+        </div>
     </div>
 </template>
 
@@ -233,22 +254,33 @@ export default {
                 previous: '/admin/dashboard'
             },
             data: null,
+            tuKhoa: "",
+            per_page: 0,
+            current_page: 1,
+            total: 0,
         };
     },
     computed: {
         token() {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             return storedUser.auth_key
-        }
+        },
+        keyword() {
+            console.log(this.$store.getters[`order/keyword`])
+            return this.$store.getters[`order/keyword`]
+        },
     },
     methods: {
         async load_data() {
-            await api.get(`danh-gia-buoi-hoc/danh-sach?page=1&limit=1000&tuKhoa=&sort=1`, {
+            await api.get(`danh-gia-buoi-hoc/danh-sach?page=${this.current_page}&limit=15&tuKhoa=${this.tuKhoa}&sort=1`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 console.log(res)
                 this.data = res?.data?.data
+                this.per_page = res?.data?.per_page ?? 0
+                this.current_page = res?.data?.current_page ?? 0
+                this.total = res?.data?.total
             })
         },
     },
@@ -256,7 +288,28 @@ export default {
         this.$store.dispatch('title/set_title', this.title);
         this.load_data()
     },
-    components: { CardItem }
+    components: { 
+        CardItem 
+    },
+    watch: {
+        tuKhoa() {
+            clearTimeout(this.timeOut);
+
+            this.timeOut = setTimeout(() => {
+                // this.$emit("click");
+                this.current_page = 1
+                this.load_data()
+
+            }, this.timer);
+        },
+        current_page() {
+            this.load_data()
+        },
+        keyword() {
+            this.current_page = 1
+            this.tuKhoa = this.keyword
+        }
+    }
 }
 </script>
 
