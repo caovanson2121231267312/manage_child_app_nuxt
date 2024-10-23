@@ -157,7 +157,7 @@
             </div>
             <b-row class="search">
                 <b-col cols="12" md="6">
-                    <b-form-input v-model.lazy="tuKhoa" placeholder="Tìm kiếm đơn hàng"></b-form-input>
+                    <b-form-input v-model.lazy="tuKhoa" placeholder="Tìm kiếm Khách hàng"></b-form-input>
                 </b-col>
                 <b-col cols="12" md="6">
                     <b-form-input v-model.lazy="giaoVien" placeholder="Tìm giáo viên"></b-form-input>

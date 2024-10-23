@@ -452,7 +452,7 @@
             <div class="d-flex align-items-center">
                 <div class="me-2 position-relative">
                     <b-form-input class="search1" v-model="tuKhoa1"
-                        placeholder="Tìm kiếm đơn hàng"></b-form-input>
+                        placeholder="Tìm kiếm Khách hàng"></b-form-input>
                     <b-dropdown ref="dropdown1" size="lg" variant="link"
                         toggle-class="text-decoration-none position-absolute" no-caret>
                         <template #button-content>
@@ -489,7 +489,7 @@
 
             <div class="w-100 search2">
                 <b-form-input class="w-100" v-model.lazy="tuKhoa2"
-                    placeholder="Tìm kiếm đơn hàng"></b-form-input>
+                    placeholder="Tìm kiếm Khách hàng"></b-form-input>
                 <b-dropdown ref="dropdown2" size="lg" variant="link" toggle-class="text-decoration-none position-absolute"
                     no-caret>
                     <template #button-content>
