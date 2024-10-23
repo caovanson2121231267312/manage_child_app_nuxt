@@ -135,7 +135,7 @@
                     </div>
 
                     <div class="mb-2 swiper-slide">
-                        <nuxt-link to="/admin/users/teachers">
+                        <nuxt-link to="/admin/users/parent">
                         <b-card style="min-width: 245px;" class="mb-2 hover-card wow animate__animated animate__bounceIn">
                             <div class="d-flex justify-content-between align-center">
                                 <div>

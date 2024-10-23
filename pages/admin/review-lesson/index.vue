@@ -272,7 +272,7 @@ export default {
     },
     methods: {
         async load_data() {
-            await api.get(`danh-gia-buoi-hoc/danh-sach?page=${this.current_page}&limit=15&tuKhoa=${this.tuKhoa}&sort=1`, {
+            await api.get(`danh-gia-buoi-hoc/danh-sach?page=${this.current_page}&limit=9&tuKhoa=${this.tuKhoa}&sort=1`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
