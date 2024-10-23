@@ -220,10 +220,10 @@
                 </b-card>
 
                 <b-card style="min-width: 245px;" class="mb-4">
-                    <a class="block w-100 teachers teacher-detail" :href="data?.link" target="_blank">
+                    <a class="block w-100 teachers teacher-detail" :href="data?.link ?? '#'" target="_blank">
                         <div class="card-body-p-16">
                             <h4 class="text-infomation">
-                                Xem kết quả bài kiểm tra
+                                {{ data?.link ? "Xem kết quả bài kiểm tra" : "Chưa cập nhật kết quả bài kiểm tra" }}
                             </h4>
                             <button class="btn btn-link-to position-relative">
                                 Đi đến liên kết
