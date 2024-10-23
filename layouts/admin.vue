@@ -696,6 +696,7 @@ export default {
             clearTimeout(this.timeOut);
             this.timeOut = setTimeout(() => {
                 this.search_data()
+                this.$store.dispatch('order/set_keyword', this.tuKhoa1);
             }, this.timer);
         },
         tuKhoa2() {
@@ -705,6 +706,7 @@ export default {
             clearTimeout(this.timeOut);
             this.timeOut = setTimeout(() => {
                 this.search_data()
+                this.$store.dispatch('order/set_keyword', this.tuKhoa2);
             }, this.timer);
         },
     },
