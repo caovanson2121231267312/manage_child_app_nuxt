@@ -199,7 +199,7 @@
                                 </v-list-item>
 
 
-                                <v-list-group class="group-list" no-action :value="isCurrentRouteMatching('/admin/lsm')">
+                                <v-list-group v-if="user.vai_tro == 'Admin'" class="group-list" no-action :value="isCurrentRouteMatching('/admin/lsm')">
                                     <template v-slot:activator>
                                         <v-list-item-icon class="icon-bar" default>
                                             <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
@@ -237,7 +237,7 @@
                                 </v-list-group>
 
 
-                                <v-list-group class="group-list" no-action :value="isCurrentRouteMatching('/admin/users')">
+                                <v-list-group  v-if="user.vai_tro == 'Admin'" class="group-list" no-action :value="isCurrentRouteMatching('/admin/users')">
                                     <template v-slot:activator>
                                         <v-list-item-icon class="icon-bar" default>
                                             <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
@@ -330,7 +330,7 @@
                                     </div>
                                 </v-list-item>
 
-                                <v-list-item class="li-bar" to="/admin/medias">
+                                <v-list-item  v-if="user.vai_tro == 'Admin'" class="li-bar" to="/admin/medias">
                                     <v-list-item-icon class="icon-bar" default>
                                         <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -680,6 +680,7 @@ export default {
         },
         user() {
             const storedUser = JSON.parse(localStorage.getItem('user'));
+            // console.log(storedUser)
             return storedUser;
         },
         token() {

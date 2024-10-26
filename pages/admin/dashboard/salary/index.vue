@@ -40,7 +40,7 @@
                                 aria-placeholder="Chọn"></b-form-select>
                         </div>
                         <div class="w-100 m-1">
-                            <b-form-select v-model="thang_id" :options="thang" aria-placeholder="Chọn"></b-form-select>
+                            <b-form-select @change="updateMonth" v-model="thang_id" :options="thang" aria-placeholder="Chọn"></b-form-select>
                         </div>
                     </div>
 
@@ -60,7 +60,7 @@
                         <tbody>
                             <tr v-for="(item, n) in data" v-bind:key="n">
                                 <td>
-                                    <nuxt-link class="d-block" :to="'/admin/dashboard/salary/' + item?.id">
+                                    <nuxt-link class="d-block" :to="'/admin/dashboard/salary/' + item?.id + '?t=' + (thang_id ?? 0)">
                                         <div class="d-flex align-items-center">
                                             <div class="box-img me-2">
                                                 <img :src="item?.anh_nguoi_dung" />
@@ -160,6 +160,11 @@ export default {
         }
     },
     methods: {
+        updateMonth() {
+            // Cập nhật URL với tham số tháng khi chọn
+            console.log(this.thang_id)
+            this.$router.push({ query: { ...this.$route.query, t: this.thang_id } });
+        },
         async load_type() {
             await api.get('dich-vu/danh-sach?page=1&limit=1000&sort=1&tuKhoa=', {
                 'Content-Type': 'multipart/form-data',
@@ -231,9 +236,12 @@ export default {
     mounted() {
         this.$store.dispatch('title/set_title', this.title)
         this.load_type()
-        let currentDate = new Date();
-        this.thang_id = currentDate.getMonth() + 1;
+        // let currentDate = new Date();
+        // this.thang_id = currentDate.getMonth() + 1;
         this.load_data()
+
+        const month = this.$route.query.t ? parseInt(this.$route.query.t) : new Date().getMonth() + 1;
+        this.thang_id = month;
     },
     watch: {
         current_page() {

@@ -7,14 +7,14 @@ const domain = process.env.link_api ?? 'https://trongtre.top/'
 const api = {
     async get(url, headers = {}) {
         try {
-            console.log(headers)
+            // console.log(headers)
 
             const data = await axios.get(domain + url, { headers: headers })
             // console.log(url)
             // console.log(data)
             return data
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             toastr.error('Đã có lỗi xảy ra');
             if(error?.response?.status == 401) {
                 toastr.error(error?.response?.data?.message);
@@ -30,14 +30,14 @@ const api = {
 
     async post(url, formData = {}, headers = {}) {
         try {
-            console.log(url)
+            // console.log(url)
             const data = await axios.post(domain + url, formData, {
                 headers: headers,
             })
             // console.log(data)
             return data
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             if(error?.response?.status == 401) {
                 toastr.error(error?.response?.data?.message);
             } else if (error?.response?.status == 500) {
@@ -61,7 +61,7 @@ const api = {
     },
 
     async delete(url, data = {}, headers = {}) {
-        console.log(url)
+        // console.log(url)
         try {
             let result = await axios.delete(domain + url, { headers: headers })
 

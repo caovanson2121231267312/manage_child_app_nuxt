@@ -140,6 +140,11 @@
                                                 <v-list-item-title>Hướng dẫn App</v-list-item-title>
                                             </v-list-item-content>
                                         </v-list-item>
+                                        <v-list-item to="/admin/system/tax">
+                                            <v-list-item-content class="p-0 ps-4">
+                                                <v-list-item-title>Chiết khấu cho giáo viên</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
                                         <v-list-item to="/admin/system/configs">
                                             <v-list-item-content class="p-0 ps-4">
                                                 <v-list-item-title>Cài đặt</v-list-item-title>
@@ -167,7 +172,7 @@
                                     </div>
                                 </v-list-item>
 
-                                <v-list-item class="li-bar" to="/admin/parents">
+                                <v-list-item class="li-bar" to="/admin/orders">
                                     <v-list-item-icon class="icon-bar" default>
                                         <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -194,7 +199,7 @@
                                 </v-list-item>
 
 
-                                <v-list-group class="group-list" no-action :value="isCurrentRouteMatching('/admin/lsm')">
+                                <v-list-group v-if="user.vai_tro == 'Admin'" class="group-list" no-action :value="isCurrentRouteMatching('/admin/lsm')">
                                     <template v-slot:activator>
                                         <v-list-item-icon class="icon-bar" default>
                                             <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
@@ -232,7 +237,7 @@
                                 </v-list-group>
 
 
-                                <v-list-group class="group-list" no-action :value="isCurrentRouteMatching('/admin/users')">
+                                <v-list-group  v-if="user.vai_tro == 'Admin'" class="group-list" no-action :value="isCurrentRouteMatching('/admin/users')">
                                     <template v-slot:activator>
                                         <v-list-item-icon class="icon-bar" default>
                                             <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
@@ -325,7 +330,7 @@
                                     </div>
                                 </v-list-item>
 
-                                <v-list-item class="li-bar" to="/admin/medias">
+                                <v-list-item  v-if="user.vai_tro == 'Admin'" class="li-bar" to="/admin/medias">
                                     <v-list-item-icon class="icon-bar" default>
                                         <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">

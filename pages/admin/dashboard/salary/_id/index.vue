@@ -265,7 +265,7 @@ export default {
         },
     },
     mounted() {
-        // this.title.previous =
+        this.title.previous = '/admin/dashboard/salary?t=' + (this.$route.query.t ? parseInt(this.$route.query.t) : new Date().getMonth() + 1)
         this.$store.dispatch('title/set_title', this.title);
         let chuoi = this.date;
         let ketqua = chuoi.split('-');

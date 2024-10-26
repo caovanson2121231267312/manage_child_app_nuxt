@@ -1,6 +1,7 @@
 {
   "name": "child_app",
   "short_name": "child_app",
+  "description": "## Build Setup",
   "icons": [
     {
       "src": "/_nuxt/icons/icon_64x64.e3e9fb.png",

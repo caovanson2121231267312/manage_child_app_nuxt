@@ -218,10 +218,10 @@
 
         <div class="mt-3">
             <v-row>
-                <v-col v-for="(item, n) in data" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
-                    <!-- <CardItem /> -->
+                <!-- <v-col v-for="(item, n) in data" :key="n" xs="12" sm="6" md="4" lg="4" xl="3">
+
                     <card-service-order :data="item" :status="item?.trang_thai"></card-service-order>
-                </v-col>
+                </v-col> -->
 
                 <v-col v-if="data == null || data?.length == 0">
                     <b-alert class="wow animate__animated animate__bounce" show dismissible variant="primary">Danh sách
@@ -288,8 +288,8 @@ export default {
         this.$store.dispatch('title/set_title', this.title);
         this.load_data()
     },
-    components: { 
-        CardItem 
+    components: {
+        CardItem
     },
     watch: {
         tuKhoa() {
