@@ -173,6 +173,20 @@
                                 </div>
                                 <v-select v-model="phu_huynh_id" :items="phu_huynh" label="Chọn phụ huynh" multiple filled
                                     flat chips item-text="itemName" item-value="itemId"></v-select>
+
+                                    <v-select 
+                                    v-model="phu_huynh_id" 
+                                    :items="phu_huynh" 
+                                    label="Chọn phụ huynh" 
+                                    multiple 
+                                    filled
+                                    flat 
+                                    chips 
+                                    item-text="itemName" 
+                                    item-value="itemId"
+                                    :search-input.sync="search"
+                                    append-icon="mdi-magnify"
+                                  ></v-select>
                             </b-form-group>
                         </div>
 
@@ -264,6 +278,7 @@ export default {
         disabled_phu_huynh: false,
         disabled_dich_vu: false,
         disabled_lao_dong: false,
+        search: '',
     }),
     computed: {
         token() {
@@ -311,7 +326,6 @@ export default {
                 //     }
                 // })
 
-                this.giao_vien.unshift({group:0, name:'Tất cả', avatar:'https://trongtrepro.htecom.com/upload-file/2024/02/23/_z7i8t7jHFPdXwDLZ95qyUANWvieJ5xcG.png'});
 
                 this.giao_vien = res?.data?.data.map(item => {
                     return {
@@ -320,6 +334,9 @@ export default {
                         avatar: item?.anh_nguoi_dung,
                     };
                 })
+
+                this.giao_vien.unshift({group:0, name:'Tất cả', avatar:'https://trongtrepro.htecom.com/upload-file/2024/02/23/_z7i8t7jHFPdXwDLZ95qyUANWvieJ5xcG.png'});
+
                 this.giao_vien_id = this.giao_vien[0].group
             })
 
