@@ -171,8 +171,8 @@
                                     </span>
                                     Gán phụ huynh
                                 </div>
-                                <v-select v-model="phu_huynh_id" :items="phu_huynh" label="Chọn phụ huynh" multiple filled
-                                    flat chips item-text="itemName" item-value="itemId"></v-select>
+                                <!-- <v-select v-model="phu_huynh_id" :items="phu_huynh" label="Chọn phụ huynh" multiple filled
+                                    flat chips item-text="itemName" item-value="itemId"></v-select> -->
 
                                     <v-select 
                                     v-model="phu_huynh_id" 
