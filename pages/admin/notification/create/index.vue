@@ -311,7 +311,7 @@ export default {
                 //     }
                 // })
 
-                // this.giao_vien.unshift({itemId:0, itemName:'Tất cả'});
+                this.giao_vien.unshift({group:0, name:'Tất cả', avatar:'https://trongtrepro.htecom.com/upload-file/2024/02/23/_z7i8t7jHFPdXwDLZ95qyUANWvieJ5xcG.png'});
 
                 this.giao_vien = res?.data?.data.map(item => {
                     return {
