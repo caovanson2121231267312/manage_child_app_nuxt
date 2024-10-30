@@ -185,6 +185,7 @@
                                     item-text="itemName" 
                                     item-value="itemId"
                                     :search-input.sync="search"
+                                    :filter="customFilter"
                                     append-icon="mdi-magnify"
                                   ></v-select>
                             </b-form-group>
@@ -287,7 +288,12 @@ export default {
         }
     },
     methods: {
-
+        customFilter(item, queryText, itemText) {
+            // This enables case-insensitive filtering
+            const text = itemText.toLowerCase();
+            const query = queryText.toLowerCase();
+            return text.includes(query);
+          },
         async load_type() {
             await api.get('thong-bao/get-type', {
                 'Content-Type': 'multipart/form-data',
