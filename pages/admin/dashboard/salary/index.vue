@@ -223,7 +223,8 @@ export default {
                 }
             });
 
-            await api.get(`bao-cao/export-excel-bao-cao-khach-hang?dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&thang=${this.month}&page=1&limit=&sort=`, {
+            // await api.get(`bao-cao/export-excel-bao-cao-khach-hang?dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&thang=${this.month}&page=1&limit=&sort=`, {
+            await api.get(`chi-luong/excel-danh-sach-phieu-luong?tuKhoa=${this.tuKhoa}&dien_thoai=&leader_kd_id=${this.leader_kd_id}&dia_chi=&dich_vu_id=${this.dich_vu_id}&thang=${this.month}&page=1&limit=&sort=`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {

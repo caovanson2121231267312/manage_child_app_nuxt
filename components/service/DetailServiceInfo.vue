@@ -996,13 +996,13 @@
         <div class="mt-6" v-if="data?.so_tien_hoan">
             <div>
                 <h5>
-                    Số tiền hoàn
+                    Đơn hoàn
                 </h5>
             </div>
             <v-card class="mx-auto" outlined>
                 <v-card-text>
-                    <div class="text-danger">
-                        {{ data?.so_tien_hoan }} vnđ
+                    <div>
+                        <b>Số tiền hoàn: </b> <span class="text-danger">{{ formatCurrency(data?.so_tien_hoan) }} vnđ</span>
                     </div>
                 </v-card-text>
             </v-card>
