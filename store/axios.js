@@ -42,6 +42,8 @@ const api = {
                 toastr.error(error?.response?.data?.message);
             } else if (error?.response?.status == 500) {
                 toastr.error(error?.response?.data?.message);
+            } else if (error?.response?.status == 400) {
+                toastr.error(error?.response?.data?.message);
             } else {
                 toastr.error('Vui lòng nhập đủ thông tin');
             }
