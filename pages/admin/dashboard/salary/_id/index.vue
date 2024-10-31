@@ -218,6 +218,7 @@ export default {
             },
             data: null,
             date: new Date().toISOString().substr(0, 7),
+            // date: this.thang_id +'/'+ (new Date()).getFullYear(),
             month: 1,
             menu: false,
             modal: false,
@@ -270,6 +271,8 @@ export default {
         let chuoi = this.date;
         let ketqua = chuoi.split('-');
         this.select_date = ketqua[1] + "/" + ketqua[0]
+        this.$route.query.t
+        this.date = (this.$route.query.t ?? 1) +'/'+ (new Date()).getFullYear()
         this.load_data()
     },
     watch: {
