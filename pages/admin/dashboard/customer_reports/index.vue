@@ -345,7 +345,7 @@ export default {
                 }
             });
 
-            await api.get(`bao-cao/export-excel-bao-cao-khach-hang?dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&thang=${this.month}&page=1&limit=&sort=`, {
+            await api.get(`bao-cao/export-excel-bao-cao-khach-hang?dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&thang=${this.month}&page=1&limit=&sort=` + `&tuNgay=${this.date1}&denNgay=${this.date}&trang_thai=${this.trang_thai_text}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
