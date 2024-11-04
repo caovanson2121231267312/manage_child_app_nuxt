@@ -241,7 +241,8 @@ export default {
         // this.thang_id = currentDate.getMonth() + 1;
         this.load_data()
 
-        const month = this.$route.query.t ? parseInt(this.$route.query.t) : new Date().getMonth() + 1;
+        // const month = this.$route.query.t ? parseInt(this.$route.query.t) : new Date().getMonth() + 1;
+        const month = new Date().getMonth() + 1;
         this.thang_id = month;
     },
     watch: {
