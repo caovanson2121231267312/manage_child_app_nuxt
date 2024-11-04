@@ -155,8 +155,9 @@ export default {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
-                console.log(res)
-                this.data = res?.data
+                console.log("order")
+                console.log(res?.data?.data)
+                this.data = res?.data?.data?.data
             })
         },
         async updateFilter(filter) {
