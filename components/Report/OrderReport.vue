@@ -130,6 +130,7 @@ export default {
                 name: null,
                 previous: '/admin/dashboard'
             },
+            data: null,
             date: new Date().toISOString(),
             date1: new Date().toISOString(),
             month: 1,
