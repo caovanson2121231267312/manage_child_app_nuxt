@@ -151,7 +151,7 @@ export default {
     },
     methods: {
         async load_data() {
-            await api.get('bao-cao/bao-cao-tinh-trang-don?thang=' + (this.month ?? '') + `&tuNgay=${this.date1}&denNgay=${this.date}`, {
+            await api.get(`bao-cao/bao-cao-tinh-trang-don?tuNgay=${this.date1}&denNgay=${this.date}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -178,7 +178,7 @@ export default {
         var day = ('0' + currentDate.getDate()).slice(-2);
 
         this.date1 = year + '-' + month + '-' + day;
-        
+
         this.$store.dispatch('title/set_title', this.title)
         this.month = this.date.split("-")[1] + '/' + this.date.split("-")[0];
         this.load_data()
