@@ -271,8 +271,8 @@ export default {
         let chuoi = this.date;
         let ketqua = chuoi.split('-');
         this.select_date = ketqua[1] + "/" + ketqua[0]
-        this.$route.query.t
-        this.date =  (new Date()).getFullYear()  +'/'+ (this.$route.query.t ?? 1)
+        // this.$route.query.t
+        // this.date =  (new Date()).getFullYear()  +'/'+ (this.$route.query.t ?? 1)
         this.load_data()
     },
     watch: {
