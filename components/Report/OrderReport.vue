@@ -165,6 +165,20 @@ export default {
         }
     },
     mounted() {
+        var currentDate = new Date();
+        var year = currentDate.getFullYear();
+        var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+        var day = ('0' + currentDate.getDate()).slice(-2);
+        var formattedDate = year + '-' + month + '-' + day;
+        this.date = formattedDate
+
+
+        var month = ('0' + (currentDate.getMonth())).slice(-2);
+        var year = currentDate.getFullYear();
+        var day = ('0' + currentDate.getDate()).slice(-2);
+
+        this.date1 = year + '-' + month + '-' + day;
+        
         this.$store.dispatch('title/set_title', this.title)
         this.month = this.date.split("-")[1] + '/' + this.date.split("-")[0];
         this.load_data()
@@ -371,7 +385,7 @@ export default {
 }
 
 .month-picker {
-    width: 94px;
+    width: 118px;
 }
 
 .chart-title {
