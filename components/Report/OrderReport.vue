@@ -156,8 +156,8 @@ export default {
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
                 console.log("order")
-                console.log(res?.data?.data)
-                this.data = res?.data?.data?.data
+                console.log(res?.data?.data?.du_kien)
+                this.data = res?.data?.data
             })
         },
         async updateFilter(filter) {
