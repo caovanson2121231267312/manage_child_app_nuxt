@@ -239,10 +239,12 @@ export default {
     },
     methods: {
         change_page() {
-            this.$router.push('/admin/dashboard/salary/' + this.id + '/create/' + this.date);
+            this.$router.push('/admin/dashboard/salary/' + this.id + '/create/' + this.date + '?t=' + (this.$route.query.t ?? 1));
         },
         async load_data() {
-            await api.get(`chi-luong/chi-tiet?thang=${this.select_date}&page=1&limit=&sort=&tuKhoa=&id=` + this.id, {
+            var url = `chi-luong/chi-tiet?thang=${this.select_date}&page=1&limit=&sort=&tuKhoa=&id=` + this.id;
+            console.log(url)
+            await api.get(url, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -270,9 +272,15 @@ export default {
         this.$store.dispatch('title/set_title', this.title);
         let chuoi = this.date;
         let ketqua = chuoi.split('-');
-        this.select_date = ketqua[1] + "/" + ketqua[0]
+        // this.select_date = ketqua[1] + "/" + ketqua[0]
         // this.$route.query.t
+        // console.log(this.$route.query.t)
+        // console.log(new Date().getFullYear())
         // this.date =  (new Date()).getFullYear()  +'/'+ (this.$route.query.t ?? 1)
+        this.date = (new Date()).getFullYear() + "-" + (this.$route.query.t ?? 1)
+        // console.log((new Date()).getFullYear()  +'/'+ (this.$route.query.t ?? 1))
+
+        this.select_date =  (this.$route.query.t ?? 1) +'/'+ (new Date()).getFullYear()
         this.load_data()
     },
     watch: {
@@ -280,7 +288,7 @@ export default {
             console.log(this.date)
             let chuoi = this.date;
             let ketqua = chuoi.split('-');
-            this.select_date = ketqua[1] + "/" + ketqua[0]
+            // this.select_date = ketqua[1] + "/" + ketqua[0]
         },
         select_date() {
             this.load_data()

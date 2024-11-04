@@ -276,7 +276,7 @@ export default {
         async load_data() {
             let chuoi = this.date_l;
             let ketqua = chuoi.split('-');
-            await api.get(`chi-luong/tao-phieu-luong?thang=${ketqua[1] + "/" + ketqua[0]}&id=` + this.id, {
+            await api.get(`chi-luong/tao-phieu-luong?thang=${(this.$route.query.t ?? ketqua[1]) + "/" +  ketqua[0]}&id=` + this.id, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -343,7 +343,7 @@ export default {
             // Hiển thị ngày hiện tại
             console.log(`${month}/${year}`);
 
-            await api.get(`chi-luong/export-phieu-luong?id=${this.id}&thang=${ketqua[1]}/${ketqua[0]}`, {
+            await api.get(`chi-luong/export-phieu-luong?id=${this.id}&thang=${(this.$route.query.t ?? ketqua[1]) + "/" +  ketqua[0]}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -376,7 +376,7 @@ export default {
             // Hiển thị ngày hiện tại
             console.log(`${month}/${year}`);
 
-            await api.get(`/chi-luong/pdf-phieu-luong?id=${this.id}&thang=${ketqua[1]}/${ketqua[0]}`, {
+            await api.get(`/chi-luong/pdf-phieu-luong?id=${this.id}&thang=${(this.$route.query.t ?? ketqua[1]) + "/" +  ketqua[0]}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -387,7 +387,7 @@ export default {
         }
     },
     mounted() {
-        this.title.previous = '/admin/dashboard/salary/' + this.id
+        this.title.previous = '/admin/dashboard/salary/' + this.id  + '?t=' + (this.$route.query.t ?? 1)
         this.$store.dispatch('title/set_title', this.title);
         this.load_data()
     },
