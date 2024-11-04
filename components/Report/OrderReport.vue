@@ -4,13 +4,28 @@
             <div class="w-100 ">
                 <div class="d-flex justify-content-between align-items-center">
                     <label class="chart-title">Tổng quan tình trạng đơn</label>
-                    <div>
+                    <div class="d-flex">
+                        <v-dialog ref="dialog1" v-model="modal1" :return-value.sync="date1" persistent width="290px">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-text-field v-model="date1" label="" class="month-picker me-3" prepend-icon="mdi-calendar"
+                                    readonly v-bind="attrs" v-on="on"></v-text-field>
+                            </template>
+                            <v-date-picker v-model="date1" type="date" scrollable>
+                                <v-spacer></v-spacer>
+                                <v-btn text color="primary" @click="modal1 = false">
+                                    Cancel
+                                </v-btn>
+                                <v-btn text color="primary" @click="$refs.dialog1.save(date1)">
+                                    OK
+                                </v-btn>
+                            </v-date-picker>
+                        </v-dialog>
                         <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field v-model="date" label="" class="month-picker" prepend-icon="mdi-calendar"
                                     readonly v-bind="attrs" v-on="on"></v-text-field>
                             </template>
-                            <v-date-picker v-model="date" type="month" scrollable>
+                            <v-date-picker v-model="date" type="date" scrollable>
                                 <v-spacer></v-spacer>
                                 <v-btn text color="primary" @click="modal = false">
                                     Cancel
@@ -115,11 +130,12 @@ export default {
                 name: null,
                 previous: '/admin/dashboard'
             },
-            data: null,
-            date: new Date().toISOString().substr(0, 7),
+            date: new Date().toISOString(),
+            date1: new Date().toISOString(),
             month: 1,
             menu: false,
             modal: false,
+            modal1: false,
             selected: 0,
             options: [
                 { value: 0, text: 'Tất cả' },
@@ -135,7 +151,7 @@ export default {
     },
     methods: {
         async load_data() {
-            await api.get('bao-cao/bao-cao-tinh-trang-don?thang=' + (this.month ?? ''), {
+            await api.get('bao-cao/bao-cao-tinh-trang-don?thang=' + (this.month ?? '') + `&tuNgay=${this.date1}&denNgay=${this.date}`, {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
             }).then(res => {
@@ -158,7 +174,14 @@ export default {
             console.log(this.date)
             const dateArray = this.date.split("-");
             console.log(dateArray)
-            this.month = dateArray[1] + '/' + dateArray[0];
+            this.month = dateArray[2] + '/' + dateArray[1] + '/' + dateArray[0];
+            this.load_data();
+        },
+        date1() {
+            console.log(this.date1)
+            const dateArray = this.date1.split("-");
+            console.log(dateArray)
+            this.month = dateArray[2] + '/' + dateArray[1] + '/' + dateArray[0];
             this.load_data();
         }
     }
