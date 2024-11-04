@@ -197,7 +197,7 @@
                                                     </svg>
 
                                                     <!--  -->
-                                                    <span class="badge bg-primary"  v-if="item?.trang_thai == 'Xác nhận hoàn trả'" >
+                                                    <span class="badge bg-primary text-white"  v-if="item?.trang_thai == 'Xác nhận hoàn trả'" >
                                                         Xác nhận hoàn trả
                                                     </span>
                                                 </div>
