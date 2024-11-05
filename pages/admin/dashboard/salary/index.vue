@@ -199,7 +199,7 @@ export default {
             })
         },
         async load_data() {
-            await api.get(`chi-luong/danh-sach?tuKhoa=${this.tuKhoa}&dien_thoai=&leader_kd_id=${this.leader_kd_id}&dia_chi=&dich_vu_id=${this.dich_vu_id}&page=${this.current_page}&limit=1000000&sort=1&thang=${(this.$route.query.t ?? this.thang_id) +'/'+ (new Date()).getFullYear()}`, {
+            await api.get(`chi-luong/danh-sach?tuKhoa=${this.tuKhoa}&dien_thoai=&leader_kd_id=${this.leader_kd_id}&dia_chi=&dich_vu_id=${this.dich_vu_id}&page=${this.current_page}&limit=1000000&sort=1&thang=${(this.thang_id ?? this.$route.query.t) +'/'+ (new Date()).getFullYear()}`, {
                 // await api.get('chi-luong/danh-sach?tuKhoa=&dien_thoai=&leader_kd_id=&dia_chi=&dich_vu_id=&page=1&limit=&sort=1&thang=' + (this.month ?? ''), {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + this.token
