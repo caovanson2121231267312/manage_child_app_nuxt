@@ -120,9 +120,10 @@
                                     flat chips item-text="itemName" item-value="itemId"></v-select> -->
 
                                     <v-autocomplete v-model="giao_vien_id" :disabled="isUpdating" :items="giao_vien" filled chips
-                                color="blue-grey lighten-2" label="" item-text="name" item-value="group">
+                                color="blue-grey lighten-2" label="" item-text="name" item-value="group" multiple>
                                 <template v-slot:selection="data">
-                                    <div class="d-flex">
+                                    <div class="d-flex m-2">
+                                        <img width="50" class="border border-2 rounded-circle" :src="data.item.avatar">
                                         <div class="ms-2">
                                             <div class="mt-2">
                                                 <b>{{ data.item.name }}</b>
@@ -174,15 +175,15 @@
                                 <!-- <v-select v-model="phu_huynh_id" :items="phu_huynh" label="Chọn phụ huynh" multiple filled
                                     flat chips item-text="itemName" item-value="itemId"></v-select> -->
 
-                                    <v-select 
-                                    v-model="phu_huynh_id" 
-                                    :items="phu_huynh" 
-                                    label="Chọn phụ huynh" 
-                                    multiple 
+                                    <v-select
+                                    v-model="phu_huynh_id"
+                                    :items="phu_huynh"
+                                    label="Chọn phụ huynh"
+                                    multiple
                                     filled
-                                    flat 
-                                    chips 
-                                    item-text="itemName" 
+                                    flat
+                                    chips
+                                    item-text="itemName"
                                     item-value="itemId"
                                     :search-input.sync="search"
                                     :filter="customFilter"
@@ -375,7 +376,9 @@ export default {
                 //     formData.append('giao_vien_id', '0')
                 // } else {
                     // formData.append('giao_vien_id', this.giao_vien_id.map(item => item.itemId).join(','))
-                    console.log(this.giao_vien_id)
+                    // console.log(this.giao_vien_id, this.giao_vien_id.join(','))
+
+                    // return
                     try {
                         formData.append('giao_vien_id', this.giao_vien_id.join(','))
                     } catch (e) {
