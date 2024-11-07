@@ -120,42 +120,42 @@
                                     flat chips item-text="itemName" item-value="itemId"></v-select> -->
 
                                     <v-autocomplete v-model="giao_vien_id" :disabled="isUpdating" :items="giao_vien" filled chips
-                                color="blue-grey lighten-2" label="" item-text="name" item-value="group" multiple>
-                                <template v-slot:selection="data">
-                                    <div class="d-flex m-2">
-                                        <img width="50" class="border border-2 rounded-circle" :src="data.item.avatar">
-                                        <div class="ms-2">
-                                            <div class="mt-2">
-                                                <b>{{ data.item.name }}</b>
+                                        color="blue-grey lighten-2" label="" item-text="name" item-value="group" multiple>
+                                        <template v-slot:selection="data">
+                                            <div class="d-flex m-2">
+                                                <img width="50" class="border border-2 rounded-circle" :src="data.item.avatar">
+                                                <div class="ms-2">
+                                                    <div class="mt-2">
+                                                        <b>{{ data.item.name }}</b>
+                                                    </div>
+                                                    <div>
+                                                        <span class="blade-id"># {{ data.item.group }}</span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <span class="blade-id"># {{ data.item.group }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- <v-chip v-bind="data.attrs" :input-value="data.selected" close @click="data.select"
-                                        @click:close="remove(data.item)">
-                                        <v-avatar left>
-                                            <v-img :src="data.item.avatar"></v-img>
-                                        </v-avatar>
-                                        {{ data.item.name }}
-                                    </v-chip> -->
-                                </template>
-                                <template v-slot:item="data">
-                                    <template v-if="typeof data.item !== 'object'">
-                                        <v-list-item-content v-text="data.item"></v-list-item-content>
-                                    </template>
-                                    <template v-else>
-                                        <v-list-item-avatar>
-                                            <img :src="data.item.avatar">
-                                        </v-list-item-avatar>
-                                        <v-list-item-content>
-                                            <v-list-item-title v-html="data.item.name"></v-list-item-title>
-                                            <v-list-item-subtitle v-html="data.item.group"></v-list-item-subtitle>
-                                        </v-list-item-content>
-                                    </template>
-                                </template>
-                            </v-autocomplete>
+                                            <!-- <v-chip v-bind="data.attrs" :input-value="data.selected" close @click="data.select"
+                                                @click:close="remove(data.item)">
+                                                <v-avatar left>
+                                                    <v-img :src="data.item.avatar"></v-img>
+                                                </v-avatar>
+                                                {{ data.item.name }}
+                                            </v-chip> -->
+                                        </template>
+                                        <template v-slot:item="data">
+                                            <template v-if="typeof data.item !== 'object'">
+                                                <v-list-item-content v-text="data.item"></v-list-item-content>
+                                            </template>
+                                            <template v-else>
+                                                <v-list-item-avatar>
+                                                    <img :src="data.item.avatar">
+                                                </v-list-item-avatar>
+                                                <v-list-item-content>
+                                                    <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                                                    <v-list-item-subtitle v-html="data.item.group"></v-list-item-subtitle>
+                                                </v-list-item-content>
+                                            </template>
+                                        </template>
+                                    </v-autocomplete>
                             </b-form-group>
                         </div>
 
@@ -175,7 +175,7 @@
                                 <!-- <v-select v-model="phu_huynh_id" :items="phu_huynh" label="Chọn phụ huynh" multiple filled
                                     flat chips item-text="itemName" item-value="itemId"></v-select> -->
 
-                                    <v-select
+                                    <!-- <v-select
                                     v-model="phu_huynh_id"
                                     :items="phu_huynh"
                                     label="Chọn phụ huynh"
@@ -188,7 +188,38 @@
                                     :search-input.sync="search"
                                     :filter="customFilter"
                                     append-icon="mdi-magnify"
-                                  ></v-select>
+                                  ></v-select> -->
+
+                                  <v-autocomplete v-model="phu_huynh_id" :disabled="isUpdating1" :items="phu_huynh" filled chips
+                                        color="blue-grey lighten-2" label="" item-text="name" item-value="group" multiple>
+                                        <template v-slot:selection="data">
+                                            <div class="d-flex m-2">
+                                                <img width="50" class="border border-2 rounded-circle" :src="data.item.avatar">
+                                                <div class="ms-2">
+                                                    <div class="mt-2">
+                                                        <b>{{ data.item.name }}</b>
+                                                    </div>
+                                                    <div>
+                                                        <span class="blade-id"># {{ data.item.group }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-slot:item="data">
+                                            <template v-if="typeof data.item !== 'object'">
+                                                <v-list-item-content v-text="data.item"></v-list-item-content>
+                                            </template>
+                                            <template v-else>
+                                                <v-list-item-avatar>
+                                                    <img :src="data.item.avatar">
+                                                </v-list-item-avatar>
+                                                <v-list-item-content>
+                                                    <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                                                    <v-list-item-subtitle v-html="data.item.group"></v-list-item-subtitle>
+                                                </v-list-item-content>
+                                            </template>
+                                        </template>
+                                    </v-autocomplete>
                             </b-form-group>
                         </div>
 
@@ -262,6 +293,7 @@ export default {
         selected: 0,
         tieu_de: null,
         isUpdating: false,
+        isUpdating1: false,
         types: null,
         get_toi: [],
         giao_vien_id: [],
@@ -342,7 +374,7 @@ export default {
                     };
                 })
 
-                this.giao_vien.unshift({group:0, name:'Tất cả', avatar:'https://trongtrepro.htecom.com/upload-file/2024/02/23/_z7i8t7jHFPdXwDLZ95qyUANWvieJ5xcG.png'});
+                this.giao_vien.unshift({group:0, name:'Tất cả', avatar:'https://trongtrepro.htecom.com/upload-file/2024/02/23/_z7i8t7jHFPdXwDLZ95qyUANWvieJ5xcG.png' });
 
                 this.giao_vien_id = this.giao_vien[0].group
             })
@@ -353,12 +385,13 @@ export default {
             }).then(res => {
                 this.phu_huynh = res?.data?.data.map(item => {
                     return {
-                        itemId: item?.id,
-                        itemName: item?.hoten ?? item?.id,
+                        group: item?.id,
+                        name: item?.hoten ?? item?.id,
+                        avatar: item?.anh_nguoi_dung,
                     }
                 })
 
-                this.phu_huynh.unshift({itemId:0, itemName:'Tất cả'});
+                this.phu_huynh.unshift({group:0, name:'Tất cả', avatar: 'https://trongtrepro.htecom.com/upload-file/2024/02/23/_z7i8t7jHFPdXwDLZ95qyUANWvieJ5xcG.png' });
             })
         },
         async send_data(event) {
@@ -453,6 +486,11 @@ export default {
         isUpdating(val) {
             if (val) {
                 setTimeout(() => (this.isUpdating = false), 3000)
+            }
+        },
+        isUpdating1(val) {
+            if (val) {
+                setTimeout(() => (this.isUpdating1 = false), 3000)
             }
         },
         get_toi_id() {
