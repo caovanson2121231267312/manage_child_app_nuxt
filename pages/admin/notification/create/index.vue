@@ -428,7 +428,11 @@ export default {
                 //     formData.append('phu_huynh_id', '0')
                 // } else {
                     // formData.append('phu_huynh_id', this.phu_huynh_id.map(item => item.itemId).join(','))
-                    formData.append('phu_huynh_id', this.phu_huynh_id.join(','))
+                    try {
+                        formData.append('phu_huynh_id', this.phu_huynh_id.join(','))
+                    } catch (e) {
+                        formData.append('phu_huynh_id', this.phu_huynh_id)
+                    }
                 // }
             }else {
                 formData.append('phu_huynh_id', '')
